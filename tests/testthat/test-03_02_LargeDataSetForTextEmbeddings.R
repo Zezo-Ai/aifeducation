@@ -3,11 +3,11 @@ testthat::skip_if_not(
   condition = check_aif_py_modules(trace = FALSE),
   message = "Necessary python modules not available"
 )
+load_all_py_scripts()
 
 # Start time
 test_time_start <- Sys.time()
 
-load_all_py_scripts()
 
 # SetUp Test---------------------------------------------------------------------
 root_path_general_data <- testthat::test_path("test_data/Embeddings")
@@ -121,6 +121,26 @@ test_that("LargeDataSetForTextEmbeddings - No FeatureExtractor", {
   expect_equal(one_case$num_rows, 1)
   multiple_cases <- new_dataset$select(c(0, 1, 2, 3))
   expect_equal(multiple_cases$num_rows, 4)
+
+  #Column extraction test
+  expect_all_true(
+    inherits(
+      new_dataset$extract_column("input",format="R"),
+      "array"
+    )
+  )
+  expect_all_true(
+    inherits(
+      new_dataset$extract_column("input",format="torch"),
+      "torch.Tensor"
+    )
+  )
+  expect_all_true(
+    inherits(
+      new_dataset$extract_column("input",format="numpy"),
+      "numpy.ndarray"
+    )
+  )
 })
 
 #-----------------------------------------------------------------------------

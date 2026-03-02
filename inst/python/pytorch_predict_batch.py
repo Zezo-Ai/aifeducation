@@ -71,6 +71,7 @@ def TeProtoNetClassifierBatchPredict(model,dataset,batch_size,embeddings_s,class
   with torch.no_grad():
     iteration=0
     if not (embeddings_s==None and classes_s==None):
+      embeddings_s = embeddings_s["input"][range(0,len(embeddings_s))]
       embeddings_s = embeddings_s.to(device,dtype=dtype)
       classes_s = classes_s.to(device,dtype=dtype)
     for batch in predictionloader:

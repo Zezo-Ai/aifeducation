@@ -7,7 +7,7 @@
 update_aifeducation(
   update_aifeducation_studio = TRUE,
   env_type = "auto",
-  cuda_version = "12.4",
+  cuda_version = "13.0",
   envname = "aifeducation"
 )
 }

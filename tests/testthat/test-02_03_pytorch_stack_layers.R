@@ -53,33 +53,25 @@ test_that("stack_dense_layer", {
 
   y <- layer(
     x = values[[1]],
-    seq_len = values[[2]],
-    mask_times = values[[3]],
-    mask_features = values[[4]]
+    mask_times = values[[2]]
   )
 
   # Test that masking values are the same
   expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(values[[2]]))
-  expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(values[[3]]))
+
 
   # Test that padding is not destroyed
   y_2 <- masking_layer(y[[1]])
   expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(y_2[[2]]))
-  expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(y_2[[3]]))
-  expect_equal(tensor_to_numpy(y[[4]]), tensor_to_numpy(y_2[[4]]))
 
   # Test that values do not change at random for same input
   y_1 <- layer(
     x = values[[1]],
-    seq_len = values[[2]],
-    mask_times = values[[3]],
-    mask_features = values[[4]]
+    mask_times = values[[2]]
   )
   y_2 <- layer(
     x = values[[1]],
-    seq_len = values[[2]],
-    mask_times = values[[3]],
-    mask_features = values[[4]]
+    mask_times = values[[2]]
   )
   expect_equal(tensor_to_numpy(y_1[[1]]), tensor_to_numpy(y_2[[1]]))
 })
@@ -130,34 +122,24 @@ test_that("stack_rec_layers", {
 
       y <- layer(
         x = values[[1]],
-        seq_len = values[[2]],
-        mask_times = values[[3]],
-        mask_features = values[[4]]
+        mask_times = values[[2]]
       )
 
       # Test that masking values are the same
       expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(values[[2]]))
-      expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(values[[3]]))
-      expect_equal(tensor_to_numpy(y[[4]]), tensor_to_numpy(values[[4]]))
 
       # Test that padding is not destroyed
       y_2 <- masking_layer(y[[1]])
       expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(y_2[[2]]))
-      expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(y_2[[3]]))
-      expect_equal(tensor_to_numpy(y[[4]]), tensor_to_numpy(y_2[[4]]))
 
       # Test that values do not change at random for same input
       y_1 <- layer(
         x = values[[1]],
-        seq_len = values[[2]],
-        mask_times = values[[3]],
-        mask_features = values[[4]]
+        mask_times = values[[2]]
       )
       y_2 <- layer(
         x = values[[1]],
-        seq_len = values[[2]],
-        mask_times = values[[3]],
-        mask_features = values[[4]]
+        mask_times = values[[2]]
       )
       expect_equal(tensor_to_numpy(y_1[[1]]), tensor_to_numpy(y_2[[1]]))
     }
@@ -217,33 +199,25 @@ test_that("stack_tf_encoder_layer", {
 
         y <- layer(
           x = values[[1]],
-          seq_len = values[[2]],
-          mask_times = values[[3]],
-          mask_features = values[[4]]
+          mask_times = values[[2]]
         )
 
         # Test that masking values are the same
         expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(values[[2]]))
-        expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(values[[3]]))
+
 
         # Test that padding is not destroyed
         y_2 <- masking_layer(y[[1]])
         expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(y_2[[2]]))
-        expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(y_2[[3]]))
-        expect_equal(tensor_to_numpy(y[[4]]), tensor_to_numpy(y_2[[4]]))
 
         # Test that values do not change at random for same input
         y_1 <- layer(
           x = values[[1]],
-          seq_len = values[[2]],
-          mask_times = values[[3]],
-          mask_features = values[[4]]
+          mask_times = values[[2]]
         )
         y_2 <- layer(
           x = values[[1]],
-          seq_len = values[[2]],
-          mask_times = values[[3]],
-          mask_features = values[[4]]
+          mask_times = values[[2]]
         )
         expect_equal(tensor_to_numpy(y_1[[1]]), tensor_to_numpy(y_2[[1]]))
       }
@@ -293,36 +267,25 @@ test_that("stack_n_gram_convolution", {
 
     y <- layer(
       x = values[[1]],
-      seq_len = values[[2]],
-      mask_times = values[[3]],
-      mask_features = values[[4]]
+      mask_times = values[[2]]
     )
 
     # Test that masking values are the same
     expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(values[[2]]))
-    expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(values[[3]]))
-
-    # Test the correct size of the new masking on feature level
-    expect_equal(dim(tensor_to_numpy(y[[4]]))[3], features)
 
     # Test that padding is not destroyed
     y_2 <- masking_layer(y[[1]])
     expect_equal(tensor_to_numpy(y[[2]]), tensor_to_numpy(y_2[[2]]))
-    expect_equal(tensor_to_numpy(y[[3]]), tensor_to_numpy(y_2[[3]]))
-    expect_equal(tensor_to_numpy(y[[4]]), tensor_to_numpy(y_2[[4]]))
+
 
     # Test that values do not change at random for same input
     y_1 <- layer(
       x = values[[1]],
-      seq_len = values[[2]],
-      mask_times = values[[3]],
-      mask_features = values[[4]]
+      mask_times = values[[2]]
     )
     y_2 <- layer(
       x = values[[1]],
-      seq_len = values[[2]],
-      mask_times = values[[3]],
-      mask_features = values[[4]]
+      mask_times = values[[2]]
     )
     expect_equal(tensor_to_numpy(y_1[[1]]), tensor_to_numpy(y_2[[1]]))
 

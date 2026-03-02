@@ -518,8 +518,8 @@ TextEmbeddingModel <- R6::R6Class(
       for (i in 1L:total_number_of_bachtes) {
         tmp_subset <- text_dataset$select(as.integer(batches_index[[i]]))
         embeddings <- self$embed(
-          raw_text = c(tmp_subset["text"]),
-          doc_id = c(tmp_subset["id"]),
+          raw_text = extract_column_from_py_dataset(tmp_subset,"text"),
+          doc_id = extract_column_from_py_dataset(tmp_subset,"id"),
           batch_size = batch_size,
           trace = FALSE
         )

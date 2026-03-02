@@ -12,6 +12,7 @@ test_time_start <- Sys.time()
 
 test_that("Setup Classifier Data", {
   # Config-------------------------------------------------------------------------
+  load_all_py_scripts()
   root_path_data <- testthat::test_path("test_data/Embeddings")
   create_dir(root_path_data, FALSE)
 

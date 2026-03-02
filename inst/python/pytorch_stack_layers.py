@@ -65,24 +65,15 @@ class stack_dense_layer(torch.nn.Module):
           )
       self.layer_list.append(tmp_layer)
 
-  def forward(self,x,seq_len,mask_times,mask_features):
-    tmp_x=x
-    tmp_seq_len=seq_len
-    tmp_mask_times=mask_times
-    tmp_mask_features=mask_features
-  
+  def forward(self,x,mask_times):
+    y=x
     for r in range(self.n_layers):
       current_layer=self.layer_list[r]
-      res=current_layer(x=tmp_x,seq_len=tmp_seq_len,mask_times=tmp_mask_times,mask_features=tmp_mask_features)
-      tmp_x=res[0]
-      tmp_seq_len=res[1]
-      tmp_mask_times=res[2]
-      tmp_mask_features=res[3]
-    
+      y,mask_times=current_layer(x=y,mask_times=mask_times)
     #Residual Connection
-    y=self.residual_connection(x=x,y=tmp_x,seq_len=tmp_seq_len,mask_times=tmp_mask_times,mask_features=tmp_mask_features)
+    y,mask_times=self.residual_connection(x=x,y=y,mask_times=mask_times)
 
-    return y[0],y[1],y[2],y[3]
+    return y,mask_times
     
   def calc_output_shape(self):
     return self.output_size
@@ -150,24 +141,18 @@ class stack_recurrent_layers(torch.nn.Module):
     self.residual_type=residual_type
     self.residual_connection=layer_residual_connection(self.residual_type,self.pad_value)  
     
-  def forward(self,x,seq_len,mask_times,mask_features):
-    y=self.pack_and_masking(x,seq_len,mask_times,mask_features)
-    y=self.rec_layers(y[0])
-    y=self.unpack(y[0],seq_len,mask_times,mask_features)
+  def forward(self,x,mask_times):
+    y,mask_times=self.pack_and_masking(x,mask_times)
+    y=self.rec_layers(y)[0]
+    y,mask_times=self.unpack(y,mask_times)
     if self.return_sequence==True:
       if self.rec_bidirectional==True:
-        new_mask_features=self.calc_new_mask(mask_features)
-        y=self.compression_layer(y[0],seq_len,mask_times,new_mask_features)
-      y=self.residual_connection(x,y[0],y[1],y[2],y[3])
-      return y[0],y[1],y[2],y[3]
+        y,mask_times=self.compression_layer(y,mask_times)
+      y,mask_times=self.residual_connection(x,y,mask_times)
+      return y,mask_times
     else:
       return y[1][-1,:,:]
     
-  def calc_new_mask(self,mask_features):
-    tmp_mask=torch.index_select(mask_features,2,torch.arange(start=0, end=1).to(device=mask_features.device))
-    mask_features_new=tmp_mask.repeat(1,1,2*self.hidden_size)
-    return mask_features_new
-  
 #stack_tf_encoder_layer--------------------------------
 class stack_tf_encoder_layer(torch.nn.Module):
   def __init__(self,dense_dim,n_layers,times, features,pad_value,dropout_rate_1,dropout_rate_2,act_fct="ELU",attention_type="MultiHead",positional_embedding="absolute",num_heads=1,bias=True,parametrizations="None",normalization_type="LayerNorm",normalization_position="Pre",device=None, dtype=None,residual_type="None"):
@@ -225,20 +210,15 @@ class stack_tf_encoder_layer(torch.nn.Module):
     self.residual_type=residual_type
     self.residual_connection=layer_residual_connection(self.residual_type,self.pad_value) 
 
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
     y=self.positional_embedding_layer(x)
-    y=torch.where(mask_features,input=x,other=y)
-
+    y=y.masked_fill(mask=get_FeatureMask_from_mask(mask_times,self.features),value=self.pad_value)
     for r in range(self.n_layers):
       current_layer=self.layer_list[r]
-      if r==0:
-        y=current_layer(y,seq_len,mask_times,mask_features)
-      else:
-        y=current_layer(y[0],seq_len,mask_times,mask_features)
-    
+      y,mask_times=current_layer(y,mask_times)
     #Residual connection
-    y=self.residual_connection(x,y[0],seq_len,mask_times,mask_features)
-    return y[0],y[1],y[2],y[3]
+    y,mask_times=self.residual_connection(x,y,mask_times)
+    return y,mask_times
 
 #stack_n_gram_convolution--------------------------------
 class stack_n_gram_convolution(torch.nn.Module):
@@ -282,14 +262,11 @@ class stack_n_gram_convolution(torch.nn.Module):
     self.residual_type=residual_type
     self.residual_connection=layer_residual_connection(self.residual_type,self.pad_value) 
 
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
+    y=x
     for r in range(self.n_layers):
       current_layer=self.layer_list[r]
-      if r==0:
-        y=current_layer(x,seq_len,mask_times,mask_features)
-      else:
-        y=current_layer(y[0],seq_len,mask_times,mask_features)
-    
+      y,mask_times=current_layer(y,mask_times)
     #Residual connection
-    y=self.residual_connection(x,y[0],seq_len,mask_times, mask_features)
-    return y[0],y[1],y[2],y[3]
+    y,mask_times=self.residual_connection(x,y,mask_times)
+    return y,mask_times

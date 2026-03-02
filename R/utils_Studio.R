@@ -932,7 +932,7 @@ check_and_prepare_for_studio <- function(env_type = "auto") {
     }
   }
 
-  prepare_session(env_type = env_type, envname = "aifeducation")
+  prepare_session(env_type = env_type, envname = "aifeducation", check_session = TRUE)
 
   message("Checking pytorch machine learning framework.")
   available_ml_frameworks <- NULL
@@ -1344,6 +1344,9 @@ summarize_args_for_long_task <- function(input,
   }
   if ("learning_rate" %in% params) {
     param_list["learning_rate"] <- list(as.numeric(param_list[["learning_rate"]]))
+  }
+  if ("lr_min" %in% params) {
+    param_list["lr_min"] <- list(as.numeric(param_list[["lr_min"]]))
   }
 
   # Override params but only if the argument to override exists

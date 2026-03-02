@@ -168,14 +168,14 @@ class TEClassifierSequential(torch.nn.Module):
                 dtype=dtype)
 
   def forward(self,x,prediction_mode=True):
-    y_original=self.masking_layer(x)
-    y_original=self.features_resize_layer(y_original[0],y_original[1],y_original[2],y_original[3])
-    y=self.stack_tf_encoder_layer(y_original[0],y_original[1],y_original[2],y_original[3])
-    y=self.stack_recurrent_layers(y[0],y[1],y[2],y[3])
-    y=self.stack_n_gram_convolution(y[0],y[1],y[2],y[3])
-    y=self.stack_dense_layer(y[0],y[1],y[2],y[3])
-    y=self.residual_connection(y_original[0],y[0],y[1],y[2],y[3])
-    y=self.summarize_layer_time(y[0],y[3])
+    y_original,mask_original=self.masking_layer(x)
+    y_original,mask_original=self.features_resize_layer(y_original,mask_original)
+    y,mask=self.stack_tf_encoder_layer(y_original,mask_original)
+    y,mask=self.stack_recurrent_layers(y,mask)
+    y,mask=self.stack_n_gram_convolution(y,mask)
+    y,mask=self.stack_dense_layer(y,mask)
+    y,mask=self.residual_connection(y_original,y,mask)
+    y=self.summarize_layer_time(y,get_FeatureMask_from_mask(mask,y.size(2)))
     y=self.summarize_layer_features(y)
     if self.inc_cls_head==True:
       y=self.classification_head(y)
@@ -431,45 +431,45 @@ class TEClassifierParallel(torch.nn.Module):
                 dtype=dtype)
 
   def forward(self,x,prediction_mode=True):
-    y=self.masking_layer(x)
+    y,mask=self.masking_layer(x)
     
-    y_original=self.features_resize_layer(y[0],y[1],y[2],y[3])
-    tensor_list=[y_original[0].clone()]
+    y_original,mask_original=self.features_resize_layer(y,mask)
+    tensor_list=[y_original.clone()]
     
     if not self.stack_tf_encoder_layer==None:
       if self.shared_feat_layer==False:
-        tmp=self.features_resize_layer_tf(y[0],y[1],y[2],y[3])
+        tmp_tf,mask_tf=self.features_resize_layer_tf(y,mask)
       else:
-        tmp=self.features_resize_layer(y[0],y[1],y[2],y[3])
-      tmp=self.stack_tf_encoder_layer(tmp[0],tmp[1],tmp[2],tmp[3])
-      tensor_list.append(tmp[0].clone())
+        tmp_tf,mask_tf=self.features_resize_layer(y,mask)
+      tmp_tf,mask_tf=self.stack_tf_encoder_layer(tmp_tf,mask_tf)
+      tensor_list.append(tmp_tf.clone())
       
     if not self.stack_recurrent_layers==None:
       if self.shared_feat_layer==False:
-        tmp=self.features_resize_layer_rec(y[0],y[1],y[2],y[3])
+        tmp_rec,mask_rec=self.features_resize_layer_rec(y,mask)
       else:
-        tmp=self.features_resize_layer(y[0],y[1],y[2],y[3])
-      tmp=self.stack_recurrent_layers(tmp[0],tmp[1],tmp[2],tmp[3])
-      tensor_list.append(tmp[0].clone())
+        tmp_rec,mask_rec=self.features_resize_layer(y,mask)
+      tmp_rec,mask_rec=self.stack_recurrent_layers(tmp_rec,mask_rec)
+      tensor_list.append(tmp_rec.clone())
       
     if not self.stack_n_gram_convolution==None:
       if self.shared_feat_layer==False:
-        tmp=self.features_resize_layer_conv(y[0],y[1],y[2],y[3])
+        tmp_ng,mask_ng=self.features_resize_layer_conv(y,mask)
       else:
-        tmp=self.features_resize_layer(y[0],y[1],y[2],y[3])
-      tmp=self.stack_n_gram_convolution(tmp[0],tmp[1],tmp[2],tmp[3])
-      tensor_list.append(tmp[0].clone())
+        tmp_ng,mask_ng=self.features_resize_layer(y,mask)
+      tmp_ng,mask_ng=self.stack_n_gram_convolution(tmp_ng,mask_ng)
+      tensor_list.append(tmp_ng.clone())
       
     if not self.stack_dense_layer==None:
       if self.shared_feat_layer==False:
-        tmp=self.features_resize_layer_dense(y[0],y[1],y[2],y[3])
+        tmp_dense,mask_dense=self.features_resize_layer_dense(y,mask)
       else:
-        tmp=self.features_resize_layer(y[0],y[1],y[2],y[3])
-      tmp=self.stack_dense_layer(tmp[0],tmp[1],tmp[2],tmp[3])
-      tensor_list.append(tmp[0].clone())
+        tmp_dense,mask_dense=self.features_resize_layer(y,mask)
+      tmp_dense,mask_dense=self.stack_dense_layer(tmp_dense,mask_dense)
+      tensor_list.append(tmp_dense.clone())
     
     #Merge  
-    result=self.merge_layer(tensor_list,y_original[1],y_original[2],y_original[3])
+    result=self.merge_layer(tensor_list,mask_original)
     if self.inc_cls_head==True:
       result=self.classification_head(result)
     if prediction_mode==False:

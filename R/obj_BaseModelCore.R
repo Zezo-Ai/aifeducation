@@ -144,7 +144,7 @@ BaseModelCore <- R6::R6Class(
         message_top = "Tokenize Text"
       )
 
-      length_vector <- tokenized_texts_raw["length"]
+      length_vector <- extract_column_from_py_dataset(tokenized_texts_raw, "length")
       if (self$last_training$config$full_sequences_only) {
         relevant_indices <- which(length_vector == self$last_training$config$max_sequence_length)
       } else {
@@ -226,7 +226,30 @@ BaseModelCore <- R6::R6Class(
       )
       logger <- do.call(create_logger, logger_args)
 
-      if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "4.46.0")) {
+      if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")) {
+        training_args <- transformers$TrainingArguments(
+          output_dir = private$dir_checkpoint,
+          eval_strategy = "epoch",
+          num_train_epochs = as.integer(self$last_training$config$n_epoch),
+          logging_strategy = "epoch",
+          save_strategy = "epoch",
+          save_total_limit = 1L,
+          load_best_model_at_end = TRUE,
+          optim = "adamw_torch",
+          learning_rate = self$last_training$config$learning_rate,
+          per_device_train_batch_size = as.integer(self$last_training$config$batch_size),
+          per_device_eval_batch_size = as.integer(self$last_training$config$batch_size),
+          auto_find_batch_size = FALSE,
+          report_to = "none",
+          log_level = "error",
+          disable_tqdm = !self$last_training$config$pytorch_trace,
+          dataloader_pin_memory = torch$cuda$is_available(),
+          remove_unused_columns = FALSE
+        )
+      } else if (
+        check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "4.46.0") &&
+          check_versions(a = get_py_package_version("transformers"), operator = "<", b = "5.0.0")
+      ) {
         training_args <- transformers$TrainingArguments(
           output_dir = private$dir_checkpoint,
           overwrite_output_dir = TRUE,
@@ -685,21 +708,39 @@ BaseModelCore <- R6::R6Class(
         fill_mask_pipeline_class <- transformers$FillMaskPipeline
       }
 
-      fill_mask_pipeline <- fill_mask_pipeline_class(
-        model = private$model,
-        tokenizer = self$Tokenizer$get_tokenizer(),
-        framework = "pt",
-        num_workers = 1L,
-        binary_output = FALSE,
-        top_k = as.integer(n_solutions),
-        tokenizer_kwargs = reticulate::dict(
-          list(
-            return_token_type_ids = private$return_token_type_ids,
-            max_length = as.integer(private$model$config$max_position_embeddings - private$adjust_max_sequence_length),
-            truncation = "longest_first"
+      if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")) {
+        fill_mask_pipeline <- fill_mask_pipeline_class(
+          model = private$model,
+          tokenizer = self$Tokenizer$get_tokenizer(),
+          num_workers = 1L,
+          binary_output = FALSE,
+          top_k = as.integer(n_solutions),
+          tokenizer_kwargs = reticulate::dict(
+            list(
+              return_token_type_ids = private$return_token_type_ids,
+              max_length = as.integer(private$model$config$max_position_embeddings - private$adjust_max_sequence_length),
+              truncation = "longest_first"
+            )
           )
         )
-      )
+      } else {
+        fill_mask_pipeline <- fill_mask_pipeline_class(
+          model = private$model,
+          tokenizer = self$Tokenizer$get_tokenizer(),
+          framework = "pt",
+          num_workers = 1L,
+          binary_output = FALSE,
+          top_k = as.integer(n_solutions),
+          tokenizer_kwargs = reticulate::dict(
+            list(
+              return_token_type_ids = private$return_token_type_ids,
+              max_length = as.integer(private$model$config$max_position_embeddings - private$adjust_max_sequence_length),
+              truncation = "longest_first"
+            )
+          )
+        )
+      }
+
 
       special_tokens <- self$Tokenizer$get_special_tokens()
       mask_token <- special_tokens[special_tokens[, "type"] == "mask_token", "token"]
@@ -918,7 +959,7 @@ BaseModelCore <- R6::R6Class(
       mask_token <- self$Tokenizer$get_special_tokens()["mask_token", "token"]
 
       selected_data <- text_dataset$select(random_sample)
-      selected_texts <- selected_data[["text"]]
+      selected_texts <- extract_column_from_py_dataset(selected_data, "text")
       selected_texts_with_mask <- paste(mask_token, selected_texts)
 
       # Start Tracking
@@ -1031,7 +1072,7 @@ BaseModelCore <- R6::R6Class(
       results[1L, "n_epochs"] <- n_epoch
 
       results[1L, "package"] <- "calflops"
-      if(is_venv()){
+      if (is_venv()) {
         results[1L, "version"] <- get_py_package_version("calflops")
       } else {
         results[1L, "version"] <- NA

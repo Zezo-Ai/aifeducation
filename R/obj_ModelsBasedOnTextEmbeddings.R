@@ -456,12 +456,12 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
         prepared_dataset <- embeddings
         tmp_np_array <- np$array(prepared_dataset)
       } else if (inherits(embeddings, "datasets.arrow_dataset.Dataset")) {
-        prepared_dataset <- embeddings$set_format("np")
-        tmp_np_array <- prepared_dataset["input"]
+        #prepared_dataset <- embeddings$set_format("np")
+        tmp_np_array <- extract_column_from_py_dataset(embeddings,"input")
       } else if (inherits(embeddings, "LargeDataSetForTextEmbeddings")) {
-        prepared_dataset <- embeddings$get_dataset()
-        prepared_dataset$set_format("np")
-        tmp_np_array <- prepared_dataset["input"]
+        #prepared_dataset <- embeddings$get_dataset()
+        #prepared_dataset$set_format("np")
+        tmp_np_array <- extract_column_from_py_dataset(embeddings$get_dataset(),"input")
       }
       tmp_np_array <- reticulate::np_array(tmp_np_array)
       if (!numpy_writeable(tmp_np_array)) {
@@ -476,7 +476,7 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
       } else if (inherits(embeddings, "array")) {
         return(rownames(embeddings))
       } else if (inherits(embeddings, "datasets.arrow_dataset.Dataset")) {
-        return(embeddings["id"])
+        return(extract_column_from_py_dataset(embeddings,"id"))
       } else if (inherits(embeddings, "LargeDataSetForTextEmbeddings")) {
         embeddings$get_ids()
       }

@@ -5,6 +5,8 @@ testthat::skip_if_not(
   message = "Necessary python modules not available"
 )
 
+load_all_py_scripts()
+
 # Start time
 test_time_start <- Sys.time()
 
@@ -15,8 +17,8 @@ test_that("class_vector_to_py_dataset", {
   dataset <- class_vector_to_py_dataset(vec)
 
   expect_s3_class(object = dataset, class = "datasets.arrow_dataset.Dataset")
-  expect_equal(dataset[["id"]], name_vector)
-  expect_equal(dataset[["labels"]], unname(vec))
+  expect_equal(extract_column_from_py_dataset(dataset,"id"), name_vector)
+  expect_equal(extract_column_from_py_dataset(dataset,"labels"), unname(vec))
 })
 
 test_that("is_venv ", {

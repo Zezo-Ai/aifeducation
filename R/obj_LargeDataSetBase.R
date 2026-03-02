@@ -45,6 +45,34 @@ LargeDataSetBase <- R6::R6Class(
     },
 
     #--------------------------------------------------------------------------
+    #' @description Extracts the data from a python data set.
+    #' @param col_name `string` Name of the column.
+    #' @param format `string` Format of the data.
+    #' * `"R"` returns the data as a R object.
+    #' * `"torch"` returns the data as PyTorch tensors.
+    #' * `"numpy"` returns the data as numpy array.
+    #' @return Returns a `vector`, `matrix` or `array` for `format="R"`. In
+    #' all other cases the requestes format is returned..
+    extract_column=function(col_name, format="R"){
+      check_class_and_type(
+        object = col_name,
+        object_name = "col_name",
+        type_classes = "string",
+        allow_NULL = FALSE
+        )
+      if(col_name%in%self$get_colnames()){
+        extraction=extract_column_from_py_dataset(
+          py_dataset=private$data,
+          column_name=col_name,
+          format = format
+        )
+        return(extraction)
+      } else {
+        stop("Column is not part of the data set.")
+      }
+    },
+
+    #--------------------------------------------------------------------------
     #' @description Get data set.
     #' @return Returns the data set of this object as an object of class `datasets.arrow_dataset.Dataset`.
     get_dataset = function() {
@@ -78,7 +106,7 @@ LargeDataSetBase <- R6::R6Class(
     #' @description Get ids
     #' @return Returns a `vector` containing the ids of every row as `string`s.
     get_ids = function() {
-      return(private$data["id"])
+      return(extract_column_from_py_dataset(private$data,"id"))
     },
 
     #--------------------------------------------------------------------------

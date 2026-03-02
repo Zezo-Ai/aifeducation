@@ -231,7 +231,13 @@ auto_n_cores <- function() {
 #' @keywords internal
 #' @noRd
 detect_base_model_type <- function(model) {
-  if (inherits(model, "transformers.configuration_utils.PretrainedConfig")) {
+  if (inherits(
+    x=model, what=c(
+      "transformers.configuration_utils.PretrainedConfig",
+      "transformers.configuration_utils.PreTrainedConfig"
+      )
+    )
+    ) {
     type_string <- model$architectures
   } else {
     type_string <- model$config

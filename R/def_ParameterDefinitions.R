@@ -1013,7 +1013,7 @@ get_param_dict <- function() {
     allow_null = TRUE,
     allowed_values = NULL,
     desc = "Region within a country. Only available for USA and Canada See the documentation of
-      codecarbon for more information. <https://mlco2.github.io/codecarbon/parameters.html>",
+      codecarbon for more information. <https://docs.codecarbon.io/latest/getting-started/parameters/>",
     gui_box = NULL,
     default_value = NULL,
     test_values = NULL
@@ -1120,7 +1120,7 @@ get_param_dict <- function() {
     allow_null = FALSE,
     min = 0L,
     max = 1L,
-    desc = "Initial learning rate for the training.",
+    desc = "Initial learning rate for the training. Sets the maximal learning rate.",
     magnitude = 0.1,
     gui_box = "Learning Rate",
     gui_label = "Learning Rate",
@@ -1128,13 +1128,42 @@ get_param_dict <- function() {
     test_values = 1e-3
   )
   param$learning_rate <- param$lr_rate
+  param$lr_min <- list(
+    type = "(double",
+    allow_null = FALSE,
+    min = 0L,
+    max = 1L,
+    desc = "Minimal learning rate during training.",
+    magnitude = 0.1,
+    gui_box = "Learning Rate",
+    gui_label = "Minimal Learning Rate",
+    default_value = 1e-4,
+    test_values = 1e-4
+  )
+  param$lr_scheduler <- list(
+    type = "string",
+    allow_null = FALSE,
+    min = NULL,
+    max = NULL,
+    allowed_values = c("None", "Linear", "Cyclic"),
+    values_desc = list(
+      None = "Uses no learning rate scheduler and no warm up phase.",
+      Linear = "Decreases the learning rate linear from the maximal value (lr_rate) to its minimum (lr_min).",
+      Cyclic = "Decreases the learning rate for 5 epochs to lr_min. Thereafter the learning rate increases for 5 epochs to lr_rate."
+    ),
+    desc = "Learning rate scheduler. To use a constant learning rate for the whole training set this parameter to 'None'.",
+    gui_box = "Learning Rate",
+    gui_label = "Scheduler",
+    default_value = "None",
+    test_values = NULL
+  )
 
   param$lr_warm_up_ratio <- list(
     type = "(double)",
     allow_null = FALSE,
     min = 0L,
     max = 0.50,
-    desc = "Number of epochs used for warm up.",
+    desc = "Number of epochs used for warm up. To disable warm up set this value to 0.0.",
     gui_box = "Learning Rate",
     gui_label = "Warm Up Ratio",
     default_value = 0.01,
@@ -1322,12 +1351,12 @@ get_param_dict <- function() {
     allow_null = FALSE,
     min = NULL,
     max = NULL,
-    allowed_values = c("matrix_exp", "cayley", "householder"),
+    allowed_values = c("matrix_exp", "cayley", "householder","None"),
     desc = "Method for ensuring orthogonality of weights.",
     default_historic = "householder",
     default_value = " matrix_exp",
     gui_box = "General Settings",
-    gui_label = "Method",
+    gui_label = "Orthogonal Method",
     test_values = NULL
   )
 
@@ -1420,10 +1449,18 @@ get_param_dict <- function() {
     min = NULL,
     max = NULL,
     allow_null = FALSE,
-    allowed_values = c("LayerNorm", "None"),
+    allowed_values = c(
+      "LayerNorm",
+      "BatchNorm",
+      "PowerNorm",
+      "RMSNorm",
+      "None"),
     values_desc = list(
-      LayerNorm = "Applies normalization as described by [Ba, Kiros, and Hinton (2016)](https://doi.org/10.48550/arXiv.1607.06450).",
-      None = "Applies no normalization. "
+      LayerNorm = "Applies normalization as described by [Ba, Kiros, and Hinton (2016)](https://doi.org/10.48550/arXiv.1607.06450). Implementation supports masking of sequences.",
+      BatchNorm = "Applies normalization as described by [Loffe and Szegedy](https://doi.org/10.48550/arXiv.1502.03167). Implementation supports masking of sequences.",
+      RMSNorm = "Applies normalization as described by  [Zhang and Sennrich](https://doi.org/10.48550/arXiv.1910.07467). Implementation supports masking of sequences.",
+      PowerNorm= "Applies normalization as described by [Shen et al.](https://doi.org/10.48550/arXiv.2003.07845). Implementation supports masking of sequences.",
+      None = "Applies no normalization."
     ),
     desc = "Type of normalization applied to all layers and stack layers.",
     gui_box = "General Settings",

@@ -64,6 +64,8 @@ TEClassifiersBasedOnRegular <- R6::R6Class(
     #' @param ml_trace `r get_param_doc_desc("ml_trace")`
     #' @param n_cores `r get_param_doc_desc("n_cores")`
     #' @param lr_rate `r get_param_doc_desc("lr_rate")`
+    #' @param lr_min `r get_param_doc_desc("lr_min")`
+    #' @param lr_scheduler `r get_param_doc_desc("lr_scheduler")`
     #' @param lr_warm_up_ratio `r get_param_doc_desc("lr_warm_up_ratio")`
     #' @param optimizer `r get_param_doc_desc("optimizer")`
     #' @return Function does not return a value. It changes the object into a trained classifier.
@@ -104,7 +106,9 @@ TEClassifiersBasedOnRegular <- R6::R6Class(
                      log_write_interval = 10L,
                      n_cores = auto_n_cores(),
                      lr_rate = 1e-3,
+                     lr_min=1e-4,
                      lr_warm_up_ratio = 0.02,
+                     lr_scheduler="None",
                      optimizer = "AdamW") {
       private$do_training(args = get_called_args(n = 1L))
     }

@@ -8,6 +8,7 @@ testthat::skip_if_not(
 test_time_start <- Sys.time()
 
 # config------------------------------------------------------------------------
+load_all_py_scripts()
 object_class_names <- get_TEClassifiers_class_names(super_class = "TEClassifiersBasedOnProtoNet")
 # Do not use these test for the old ProtoNet Classifier
 object_class_names <- setdiff(x = object_class_names, y = "TEClassifierProtoNet")

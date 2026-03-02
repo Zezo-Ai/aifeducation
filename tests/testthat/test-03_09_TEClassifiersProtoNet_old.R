@@ -8,6 +8,7 @@ testthat::skip_if_not(
 test_time_start <- Sys.time()
 
 # config------------------------------------------------------------------------
+load_all_py_scripts()
 # object_class_names <- get_TEClassifiers_class_names(super_class = "TEClassifiersBasedOnProtoNet")
 object_class_names <- "TEClassifierProtoNet"
 max_samples <- 20

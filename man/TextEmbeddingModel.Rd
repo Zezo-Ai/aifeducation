@@ -420,7 +420,7 @@ sustainability should be tracked. A list can be found on Wikipedia:
 \url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
 
 \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://mlco2.github.io/codecarbon/parameters.html} Allowed values: any}
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/getting-started/parameters/} Allowed values: any}
 
 \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
 

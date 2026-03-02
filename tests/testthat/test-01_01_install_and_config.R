@@ -23,7 +23,11 @@ test_that("set_transformers_logger", {
 })
 
 test_that("prepare_session", {
-  expect_no_error(prepare_session())
+  expect_no_error(prepare_session(check_session=TRUE))
+})
+
+test_that("prepare_session", {
+  expect_no_error(prepare_session(check_session=FALSE))
 })
 
 test_that("get_recommended_py_versions", {

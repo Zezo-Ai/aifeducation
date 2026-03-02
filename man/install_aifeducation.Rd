@@ -7,7 +7,7 @@
 install_aifeducation(
   install_aifeducation_studio = TRUE,
   python_version = "3.12",
-  cuda_version = "12.9",
+  cuda_version = "13.0",
   use_conda = FALSE
 )
 }

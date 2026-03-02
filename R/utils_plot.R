@@ -281,15 +281,19 @@ add_breaks <- function(plot_object, x_min, x_max, y_min, y_max, special_x = NULL
   )
 
   if (!is.null(special_x)) {
+    distances_x=(max(breaks_x)-min(breaks_x))/10
+    distances_x=distances_x*0.10
     for (sp_x in special_x) {
-      breaks_x <- breaks_x[breaks_x < sp_x * 0.9 | breaks_x > sp_x * 1.1]
+      breaks_x <- breaks_x[(breaks_x-distances_x) > sp_x & (breaks_x+ distances_x)< sp_x]
     }
     breaks_x <- c(breaks_x, special_x)
   }
 
   if (!is.null(special_y)) {
+    distances_y=(max(breaks_y)-min(breaks_y))/5
+    distances_y=distances_y*0.10
     for (sp_y in special_y) {
-      breaks_y <- breaks_y[breaks_y < sp_y * 0.9 | breaks_y > sp_y * 1.1]
+      breaks_y <- breaks_y[(breaks_y-distances_y) > sp_y  & (breaks_y+distances_y) < sp_y]
     }
     breaks_y <- c(breaks_y, special_y)
   }

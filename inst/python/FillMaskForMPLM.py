@@ -16,7 +16,9 @@
 # Fill mask pipeline for MPLM
 # ======================================================================================
 
+import transformers
 from transformers import FillMaskPipeline
+from packaging import version
 import copy
 
 class FillMaskPipelineForMPLM():
@@ -37,13 +39,21 @@ class FillMaskPipelineForMPLM():
         self.tokenizer_kwargs = tokenizer_kwargs
     
     def _make_pipeline(self, n_solutions: int = 1) -> FillMaskPipeline:
-        return FillMaskPipeline(model = self.model,
-                                tokenizer = self.tokenizer,
-                                framework = self.framework,
-                                num_workers = self.num_workers,
-                                binary_output = self.binary_output,
-                                top_k = n_solutions,
-                                tokenizer_kwargs = self.tokenizer_kwargs)
+        if version.Version(transformers.__version__) < version.Version("5.0.0"):
+          return FillMaskPipeline(model = self.model,
+                                  tokenizer = self.tokenizer,
+                                  framework = self.framework,
+                                  num_workers = self.num_workers,
+                                  binary_output = self.binary_output,
+                                  top_k = n_solutions,
+                                  tokenizer_kwargs = self.tokenizer_kwargs)
+        else:
+          return FillMaskPipeline(model = self.model,
+                        tokenizer = self.tokenizer,
+                        num_workers = self.num_workers,
+                        binary_output = self.binary_output,
+                        top_k = n_solutions,
+                        tokenizer_kwargs = self.tokenizer_kwargs)
     
     def _prepare(self, t: str) -> str:
         """

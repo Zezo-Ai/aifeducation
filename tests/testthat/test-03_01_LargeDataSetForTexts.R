@@ -3,6 +3,7 @@ testthat::skip_if_not(
   condition = check_aif_py_modules(trace = FALSE),
   message = "Necessary python modules not available"
 )
+load_all_py_scripts()
 
 # Start time
 test_time_start <- Sys.time()
@@ -51,31 +52,31 @@ test_that("LargeDataSetForTexts - Add txt", {
     )
   )
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("text_a", "text_b")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("This is the first text", "This is the 2. text")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("BIBSENTRY txt A", "BIBSENTRY txt B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("CC BY", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("NA", "https://url.to.license.txt_b.html")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c("NA", "License text for txt b")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c("NA", "https://url.to.source.txt_b.txt")
   )
 
@@ -129,31 +130,31 @@ test_that("LargeDataSetForTexts - Add txt - with log", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("text_a", "text_b")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("This is the first text", "This is the 2. text")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("BIBSENTRY txt A", "BIBSENTRY txt B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("CC BY", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("NA", "https://url.to.license.txt_b.html")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c("NA", "License text for txt b")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c("NA", "https://url.to.source.txt_b.txt")
   )
 
@@ -187,31 +188,31 @@ test_that("LargeDataSetForTexts - Add pdf", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("pdf_a", "pdf_b")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("This is PDF A ", "This is PDF B ")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("BIBSENTRY PDF A", "BIBSENTRY PDF B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("NA", "CC BY SA")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("NA", "https://url.to.license.pdf_b.html")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c("NA", "License text for pdf b")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c("NA", "https://url.to.source.pdf_b.pdf")
   )
 
@@ -260,31 +261,31 @@ test_that("LargeDataSetForTexts - Add pdf with log", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("pdf_a", "pdf_b")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("This is PDF A ", "This is PDF B ")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("BIBSENTRY PDF A", "BIBSENTRY PDF B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("NA", "CC BY SA")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("NA", "https://url.to.license.pdf_b.html")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c("NA", "License text for pdf b")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c("NA", "https://url.to.source.pdf_b.pdf")
   )
 
@@ -318,27 +319,27 @@ test_that("LargeDataSetForTexts - Add excel", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("excel_a", "excel_b", "excel_c")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("Excel Text A", "Excel Text B", "Excel Text C")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("NA", "test excel", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("NA", "CC BY", "CC BY NC")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("https://test.a.html", "https://test.b.html", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c(
       "This is a license text for entry a",
       "This is a license text for entry b",
@@ -346,7 +347,7 @@ test_that("LargeDataSetForTexts - Add excel", {
     )
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c(
       "NA",
       "www.source.source.excel_b.xlsx",
@@ -398,27 +399,27 @@ test_that("LargeDataSetForTexts - Add excel with log", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("excel_a", "excel_b", "excel_c")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("Excel Text A", "Excel Text B", "Excel Text C")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("NA", "test excel", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("NA", "CC BY", "CC BY NC")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("https://test.a.html", "https://test.b.html", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c(
       "This is a license text for entry a",
       "This is a license text for entry b",
@@ -426,7 +427,7 @@ test_that("LargeDataSetForTexts - Add excel with log", {
     )
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c(
       "NA",
       "www.source.source.excel_b.xlsx",
@@ -479,37 +480,37 @@ test_that("LargeDataSetForTexts - Add data.frame", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("df_A", "df_B")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("data.frame text A", "data.frame text B")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("bib_entry Text A", "bib_entry Text B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("NA", "CC BY")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c(
       "NA",
       "www.url_to_license"
     )
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c(
       "NA",
       "This is license text."
     )
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c(
       "NA",
       "www.to.source"
@@ -691,31 +692,31 @@ test_that("LargeDataSetForTexts - Method Save and Load", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("text_a", "text_b")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("This is the first text", "This is the 2. text")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("BIBSENTRY txt A", "BIBSENTRY txt B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("CC BY", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("NA", "https://url.to.license.txt_b.html")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c("NA", "License text for txt b")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c("NA", "https://url.to.source.txt_b.txt")
   )
 
@@ -768,31 +769,31 @@ test_that("LargeDataSetForTexts - Function Save and Load", {
   )
 
   expect_equal(
-    new_dataset$get_dataset()["id"],
+    new_dataset$extract_column("id"),
     c("text_a", "text_b")
   )
   expect_equal(
-    new_dataset$get_dataset()["text"],
+    new_dataset$extract_column("text"),
     c("This is the first text", "This is the 2. text")
   )
   expect_equal(
-    new_dataset$get_dataset()["bib_entry"],
+    new_dataset$extract_column("bib_entry"),
     c("BIBSENTRY txt A", "BIBSENTRY txt B")
   )
   expect_equal(
-    new_dataset$get_dataset()["license"],
+    new_dataset$extract_column("license"),
     c("CC BY", "NA")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_license"],
+    new_dataset$extract_column("url_license"),
     c("NA", "https://url.to.license.txt_b.html")
   )
   expect_equal(
-    new_dataset$get_dataset()["text_license"],
+    new_dataset$extract_column("text_license"),
     c("NA", "License text for txt b")
   )
   expect_equal(
-    new_dataset$get_dataset()["url_source"],
+    new_dataset$extract_column("url_source"),
     c("NA", "https://url.to.source.txt_b.txt")
   )
 

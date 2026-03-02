@@ -274,11 +274,23 @@ cat_message <- function(msg, trace) {
 #'
 #' @param log `data.frame` containing the log.
 #' @return Returns a `data.frame` containing epochs, loss, and val_loss.
-#'
+#' @importFrom reticulate import_builtins
 #' @family Utils Log Developers
 #' @export
 clean_pytorch_log_transformers <- function(log) {
-  max_epochs <- max(log$epoch)
+  if (is.data.frame(log)){
+    history_data <- log
+  } else if (inherits(x=log,what = "pandas.DataFrame")){
+    python_bulit_ins <- reticulate::import_builtins()
+    data_colnames <- python_bulit_ins$list(log$columns)
+    history_data <- log$to_numpy()
+    colnames(history_data) <- data_colnames
+    history_data <- as.data.frame(history_data)
+  } else {
+    stop("Class of log is not supported.")
+  }
+
+  max_epochs <- max(history_data$epoch)
 
   cols <- c("epoch", "loss", "val_loss")
 
@@ -291,11 +303,11 @@ clean_pytorch_log_transformers <- function(log) {
   for (i in 1L:max_epochs) {
     cleaned_log[i, "epoch"] <- i
 
-    tmp_loss <- subset(log, log$epoch == i & !is.na(log$loss))
+    tmp_loss <- subset(history_data, history_data$epoch == i & !is.na(history_data$loss))
     tmp_loss <- tmp_loss[1L, "loss"]
     cleaned_log[i, "loss"] <- tmp_loss
 
-    tmp_val_loss <- subset(log, log$epoch == i & !is.na(log$eval_loss))
+    tmp_val_loss <- subset(history_data, history_data$epoch == i & !is.na(history_data$eval_loss))
     tmp_val_loss <- tmp_val_loss[1L, "eval_loss"]
     cleaned_log[i, "val_loss"] <- tmp_val_loss
   }

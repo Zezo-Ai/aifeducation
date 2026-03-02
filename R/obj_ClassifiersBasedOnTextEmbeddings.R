@@ -290,8 +290,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
           return(FALSE)
         }
       } else if (inherits(text_embeddings, "datasets.arrow_dataset.Dataset")) {
-        text_embeddings$set_format("np")
-        tensors <- text_embeddings["input"][1L, , , drop = FALSE]
+        tensors <-extract_column_from_py_dataset(text_embeddings,"input")[1L, , , drop = FALSE]
         if (dim(tensors)[3L] > private$model_config$features) {
           return(TRUE)
         } else {
@@ -466,14 +465,13 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       )
       test_pred_cat <- test_predictions$expected_category
       names(test_pred_cat) <- rownames(test_predictions)
-      test_pred_cat <- test_pred_cat[test_data["id"]]
-      test_data$set_format("np")
+      test_pred_cat <- test_pred_cat[extract_column_from_py_dataset(test_data,"id")]
       true_values <- factor(
-        x = test_data["labels"],
+        x = extract_column_from_py_dataset(test_data,"labels"),
         levels = 0L:(length(private$model_config$target_levels) - 1L),
         labels = private$model_config$target_levels
       )
-      names(true_values) <- test_data["id"]
+      names(true_values) <- extract_column_from_py_dataset(test_data,"id")
       test_res <- get_coder_metrics(
         true_values = true_values,
         predicted_values = test_pred_cat
@@ -500,16 +498,15 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         )
         test_pred_cat <- test_predictions$expected_category
         names(test_pred_cat) <- rownames(test_predictions)
-        test_pred_cat <- test_pred_cat[test_data["id"]]
+        test_pred_cat <- test_pred_cat[extract_column_from_py_dataset(test_data,"id")]
 
         # Calculate standard measures
-        test_data$set_format("np")
         true_values <- factor(
-          x = test_data["labels"],
+          x = extract_column_from_py_dataset(test_data,"labels"),
           levels = 0L:(length(private$model_config$target_levels) - 1L),
           labels = private$model_config$target_levels
         )
-        names(true_values) <- test_data["id"]
+        names(true_values) <- extract_column_from_py_dataset(test_data,"id")
         self$reliability$standard_measures_end[iteration] <- list(
           calc_standard_classification_measures(
             true_values = true_values,
@@ -520,7 +517,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         # Calculate iota objects
         self$reliability$iota_objects_end[iteration] <- list(iotarelr::check_new_rater(
           true_values = factor(
-            x = test_data["labels"],
+            x = extract_column_from_py_dataset(test_data,"labels"),
             levels = 0L:(length(private$model_config$target_levels) - 1L),
             labels = private$model_config$target_levels
           ),
@@ -529,7 +526,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         ))
         self$reliability$iota_objects_end_free[iteration] <- list(iotarelr::check_new_rater(
           true_values = factor(
-            x = test_data["labels"],
+            x = extract_column_from_py_dataset(test_data,"labels"),
             levels = 0L:(length(private$model_config$target_levels) - 1L),
             labels = private$model_config$target_levels
           ),
@@ -944,9 +941,8 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       )
 
       # get the corresponding input
-      unlabeled_data$set_format("np")
-      embeddings <- unlabeled_data["input"]
-      rownames(embeddings) <- unlabeled_data["id"]
+      embeddings <-extract_column_from_py_dataset(unlabeled_data,"input")
+      rownames(embeddings) <- extract_column_from_py_dataset(unlabeled_data,"id")
       embeddings <- embeddings[names_final_new_categories, , ]
 
       # Return results
@@ -967,13 +963,12 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       )
       val_pred_cat <- val_predictions$expected_category
       names(val_pred_cat) <- rownames(val_predictions)
-      val_pred_cat <- val_pred_cat[val_data["id"]]
+      val_pred_cat <- val_pred_cat[extract_column_from_py_dataset(val_data,"id")]
 
       # Calculate Assignment Error Matrix
-      val_data$set_format("np")
       val_iota_object <- iotarelr::check_new_rater(
         true_values = factor(
-          x = val_data["labels"],
+          x = extract_column_from_py_dataset(val_data,"labels"),
           levels = 0L:(length(private$model_config$target_levels) - 1L),
           labels = private$model_config$target_levels
         ),
@@ -1018,7 +1013,9 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
 
       # Generating class weights
       if (self$last_training$config$loss_balance_class_weights) {
-        abs_freq_classes <- table(train_data["labels"])
+        abs_freq_classes <- table(
+          extract_column_from_py_dataset(train_data,"labels")
+          )
         class_weights <- as.vector(sum(abs_freq_classes) / (length(abs_freq_classes) * abs_freq_classes))
       } else {
         class_weights <- rep(x = 1L, times = length(private$model_config$target_levels))
@@ -1026,7 +1023,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
 
       # Generating weights for sequence length
       if (self$last_training$config$loss_balance_sequence_length) {
-        sequence_length <- train_data["length"]
+        sequence_length <- extract_column_from_py_dataset(train_data,"length")
         abs_freq_length <- table(sequence_length)
 
         sample_weight_per_sequence_length <- as.vector(
@@ -1040,7 +1037,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
           sample_weights[i] <- sample_weight_per_sequence_length[idx]
         }
       } else {
-        sequence_length <- train_data["length"]
+        sequence_length <- extract_column_from_py_dataset(train_data,"length")
         sample_weights <- rep.int(x = 1L, times = length(sequence_length))
       }
 
@@ -1072,7 +1069,8 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         ))
       )
 
-      dataset_train <- train_data$add_column("sample_weights", data_set_weights["sample_weights"])
+      dataset_train <- train_data$add_column("sample_weights",
+                                             extract_column_from_py_dataset(data_set_weights,"sample_weights"))
       dataset_train <- dataset_train$select_columns(c("input", target_column, "sample_weights"))
 
       if (private$model_config$require_one_hot) {
@@ -1102,6 +1100,8 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         loss_cls_fct_name = self$last_training$config$loss_cls_fct_name,
         optimizer_method = self$last_training$config$optimizer,
         lr_rate = self$last_training$config$lr_rate,
+        lr_min=self$last_training$config$lr_min,
+        scheduler_type=self$last_training$config$lr_scheduler,
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
         epochs = as.integer(self$last_training$config$epochs),
         trace = as.integer(self$last_training$config$ml_trace),
@@ -1239,6 +1239,10 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         if (self$last_training$config$sc_max_k < self$last_training$config$sc_min_k) {
           stop("sc_max_k must be at least sc_min_k")
         }
+      }
+
+      if (self$last_training$config$lr_rate < self$last_training$config$lr_min) {
+        stop("lr_rate must be at least lr_min")
       }
     },
     #---------------------------------------------------------------------------

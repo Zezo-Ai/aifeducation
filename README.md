@@ -17,6 +17,8 @@ coverage](https://codecov.io/gh/FBerding/aifeducation/graph/badge.svg)](https://
 **CRAN** [![CRAN
 status](https://www.r-pkg.org/badges/version/aifeducation)](https://CRAN.R-project.org/package=aifeducation)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/aifeducation)](https://cran.r-project.org/package=aifeducation)
+[![Downloads](http://cranlogs.r-pkg.org/badges/last-month/aifeducation?color=blue)](https://cran.r-project.org/package=aifeducation)
+[![DOI](https://img.shields.io/badge/doi-10.32614/CRAN.package.aifeducation-green.svg)](https://doi.org/10.32614/CRAN.package.aifeducation)
 
 <!-- badges: end -->
 

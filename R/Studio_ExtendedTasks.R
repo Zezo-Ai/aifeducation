@@ -36,7 +36,8 @@ long_add_texts_to_dataset <- function(source_path,
     # Set up py env
     prepare_session(
       env_type = py_environment_type,
-      envname = py_env_name
+      envname = py_env_name,
+      check_session = FALSE
     )
 
     # Set up top level progress monitoring
@@ -128,7 +129,8 @@ long_transform_text_to_embeddings <- function(source_path,
     # Set up py env
     prepare_session(
       env_type = py_environment_type,
-      envname = py_env_name
+      envname = py_env_name,
+      check_session = FALSE
     )
 
     # Read the large data set for raw texts
@@ -170,7 +172,8 @@ long_models <- function(args) {
     # Set up py env
     prepare_session(
       env_type = args[[1]]$meta_args$py_environment_type,
-      envname = args[[1]]$meta_args$py_env_name
+      envname = args[[1]]$meta_args$py_env_name,
+      check_session = FALSE
     )
 
     # Create object or load object
@@ -188,7 +191,6 @@ long_models <- function(args) {
         path_args = args[[method]]$path_args,
         meta_args = args[[method]]$meta_args
       )
-
       # Call Method
       do.call(what = object[[method]], args = args[[method]]$args)
     }
@@ -219,7 +221,8 @@ long_transformers <- function(args) {
     # Set up py env
     prepare_session(
       env_type = args[[1]]$meta_args$py_environment_type,
-      envname = args[[1]]$meta_args$py_env_name
+      envname = args[[1]]$meta_args$py_env_name,
+      check_session = FALSE
     )
 
     object_list <- list()

@@ -11,12 +11,12 @@ data.frame_to_py_dataset <- function(data_frame) {
     data_frame <- rbind(data_frame, data_frame)
     data_list <- as.list(data_frame)
     data_dict <- reticulate::dict(data_list)
-    dataset <- datasets$Dataset$from_dict(data_dict)
+    dataset <- datasets$Dataset$from_dict(mapping = data_dict)
     dataset <- dataset$select(indices = list(0L))
   } else {
     data_list <- as.list(data_frame)
     data_dict <- reticulate::dict(data_list)
-    dataset <- datasets$Dataset$from_dict(data_dict)
+    dataset <- datasets$Dataset$from_dict(mapping = data_dict)
   }
   return(dataset)
 }
@@ -33,8 +33,8 @@ data.frame_to_py_dataset <- function(data_frame) {
 #' @export
 py_dataset_to_embeddings <- function(py_dataset) {
   py_dataset$set_format("np")
-  embeddings <- py_dataset["input"]
-  rownames(embeddings) <- as.character(py_dataset["id"])
+  embeddings <- extract_column_from_py_dataset(py_dataset, "input")
+  rownames(embeddings) <- as.character(extract_column_from_py_dataset(py_dataset, "id"))
   return(embeddings)
 }
 
@@ -180,4 +180,111 @@ tensor_list_to_numpy <- function(tensor_list) {
     )
   }
   return(tensor_list)
+}
+
+#' @title Extract column
+#' @description Function extracts the content of a column from a python data set in order to allow further operations in *R*.
+#'
+#' @param py_dataset `datasets.arrow_dataset.Dataset` data set to extract the column from.
+#' @param column_name `string` Name of the column to extract.
+#' @param format `string` Format of the requested data.
+#' * `"R"` returns the data as a R object.
+#' * `"torch"` returns the data as PyTorch tensors.
+#' * `"numpy"` returns the data as numpy array.
+#' @return Returns a `vector`, `matrix` or `array` for `format="R"`. In all other
+#' cases the requested format is returned.
+#'
+#' @importFrom utils head
+#'
+#' @family Utils Python Data Management Developers
+#' @export
+extract_column_from_py_dataset <- function(py_dataset, column_name,format="R") {
+  check_class_and_type(
+    object = column_name,
+    object_name = "column_name",
+    allow_NULL = FALSE,
+    type_classes = "string"
+  )
+  check_class_and_type(
+    object = py_dataset,
+    object_name = "py_dataset",
+    allow_NULL = FALSE,
+    type_classes = "datasets.arrow_dataset.Dataset"
+  )
+
+  if (check_versions(
+    a = get_py_package_version("datasets"),
+    operator = ">",
+    b = "3.6.0"
+  )) {
+    data_column <- py_dataset$select_columns(column_name)
+    if(format=="R"){
+      data_column$set_format("numpy")
+      if (data_column$num_rows == 1L) {
+        data_column <- data_column$`repeat`(2L)
+
+        r_column <- data_column[column_name]
+        r_column <- r_column[seq.int(from = 0, to = data_column$num_rows - 1L)]
+
+        if (is.array(r_column) || is.matrix(r_column)) {
+          r_column <- utils::head(r_column,n=1L)
+        }
+      } else {
+        r_column <- data_column[column_name]
+        r_column <- r_column[seq.int(from = 0, to = data_column$num_rows - 1L)]
+      }
+
+      if (length(dim(r_column)) <= 1L) {
+        r_column <- as.vector(r_column)
+      }
+      rm(data_column)
+      gc()
+      return(r_column)
+    } else {
+      data_column$set_format(format)
+      r_column <- data_column[column_name]
+      r_column <- r_column[seq.int(from = 0, to = data_column$num_rows - 1L)]
+      if(format=="numpy"){
+        r_column=reticulate::r_to_py(r_column)
+      }
+      return(r_column)
+    }
+  } else {
+    if(format=="R"){
+      py_dataset$set_format("numpy")
+      r_column=py_dataset[[column_name]]
+      if (length(dim(r_column)) <= 1L) {
+        r_column <- as.vector(r_column)
+      }
+      return(r_column)
+    } else {
+      py_dataset$set_format(format)
+      r_column=py_dataset[[column_name]]
+      if(format=="numpy"){
+        r_column=reticulate::r_to_py(r_column)
+      }
+      return(r_column)
+    }
+  }
+}
+
+#' @title File path for caching data sets
+#' @description Function creates a valid file path for the argument `cache_file_name` of classes
+#' `"datasets.arrow_dataset.Dataset"` from the python library 'datasets'. The aim of the
+#' function is to ensure compatibility between different versions of 'datasets'.
+#'
+#' @param file_path `string` file path without file extension.
+#' @return Returns a file path as `string`.
+#'
+#' @family Utils Python Data Management Developers
+create_py_dataset_cache_file_path <- function(file_path) {
+  if (check_versions(
+    a = get_py_package_version("datasets"),
+    operator = ">",
+    b = "3.6.0"
+  )) {
+    return(paste0(file_path, ".cache"))
+  } else {
+    return(file_path)
+  }
 }

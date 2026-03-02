@@ -3,6 +3,7 @@ testthat::skip_if_not(
   condition = check_aif_py_modules(trace = FALSE),
   message = "Necessary python modules not available"
 )
+load_all_py_scripts()
 
 # Start time
 test_time_start <- Sys.time()
@@ -164,7 +165,10 @@ for (framework in ml_frameworks) {
           )
 
           i <- sample(seq.int(from = 1, to = predictions$n_rows()))
-          expect_equal(predictions$select((i - 1))["input"], predictions_2$select((i - 1))["input"])
+          expect_equal(
+            predictions$extract_column("input")[i,,,drop=FALSE],
+            predictions_2$extract_column("input")[i,,,drop=FALSE]
+          )
         }
       })
 
@@ -199,8 +203,8 @@ for (framework in ml_frameworks) {
           )
           i <- sample(seq.int(from = 1, to = predictions$n_rows()), size = 1)
           expect_equal(
-            predictions$select((i - 1))["input"],
-            predictions_Perm$select(which(perm == i) - 1)["input"]
+            predictions$extract_column("input")[i,,,drop=FALSE],
+            predictions_Perm$extract_column("input")[which(perm == i),,,drop=FALSE]
           )
         }
       })
@@ -216,8 +220,9 @@ for (framework in ml_frameworks) {
             batch_size = 50
           )
           i <- sample(seq.int(from = 1, to = predictions_ET$n_rows()), size = 1)
-          expect_equal(unname(predictions_ET$embeddings[i, , , drop = FALSE]),
-            predictions_LD$select(i - 1)["input"],
+          expect_equal(
+            unname(predictions_ET$embeddings[i, , , drop = FALSE]),
+            predictions_LD$extract_column("input")[i,,,drop=FALSE],
             tolerance = 1e-7
           )
         })

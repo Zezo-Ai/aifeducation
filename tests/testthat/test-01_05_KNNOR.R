@@ -5,6 +5,8 @@ testthat::skip_if_not(
   message = "Necessary python modules not available"
 )
 
+load_all_py_scripts()
+
 # Start time
 test_time_start <- Sys.time()
 

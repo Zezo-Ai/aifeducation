@@ -183,7 +183,7 @@ The remaining cases are part of the training data. Allowed values: \ifelse{latex
 \item{\code{min_seq_len}}{\code{int} Only relevant if \code{full_sequences_only = FALSE}. Value determines the minimal sequence length included in
 training process.  Allowed values: \ifelse{latex}{$10 <= x $}{\ifelse{html}{\eqn{10 <= x }}{`10 <= x `}}}
 
-\item{\code{learning_rate}}{\code{double} Initial learning rate for the training. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
+\item{\code{learning_rate}}{\code{double} Initial learning rate for the training. Sets the maximal learning rate. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
 
 \item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
 
@@ -192,7 +192,7 @@ sustainability should be tracked. A list can be found on Wikipedia:
 \url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
 
 \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://mlco2.github.io/codecarbon/parameters.html} Allowed values: any}
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/getting-started/parameters/} Allowed values: any}
 
 \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
 

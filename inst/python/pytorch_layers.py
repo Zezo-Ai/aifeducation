@@ -17,13 +17,17 @@ import numpy as np
 import math
 import safetensors
 
+def get_SeqLen_from_mask(mask):
+  return torch.sum(~mask,dim=1,keepdim=False)
+
+def get_FeatureMask_from_mask(mask,num_features):
+  return torch.unsqueeze(mask,dim=2).expand((mask.size(0),mask.size(1),num_features))
+
 # Masking Layer------------------------------------------------------------------
 # Layer for generating masking tensors
 # Returns a list with the following tensors
 # * Input tensor
-# * Sequence length of the tensors shape (Batch)
 # * mask_times Mask on the level of complete sequences shape (Batch, Times)
-# * mask_features Mask on the level of single features shape (Batch, Times, Features)
 # True indicates that the sequence or is padded. If True these values should not be part 
 # of further computations
 class masking_layer(torch.nn.Module):
@@ -39,16 +43,9 @@ class masking_layer(torch.nn.Module):
     time_sums=torch.sum(x,dim=2)
     #Get mask on the level of sequences/times
     mask_times=(time_sums==features*self.pad_value)
-    #Get corresponding sequence length
-    seq_len=torch.sum(~mask_times,dim=1)
-    #Get mask for the level of features
-    n_elements=seq_len*features
-    mask_features=torch.reshape(torch.repeat_interleave(mask_times,repeats=features,dim=1),(x.size(dim=0),x.size(dim=1),features))
     #Bring values to device
-    seq_len=seq_len.to(device)
     mask_times=mask_times.to(device)
-    mask_features=mask_features.to(device)
-    return x, seq_len, mask_times, mask_features
+    return x, mask_times
 
 #Dropout layer with mask
 class layer_dropout_with_mask(torch.nn.Module):
@@ -61,10 +58,10 @@ class layer_dropout_with_mask(torch.nn.Module):
         self.pad_value=pad_value.detach()
       else:
         self.pad_value=torch.tensor(pad_value)
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
     y=self.dropout_layer(x)
-    y_padded=torch.where(condition=mask_features,input=self.pad_value,other=y)
-    return y_padded,seq_len,mask_times,mask_features
+    y_padded=y.masked_fill(mask=get_FeatureMask_from_mask(mask_times,y.size(2)),value=self.pad_value)
+    return y_padded,mask_times
 
 
 #Residual Connection layer----------------------------------------------------
@@ -81,18 +78,18 @@ class layer_residual_connection(torch.nn.Module):
       if self.type=="ResidualGate":
         self.gate_param=torch.nn.Parameter(torch.ones(1))
       
-    def forward(self, x,y,seq_len,mask_times,mask_features):
+    def forward(self, x,y,mask_times):
       if self.type=="None":
-        return y, seq_len,mask_times,mask_features
+        return y, mask_times
       elif self.type=="Addition":
         z=x+y
-        z=torch.where(condition=mask_features,input=self.pad_value,other=z)
-        return z, seq_len,mask_times,mask_features
+        z=z.masked_fill(mask=get_FeatureMask_from_mask(mask_times,z.size(2)),value=self.pad_value)
+        return z, mask_times
       elif self.type=="ResidualGate":
         weight=torch.nn.functional.sigmoid(self.gate_param)
         z=(1-weight)*x+weight*y
-        torch.where(condition=mask_features,input=self.pad_value,other=z)
-        return z, seq_len,mask_times,mask_features
+        z=z.masked_fill(mask=get_FeatureMask_from_mask(mask_times,z.size(2)),value=self.pad_value)
+        return z, mask_times
 
 class identity_layer(torch.nn.Module):
   def __init__(self,pad_value=None,apply_masking=True):
@@ -103,10 +100,12 @@ class identity_layer(torch.nn.Module):
       else:
         self.pad_value=torch.tensor(pad_value)
     self.apply_masking=apply_masking
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
     if self.apply_masking==True:
-      x=torch.where(condition=mask_features,input=self.pad_value,other=x)
-    return x,seq_len,mask_times,mask_features
+      y=x.masked_fill(mask=get_FeatureMask_from_mask(mask_times,x.size(2)),value=self.pad_value)
+    else:
+      y=x
+    return y,mask_times
 
 #Blockwise orthogonal dense layer----------------------------------------------
 #Function required for block_orth_dense to speed up comutations via vmap
@@ -237,32 +236,13 @@ class dense_layer_with_mask(torch.nn.Module):
     
     self.residual_connection=layer_residual_connection(residual_type,self.pad_value)  
       
-  def forward(self,x,seq_len,mask_times,mask_features):
-    #Calculate new mask on the feature level
-    mask_features_new=self.calc_new_mask(mask_features=mask_features)
-      
-    #Calculate values
+  def forward(self,x,mask_times):
     y=self.dense(x)
-    y=self.normalization_layer(y,seq_len,mask_times,mask_features_new)
-    y_activation=self.act_fct(y[0])
-    y=self.dropout(x=y_activation,seq_len=y[1],mask_times=y[2],mask_features=y[3])
-    y=self.residual_connection(x=x,y=y[0],seq_len=y[1],mask_times=y[2],mask_features=y[3])
-    
-    #insert pad values
-    #y_padded=torch.where(condition=mask_features_new,input=self.pad_value,other=y_dropout)
-    
-    #Return values
-    return y[0],y[1],y[2],mask_features_new
-  
-  def calc_new_mask(self,mask_features):
-    if self.input_size>self.output_size:
-      mask_features_new=torch.index_select(mask_features,2,torch.arange(start=0, end=self.output_size).to(device=mask_features.device))
-    elif self.input_size<self.output_size:
-      tmp_mask=torch.index_select(mask_features,2,torch.arange(start=0, end=1).to(device=mask_features.device))
-      mask_features_new=tmp_mask.repeat(1,1,self.output_size)
-    else:
-      mask_features_new=mask_features
-    return mask_features_new
+    y,mask_times=self.normalization_layer(y,mask_times)
+    y=self.act_fct(y)
+    y,mask_times=self.dropout(x=y,mask_times=mask_times)
+    y,mask_times=self.residual_connection(x=x,y=y,mask_times=mask_times)
+    return y,mask_times
 
 # Pooling Layer================================================================
 #Extreme Pooling
@@ -404,7 +384,8 @@ class layer_n_gram_convolution(torch.nn.Module):
     elif self.parametrizations=="SpectralNorm":
       torch.nn.utils.spectral_norm(module=self.conv_layer, name='weight', n_power_iterations=1, eps=1e-12, dim=None)
   
-  def forward(self, x,seq_len,mask_times,mask_features):
+  def forward(self, x,mask_times):
+    mask_features=get_FeatureMask_from_mask(mask_times,x.size(2))
     y=x*(~mask_features)
     y=torch.unsqueeze(y,dim=1)
     y=torch.nn.functional.pad(input=y,pad=self.padding,value=0)
@@ -412,26 +393,13 @@ class layer_n_gram_convolution(torch.nn.Module):
     y=torch.squeeze(y,dim=3)
     y=torch.permute(input=y,dims=(0,2,1))
     y=self.act_fct(y)
-    
     #Insert padding
-    new_mask_features=self.calc_new_mask(mask_features=mask_features)
-    y_padded=torch.where(condition=new_mask_features,input=self.pad_value,other=y)
-    return y_padded,seq_len,mask_times,new_mask_features
+    y_padded=y.masked_fill(mask=get_FeatureMask_from_mask(mask_times,self.n_filters),value=self.pad_value)
+    return y_padded,mask_times
     
   def calc_padding(self):
     padding_times=self.kernel_size_times-self.stride
-    return 0,0, 0,padding_times
-  
-  def calc_new_mask(self,mask_features):
-    if self.features>self.n_filters:
-      mask_features_new=torch.index_select(mask_features,2,torch.arange(start=0, end=self.n_filters).to(device=mask_features.device))
-    elif self.features<self.n_filters:
-      tmp_mask=torch.index_select(mask_features,2,torch.arange(start=0, end=1).to(device=mask_features.device))
-      mask_features_new=tmp_mask.repeat(1,1,self.n_filters)
-    else:
-      mask_features_new=mask_features
-    return mask_features_new
-  
+    return 0,0,0,padding_times
 
 #Multiple_n_gram_convolution
 #n-Gram-Convolution
@@ -512,36 +480,37 @@ class layer_mutiple_n_gram_convolution(torch.nn.Module):
       
     self.residual_connection=layer_residual_connection(residual_type,self.pad_value) 
       
-  def forward(self, x,seq_len,mask_times,mask_features):
+  def forward(self, x,mask_times):
     #Extract Features
     #Padding is insert within the layers. No Post-Processing required.
     for i in range(len(self.layer_list)):
       current_layer=self.layer_list[i]
-      tmp=current_layer(x,seq_len,mask_times,mask_features)[0]
+      tmp=current_layer(x,mask_times)[0]
       if i==0:
         y=tmp
       else:
         y=torch.cat((y,tmp),dim=2)
     
-    y=self.normalization_layer(x=y,seq_len=seq_len,mask_times=mask_times,mask_features=mask_features)    
-    y_activation=self.act_fct(y[0])
-    y=self.dropout(x=y_activation,seq_len=y[1],mask_times=y[2],mask_features=y[3])
-    y=self.residual_connection(x=x,y=y[0],seq_len=y[1],mask_times=y[2],mask_features=y[3])
+    y,mask_times=self.normalization_layer(x=y,mask_times=mask_times)    
+    y=self.act_fct(y)
+    y,mask_times=self.dropout(x=y,mask_times=mask_times)
+    y,mask_times=self.residual_connection(x=x,y=y,mask_times=mask_times)
     
-    return y[0],y[1],y[2],y[3]
+    return y,mask_times
 
 #Pack and unpack layers
 class layer_pack_and_masking(torch.nn.Module):
   def __init__(self):
     super().__init__()
   
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
+    seq_len=get_SeqLen_from_mask(mask_times)
     x=torch.nn.utils.rnn.pack_padded_sequence(
     input=x,
     lengths=seq_len.to("cpu",dtype=torch.int),
     enforce_sorted=False, 
     batch_first=True)
-    return x, seq_len,mask_times,mask_features
+    return x, mask_times
 
 class layer_unpack_and_masking(torch.nn.Module):
   def __init__(self,sequence_length,pad_value):
@@ -552,13 +521,13 @@ class layer_unpack_and_masking(torch.nn.Module):
     else:
       self.pad_value=torch.tensor(pad_value)
     
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
     x=torch.nn.utils.rnn.pad_packed_sequence(
     sequence=x,
     total_length=self.sequence_length,
     padding_value=self.pad_value,
     batch_first=True)[0]
-    return x,seq_len,mask_times,mask_features
+    return x,mask_times
 
 #layer transformer_encoder_fourier 
 class layer_fourier_transformation(torch.nn.Module):
@@ -591,7 +560,7 @@ class layer_abs_positional_embedding(torch.nn.Module):
     input_seq=input_seq.to(device)
     
     input_seq=input_seq.repeat(x.shape[0], 1)
-    input_seq.masked_fill_(mask,value=0)
+    input_seq.masked_fill(mask,value=0)
     embedded_positions_masked=self.embedding(input_seq)
    
     return x+embedded_positions_masked
@@ -690,7 +659,8 @@ class layer_tf_encoder(torch.nn.Module):
     self.residual_connection_1=layer_residual_connection(residual_type,self.pad_value)
     self.residual_connection_2=layer_residual_connection(residual_type,self.pad_value)
 
-  def forward(self,x,seq_len,mask_times,mask_features):
+  def forward(self,x,mask_times):
+    mask_features=get_FeatureMask_from_mask(mask_times,x.size(2))
     #Post Layer Normalization
     if self.normalization_position=="Post":
       #Sub-Layer 1
@@ -703,24 +673,24 @@ class layer_tf_encoder(torch.nn.Module):
           value=x,
           key_padding_mask=mask_times)[0]
       y=self.dropout_1(y)
-      y=torch.where(mask_features,input=self.pad_value,other=y)
-      y=self.residual_connection_1(x=x,y=y,seq_len=seq_len,mask_times=mask_times,mask_features=mask_features)
-      y=self.normalization_1(y[0],y[1],y[2],y[3])
+      y=y.masked_fill(mask=mask_features,value=self.pad_value)
+      y,mask_times=self.residual_connection_1(x=x,y=y,mask_times=mask_times)
+      y,mask_times=self.normalization_1(y,mask_times)
   
       #Sub Layer 2    
-      proj_output=self.dense_1(y[0],y[1],y[2],y[3])
+      proj_output,proj_mask=self.dense_1(y,mask_times)
       #Actvation function is part of dense_1. This it does not need a layer
-      proj_output=self.dense_2(proj_output[0],proj_output[1],proj_output[2],proj_output[3])
-      proj_dropout=self.dropout_2(proj_output[0])
-      proj_dropout=torch.where(mask_features,input=self.pad_value,other=proj_dropout)
+      proj_output,proj_mask=self.dense_2(proj_output,proj_mask)
+      proj_dropout=self.dropout_2(proj_output)
+      proj_dropout=proj_dropout.masked_fill(mask=mask_features,value=self.pad_value)
       
-      output=self.residual_connection_2(x=y[0],y=proj_dropout,seq_len=seq_len,mask_times=mask_times,mask_features=mask_features)
-      output=self.normalization_2(output[0],output[1],output[2],output[3])
+      output,mask_times=self.residual_connection_2(x=y,y=proj_dropout,mask_times=mask_times)
+      output,mask_times=self.normalization_2(output,mask_times)
     
     #Pre-Layer-Normalization
     if self.normalization_position=="Pre":
       #Sub-Layer 1
-      xn=self.normalization_1(x,seq_len,mask_times,mask_features)[0]
+      xn=self.normalization_1(x,mask_times)[0]
       if self.attention_type=="Fourier":
         y=self.attention(xn*(~mask_features))
       elif self.attention_type=="MultiHead":
@@ -730,22 +700,20 @@ class layer_tf_encoder(torch.nn.Module):
           value=xn,
           key_padding_mask=mask_times)[0]
       y=self.dropout_1(y)
-      y=torch.where(mask_features,input=self.pad_value,other=y)
-      y=self.residual_connection_1(x=x,y=y,seq_len=seq_len,mask_times=mask_times,mask_features=mask_features)
+      y=y.masked_fill(mask=mask_features,value=self.pad_value)
+      y,mask_times=self.residual_connection_1(x=x,y=y,mask_times=mask_times)
   
       #Sub Layer 2
-      yn=self.normalization_2(y[0],y[1],y[2],y[3]) 
-      proj_output=self.dense_1(yn[0],yn[1],yn[2],yn[3])
+      yn,mask_times=self.normalization_2(y,mask_times) 
+      proj_output,proj_mask=self.dense_1(yn,mask_times)
       #Actvation function is part of dense_1. This it does not need a layer
-      proj_output=self.dense_2(proj_output[0],proj_output[1],proj_output[2],proj_output[3])
-      proj_dropout=self.dropout_2(proj_output[0])
-      proj_dropout=torch.where(mask_features,input=self.pad_value,other=proj_dropout)
+      proj_output,proj_mask=self.dense_2(proj_output,proj_mask)
+      proj_dropout=self.dropout_2(proj_output)
+      proj_dropout=proj_dropout.masked_fill(mask=mask_features,value=self.pad_value)
       
-      output=self.residual_connection_2(x=y[0],y=proj_dropout,seq_len=seq_len,mask_times=mask_times,mask_features=mask_features)
+      output, mask_times =self.residual_connection_2(x=y,y=proj_dropout,mask_times=mask_times)
            
-    return output[0],output[1],output[2],output[3]
-  
-
+    return output, mask_times
 
 #Merge Leyer
 class merge_layer(torch.nn.Module):
@@ -815,14 +783,13 @@ class merge_layer(torch.nn.Module):
       
       
 
-  def forward(self,tensor_list,seq_len,mask_times,mask_features):
+  def forward(self,tensor_list,mask_times):
     #Extract features by pooling and conotate to a new sequence
-
     for r in range(self.n_input_streams):
       tmp_tensor=tensor_list[r]
       tmp_norm_layer=self.norm_layer_list[r]
-      extracted=tmp_norm_layer(x=tmp_tensor,seq_len=seq_len,mask_times=mask_times,mask_features=mask_features)
-      extracted=self.pooling_layer(extracted[0],extracted[3])
+      extracted=tmp_norm_layer(x=tmp_tensor,mask_times=mask_times)
+      extracted=self.pooling_layer(extracted[0],get_FeatureMask_from_mask(extracted[1],extracted[0].size(2)))
       extracted=torch.unsqueeze(extracted,dim=1)
       if r==0:
         extracted_seq=extracted

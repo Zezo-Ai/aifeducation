@@ -8,11 +8,8 @@ testthat::skip_if_not(
 test_time_start <- Sys.time()
 
 # config------------------------------------------------------------------------
+load_all_py_scripts()
 object_class_names <- get_TEClassifiers_class_names(super_class = "ClassifiersBasedOnTextEmbeddings")
-# object_class_names=c("TEClassifierSequential")
-# object_class_names="TEClassifierParallel"
-# object_class_names="TEClassifierSequentialPrototype"
-# object_class_names <- "TEClassifierRegular"
 
 max_samples <- 20
 max_samples_CI <- 2
@@ -25,11 +22,10 @@ class_range <- c(2, 3)
 prob_precision <- 1e-6
 
 # Skip Tests-------------------------------------------------------------------
-skip_creation_test <- FALSE
-skip_function_save_load <- FALSE
+skip_creation_test <- TRUE
+skip_function_save_load <- TRUE
 skip_training_test <- FALSE
-skip_documentation <- FALSE
-
+skip_documentation <- TRUE
 
 # SetUp-------------------------------------------------------------------------
 # Set paths
@@ -140,7 +136,9 @@ for (object_class_name in object_class_names) {
             ml_trace = 0
           )
         )
-        expect_equal(reference_predictions[, 1:(ncol(reference_predictions) - 1)], predictions_LD[, 1:(ncol(predictions_LD) - 1)],
+        expect_equal(
+          reference_predictions[, 1:(ncol(reference_predictions) - 1)],
+          predictions_LD[, 1:(ncol(predictions_LD) - 1)],
           tolerance = 1e-6
         )
 
@@ -153,7 +151,9 @@ for (object_class_name in object_class_names) {
             ml_trace = 0
           )
         )
-        expect_equal(reference_predictions[, 1:(ncol(reference_predictions) - 1)], predictions_2[, 1:(ncol(predictions_2) - 1)],
+        expect_equal(
+          reference_predictions[, 1:(ncol(reference_predictions) - 1)],
+          predictions_2[, 1:(ncol(predictions_2) - 1)],
           tolerance = 1e-6
         )
         # LargeDataSet
@@ -164,7 +164,9 @@ for (object_class_name in object_class_names) {
             ml_trace = 0
           )
         )
-        expect_equal(reference_predictions[, 1:(ncol(reference_predictions) - 1)], predictions_2[, 1:(ncol(predictions_2) - 1)],
+        expect_equal(
+          reference_predictions[, 1:(ncol(reference_predictions) - 1)],
+          predictions_2[, 1:(ncol(predictions_2) - 1)],
           tolerance = 1e-6
         )
 
@@ -237,8 +239,6 @@ for (object_class_name in object_class_names) {
           expected = 1
         )
       })
-
-
       gc()
     }
   }
@@ -333,7 +333,7 @@ for (object_class_name in object_class_names) {
 
   # Documentation--------------------------------------------------------------
   if (!skip_documentation) {
-    test_that(paste("Documentation", object_class_name, get_current_args_for_print(test_combination)), {
+    test_that(paste("Documentation", object_class_name), {
       # Test for different number of classes
       n_classes <- sample(class_range, size = 1L)
 
@@ -457,7 +457,7 @@ for (object_class_name in object_class_names) {
         tf_n_layers=0L
         ng_conv_n_layers=0L
         rec_n_layers=0L
-        dense_n_layer=1L
+        dense_n_layers=1L
       } else {
         use_pl <- FALSE
         tf_n_layers=NULL

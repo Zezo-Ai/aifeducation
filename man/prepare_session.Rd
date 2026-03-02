@@ -4,7 +4,11 @@
 \alias{prepare_session}
 \title{Function for setting up a python environment within R.}
 \usage{
-prepare_session(env_type = "auto", envname = "aifeducation")
+prepare_session(
+  env_type = "auto",
+  envname = "aifeducation",
+  check_session = TRUE
+)
 }
 \arguments{
 \item{env_type}{\code{string} If set to \code{"venv"}  virtual environment is requested. If set to
@@ -14,6 +18,11 @@ it tries to activate a conda environment with the given name. If this fails
 the default virtual environment is used.}
 
 \item{envname}{\code{string} envname name of the requested environment.}
+
+\item{check_session}{\code{bool} If \code{TRUE} functions checks if all necessary python packages are
+available. Set this argument to \code{FALSE} can speed up sessions' preparation.
+Set this argument to \code{FALSE} only if you are certain that the requirements for the
+package are satisfied.}
 }
 \value{
 Function does not return anything. It is used for preparing python and R.

@@ -56,6 +56,7 @@ Other Data Management:
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="extract_column"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-extract_column'><code>aifeducation::LargeDataSetBase$extract_column()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_all_fields"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_all_fields'><code>aifeducation::LargeDataSetBase$get_all_fields()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_colnames"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_colnames'><code>aifeducation::LargeDataSetBase$get_colnames()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_dataset"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_dataset'><code>aifeducation::LargeDataSetBase$get_dataset()</code></a></span></li>

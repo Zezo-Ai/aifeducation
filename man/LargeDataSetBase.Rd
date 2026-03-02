@@ -29,6 +29,7 @@ Other R6 Classes for Developers:
 \item \href{#method-LargeDataSetBase-n_cols}{\code{LargeDataSetBase$n_cols()}}
 \item \href{#method-LargeDataSetBase-n_rows}{\code{LargeDataSetBase$n_rows()}}
 \item \href{#method-LargeDataSetBase-get_colnames}{\code{LargeDataSetBase$get_colnames()}}
+\item \href{#method-LargeDataSetBase-extract_column}{\code{LargeDataSetBase$extract_column()}}
 \item \href{#method-LargeDataSetBase-get_dataset}{\code{LargeDataSetBase$get_dataset()}}
 \item \href{#method-LargeDataSetBase-reduce_to_unique_ids}{\code{LargeDataSetBase$reduce_to_unique_ids()}}
 \item \href{#method-LargeDataSetBase-select}{\code{LargeDataSetBase$select()}}
@@ -79,6 +80,34 @@ Get names of the columns in the data set.
 
 \subsection{Returns}{
 \code{vector} containing the names of the columns as \code{string}s.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LargeDataSetBase-extract_column"></a>}}
+\if{latex}{\out{\hypertarget{method-LargeDataSetBase-extract_column}{}}}
+\subsection{Method \code{extract_column()}}{
+Extracts the data from a python data set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$extract_column(col_name, format = "R")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{col_name}}{\code{string} Name of the column.}
+
+\item{\code{format}}{\code{string} Format of the data.
+\itemize{
+\item \code{"R"} returns the data as a R object.
+\item \code{"torch"} returns the data as PyTorch tensors.
+\item \code{"numpy"} returns the data as numpy array.
+}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Returns a \code{vector}, \code{matrix} or \code{array} for \code{format="R"}. In
+all other cases the requestes format is returned..
 }
 }
 \if{html}{\out{<hr>}}

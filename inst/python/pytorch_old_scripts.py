@@ -23,7 +23,6 @@ class GlobalAveragePooling1D_PT(torch.nn.Module):
     super().__init__()
 
   def forward(self,x,mask=None):
-    print("test")
     if not mask is None:
       mask_r=mask.reshape(mask.size()[0],mask.size()[1],1)
       print(mask)
@@ -302,7 +301,7 @@ class AddPositionalEmbedding_PT(torch.nn.Module):
     input_seq=input_seq.to(device)
     
     input_seq=input_seq.repeat(x.shape[0], 1)
-    input_seq.masked_fill_(mask,value=0)
+    input_seq.masked_fill(mask,value=0)
     embedded_positions_masked=self.embedding(input_seq)
    
     return x+embedded_positions_masked
@@ -613,7 +612,7 @@ class TextEmbeddingClassifierProtoNet_PT(torch.nn.Module):
   def get_trained_prototypes(self):
     return self.trained_prototypes
   
-def TeClassifierProtoNetTrain_PT_with_Datasets(model,loss_fct_name, optimizer_method, epochs, trace,Ns,Nq,lr_rate, lr_warm_up_ratio,
+def TeClassifierProtoNetTrain_PT_with_Datasets(model,loss_fct_name, optimizer_method, epochs, trace,Ns,Nq,scheduler_type, lr_rate,lr_min, lr_warm_up_ratio,
 loss_alpha, loss_margin, train_data,val_data,filepath,use_callback,n_classes,sampling_separate,sampling_shuffle,test_data=None,
 log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_message="NA"):
   
@@ -626,22 +625,6 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     dtype=torch.double
     model.to(device,dtype=dtype)
   
-  if optimizer_method=="Adam":
-    optimizer=torch.optim.Adam(lr=lr_rate,params=model.parameters(),weight_decay=1e-3)
-  elif optimizer_method=="RMSprop":
-    optimizer=torch.optim.RMSprop(lr=lr_rate,params=model.parameters(),momentum=0.90)
-  elif optimizer_method=="AdamW":
-    optimizer=torch.optim.AdamW(lr=lr_rate,params=model.parameters())
-  elif optimizer_method=="SGD":
-    optimizer=torch.optim.SGD(params=model.parameters(), lr=lr_rate, momentum=0.90, dampening=0, weight_decay=0, nesterov=False, maximize=False, foreach=None, differentiable=False, fused=None)
-    
-  warm_up_steps=math.floor(epochs*lr_warm_up_ratio)
-  main_steps=epochs-warm_up_steps
-  scheduler_warm_up = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1e-9,end_factor=1, total_iters=warm_up_steps)
-  scheduler_main=torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1,end_factor=0, total_iters=main_steps)
-  scheduler = torch.optim.lr_scheduler.SequentialLR(schedulers = [scheduler_warm_up, scheduler_main], optimizer=optimizer,milestones=[warm_up_steps])
- 
-    
   #if loss_fct_name=="ProtoNetworkMargin":
   loss_fct=ProtoNetLossWithMargin_PT(
     alpha=loss_alpha,
@@ -669,7 +652,7 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
   
   #Set Up Loaders
   ProtoNetSampler_Train=MetaLernerBatchSampler(
-  targets=train_data["labels"],
+  targets=train_data["labels"][range(0,len(train_data))],
   Ns=Ns,
   Nq=Nq,
   separate=sampling_separate,
@@ -689,7 +672,22 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
       test_data,
       batch_size=Ns+Nq,
       shuffle=False)
-  
+      
+  optimizer=get_Optimizer(
+    optimizer_method,
+    params=model.parameters(),
+    lr_rate=lr_rate
+  )
+  scheduler=get_lr_scheduler(
+    optimizer=optimizer,
+    scheduler_type=scheduler_type,
+    lr_warm_up_ratio=lr_warm_up_ratio,
+    total_epochs=epochs,
+    batches_per_epoch=len(trainloader),
+    max_lr=lr_rate,
+    min_lr=lr_min
+  )
+      
   #Log file
   if not (log_dir is None):
     log_file=log_dir+"/aifeducation_state.log"
@@ -777,7 +775,8 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     avg_iota_train=torch.sum(avg_iota_train)/n_classes
     
     #Update learning rate
-    scheduler.step()
+    if scheduler!=None:
+      scheduler.step()
     
     #Calculate trained prototypes----------------------------------------------
     model.eval()

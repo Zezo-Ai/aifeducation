@@ -255,7 +255,7 @@ indicating a higher category/class. For nominal data the order does not matter.}
 
 \item{\code{feat_parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values: 'None', 'OrthogonalWeights', 'WeightNorm', 'SpectralNorm'}
 
-\item{\code{feat_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'None'}
+\item{\code{feat_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'BatchNorm', 'PowerNorm', 'RMSNorm', 'None'}
 
 \item{\code{ng_conv_act_fct}}{\code{string} Activation function for all layers. Allowed values: 'ELU', 'LeakyReLU', 'ReLU', 'GELU', 'Sigmoid', 'Tanh', 'PReLU'}
 
@@ -271,7 +271,7 @@ indicating a higher category/class. For nominal data the order does not matter.}
 
 \item{\code{ng_conv_parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values: 'None', 'OrthogonalWeights', 'WeightNorm', 'SpectralNorm'}
 
-\item{\code{ng_conv_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'None'}
+\item{\code{ng_conv_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'BatchNorm', 'PowerNorm', 'RMSNorm', 'None'}
 
 \item{\code{ng_conv_residual_type}}{\code{string} Type of residual connenction for all layers and stack of layers. Allowed values: 'ResidualGate', 'Addition', 'None'}
 
@@ -285,7 +285,7 @@ indicating a higher category/class. For nominal data the order does not matter.}
 
 \item{\code{dense_parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values: 'None', 'OrthogonalWeights', 'WeightNorm', 'SpectralNorm'}
 
-\item{\code{dense_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'None'}
+\item{\code{dense_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'BatchNorm', 'PowerNorm', 'RMSNorm', 'None'}
 
 \item{\code{dense_residual_type}}{\code{string} Type of residual connenction for all layers and stack of layers. Allowed values: 'ResidualGate', 'Addition', 'None'}
 
@@ -303,7 +303,7 @@ indicating a higher category/class. For nominal data the order does not matter.}
 
 \item{\code{rec_parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values: 'None'}
 
-\item{\code{rec_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'None'}
+\item{\code{rec_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'BatchNorm', 'PowerNorm', 'RMSNorm', 'None'}
 
 \item{\code{rec_residual_type}}{\code{string} Type of residual connenction for all layers and stack of layers. Allowed values: 'ResidualGate', 'Addition', 'None'}
 
@@ -327,7 +327,7 @@ indicating a higher category/class. For nominal data the order does not matter.}
 
 \item{\code{tf_parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values: 'None', 'OrthogonalWeights', 'WeightNorm', 'SpectralNorm'}
 
-\item{\code{tf_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'None'}
+\item{\code{tf_normalization_type}}{\code{string} Type of normalization applied to all layers and stack layers. Allowed values: 'LayerNorm', 'BatchNorm', 'PowerNorm', 'RMSNorm', 'None'}
 
 \item{\code{tf_normalization_position}}{\code{string} Position where the normalization should be applied. Allowed values: 'Pre', 'Post'}
 

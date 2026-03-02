@@ -113,7 +113,9 @@ is used as the final model.
   log_write_interval = 10L,
   n_cores = auto_n_cores(),
   lr_rate = 0.001,
+  lr_min = 1e-04,
   lr_warm_up_ratio = 0.02,
+  lr_scheduler = "None",
   optimizer = "AdamW"
 )}\if{html}{\out{</div>}}
 }
@@ -166,7 +168,7 @@ sustainability should be tracked. A list can be found on Wikipedia:
 \url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
 
 \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://mlco2.github.io/codecarbon/parameters.html} Allowed values: any}
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/getting-started/parameters/} Allowed values: any}
 
 \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
 
@@ -188,9 +190,13 @@ the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed value
 
 \item{\code{n_cores}}{\code{int} Number of cores which should be used during the calculation of synthetic cases. Only relevant if \code{use_sc=TRUE}. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
 
-\item{\code{lr_rate}}{\code{double} Initial learning rate for the training. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
+\item{\code{lr_rate}}{\code{double} Initial learning rate for the training. Sets the maximal learning rate. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
 
-\item{\code{lr_warm_up_ratio}}{\code{double} Number of epochs used for warm up. Allowed values: \ifelse{latex}{$0 < x < 0.5$}{\ifelse{html}{\eqn{0 < x < 0.5}}{`0 < x < 0.5`}}}
+\item{\code{lr_min}}{\code{double} Minimal learning rate during training. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
+
+\item{\code{lr_warm_up_ratio}}{\code{double} Number of epochs used for warm up. To disable warm up set this value to 0.0. Allowed values: \ifelse{latex}{$0 < x < 0.5$}{\ifelse{html}{\eqn{0 < x < 0.5}}{`0 < x < 0.5`}}}
+
+\item{\code{lr_scheduler}}{\code{string} Learning rate scheduler. To use a constant learning rate for the whole training set this parameter to 'None'. Allowed values: 'None', 'Linear', 'Cyclic'}
 
 \item{\code{optimizer}}{\code{string} determining the optimizer used for training. Allowed values: 'Adam', 'RMSprop', 'AdamW', 'SGD'}
 }

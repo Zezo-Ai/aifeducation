@@ -23,7 +23,9 @@ Function groups cases into batches.
 \seealso{
 Other Utils Python Data Management Developers: 
 \code{\link{class_vector_to_py_dataset}()},
+\code{\link{create_py_dataset_cache_file_path}()},
 \code{\link{data.frame_to_py_dataset}()},
+\code{\link{extract_column_from_py_dataset}()},
 \code{\link{prepare_r_array_for_dataset}()},
 \code{\link{py_dataset_to_embeddings}()},
 \code{\link{reduce_to_unique}()},

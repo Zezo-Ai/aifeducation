@@ -25,7 +25,7 @@ tokenize_dataset <- function(dataset, tokenizer, max_length, add_special_tokens 
     batch_size = batch_size,
     load_from_cache_file = FALSE,
     keep_in_memory = FALSE,
-    cache_file_name = paste0(create_and_get_tmp_dir(), "/", id),
+    cache_file_name = create_py_dataset_cache_file_path(paste0(create_and_get_tmp_dir(), "/", id)),
     new_fingerprint = id,
     fn_kwargs = reticulate::dict(
       list(

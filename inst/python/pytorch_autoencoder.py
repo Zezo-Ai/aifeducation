@@ -132,9 +132,10 @@ class DenseAutoencoder_with_Mask_PT(torch.nn.Module):
       self.param_w2=torch.nn.Parameter(torch.randn(math.ceil(self.features_in-self.difference*(1/3)),math.ceil(self.features_in-self.difference*(2/3))))
       self.param_w3=torch.nn.Parameter(torch.randn(self.features_out,math.ceil(self.features_in-self.difference*(1/3))))
       
-      torch.nn.utils.parametrizations.orthogonal(module=self, name="param_w1",orthogonal_map=orthogonal_method)
-      torch.nn.utils.parametrizations.orthogonal(module=self, name="param_w2",orthogonal_map=orthogonal_method)
-      torch.nn.utils.parametrizations.orthogonal(module=self, name="param_w3",orthogonal_map=orthogonal_method)
+      if not orthogonal_method=="None":
+        torch.nn.utils.parametrizations.orthogonal(module=self, name="param_w1",orthogonal_map=orthogonal_method)
+        torch.nn.utils.parametrizations.orthogonal(module=self, name="param_w2",orthogonal_map=orthogonal_method)
+        torch.nn.utils.parametrizations.orthogonal(module=self, name="param_w3",orthogonal_map=orthogonal_method)
       
       if not pad_value==0:
         self.switch_pad_value_start=layer_switch_pad_values(pad_value_old=pad_value,pad_value_new=0)
@@ -217,9 +218,9 @@ class ConvAutoencoder_with_Mask_PT(torch.nn.Module):
       self.param_w2=torch.nn.Parameter(torch.randn(self.features_out,math.ceil(self.features_in-self.difference*(1/2)),self.kernel_size))
       
       self.sequence_reduction=torch.nn.AvgPool1d(kernel_size=(self.kernel_size),stride=1,padding=0)
-
-      torch.nn.utils.parametrizations.orthogonal(self, "param_w1",orthogonal_map="householder")
-      torch.nn.utils.parametrizations.orthogonal(self, "param_w2",orthogonal_map="householder")
+      if not orthogonal_method=="None":
+        torch.nn.utils.parametrizations.orthogonal(self, "param_w1",orthogonal_map="householder")
+        torch.nn.utils.parametrizations.orthogonal(self, "param_w2",orthogonal_map="householder")
 
     def forward(self, x, encoder_mode=False, return_scs=False):
       if encoder_mode==False:
@@ -282,7 +283,7 @@ class ConvAutoencoder_with_Mask_PT(torch.nn.Module):
       return(noise)
 
     
-def AutoencoderTrain_PT_with_Datasets(model,optimizer_method, lr_rate, lr_warm_up_ratio, epochs, trace,batch_size,
+def AutoencoderTrain_PT_with_Datasets(model,optimizer_method,scheduler_type, lr_rate,lr_min, lr_warm_up_ratio, epochs, trace,batch_size,
 train_data,val_data,filepath,use_callback,
 log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_message="NA"):
   
@@ -307,23 +308,21 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     batch_size=batch_size,
     shuffle=False)
 
-  if optimizer_method=="Adam":
-    optimizer=torch.optim.Adam(lr=lr_rate,params=model.parameters(),weight_decay=1e-3)
-  elif optimizer_method=="RMSprop":
-    optimizer=torch.optim.RMSprop(lr=lr_rate,params=model.parameters(),momentum=0.90)
-  elif optimizer_method=="AdamW":
-    optimizer=torch.optim.AdamW(lr=lr_rate,params=model.parameters())
-  elif optimizer_method=="SGD":
-    optimizer=torch.optim.SGD(params=model.parameters(), lr=lr_rate, momentum=0.90, dampening=0, weight_decay=0, nesterov=False, maximize=False, foreach=None, differentiable=False, fused=None)
+  optimizer=get_Optimizer(
+    optimizer_method,
+    params=model.parameters(),
+    lr_rate=lr_rate
+  )
+  scheduler=get_lr_scheduler(
+    optimizer=optimizer,
+    scheduler_type=scheduler_type,
+    lr_warm_up_ratio=lr_warm_up_ratio,
+    total_epochs=epochs,
+    batches_per_epoch=len(trainloader),
+    max_lr=lr_rate,
+    min_lr=lr_min
+  )
   
-  warm_up_steps=math.floor(epochs*lr_warm_up_ratio)
-  main_steps=epochs-warm_up_steps
-  scheduler_warm_up = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1e-9,end_factor=1, total_iters=warm_up_steps)
-  scheduler_main=torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1,end_factor=0.01, total_iters=main_steps)
-  #scheduler_main=torch.optim.lr_scheduler.CyclicLR(optimizer, base_lr=lr_rate*1e-3, max_lr=lr_rate, step_size_up=5*len(trainloader))
-  #scheduler_main=torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.95,last_epoch=-1)
-  scheduler = torch.optim.lr_scheduler.SequentialLR(schedulers = [scheduler_warm_up, scheduler_main], optimizer=optimizer,milestones=[warm_up_steps])    
-    
   #Tensor for Saving Training History
   history_loss=torch.ones(size=(2,epochs),requires_grad=False)*-100
 
@@ -371,7 +370,8 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
         last_log_loss=write_log_performance_py(log_file=log_file_loss, history=history_loss.numpy().tolist(), last_log = last_log_loss, write_interval = log_write_interval)
     
     #Update learning rate
-    scheduler.step()
+    if scheduler!=None:
+      scheduler.step()
     
     #Validation----------------------------------------------------------------
     val_loss=0.0

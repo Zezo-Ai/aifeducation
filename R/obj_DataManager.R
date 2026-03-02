@@ -209,12 +209,12 @@ DataManagerClassifier <- R6::R6Class(
       if (!is.null(self$datasets)) {
         if (!is.null(self$datasets$data_labeled)) {
           self$datasets$data_labeled$set_format("np")
-          length_labeled <- self$datasets$data_labeled["length"]
-          labels_labeled <- self$datasets$data_labeled["labels"]
+          length_labeled <- extract_column_from_py_dataset(self$datasets$data_labeled,"length")
+          labels_labeled <- extract_column_from_py_dataset(self$datasets$data_labeled,"labels")
 
           if (!is.null(self$datasets$data_unlabeled)) {
             self$datasets$data_unlabeled$set_format("np")
-            length_unlabeled <- self$datasets$data_unlabeled["length"]
+            length_unlabeled <- extract_column_from_py_dataset(self$datasets$data_unlabeled,"length")
             labels_unlabeled <- rep(NA, times = length(length_unlabeled))
           } else {
             length_unlabeled <- NULL
@@ -385,9 +385,9 @@ DataManagerClassifier <- R6::R6Class(
       # Create Synthetic Cases
       tmp_data$set_format("np")
       syn_cases <- get_synthetic_cases_from_matrix(
-        matrix_form = tmp_data["matrix_form"],
-        target = tmp_data["labels"],
-        sequence_length = tmp_data["length"],
+        matrix_form = extract_column_from_py_dataset(tmp_data,"matrix_form"),
+        target = extract_column_from_py_dataset(tmp_data,"labels"),
+        sequence_length = extract_column_from_py_dataset(tmp_data,"length"),
         method = self$config$sc$methods,
         min_k = self$config$sc$min_k,
         max_k = self$config$sc$max_k,
@@ -528,7 +528,7 @@ DataManagerClassifier <- R6::R6Class(
       # Prepare classes for join
       class_vector <- vector(length = n_final_cases)
       class_vector[] <- NA
-      names(class_vector) <- data_set_embeddings["id"]
+      names(class_vector) <- extract_column_from_py_dataset(data_set_embeddings,"id")
 
       # Convert labels
       data_targets <- na.omit(data_targets)
@@ -543,7 +543,7 @@ DataManagerClassifier <- R6::R6Class(
       class_vector[relevant_target_names] <- data_targets[relevant_target_names]
 
       # Sort class vector according to the input ids
-      class_vector <- class_vector[data_set_embeddings["id"]]
+      class_vector <- class_vector[extract_column_from_py_dataset(data_set_embeddings,"id")]
 
       # Get indices for labeled-unlabeled split
       indices_unlabeled <- which(is.na(class_vector)) - 1L
@@ -574,7 +574,7 @@ DataManagerClassifier <- R6::R6Class(
     #--------------------------------------------------------------------------
     get_all_labels = function() {
       self$datasets$data_labeled$set_format("np")
-      self$datasets$data_labeled["labels"]
+      return(extract_column_from_py_dataset(self$datasets$data_labeled,"labels"))
     },
     #-------------------------------------------------------------------------
     check_and_calculate_number_folds = function(folds) {
@@ -605,7 +605,7 @@ DataManagerClassifier <- R6::R6Class(
           ),
           load_from_cache_file = FALSE,
           keep_in_memory = FALSE,
-          cache_file_name = file.path(private$cache_dir, generate_id(15L))
+          cache_file_name = create_py_dataset_cache_file_path(file.path(private$cache_dir, generate_id(15L)))
         )
         return(dataset)
       } else {
@@ -619,7 +619,7 @@ DataManagerClassifier <- R6::R6Class(
           fn_kwargs = reticulate::dict(list(num_classes = as.integer(self$config$n_classes))),
           load_from_cache_file = FALSE,
           keep_in_memory = FALSE,
-          cache_file_name = file.path(private$cache_dir, generate_id(15L))
+          cache_file_name = create_py_dataset_cache_file_path(file.path(private$cache_dir, generate_id(15L)))
         )
         return(dataset)
       } else {
@@ -632,12 +632,12 @@ DataManagerClassifier <- R6::R6Class(
       ))
     },
     create_indices_name_map = function() {
-      self$name_idx$labeled_data <- seq.int(from = 0L, to = (length(self$datasets$data_labeled["id"])) - 1L)
-      names(self$name_idx$labeled_data) <- self$datasets$data_labeled["id"]
+      self$name_idx$labeled_data <- seq.int(from = 0L, to = (length(extract_column_from_py_dataset(self$datasets$data_labeled,"id"))) - 1L)
+      names(self$name_idx$labeled_data) <- extract_column_from_py_dataset(self$datasets$data_labeled,"id")
 
       if (!is.null(self$datasets$data_unlabeled)) {
-        self$name_idx$unlabeled_data <- seq.int(from = 0L, to = (length(self$datasets$data_unlabeled["id"])) - 1L)
-        names(self$name_idx$unlabeled_data) <- self$datasets$data_unlabeled["id"]
+        self$name_idx$unlabeled_data <- seq.int(from = 0L, to = (length(extract_column_from_py_dataset(self$datasets$data_unlabeled,"id"))) - 1L)
+        names(self$name_idx$unlabeled_data) <- extract_column_from_py_dataset(self$datasets$data_unlabeled,"id")
       } else {
         self$name_idx$unlabeled_data <- NULL
       }
@@ -645,8 +645,8 @@ DataManagerClassifier <- R6::R6Class(
     create_folds = function() {
       # Create Train, Test, and Validation Samples--------------------------------
       # Check maximal number of folds, adjust, and create folds
-      data_targets <- factor(x = self$datasets$data_labeled["labels"])
-      names(data_targets) <- self$datasets$data_labeled["id"]
+      data_targets <- factor(x = extract_column_from_py_dataset(self$datasets$data_labeled,"labels"))
+      names(data_targets) <- extract_column_from_py_dataset(self$datasets$data_labeled,"id")
 
       folds <- get_folds(
         target = data_targets,
@@ -671,8 +671,8 @@ DataManagerClassifier <- R6::R6Class(
       }
     },
     create_final_sample = function(data_targets) {
-      data_targets <- factor(x = self$datasets$data_labeled["labels"])
-      names(data_targets) <- self$datasets$data_labeled["id"]
+      data_targets <- factor(x = extract_column_from_py_dataset(self$datasets$data_labeled,"labels"))
+      names(data_targets) <- extract_column_from_py_dataset(self$datasets$data_labeled,"id")
 
       names_final_split <- get_stratified_train_test_split(
         targets = data_targets,

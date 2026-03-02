@@ -25,14 +25,14 @@
 #' @export
 get_recommended_py_versions <- function() {
   py_versions <- list(
-    transformers = c("4.56.0", "4.57.1"),
-    tokenizers = c("0.22.0", "0.22.1"),
-    pandas = c("2.3.2", "2.3.3"),
-    datasets = c("3.6.0", "3.6.0"),
-    codecarbon = c("3.0.0", "3.0.8"),
-    safetensors = c("0.6.2", "0.6.2"),
+    transformers = c("4.56.0", "5.2.0"),
+    tokenizers = c("0.22.0", "0.22.2"),
+    pandas = c("2.3.2", "3.0.1"),
+    datasets = c("3.6.0", "4.5.0"),
+    codecarbon = c("3.0.0", "3.2.2"),
+    safetensors = c("0.6.2", "0.7.0"),
     torcheval = c("0.0.7", "0.0.7"),
-    accelerate = c("1.10.1", "1.11.0"),
+    accelerate = c("1.10.1", "1.12.0"),
     calflops = c("0.3.2", "0.3.2")
   )
 
@@ -75,7 +75,7 @@ get_recommended_py_versions <- function() {
 #' @export
 install_aifeducation <- function(install_aifeducation_studio = TRUE,
                                  python_version = "3.12",
-                                 cuda_version = "12.9",
+                                 cuda_version = "13.0",
                                  use_conda = FALSE) {
   if (install_aifeducation_studio) {
     install_aifeducation_studio()
@@ -140,7 +140,7 @@ install_aifeducation <- function(install_aifeducation_studio = TRUE,
 #' @export
 update_aifeducation <- function(update_aifeducation_studio = TRUE,
                                 env_type = "auto",
-                                cuda_version = "12.4",
+                                cuda_version = "13.0",
                                 envname = "aifeducation") {
   # Search for environment
   if (env_type == "auto") {
@@ -252,16 +252,16 @@ install_aifeducation_studio <- function() {
 #' @family Installation and Configuration
 #' @export
 install_py_modules <- function(envname = "aifeducation",
-                               transformer_version = "<=4.57.1",
-                               tokenizers_version = "<=0.22.1",
-                               pandas_version = "<=2.3.3",
-                               datasets_version = "<=3.6.0",
-                               codecarbon_version = "<=3.0.7",
-                               safetensors_version = "<=0.6.2",
+                               transformer_version = "<=5.2.0",
+                               tokenizers_version = "<=0.22.2",
+                               pandas_version = "<=3.0.1",
+                               datasets_version = "<=4.5.0",
+                               codecarbon_version = "<=3.2.2",
+                               safetensors_version = "<=0.7.0",
                                torcheval_version = "<=0.0.7",
-                               accelerate_version = "<=1.11.0",
+                               accelerate_version = "<=1.12.0",
                                calflops_version = "<=0.3.2",
-                               pytorch_cuda_version = "12.9",
+                               pytorch_cuda_version = "13.0",
                                python_version = "3.12",
                                remove_first = FALSE,
                                use_conda = FALSE) {
@@ -454,12 +454,16 @@ set_transformers_logger <- function(level = "ERROR") {
 #' activate a virtual environment with the given name. If this environment does not exist
 #' it tries to activate a conda environment with the given name. If this fails
 #' the default virtual environment is used.
+#' @param check_session `bool` If `TRUE` functions checks if all necessary python packages are
+#' available. Set this argument to `FALSE` can speed up sessions' preparation.
+#' Set this argument to `FALSE` only if you are certain that the requirements for the
+#' package are satisfied.
 #'
 #' @return Function does not return anything. It is used for preparing python and R.
 #'
 #' @family Installation and Configuration
 #' @export
-prepare_session <- function(env_type = "auto", envname = "aifeducation") {
+prepare_session <- function(env_type = "auto", envname = "aifeducation", check_session=TRUE) {
   if (!reticulate::py_available(FALSE)) {
     message("Python is not initalized.")
     if (env_type == "auto") {
@@ -519,16 +523,19 @@ prepare_session <- function(env_type = "auto", envname = "aifeducation") {
 
   # Print information
   message("Detected OS: ", detec_os())
-  message("Checking python packages. This can take a moment.")
-  if (check_aif_py_modules(trace = FALSE)) {
-    message("All necessary python packages are available.")
-  } else {
-    stop("Not all required python packages are available. Call check_aif_py_modules for details.")
+  if(check_session){
+    message("Checking python packages. This can take a moment.")
+    if (check_aif_py_modules(trace = FALSE)) {
+      message("All necessary python packages are available.")
+    } else {
+      stop("Not all required python packages are available. Call check_aif_py_modules for details.")
+    }
+    pkg_versions <- get_py_package_versions()
+    message(paste(paste0(names(pkg_versions), ":"), pkg_versions, collapse = "\n"))
+    message("GPU Acceleration: ", torch$cuda$is_available())
   }
-
-  pkg_versions <- get_py_package_versions()
-  message(paste(paste0(names(pkg_versions), ":"), pkg_versions, collapse = "\n"))
-  message("GPU Acceleration: ", torch$cuda$is_available())
+  message("Load all python objects and functions.")
+  load_all_py_scripts()
   message("Location for Temporary Files:", create_and_get_tmp_dir())
 }
 
