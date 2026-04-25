@@ -23,15 +23,34 @@ test_that("set_transformers_logger", {
 })
 
 test_that("prepare_session", {
-  expect_no_error(prepare_session(check_session=TRUE))
+  expect_no_error(suppressMessages(
+    prepare_session(check_session = TRUE)
+  ))
 })
 
 test_that("prepare_session", {
-  expect_no_error(prepare_session(check_session=FALSE))
+  expect_no_error(
+    suppressMessages(
+      prepare_session(check_session = FALSE)
+    )
+  )
 })
 
 test_that("get_recommended_py_versions", {
   expect_s3_class(get_recommended_py_versions(), "data.frame")
+  packages <- c(
+    "transformers",
+    "tokenizers",
+    "pandas",
+    "codecarbon",
+    "safetensors",
+    "torcheval",
+    "accelerate",
+    "calflops"
+  )
+  for (package in packages) {
+    expect_no_error(get_recommended_py_versions(package))
+  }
 })
 
 monitor_test_time_on_CI(

@@ -10,9 +10,7 @@ create_synthetic_units_from_matrix(
   required_cases,
   k,
   method,
-  cat,
-  k_s,
-  max_k
+  cat
 )
 }
 \arguments{
@@ -30,10 +28,6 @@ investigation and the major class.}
 "knnor" from this package is available.}
 
 \item{cat}{\code{string} The category for which new cases should be created.}
-
-\item{k_s}{\code{int} Number of ks in the complete generation process.}
-
-\item{max_k}{\code{int} The maximum number of nearest neighbors during sampling process.}
 }
 \value{
 Returns a \code{list} which contains the text embeddings of the new synthetic cases as a named \code{data.frame} and

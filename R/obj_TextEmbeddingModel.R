@@ -55,16 +55,6 @@ TextEmbeddingModel <- R6::R6Class(
       private$model_info$model_language <- model_language
     },
     #-------------------------------------------------------------------------
-    load_reload_python_scripts = function() {
-      load_py_scripts(
-        files = c(
-          "pytorch_layers.py",
-          "MPNetForMPLM_PT.py",
-          "pytorch_text_embedding_model.py"
-        )
-      )
-    },
-    #-------------------------------------------------------------------------
     # Method for checking and setting the embedding configuration
     check_and_set_embedding_layers = function(emb_layer_min,
                                               emb_layer_max) {
@@ -203,7 +193,7 @@ TextEmbeddingModel <- R6::R6Class(
                          pad_value = -100L,
                          base_model = NULL) {
       # Load or reload python scripts
-      private$load_reload_python_scripts()
+
 
       # Check if the object is not configured
       private$check_config_for_FALSE()
@@ -250,7 +240,7 @@ TextEmbeddingModel <- R6::R6Class(
       private$load_config_file(dir_path)
 
       # Load or reload python scripts
-      private$load_reload_python_scripts()
+
 
       # Load Base model
       version_lower <- check_versions(
@@ -359,7 +349,7 @@ TextEmbeddingModel <- R6::R6Class(
       check_type(object = return_large_dataset, type = "bool", FALSE)
 
       # Load python scripts
-      private$load_reload_python_scripts()
+
 
       # Object for storing embeddings
       batch_results <- list()
@@ -373,7 +363,7 @@ TextEmbeddingModel <- R6::R6Class(
         pytorch_dtype <- torch$float
       } else {
         pytorch_device <- "cpu"
-        pytorch_dtype <- torch$double
+        pytorch_dtype <- torch$float
       }
 
       require_token_type_ids <- self$BaseModel$get_private()$return_token_type_ids
@@ -394,6 +384,13 @@ TextEmbeddingModel <- R6::R6Class(
       pytorch_embedding_model$eval()
 
       n_documents <- length(raw_text)
+
+      PgrInd=ProgressIndicator$new(
+        max_iter = n_documents,
+        inc_absolute = TRUE,
+        calc_eta = TRUE
+      )
+
       for (i in seq_along(raw_text)) {
         tokens <- tokenizer(
           raw_text[i],
@@ -428,11 +425,12 @@ TextEmbeddingModel <- R6::R6Class(
 
         batch_results[length(batch_results) + 1] <- list(tmp_embeddings)
 
-        if (trace == TRUE) {
-          cat(paste(
-            date(),
-            "Document", i, "/", n_documents, "Done", "\n"
-          ))
+        if (trace) {
+          PgrInd$print_step(
+            iter=i,
+            text_pre="Document",
+            text_post="done"
+          )
         }
       }
 
@@ -515,6 +513,13 @@ TextEmbeddingModel <- R6::R6Class(
       last_log <- NULL
 
       # Process every batch
+
+      PgrInd=ProgressIndicator$new(
+        max_iter = total_number_of_bachtes,
+        inc_absolute = TRUE,
+        calc_eta = TRUE
+      )
+
       for (i in 1L:total_number_of_bachtes) {
         tmp_subset <- text_dataset$select(as.integer(batches_index[[i]]))
         embeddings <- self$embed(
@@ -549,10 +554,11 @@ TextEmbeddingModel <- R6::R6Class(
           embedded_texts_large$add_embeddings_from_EmbeddedText(embeddings)
         }
         if (trace) {
-          cat(paste(
-            get_time_stamp(),
-            "Batch", i, "/", total_number_of_bachtes, "done", "\n"
-          ))
+          PgrInd$print_step(
+            iter=i,
+            text_pre="Batch",
+            text_post="done"
+          )
         }
 
         # Update log

@@ -142,7 +142,7 @@ TEClassifierSequential <- R6::R6Class(
     create_reset_model = function() {
       private$check_config_for_TRUE()
 
-      private$load_reload_python_scripts()
+      
 
       private$model <- py$TEClassifierSequential(
         features = as.integer(private$model_config$features),

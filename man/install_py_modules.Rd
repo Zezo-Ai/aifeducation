@@ -6,15 +6,15 @@
 \usage{
 install_py_modules(
   envname = "aifeducation",
-  transformer_version = "<=5.2.0",
-  tokenizers_version = "<=0.22.2",
-  pandas_version = "<=3.0.1",
-  datasets_version = "<=4.5.0",
-  codecarbon_version = "<=3.2.2",
-  safetensors_version = "<=0.7.0",
-  torcheval_version = "<=0.0.7",
-  accelerate_version = "<=1.12.0",
-  calflops_version = "<=0.3.2",
+  transformer_version = get_recommended_py_versions("transformers"),
+  tokenizers_version = get_recommended_py_versions("tokenizers"),
+  pandas_version = get_recommended_py_versions("pandas"),
+  datasets_version = get_recommended_py_versions("datasets"),
+  codecarbon_version = get_recommended_py_versions("codecarbon"),
+  safetensors_version = get_recommended_py_versions("safetensors"),
+  torcheval_version = get_recommended_py_versions("torcheval"),
+  accelerate_version = get_recommended_py_versions("accelerate"),
+  calflops_version = get_recommended_py_versions("calflops"),
   pytorch_cuda_version = "13.0",
   python_version = "3.12",
   remove_first = FALSE,
@@ -64,6 +64,8 @@ Function for installing the necessary python modules.
 \note{
 Function tries to identify the type of operating system. In the case that
 MAC OS is detected 'PyTorch' is installed without support for cuda.
+
+Supported versions of the packages can be requested with \verb{get_recommended_py_versions())}
 }
 \seealso{
 Other Installation and Configuration: 

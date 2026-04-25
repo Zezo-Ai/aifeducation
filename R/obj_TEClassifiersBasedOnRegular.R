@@ -68,6 +68,7 @@ TEClassifiersBasedOnRegular <- R6::R6Class(
     #' @param lr_scheduler `r get_param_doc_desc("lr_scheduler")`
     #' @param lr_warm_up_ratio `r get_param_doc_desc("lr_warm_up_ratio")`
     #' @param optimizer `r get_param_doc_desc("optimizer")`
+    #' @param amp `r get_param_doc_desc("amp")`
     #' @return Function does not return a value. It changes the object into a trained classifier.
     #' @details
     #'
@@ -109,7 +110,8 @@ TEClassifiersBasedOnRegular <- R6::R6Class(
                      lr_min=1e-4,
                      lr_warm_up_ratio = 0.02,
                      lr_scheduler="None",
-                     optimizer = "AdamW") {
+                     optimizer = "AdamW",
+                     amp = FALSE) {
       private$do_training(args = get_called_args(n = 1L))
     }
   ),

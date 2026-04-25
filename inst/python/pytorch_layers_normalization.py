@@ -99,8 +99,8 @@ class BatchNorm_with_Mask(torch.nn.Module):
             self.pad_value = torch.tensor(pad_value)
         self.gamma = torch.nn.Parameter(torch.ones(1, 1, self.features))
         self.beta = torch.nn.Parameter(torch.zeros(1, 1, self.features))
-        self.register_buffer("running_mean", torch.zeros((1, 1, self.features)))
-        self.register_buffer("running_variance", torch.ones((1, 1, self.features)))
+        self.register_buffer("running_mean",torch.zeros((1, 1, self.features)))
+        self.register_buffer("running_variance",torch.ones((1, 1, self.features)))
 
     def forward(
         self,
@@ -139,7 +139,7 @@ class BatchNorm_with_Mask(torch.nn.Module):
                 ) * self.running_mean + self.alpha * torch.unsqueeze(
                     torch.unsqueeze(batch_mean.detach(), dim=0), dim=0
                 )  # (1, 1, F_out)
-                self.running_variance = (
+                self.running_variance =  (
                     1 - self.alpha
                 ) * self.running_variance + self.alpha * (
                     n_elements / (n_elements - 1)
@@ -317,8 +317,8 @@ class PowerNorm_with_Mask(nn.Module):
         self.gamma = nn.Parameter(torch.ones(features))
         self.beta = nn.Parameter(torch.zeros(features))
 
-        self.register_buffer("running_psi", torch.ones(features))
-        self.register_buffer("nu", torch.zeros(features))
+        self.register_buffer("running_psi",torch.ones(features))
+        self.register_buffer("nu",torch.zeros(features))
 
         self.alpha = alpha
         self.eps = eps

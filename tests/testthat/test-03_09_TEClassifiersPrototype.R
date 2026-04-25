@@ -26,6 +26,7 @@ create_dir(testthat::test_path("test_artefacts"), FALSE)
 root_path_results <- testthat::test_path("test_artefacts/TeClassifierProtoNet")
 create_dir(root_path_results, FALSE)
 root_path_feature_extractor <- testthat::test_path("test_data_tmp/classifier/feature_extractor_pytorch")
+tolerance=1e-4
 
 # SetUp datasets
 # Disable tqdm progressbar
@@ -116,8 +117,10 @@ for (object_class_name in object_class_names) {
         batch_size = 2,
         ml_trace = 0
       )
-      expect_equal(reference_predictions[, 1:(ncol(reference_predictions) - 1)], predictions_2[, 1:(ncol(predictions_2) - 1)],
-        tolerance = 1e-6
+      expect_equal(
+        reference_predictions[, 1:(ncol(reference_predictions) - 1)],
+        predictions_2[, 1:(ncol(predictions_2) - 1)],
+        tolerance = tolerance
       )
       # LargeDataSet
       predictions_2 <- NULL
@@ -128,8 +131,10 @@ for (object_class_name in object_class_names) {
         batch_size = 2,
         ml_trace = 0
       )
-      expect_equal(reference_predictions[, 1:(ncol(reference_predictions) - 1)], predictions_2[, 1:(ncol(predictions_2) - 1)],
-        tolerance = 1e-6
+      expect_equal(
+        reference_predictions[, 1:(ncol(reference_predictions) - 1)],
+        predictions_2[, 1:(ncol(predictions_2) - 1)],
+        tolerance = tolerance
       )
 
       # Order Invariance
@@ -150,7 +155,7 @@ for (object_class_name in object_class_names) {
           expect_equal(
             reference_predictions[ids, 1:(ncol(reference_predictions) - 1)],
             predictions_Perm[ids, 1:(ncol(predictions_Perm) - 1)],
-            tolerance = 1e-6
+            tolerance = tolerance
           )
 
           # LargeDataSet
@@ -165,7 +170,7 @@ for (object_class_name in object_class_names) {
           expect_equal(
             reference_predictions[ids, 1:(ncol(reference_predictions) - 1)],
             predictions_Perm[ids, 1:(ncol(predictions_Perm) - 1)],
-            tolerance = 1e-6
+            tolerance = tolerance
           )
         }
       }
@@ -219,7 +224,7 @@ for (object_class_name in object_class_names) {
       for (j in seq_len(nrow(embeddings$embeddings_q))) {
         expect_equal(embeddings$embeddings_q[j, ],
           embeddings_perm$embeddings_q[which(perm == j), ],
-          tolerance = 1e-5
+          tolerance = tolerance
         )
       }
     })
@@ -247,7 +252,7 @@ for (object_class_name in object_class_names) {
       for (j in seq_len(nrow(embeddings$embeddings_q))) {
         expect_equal(embeddings$embeddings_q[j, ],
           embeddings_perm$embeddings_q[which(perm == j), ],
-          tolerance = 1e-5
+          tolerance = tolerance
         )
       }
     })

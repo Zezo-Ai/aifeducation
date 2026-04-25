@@ -23,10 +23,6 @@ TokenizerBase <- R6::R6Class(
   private = list(
     tokenizer_statistics = data.frame(),
     configured = FALSE,
-    #-------------------------------------------------------------------------
-    load_reload_python_scripts = function() {
-      load_py_scripts("py_log.py")
-    },
     #------------------------------------------------------------------------
     # Method for loading tokenizer statistics
     load_tokenizer_statistics = function(model_dir) {
@@ -97,7 +93,7 @@ TokenizerBase <- R6::R6Class(
     #' @return `r get_description("return_load_on_disk")`
     load_from_disk = function(dir_path) {
       # Load or reload python scripts
-      private$load_reload_python_scripts()
+
 
       # Load private and public config files
       private$load_config_file(dir_path)
@@ -389,7 +385,7 @@ WordPieceTokenizer <- R6::R6Class(
     #' @return `r get_description("return_nothing")`
     configure = function(vocab_size = 10000L,
                          vocab_do_lower_case = FALSE) {
-      private$load_reload_python_scripts()
+
       private$check_config_for_FALSE()
 
       private$save_all_args(
@@ -502,7 +498,9 @@ WordPieceTokenizer <- R6::R6Class(
         cls_token = cls_token,
         mask_token = mask_token,
         bos_token = bos_token,
-        eos_token = eos_token
+        eos_token = eos_token,
+        padding_side = "right",
+        truncation_side = "right"
       )
 
       # Calculate tokenizer statistics

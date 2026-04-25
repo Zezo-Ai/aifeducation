@@ -70,9 +70,7 @@ class stack_dense_layer(torch.nn.Module):
     for r in range(self.n_layers):
       current_layer=self.layer_list[r]
       y,mask_times=current_layer(x=y,mask_times=mask_times)
-    #Residual Connection
     y,mask_times=self.residual_connection(x=x,y=y,mask_times=mask_times)
-
     return y,mask_times
     
   def calc_output_shape(self):
@@ -183,7 +181,6 @@ class stack_tf_encoder_layer(torch.nn.Module):
     if self.positional_embedding=="absolute":
        self.positional_embedding_layer=layer_abs_positional_embedding(sequence_length=self.times,embedding_dim=self.features)
     elif self.positional_embedding=="None":
-      #self.positional_embedding_layer=identity_layer(pad_value=self.pad_value,apply_masking=True)
       self.positional_embedding_layer=torch.nn.Identity()
 
     for r in range(self.n_layers):
@@ -216,7 +213,6 @@ class stack_tf_encoder_layer(torch.nn.Module):
     for r in range(self.n_layers):
       current_layer=self.layer_list[r]
       y,mask_times=current_layer(y,mask_times)
-    #Residual connection
     y,mask_times=self.residual_connection(x,y,mask_times)
     return y,mask_times
 

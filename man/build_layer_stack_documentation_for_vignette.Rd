@@ -11,7 +11,7 @@ Returns a \code{string} containing the description written in rmarkdown.
 }
 \description{
 Function for generating the whole documentation for an article
-used on the packages home page.
+used on the package's home page.
 }
 \note{
 Function is designed to be used with inline r code in rmarkdown vignettes/articles.

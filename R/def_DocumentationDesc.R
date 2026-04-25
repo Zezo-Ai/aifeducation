@@ -70,8 +70,8 @@ get_layer_dict <- function(layer) {
     these sub-sequences can be interpreted as n-grams (Jacovi, Shalom & Goldberg 2018). The convolution is done across all features.
     The number of filters equals the number of features of the input tensor. Thus, the shape of the tensor is retained (Pham, Kruszewski & Boleda 2016).
     \n The layer is able to consider multiple n-grams at the same time. In this case the convolution of the n-grams is done
-    seprately and the resulting tensors are concatenated along the feature dimension. The number of filters for every n-gram
-    is set to num_features/num_n-grams. Thus, the resulting tensor has the same shape as the input tensor.
+    seprately and the resulting tensors are concatenated along the feature dimension. The number of filters for each n-gram is set to the next smallest natural number
+    of num_features/num_n-grams. A residual is added to the first n-gram. Thus, the resulting tensor has the same shape as the input tensor.
     \n Sub-sequences that are masked in the input are
     also masked in the output.
     \n The output of this layer can be understand as the results of the n-gram filters. Stacking this layer
@@ -475,7 +475,7 @@ build_documentation_for_model <- function(model_name, cls_type = NULL, core_type
 
 #' @title Generate documentation of all layers for an vignette or article
 #' @description Function for generating the whole documentation for an article
-#' used on the packages home page.
+#' used on the package's home page.
 #' @returns Returns a `string` containing the description written in rmarkdown.
 #' @note Function is designed to be used with inline r code in rmarkdown vignettes/articles.
 #' @family Utils Documentation
@@ -555,7 +555,7 @@ build_aife_site <- function(clear_docs = FALSE) {
   pkgdown::build_reference()
   pkgdown::build_redirects()
 
-  #devtools::load_all()
+  # devtools::load_all()
   pkgdown::preview_site()
 }
 

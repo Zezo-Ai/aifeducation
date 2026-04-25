@@ -46,7 +46,7 @@ test_that("logging in R - loss log", {
 
   res <- read_loss_log(log_file)
   expect_equal(colnames(res), c("train", "validation", "test", "epoch"))
-  expect_equal(unname(as.matrix(res)[1, 1:3]), c(-100, -100, -100))
+  expect_equal(unname(as.matrix(res)[1, 1:3]), as.numeric(c(NA, NA, NA)))
 })
 
 # Monitor test time

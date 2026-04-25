@@ -116,7 +116,8 @@ is used as the final model.
   lr_min = 1e-04,
   lr_warm_up_ratio = 0.02,
   lr_scheduler = "None",
-  optimizer = "AdamW"
+  optimizer = "AdamW",
+  amp = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -168,7 +169,7 @@ sustainability should be tracked. A list can be found on Wikipedia:
 \url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
 
 \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://docs.codecarbon.io/latest/getting-started/parameters/} Allowed values: any}
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values: any}
 
 \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
 
@@ -199,6 +200,11 @@ the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed value
 \item{\code{lr_scheduler}}{\code{string} Learning rate scheduler. To use a constant learning rate for the whole training set this parameter to 'None'. Allowed values: 'None', 'Linear', 'Cyclic'}
 
 \item{\code{optimizer}}{\code{string} determining the optimizer used for training. Allowed values: 'Adam', 'RMSprop', 'AdamW', 'SGD'}
+
+\item{\code{amp}}{\code{bool} Apply automatic mixed precision to spped up computations. It is generally
+recommended to set this parameter to \code{TRUE}. If you encounter problems set to \code{FALSE}.
+* \code{FALSE}: Use full precision.
+* \code{TRUE}: Use automatic mixed precision (amp) with gradient scaling.}
 }
 \if{html}{\out{</div>}}
 }

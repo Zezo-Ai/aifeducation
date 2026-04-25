@@ -146,7 +146,7 @@ Training_Server <- function(id, model) {
 
 
     output$widget_classifier_pl_step <- shiny::renderUI({
-      if (sum(get_TEClassifiers_class_names() %in% class(model)) > 0) {
+      if (any(get_TEClassifiers_class_names() %in% class(model))) {
         if (model()$last_training$config$use_pl == TRUE) {
           n_steps <- model()$last_training$config$pl_max_steps
           return(

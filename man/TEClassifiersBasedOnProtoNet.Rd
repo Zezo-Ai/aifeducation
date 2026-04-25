@@ -126,7 +126,8 @@ is used as the final model.
   lr_min = 1e-04,
   lr_scheduler = "None",
   lr_warm_up_ratio = 0.02,
-  optimizer = "AdamW"
+  optimizer = "AdamW",
+  amp = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -144,7 +145,7 @@ named and has to use the same names as used in in the embeddings. .}
 used for the validation sample during the estimation of the model.
 The remaining cases are part of the training data. Allowed values: \ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
 
-\item{\code{loss_pt_fct_name}}{\code{string} Name of the loss function to use during training. Allowed values: 'MultiWayContrastiveLoss'}
+\item{\code{loss_pt_fct_name}}{\code{string} Name of the loss function to use during training. Allowed values: 'MultiWayContrastiveLoss', 'MultiWayContrastiveLossFC'}
 
 \item{\code{use_sc}}{\code{bool} \code{TRUE} if the estimation should integrate synthetic cases. \code{FALSE} if not.}
 
@@ -171,7 +172,7 @@ sustainability should be tracked. A list can be found on Wikipedia:
 \url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
 
 \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://docs.codecarbon.io/latest/getting-started/parameters/} Allowed values: any}
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values: any}
 
 \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
 
@@ -223,6 +224,11 @@ the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed value
 \item{\code{lr_warm_up_ratio}}{\code{double} Number of epochs used for warm up. To disable warm up set this value to 0.0. Allowed values: \ifelse{latex}{$0 < x < 0.5$}{\ifelse{html}{\eqn{0 < x < 0.5}}{`0 < x < 0.5`}}}
 
 \item{\code{optimizer}}{\code{string} determining the optimizer used for training. Allowed values: 'Adam', 'RMSprop', 'AdamW', 'SGD'}
+
+\item{\code{amp}}{\code{bool} Apply automatic mixed precision to spped up computations. It is generally
+recommended to set this parameter to \code{TRUE}. If you encounter problems set to \code{FALSE}.
+* \code{FALSE}: Use full precision.
+* \code{TRUE}: Use automatic mixed precision (amp) with gradient scaling.}
 
 \item{\code{loss_balance_class_weights}}{\code{bool} If \code{TRUE} class weights are generated based on the frequencies of the
 training data with the method Inverse Class Frequency. If \code{FALSE} each class has the weight 1.}

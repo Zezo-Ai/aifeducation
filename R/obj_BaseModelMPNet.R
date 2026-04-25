@@ -42,17 +42,37 @@ BaseModelMPNet <- R6::R6Class(
         layer_norm_eps = 1e-12
       )
 
-      run_py_file("MPNetForMPLM_PT.py")
       device <- ifelse(torch$cuda$is_available(), "cuda", "cpu")
       private$model <- py$MPNetForMPLM_PT(configuration)$to(device)
     },
     #--------------------------------------------------------------------------
     create_data_collator = function() {
       collator_maker <- NULL
-      run_py_file("DataCollatorForMPLM_PT.py")
+      if (
+        check_versions(a = get_py_package_version("transformers"), operator = "<", b = "4.49.0")
+      ) {
+        transformers_version_controll=0L
+      }
+      else if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "4.49.0") &&
+               check_versions(a = get_py_package_version("transformers"), operator = "<", b = "5.0.0")
+      ) {
+        transformers_version_controll=1L
+      } else if (
+        check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")
+      ) {
+        transformers_version_controll=2L
+        stop(
+          "MPNet with transformers of version 5.0.0 and higher is temporarily not available. ",
+          "This will change in future versions of aifeducation.")
+      } else {
+        stop("Version not implemented. Version of transformers is ",get_py_package_version("transformers"))
+      }
+
       collator_maker <- py$CollatorMaker_PT(
         tokenizer = self$Tokenizer$get_tokenizer(),
         mlm = TRUE,
+        transformers_version_controll=transformers_version_controll,
+        max_length = as.integer(private$model$config$max_position_embeddings - private$adjust_max_sequence_length),
         mlm_probability = self$last_training$config$p_mask,
         plm_probability = self$last_training$config$p_perm,
         mask_whole_words = self$last_training$config$whole_word

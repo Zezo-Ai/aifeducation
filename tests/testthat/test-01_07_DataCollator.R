@@ -59,7 +59,7 @@ Tokenizer$train(
 mlm_prob <- 0.5
 
 tokenizer <- Tokenizer$get_tokenizer()
-collator <- py$DataCollatorForWholeWordMask(tokenizer, mlm_probability = mlm_prob)
+collator <- py$AifeDataCollatorForWholeWordMask(tokenizer, mlm_probability = mlm_prob)
 
 lines <- list(
   "Whole word masking is fun",

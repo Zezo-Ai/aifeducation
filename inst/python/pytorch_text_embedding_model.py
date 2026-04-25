@@ -41,6 +41,7 @@ class TextEmbeddingModel(torch.nn.Module):
     self.sequence_mode=sequence_mode
     self.n_layers=emb_layer_max-emb_layer_min+1
 
+  @torch.inference_mode()
   def forward(self,input_ids,attention_mask,token_type_ids=None):
     #Select relevant chunks for the case that more chunks are available (e.g. long documents)
     n_chunks=min(input_ids.size(0),self.chunks)

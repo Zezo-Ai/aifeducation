@@ -15,8 +15,9 @@ check_adjust_n_samples_on_CI(n_samples_requested, n_CI = 50L)
 Returns an \code{int} depending on the test environment.
 }
 \description{
-Function adjust the number of samples depending on the test environment.
-On continuous integration it is limited to a random sample of combinations.
+Depending on the test environment, the function adjusts the number of samples.
+For continuous integration, it is limited to a random sample of combinations.
+The same applies if CUDA is unavailable.
 }
 \seealso{
 Other Utils TestThat Developers: 

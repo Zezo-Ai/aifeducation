@@ -4,7 +4,7 @@ from transformers import PreTrainedTokenizerFast
 import random
 
 
-class DataCollatorForWholeWordMask:
+class AifeDataCollatorForWholeWordMask:
   def __init__(self, 
                tokenizer: PreTrainedTokenizerFast,
                mlm_probability: float = 0.15,

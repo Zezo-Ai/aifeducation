@@ -12,6 +12,122 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
+
+#' @title Create tasks for generating synthetic cases
+#' @description This function creates a valid list of tasks for generating synthetic cases. The
+#' result of this function should be used within the function `get_synthetic_cases_from_matrix`.
+#' @param target Named `factor` containing the labels of the corresponding embeddings.
+#' @param sequence_length `int` Length of the text embedding sequences.
+#' @param method `vector` containing strings of the requested methods for generating new cases. Currently
+#'   "knnor" from this package is available.
+#' @param min_k `int` The minimal number of nearest neighbors during sampling process.
+#' @param max_k `int` The maximum number of nearest neighbors during sampling process.
+#' @return `list` with the following components:
+#'   * `cat`: `string` Category/class to generate synthetic cases for.
+#'   * `required_cases`: `int` Number of synthetic cases to generate.
+#'   * `k`: `int` Number of neighbors used for generating synthetic cases.
+#'   * `selected_cases`: `vector` of `int` representing the indices of cases that should be used.
+#'   * `chunks`: `int` Sequence length for which the synthetic cases are generated.
+#'
+#' @family Utils Developers
+#' @keywords internal
+#' @noRd
+create_sc_tasks_and_config=function(sequence_length,target,max_k,min_k){
+  input=list()
+  # get possible seq lengths in order to group the cases by sequence length
+  seq_length_categories <- as.numeric(names(table(sequence_length)))
+
+  # Create tasks for every group of sequence lengths
+  for (current_seq_length in seq_length_categories) {
+
+    condition <- (sequence_length == current_seq_length)
+    idx <- which(condition)
+    cat_freq <- table(target[idx])
+    categories <- names(cat_freq)
+    max_freq <- max(cat_freq)
+
+    for (cat in categories) {
+      if(cat_freq[cat]>4L && cat_freq[cat]<max_freq){
+        # Check k and adjust if necessary
+        n_neighbors <- cat_freq[cat] - 2L
+
+        if (n_neighbors <= max_k) {
+          max_k_final <- n_neighbors
+          if (min_k > max_k_final) {
+            min_k_final <- max_k_final
+          } else {
+            min_k_final <- min_k
+          }
+        } else {
+          max_k_final <- max_k
+          min_k_final <- min_k
+        }
+
+        max_k_final <- as.numeric(max_k_final)
+        min_k_final <- as.numeric(min_k_final)
+
+        # calculate required cases
+        n_k <- max_k_final-min_k_final+1L
+        required_cases_vector=vector(length = n_k)
+        required_cases_vector[]=0L
+        required_cases_total=max_freq - cat_freq[cat]
+        required_cases_per_n_k<-floor(required_cases_total/n_k)
+        residual=required_cases_total-required_cases_per_n_k*n_k
+        for (i in seq_len(n_k)) {
+          if(residual>0L){
+            required_cases_vector[i]=required_cases_per_n_k+1L
+            residual=residual-1L
+          } else {
+            required_cases_vector[i]=required_cases_per_n_k
+          }
+        }
+        if(sum(required_cases_vector)!=required_cases_total){
+          stop("Error in required_cases_vector.")
+        }
+
+        ids_to_small=which(required_cases_vector<=1L)
+        sum_to_small=sum(required_cases_vector[ids_to_small])
+        if(sum(required_cases_vector>1L)==0L){
+          valid_ids=seq.int(from = 1L,to=max(1L,floor(sum_to_small/2L)))
+        } else{
+          valid_ids=which(required_cases_vector>1L)
+        }
+        ids_to_small=setdiff(x=ids_to_small,y=valid_ids)
+        sum_to_small=sum(required_cases_vector[ids_to_small])
+
+        cases_per_valid=floor(sum_to_small/length(valid_ids))
+        residual=sum_to_small-cases_per_valid*length(valid_ids)
+        for(vid in valid_ids){
+          if(residual>0L){
+            required_cases_vector[vid]=required_cases_vector[vid]+cases_per_valid+1L
+            residual=residual-1L
+          } else {
+            required_cases_vector[vid]=required_cases_vector[vid]+cases_per_valid
+          }
+        }
+        required_cases_vector[ids_to_small]=0L
+
+        if(sum(required_cases_vector)!=required_cases_total){
+          stop("Error in required_cases_vector.")
+        }
+
+        ids=which(required_cases_vector>1L)
+        for(id in ids){
+          input[[length(input)+1L]] <- list(
+            cat = as.character(cat),
+            required_cases = required_cases_vector[id],
+            k = min_k_final+id-1L,
+            selected_cases = idx,
+            chunks = current_seq_length
+          )
+        }
+      }
+    }
+  }
+  return(input)
+}
+
+
 #-----------------------------------------------------------------------------
 #' @title Create synthetic cases for balancing training data
 #' @description This function creates synthetic cases for balancing the training with classifier models.
@@ -24,6 +140,7 @@
 #'   "knnor" from this package is available.
 #' @param min_k `int` The minimal number of nearest neighbors during sampling process.
 #' @param max_k `int` The maximum number of nearest neighbors during sampling process.
+#' @param pad_value `int` Value for indicating padding.
 #' @return `list` with the following components:
 #'   * `syntetic_embeddings`: Named `data.frame` containing the text embeddings of the synthetic cases.
 #'   * `syntetic_targets`: Named `factor` containing the labels of the corresponding synthetic cases.
@@ -41,86 +158,23 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
                                             sequence_length,
                                             method = "knnor",
                                             min_k = 1L,
-                                            max_k = 6L) {
-  # get possible seq lengthes in order to group the cases by sequence length
-  seq_length_categories <- as.numeric(names(table(sequence_length)))
+                                            max_k = 6L,
+                                            pad_value=-100L) {
 
-  index <- 1L
-  input <- NULL
+  input=create_sc_tasks_and_config(
+    sequence_length=sequence_length,
+    target=target,
+    min_k=min_k,
+    max_k=max_k
+    )
 
-  # Create tasks for every group of sequence lengths
-  for (current_seq_length in seq_length_categories) {
-    condition <- (sequence_length == current_seq_length)
-    idx <- which(condition)
-    cat_freq <- table(target[idx])
-    categories <- names(cat_freq)
-    max_freq <- max(cat_freq)
-
-    for (cat in categories) {
-      # Check k and adjust if necessary
-      n_neighbors <- cat_freq[cat] - 1L
-
-      if (n_neighbors <= max_k) {
-        max_k_final <- n_neighbors
-        if (min_k > max_k_final) {
-          min_k_final <- max_k_final
-        } else {
-          min_k_final <- min_k
-        }
-      } else {
-        max_k_final <- max_k
-        min_k_final <- min_k
-      }
-
-      max_k_final <- as.numeric(max_k_final)
-      min_k_final <- as.numeric(min_k_final)
-
-      # Check k and adjust according to the difference to the major category
-      required_cases <- as.numeric(max_freq - cat_freq[cat])
-      n_k <- length(min_k_final:max_k_final)
-      if (required_cases < n_k) {
-        difference <- n_k - required_cases
-        min_k_final <- min_k_final + difference
-      }
-
-      if (cat_freq[cat] < max_freq && min_k > 0L && cat_freq[cat] > 3L && required_cases > 0L) {
-        for (m in seq_len(length(method))) {
-          for (k in min_k_final:max_k_final) {
-            if (length(max_k_final) > 1L) {
-              stop("length")
-            }
-            if (max_k_final < 0L) {
-              stop("max smaller 0")
-            }
-            # print(as.numeric(max_k_final))
-            # print(class(max_k_final))
-            input[[index]] <- list(
-              cat = as.character(cat),
-              required_cases = as.numeric(required_cases),
-              k = as.numeric(k),
-              method = as.character(method[m]),
-              selected_cases = idx,
-              chunks = as.character(current_seq_length),
-              k_s = length(min_k_final:max_k_final),
-              max_k = as.numeric(max_k_final)
-            )
-            index <- index + 1L
-          }
-        }
-      }
-    }
-  }
-  # print(input)
-  # return(input)
-
-
+  index <- 1
   result_list <- foreach::foreach(
     index = seq_len(length(input)),
     .export = "create_synthetic_units_from_matrix",
     .errorhandling = "pass"
   ) %dopar% {
-    # index <- 1
-    create_synthetic_units_from_matrix(
+    tmp_results=create_synthetic_units_from_matrix(
       matrix_form = matrix_form[
         input[[index]]$selected_cases,
         c(1L:(input[[index]]$chunks * features))
@@ -128,10 +182,8 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
       target = target[input[[index]]$selected_cases],
       required_cases = input[[index]]$required_cases,
       k = input[[index]]$k,
-      method = input[[index]]$method,
-      cat = input[[index]]$cat,
-      k_s = input[[index]]$k_s,
-      max_k = input[[index]]$max_k
+      method = method,
+      cat = input[[index]]$cat
     )
   }
 
@@ -144,7 +196,7 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
   }
 
   syntetic_embeddings <- matrix(
-    data = 0L,
+    data = pad_value,
     nrow = n_syn_cases,
     ncol = times * features
   )
@@ -176,7 +228,6 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
     features = features
   )
   rownames(syntetic_embeddings) <- names_vector
-  # dimnames(syntetic_embeddings)[3] <- feature_names
 
   n_syntetic_units <- table(syntetic_targets)
 
@@ -184,7 +235,6 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
   results["syntetic_embeddings"] <- list(syntetic_embeddings)
   results["syntetic_targets"] <- list(syntetic_targets)
   results["n_syntetic_units"] <- list(n_syntetic_units)
-
   return(results)
 }
 
@@ -200,8 +250,6 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
 #' @param required_cases `int` Number of cases necessary to fill the gab between the frequency of the class under
 #'   investigation and the major class.
 #' @param k `int` The number of nearest neighbors during sampling process.
-#' @param max_k `int` The maximum number of nearest neighbors during sampling process.
-#' @param k_s `int` Number of ks in the complete generation process.
 #' @param method `vector` containing strings of the requested methods for generating new cases. Currently
 #'   "knnor" from this package is available.
 #' @param cat `string` The category for which new cases should be created.
@@ -211,17 +259,31 @@ get_synthetic_cases_from_matrix <- function(matrix_form,
 #' @family Utils Developers
 #'
 #' @export
-# TODO (Yuliia): k_s and max_k parameters can be removed
 create_synthetic_units_from_matrix <- function(matrix_form,
                                                target,
                                                required_cases,
                                                k,
                                                method,
-                                               cat,
-                                               k_s,
-                                               max_k) {
+                                               cat) {
+
   # Transform to a binary problem
-  tmp_target <- (target == cat)
+  tmp_target <- as.numeric((target == cat))
+  if(length(tmp_target)!=nrow(matrix_form)){
+    stop("Number of labels and number of embeddings do not match.")
+  }
+  if(anyNA(tmp_target)){
+    stop("Labels contain NA.")
+  }
+  if(anyNA(matrix_form)){
+    stop("Labels contain NA.")
+  }
+  if(!is.numeric(matrix_form)){
+    stop("matrix_form must be numeric")
+  }
+  if(!is.character(cat)){
+    stop("cat must be of type character")
+  }
+
 
   syn_data <- NULL
   if (method == "knnor") {
@@ -231,8 +293,9 @@ create_synthetic_units_from_matrix <- function(matrix_form,
           embeddings = matrix_form,
           labels = tmp_target
         ),
-        k = k,
-        aug_num = required_cases
+        k = as.integer(k),
+        aug_num = as.integer(required_cases),
+        cycles_number_limit=5000L
       ),
       silent = TRUE
     )
@@ -242,18 +305,23 @@ create_synthetic_units_from_matrix <- function(matrix_form,
     !inherits(x = syn_data, what = "try-error") &&
       (!is.null(syn_data) || nrow(syn_data$syn_data) > 0L)
   ) {
+
+    if(nrow(syn_data)!=required_cases){
+      stop("Number or requestes cases could not be generated.")
+    }
+
     n_cols_embedding <- ncol(matrix_form)
-    tmp_data <- syn_data$syn_data[1L:required_cases, -ncol(syn_data$syn_data)]
-    rownames(tmp_data) <- paste0(
+    syn_data <- syn_data
+    rownames(syn_data) <- paste0(
       method, "_", cat, "_", k, "_", n_cols_embedding, "_",
-      seq(from = 1L, to = nrow(tmp_data), by = 1L)
+      seq(from = 1L, to = nrow(syn_data), by = 1L)
     )
-    tmp_data <- as.data.frame(tmp_data)
-    tmp_target <- rep(cat, times = nrow(tmp_data))
-    names(tmp_target) <- rownames(tmp_data)
+    syn_data <- as.data.frame(syn_data)
+    tmp_target <- rep(cat, times = nrow(syn_data))
+    names(tmp_target) <- rownames(syn_data)
 
     results <- list(
-      syntetic_embeddings = tmp_data,
+      syntetic_embeddings = syn_data,
       syntetic_targets = tmp_target
     )
   } else {
@@ -262,7 +330,6 @@ create_synthetic_units_from_matrix <- function(matrix_form,
       syntetic_targets = NULL
     )
   }
-
   return(results)
 }
 

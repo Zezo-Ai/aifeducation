@@ -4,11 +4,16 @@
 \alias{get_recommended_py_versions}
 \title{Recommended version of python packages}
 \usage{
-get_recommended_py_versions()
+get_recommended_py_versions(package_name = NULL)
+}
+\arguments{
+\item{package_name}{\code{string} Name of the package the recommended version should be returned. If
+set to \code{NULL} a table with all core packages and their supported version is returned.}
 }
 \value{
-Returns a \code{data.frame} with the packages in the columns and the minimum and
-maximum version in the rows.
+Returns a \code{data.frame} with the packages in the columns and the minimum,
+maximum, and recommended version in the rows. If a concrete name is passed returns a
+string with leading '<='.
 }
 \description{
 Returns the minimum and maximum versions of the core

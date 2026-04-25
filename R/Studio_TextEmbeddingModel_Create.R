@@ -163,8 +163,8 @@ TextEmbeddingModel_Create_Server <- function(id, log_dir, volumes) {
         max_layer <- model$get_n_layers()
         toc_granularity <- model$get_tokenizer_statistics()
       } else {
-        path_bin <- paste0(model_path, "/", "pytorch_model.bin")
-        path_safetensor <- paste0(model_path, "/", "model.safetensors")
+        path_bin <- file.path(model_path, "pytorch_model.bin")
+        path_safetensor <- file.path(model_path, "model.safetensors")
 
         if (file.exists(path_safetensor)) {
           valid_path <- path_safetensor

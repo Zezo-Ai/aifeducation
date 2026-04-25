@@ -108,16 +108,14 @@ class LSTMAutoencoder_with_Mask_PT(torch.nn.Module):
         x=self.switch_pad_value_final(x)
       return x
     def get_mask(self,x):
-      device=('cuda' if torch.cuda.is_available() else 'cpu')
       time_sums=torch.sum(x,dim=2)
       mask=(time_sums==0)
       mask_long=torch.reshape(torch.repeat_interleave(mask,repeats=self.features_in,dim=1),(x.size(dim=0),x.size(dim=1),self.features_in))
-      mask_long=mask_long.to(device)
+      mask_long=mask_long.to(x.device)
       return mask_long
     def add_noise(self, x):
-      device=('cuda' if torch.cuda.is_available() else 'cpu')
       noise=self.noise_factor*torch.rand(size=x.size())
-      noise=noise.to(device)
+      noise=noise.to(x.device)
       return(noise)
       
 class DenseAutoencoder_with_Mask_PT(torch.nn.Module):
@@ -189,16 +187,14 @@ class DenseAutoencoder_with_Mask_PT(torch.nn.Module):
         return x
       
     def get_mask(self,x):
-      device=('cuda' if torch.cuda.is_available() else 'cpu')
       time_sums=torch.sum(x,dim=2)
       mask=(time_sums==0)
       mask_long=torch.reshape(torch.repeat_interleave(mask,repeats=self.features_in,dim=1),(x.size(dim=0),x.size(dim=1),self.features_in))
-      mask_long=mask_long.to(device)
+      mask_long=mask_long.to(x.device)
       return mask_long
     def add_noise(self, x):
-      device=('cuda' if torch.cuda.is_available() else 'cpu')
       noise=self.noise_factor*torch.rand(size=x.size())
-      noise=noise.to(device)
+      noise=noise.to(x.device,x.dtype)
       return(noise)
     
 class ConvAutoencoder_with_Mask_PT(torch.nn.Module):
@@ -282,32 +278,81 @@ class ConvAutoencoder_with_Mask_PT(torch.nn.Module):
       noise=noise.to(device)
       return(noise)
 
+
+def run_epoch_autoencoder(model,dataloader,loss_fct,optimizer,scaler,scheduler,amp,epoch,device,current_dtype,cblock,metric_storage,logger):
+  total_loss=0.0
+  if cblock=="train":
+    optimizer.zero_grad()
+    model.train()
+    ctx=torch.enable_grad()
+  else:
+    model.eval()
+    ctx=torch.no_grad()
+  for batch in dataloader:
+    with ctx: 
+      inputs=batch["input"]
+      labels=batch["labels"]
+      inputs = inputs.to(device,dtype=current_dtype)
+      labels=labels.to(device,dtype=current_dtype)
+      if cblock=="train":
+        optimizer.zero_grad()
+      with torch.autocast(device_type=device, dtype=None, enabled=amp):  
+        outputs=model(inputs,encoder_mode=False)
+        loss=loss_fct(outputs,labels)
+      if cblock=="train":
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()  
+        #loss.backward()
+        #optimizer.step()
+        if scheduler!=None:
+          scheduler.step()
+      #Metrics
+      total_loss +=loss.item()
+    #Update log file
+    logger.inc_value("bottom")
+    logger.write_log()
+    logger.write_history_log(metric_storage["loss"])
+  #Calc final metrics for epoch
+  results={"loss":total_loss/len(dataloader)}
+  #Save metrics
+  add_metrics(
+    metrics=results,
+    storage=metric_storage,
+    cblock=cblock,
+    epoch=epoch
+  )
+  return results
+
+def check_and_set_checkpoints_loss(use_callback,model,filepath,epoch,metric_storage,best_val_loss,val_loss):
+  if use_callback==True:
+      if val_loss<=best_val_loss:
+        torch.save(model.state_dict(),filepath)
+        best_val_loss=val_loss
+        metric_storage["checkpoints"][epoch]=1
+  return best_val_loss
     
-def AutoencoderTrain_PT_with_Datasets(model,optimizer_method,scheduler_type, lr_rate,lr_min, lr_warm_up_ratio, epochs, trace,batch_size,
+def AutoencoderTrain_PT_with_Datasets(model,optimizer_method,scheduler_type,amp, lr_rate,lr_min, lr_warm_up_ratio, epochs, trace,batch_size,
 train_data,val_data,filepath,use_callback,
 log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_message="NA"):
-  
-  device=('cuda' if torch.cuda.is_available() else 'cpu')
-  
-  if device=="cpu":
-    dtype=torch.float64
-    model.to(device,dtype=dtype)
-  else:
-    dtype=torch.double
-    model.to(device,dtype=dtype)
- 
+  #Set test data to None
+  test_data=None
+  #Prepare model
+  device=get_device()
+  current_dtype=get_dtype(device)
+  model.to(device=device,dtype=current_dtype)
+  #Prepare loss function
   loss_fct=torch.nn.MSELoss()
-
-  trainloader=torch.utils.data.DataLoader(
-    train_data,
+  loss_fct.to(device,dtype=current_dtype)
+  #create data loader
+  trainloader, valloader, testloader = build_data_loaders(
+    train_data=train_data,
+    val_data=val_data,
+    test_data=test_data,
     batch_size=batch_size,
-    shuffle=True)
-    
-  valloader=torch.utils.data.DataLoader(
-    val_data,
-    batch_size=batch_size,
-    shuffle=False)
-
+    pin_memory = True if device=="cuda" else False
+  )
+  #Create optimizer and scheduler
   optimizer=get_Optimizer(
     optimizer_method,
     params=model.parameters(),
@@ -322,123 +367,126 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     max_lr=lr_rate,
     min_lr=lr_min
   )
-  
+  amp_scaler=torch.amp.GradScaler(device ,enabled=amp)
   #Tensor for Saving Training History
-  history_loss=torch.ones(size=(2,epochs),requires_grad=False)*-100
-
+    #Numpys for Saving Training History
+  metric_storage=create_metric_storage(
+    metric_names=["loss"],
+    epochs=epochs,
+    inc_test=True if not (test_data is None) else False
+  )
+  # Init checkpoint values
   best_val_loss=float('inf')
-  
-  #Log file
-  if not (log_dir is None):
-    log_file=log_dir+"/aifeducation_state.log"
-    log_file_loss=log_dir+"/aifeducation_loss.log"
-    last_log=None
-    last_log_loss=None
-    current_step=0
-    total_epochs=epochs
-    total_steps=len(trainloader)+len(valloader)
+  #Logger
+  total_steps=len(trainloader)+len(valloader)
+  if not (test_data is None):
+    total_steps=total_steps+len(testloader)
+  logger=LogWriter(
+    log_file=log_dir+"/aifeducation_state.log" if not (log_dir is None) else None,
+    log_file_loss =log_dir+"/aifeducation_loss.log" if not (log_dir is None) else None,
+    value_top = log_top_value, 
+    value_middle = 0, 
+    value_bottom = 0,
+    total_top = log_top_total, 
+    total_middle = epochs, 
+    total_bottom = total_steps, 
+    message_top = log_top_message, 
+    message_middle = "Epoch",
+    message_bottom = "Steps",
+    last_log = None, 
+    write_interval = log_write_interval
+  )
 
   for epoch in range(epochs):
-    #logging
-    current_step=0
-    
-    #Training------------------------------------------------------------------
-    train_loss=0.0
-
-    model.train(True)
-    for batch in trainloader:
-      inputs=batch["input"]
-      labels=batch["labels"]
-
-      inputs = inputs.to(device=device,dtype=dtype)
-      labels=labels.to(device=device,dtype=dtype)
-
-      optimizer.zero_grad()
-      
-      outputs=model(inputs,encoder_mode=False,return_scs=True)
-      loss=loss_fct(outputs[0],labels)+outputs[1]
-      loss.backward()
-      optimizer.step()
-      train_loss +=loss.item()
-      
-      #Update log file
-      if not (log_dir is None):
-        current_step+=1
-        last_log=write_log_py(log_file=log_file, value_top = log_top_value, value_middle = epoch+1, value_bottom = current_step,
-                  total_top = log_top_total, total_middle = epochs, total_bottom = total_steps, message_top = log_top_message, message_middle = "Epochs",
-                  message_bottom = "Steps", last_log = last_log, write_interval = log_write_interval)
-        last_log_loss=write_log_performance_py(log_file=log_file_loss, history=history_loss.numpy().tolist(), last_log = last_log_loss, write_interval = log_write_interval)
-    
-    #Update learning rate
-    if scheduler!=None:
-      scheduler.step()
-    
-    #Validation----------------------------------------------------------------
-    val_loss=0.0
-
-    model.eval()
-    with torch.no_grad():
-      for batch in valloader:
-        inputs=batch["input"]
-        labels=batch["labels"]
-
-        inputs = inputs.to(device=device,dtype=dtype)
-        labels=labels.to(device=device,dtype=dtype)
-      
-        outputs=model(inputs,encoder_mode=False,return_scs=True)
-        
-        loss=loss_fct(outputs[0],labels)+outputs[1]
-        val_loss +=loss.item()
-        
-        #Update log file
-        if not (log_dir is None):
-          current_step+=1
-          last_log=write_log_py(log_file=log_file, value_top = log_top_value, value_middle = epoch+1, value_bottom = current_step,
-                    total_top = log_top_total, total_middle = epochs, total_bottom = total_steps, message_top = log_top_message, message_middle = "Epochs",
-                    message_bottom = "Steps", last_log = last_log, write_interval = log_write_interval)
-          last_log_loss=write_log_performance_py(log_file=log_file_loss, history=history_loss.numpy().tolist(), last_log = last_log_loss, write_interval = log_write_interval)
-    
-    #Record History------------------------------------------------------------
-    history_loss[0,epoch]=train_loss/len(trainloader)
-    history_loss[1,epoch]=val_loss/len(valloader)
-    
-    #Trace---------------------------------------------------------------------
-    if trace>=1:
-      print("Epoch: {}/{} Train Loss: {:.8f} | Val Loss: {:.8f}".format(
-        epoch+1,
-        epochs,
-        train_loss/len(trainloader),
-        val_loss/len(valloader)))
-          
+    train_results=run_epoch_autoencoder(
+      model=model,
+      dataloader=trainloader,
+      optimizer=optimizer,
+      scaler=amp_scaler,
+      amp=amp,
+      scheduler=scheduler,
+      loss_fct=loss_fct,
+      epoch=epoch,
+      device=device,
+      current_dtype=current_dtype,
+      cblock="train",
+      metric_storage=metric_storage,
+      logger=logger
+    )
+    val_results=run_epoch_autoencoder(
+      model=model,
+      dataloader=valloader,
+      loss_fct=loss_fct,
+      optimizer=optimizer,
+      scaler=amp_scaler,
+      amp=amp,
+      scheduler=scheduler,
+      epoch=epoch,
+      device=device,
+      current_dtype=current_dtype,
+      cblock="val",
+      metric_storage=metric_storage,
+      logger=logger
+    )
+    if testloader is not None:
+      test_results=run_epoch_autoencoder(
+        model=model,
+        dataloader=testloader,
+        optimizer=optimizer,
+        scaler=amp_scaler,
+        amp=amp,
+        scheduler=scheduler,
+        loss_fct=loss_fct,
+        epoch=epoch,
+        device=device,
+        current_dtype=current_dtype,
+        cblock="test",
+        metric_storage=metric_storage,
+        logger=logger
+      )
+    #Update logger   
+    logger.reset_value(level="bottom")
+    logger.inc_value(level="middle") 
     #Callback-------------------------------------------------------------------
-    if use_callback==True:
-      if (val_loss/len(valloader))<best_val_loss:
-        if trace>=1:
-          print("Val Loss decreased from {:.8f} to {:.8f}".format(best_val_loss,val_loss/len(valloader)))
-          print("Save checkpoint to {}".format(filepath))
-        torch.save(model.state_dict(),filepath)
-        best_val_loss=val_loss/len(valloader)
-
+    best_val_loss=check_and_set_checkpoints_loss(
+      use_callback=use_callback,
+      model=model,
+      filepath=filepath,
+      epoch=epoch,
+      metric_storage=metric_storage,
+      best_val_loss=best_val_loss,
+      val_loss=val_results["loss"]
+    )
+    #Trace---------------------------------------------------------------------
+    print_epoch_results(
+      trace=trace,
+      loss_only=True,
+      metric_storage=metric_storage,
+      epoch=epoch,
+      epochs=epochs,
+      metric_criterion="loss",
+      best_metric=None,
+      best_loss=best_val_loss
+    )
   #Finalize--------------------------------------------------------------------
   if use_callback==True:
     if trace>=1:
       print("Load Best Weights from {}".format(filepath))
     model.load_state_dict(torch.load(filepath,weights_only=True))
 
-  history={"loss":history_loss.numpy()} 
-    
-  return history
+  return metric_storage
 
+@torch.inference_mode()
 def TeFeatureExtractorBatchExtract(model,dataset,batch_size):
   
   device=('cuda' if torch.cuda.is_available() else 'cpu')
   
   if device=="cpu":
-    dtype=torch.float64
+    dtype=torch.float
     model.to(device,dtype=dtype)
   else:
-    model.to(device,dtype=torch.double)
-    dtype=torch.double
+    dtype=torch.float
+    model.to(device,dtype=dtype)
     
   model.eval()
   predictionloader=torch.utils.data.DataLoader(
@@ -446,17 +494,16 @@ def TeFeatureExtractorBatchExtract(model,dataset,batch_size):
     batch_size=batch_size,
     shuffle=False)
 
-  with torch.no_grad():
-    iteration=0
-    for batch in predictionloader:
-      inputs=batch["input"]
-      inputs = inputs.to(device,dtype=dtype)
-      predictions=model(inputs,encoder_mode=True)
-      
-      if iteration==0:
-        predictions_list=predictions.to("cpu")
-      else:
-        predictions_list=torch.concatenate((predictions_list,predictions.to("cpu")), axis=0, out=None)
-      iteration+=1
+  iteration=0
+  for batch in predictionloader:
+    inputs=batch["input"]
+    inputs = inputs.to(device,dtype=dtype)
+    predictions=model(inputs,encoder_mode=True)
+    
+    if iteration==0:
+      predictions_list=predictions.to("cpu")
+    else:
+      predictions_list=torch.concatenate((predictions_list,predictions.to("cpu")), axis=0, out=None)
+    iteration+=1
   
   return predictions_list

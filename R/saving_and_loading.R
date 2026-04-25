@@ -96,7 +96,7 @@ load_from_disk <- function(dir_path) {
     model$load_from_disk(dir_path = dir_path)
     return(model)
   } else {
-    # Case for base models
+    stop("There is no compatible model at",dir_path)
   }
 }
 

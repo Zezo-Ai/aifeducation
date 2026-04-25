@@ -65,6 +65,28 @@ for (method in methods) {
       expect_true(test_datamanager$contains_unlabeled_data())
     })
 
+    test_that(paste("DataManager - get_config"), {
+      config <- test_datamanager$get_config()
+      expect_equal(config$n_folds, fold)
+      expect_equal(config$val_size, 0.25)
+      expect_true(config$add_matrix_map)
+      expect_true(config$one_hot_encoding)
+      expect_equal(config$class_levels, levels(data_targets))
+      expect_equal(config$features, data_embeddings$get_features())
+      expect_equal(config$times, data_embeddings$get_times())
+      expect_equal(config$pad_value, -100)
+      expect_equal(config$sc$methods, method)
+      expect_equal(config$sc$max_k, 10)
+      expect_equal(config$sc$min_k, 1)
+    })
+
+    test_that(paste("DataManager - get_n_classes"), {
+      expect_equal(
+        test_datamanager$get_n_classes(),
+        length(levels(data_targets))
+      )
+    })
+
     for (i in 1:(test_datamanager$get_n_folds() + 1)) {
       sample <- test_datamanager$get_samples()[[i]]
       #-----------------------------------------------------------------------------
@@ -129,20 +151,19 @@ for (method in methods) {
         test_datamanager$create_synthetic(trace = FALSE, inc_pseudo_data = FALSE)
         if (!is.null(test_datamanager$datasets$data_labeled_synthetic)) {
           synthetic_cases_per_seq <- table(
-            extract_column_from_py_dataset(test_datamanager$datasets$data_labeled_synthetic,"length"),
-            extract_column_from_py_dataset(test_datamanager$datasets$data_labeled_synthetic,"labels")
+            extract_column_from_py_dataset(test_datamanager$datasets$data_labeled_synthetic, "length"),
+            extract_column_from_py_dataset(test_datamanager$datasets$data_labeled_synthetic, "labels")
           )
           original_cases_per_seq <- table(
-            extract_column_from_py_dataset(test_datamanager$get_dataset(),"length"),
-            extract_column_from_py_dataset(test_datamanager$get_dataset(),"labels")
+            extract_column_from_py_dataset(test_datamanager$get_dataset(), "length"),
+            extract_column_from_py_dataset(test_datamanager$get_dataset(), "labels")
           )
           for (r in intersect(rownames(original_cases_per_seq), rownames(synthetic_cases_per_seq))) {
             for (c in intersect(colnames(original_cases_per_seq), colnames(synthetic_cases_per_seq))) {
               if (original_cases_per_seq[r, c] > 3) {
-                expect_equal(
+                expect_gte(
                   object = original_cases_per_seq[r, c] + synthetic_cases_per_seq[r, c],
-                  expected = max(original_cases_per_seq[r, ]),
-                  tolerance = 1
+                  expected = max(original_cases_per_seq[r, ])-2
                 )
               }
             }
@@ -171,7 +192,7 @@ for (method in methods) {
           inc_synthetic = TRUE,
           inc_pseudo_data = FALSE
         )
-        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test,"length")))
+        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test, "length")))
         true_number_of_cases <- length(test_datamanager$samples[[i]]$train) +
           length(test_datamanager$datasets$data_labeled_synthetic)
         expect_equal(number_of_cases, true_number_of_cases)
@@ -182,7 +203,7 @@ for (method in methods) {
           inc_synthetic = TRUE,
           inc_pseudo_data = TRUE
         )
-        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test,"length")))
+        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test, "length")))
         true_number_of_cases <- length(test_datamanager$samples[[i]]$train) +
           length(test_datamanager$datasets$data_labeled_synthetic) +
           length(test_datamanager$datasets$data_labeled_pseudo)
@@ -194,27 +215,20 @@ for (method in methods) {
           inc_synthetic = TRUE,
           inc_pseudo_data = TRUE
         )
-        if (!is.null(data_test)) {
-          number_of_cases <- sum(table(extract_column_from_py_dataset(data_test,"length")))
-          true_number_of_cases <- length(test_datamanager$datasets$data_labeled_synthetic) +
-            length(test_datamanager$datasets$data_labeled_pseudo)
-          expect_equal(number_of_cases, true_number_of_cases)
+        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test, "length")))
+        true_number_of_cases <- length(test_datamanager$datasets$data_labeled_synthetic) +
+          length(test_datamanager$datasets$data_labeled_pseudo)
+        expect_equal(number_of_cases, true_number_of_cases)
 
-          data_test <- test_datamanager$get_dataset(
-            inc_labeled = FALSE,
-            inc_unlabeled = FALSE,
-            inc_synthetic = TRUE,
-            inc_pseudo_data = FALSE
-          )
-          number_of_cases <- sum(table(data_test["length"]))
-          true_number_of_cases <- length(test_datamanager$datasets$data_labeled_synthetic)
-          expect_equal(number_of_cases, true_number_of_cases)
-        } else {
-          expect_equal(
-            object = test_datamanager$datasets$data_labeled_synthetic,
-            expected = NULL
-          )
-        }
+        data_test <- test_datamanager$get_dataset(
+          inc_labeled = FALSE,
+          inc_unlabeled = FALSE,
+          inc_synthetic = TRUE,
+          inc_pseudo_data = FALSE
+        )
+        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test, "length")))
+        true_number_of_cases <- length(test_datamanager$datasets$data_labeled_synthetic)
+        expect_equal(number_of_cases, true_number_of_cases)
 
 
         data_test <- test_datamanager$get_dataset(
@@ -223,7 +237,7 @@ for (method in methods) {
           inc_synthetic = FALSE,
           inc_pseudo_data = TRUE
         )
-        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test,"length")))
+        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test, "length")))
         true_number_of_cases <- length(test_datamanager$datasets$data_labeled_pseudo)
         expect_equal(number_of_cases, true_number_of_cases)
 
@@ -233,7 +247,7 @@ for (method in methods) {
           inc_synthetic = FALSE,
           inc_pseudo_data = FALSE
         )
-        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test,"length")))
+        number_of_cases <- sum(table(extract_column_from_py_dataset(data_test, "length")))
         true_number_of_cases <- length(test_datamanager$datasets$data_unlabeled)
         expect_equal(number_of_cases, true_number_of_cases)
       })

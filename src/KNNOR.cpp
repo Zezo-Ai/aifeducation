@@ -16,6 +16,7 @@
 
 // we only include RcppArmadillo.h which pulls Rcpp.h in for us
 #include "RcppArmadillo.h"
+#include <cmath>
 
 // via the depends attribute we tell Rcpp to create hooks for
 // RcppArmadillo so that the build process will know what to do
@@ -108,6 +109,18 @@ Rcpp::List knn(const arma::mat &embeddings, size_t k)
 {
   size_t n = embeddings.n_rows;
 
+  if (n == 0) {
+    Rcpp::stop("knn(): embeddings has zero rows");
+  }
+
+  if (k == 0) {
+    Rcpp::stop("knn(): k must be >= 1");
+  }
+
+  if (k > n - 1) {
+    Rcpp::stop("knn(): k cannot exceed n - 1");
+  }
+
   // Creating result matrices
   arma::mat neighbors(n, k);
   arma::mat distances(n, k);
@@ -115,6 +128,7 @@ Rcpp::List knn(const arma::mat &embeddings, size_t k)
   for (size_t i = 0; i < n; ++i)
   {
     std::vector<std::pair<size_t, double>> dist_pairs;
+    dist_pairs.reserve(n - 1);
 
     for (size_t j = 0; j < n; ++j)
     {
@@ -125,8 +139,13 @@ Rcpp::List knn(const arma::mat &embeddings, size_t k)
     }
 
     // Sort by distance (ascending)
-    std::sort(dist_pairs.begin(), dist_pairs.end(), [](const std::pair<size_t, double> &a, const std::pair<size_t, double> &b)
-              { return a.second < b.second; });
+    std::sort(
+      dist_pairs.begin(),
+      dist_pairs.end(),
+      [](const std::pair<size_t, double> &a, const std::pair<size_t, double> &b) {
+        return a.second < b.second;
+      }
+    );
 
     // Store k nearest neighbors
     for (size_t t = 0; t < k; ++t)
@@ -164,19 +183,27 @@ Rcpp::List knnor_filter(const Rcpp::List &dataset, size_t k)
 
   arma::vec unique_classes = arma::unique(labels);
 
+  if (unique_classes.n_elem != 2) {
+    Rcpp::stop("knnor_filter() supports exactly 2 classes.");
+  }
+
   // List of two matrices
   std::vector<arma::mat> splitted_embeddings(2);
-  for (size_t i = 0; i < splitted_embeddings.size(); ++i)
-    splitted_embeddings[i] = arma::mat();
-
-  for (size_t i = 0; i < labels.n_elem; ++i)
-    if (labels[i] == unique_classes[0])
+  for (size_t i = 0; i < labels.n_elem; ++i) {
+    if (labels[i] == unique_classes[0]) {
       splitted_embeddings[0] = arma::join_vert(splitted_embeddings[0], embeddings.row(i));
-    else
+    } else {
       splitted_embeddings[1] = arma::join_vert(splitted_embeddings[1], embeddings.row(i));
+    }
+  }
 
   size_t min_index = splitted_embeddings[0].n_rows < splitted_embeddings[1].n_rows ? 0 : 1;
-  size_t maj_index = !min_index;
+  size_t maj_index = (min_index == 0) ? 1 : 0;
+
+  size_t minority_n = splitted_embeddings[min_index].n_rows;
+  if (minority_n <= k) {
+    Rcpp::stop("Minority class has too few samples for requested k.");
+  }
 
   Rcpp::List knn_res = knn(splitted_embeddings[min_index], k);
   arma::mat distances = knn_res["distances"];
@@ -186,7 +213,16 @@ Rcpp::List knnor_filter(const Rcpp::List &dataset, size_t k)
 
   arma::vec distances_sorted = arma::sort(distances2kth, "ascend");
   double d = calc_threshold_distance(distances_sorted);
-  size_t n_data_points = distances_sorted.n_elem * d;
+
+  size_t n_data_points = static_cast<size_t>(std::ceil(minority_n * d));
+
+  // clamp to valid range
+  n_data_points = std::min(n_data_points, minority_n);
+  n_data_points = std::max(n_data_points, k + 1);
+
+  if (n_data_points == k + 1) {
+    Rcpp::warning("n_data_points was clamped to k + 1\n");
+  }
 
   arma::uvec distances_sorted_inds = arma::sort_index(distances2kth, "ascend");
 
@@ -388,7 +424,13 @@ arma::mat knnor_augmentation(const arma::mat &embeddings_min,
       arma::rowvec new_embedding_point;
       for (size_t j = 0; j < k; ++j)
       {
-        size_t neighbor_index = source_neighbors(j);
+        double raw_neighbor = source_neighbors(j);
+        size_t neighbor_index = static_cast<size_t>(raw_neighbor);
+
+        if (neighbor_index >= embeddings_min_sorted.n_rows) {
+          Rcpp::stop("neighbor_index out of bounds");
+        }
+
         arma::rowvec source_neighbor = embeddings_min_sorted.row(neighbor_index);
 
         double random_alpha = arma::randu() * (upper_alpha - 1e-6) + 1e-6; // interval (0; upper_alpha]

@@ -4,6 +4,55 @@ editor_options:
     wrap: 72
 ---
 
+# aifeducation 1.1.5
+
+**General**
+
+- Replaced the current logging mechanism with a more sophisticated version.
+- Add new tests.
+- Update to newer versions of python packages (except 'transformers' and 'codecarbon').
+- Fixed 'check_adjust_n_samples_on_CI'.
+- Fixed the y_max value in all plots for objects based on text embeddings. Now the
+  value is correctly calculated if 'y_max=NULL'.
+
+**Saving and Loading**
+
+- Add error message to load_from_disk for the case that there is no model at the specified location.
+
+**Installation and Configuration**
+
+- Fixed error in 'install_aifeducation_studio'.
+- Fixed error in detecting MacOS.
+
+**AI for Education - Studio**
+
+- Increased size of widgets for a better usability.
+- Fixed a bug in progress modal that could crash a training loop.
+- Reduced the time interval to update progress graphics to 4 seconds.
+- Improved visualization of training processes.
+
+**BaseModel**
+
+- In transformers 4.49.0 and transformers 5.0.0 the data collator for whole word masking changed. 
+  Now aifeducation is compatible with these versions and whole word masking.
+- MPNet is temporarily not available with transformers of 5.0.0 and higher. This will be changed
+  with the next release. 
+
+**Classifiers**
+
+- Fixed a bug with knnor which caused a crash for some datasets.
+- Fixed a bug in Multiple N-Gram Layers. 
+  This version of the package is not compatible with older models containing this kind of layer.
+- Changed dtype from float64 to float32 and added decorator torch.inference_mode() for predictions.
+- Add Automatic Mixed Precision to training loops of all classifiers.
+- Add 'MultiWayContrastiveLossFC' as a new loss for classifiers with prototypes. This loss is a
+  combination of 'MultiWayContrastiveLoss' and 'FocalLoss'.
+
+**TeFeatureExtractor**
+
+- Changed dtype from float64 to float32 and added decorator torch.inference_mode() for predictions.
+- Add Automatic Mixed Precision to training loop.
+
 # aifeducation 1.1.4
 
 **General**

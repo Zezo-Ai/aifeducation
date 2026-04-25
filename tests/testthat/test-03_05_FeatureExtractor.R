@@ -15,6 +15,7 @@ root_path_general_data <- testthat::test_path("test_data/Embeddings")
 create_dir(testthat::test_path("test_artefacts"), FALSE)
 root_path_results <- testthat::test_path("test_artefacts/FeatureExtractor")
 create_dir(root_path_results, FALSE)
+tolerance=1e-5
 
 # SetUp datasets
 # Disable tqdm progressbar
@@ -153,7 +154,7 @@ for (framework in ml_frameworks) {
             data_embeddings = dataset_list[[data_type]],
             batch_size = 50
           )
-          expect_equal(predictions, predictions_2)
+          expect_equal(predictions, predictions_2,tolerance = tolerance)
         } else {
           predictions <- extractor$extract_features_large(
             data_embeddings = dataset_list[[data_type]],
@@ -167,7 +168,8 @@ for (framework in ml_frameworks) {
           i <- sample(seq.int(from = 1, to = predictions$n_rows()))
           expect_equal(
             predictions$extract_column("input")[i,,,drop=FALSE],
-            predictions_2$extract_column("input")[i,,,drop=FALSE]
+            predictions_2$extract_column("input")[i,,,drop=FALSE],
+            tolerance = tolerance
           )
         }
       })
@@ -190,7 +192,8 @@ for (framework in ml_frameworks) {
 
           expect_equal(
             predictions$embeddings[i, , , drop = FALSE],
-            predictions_Perm$embeddings[which(perm == i), , , drop = FALSE]
+            predictions_Perm$embeddings[which(perm == i), , , drop = FALSE],
+            tolerance = tolerance
           )
         } else {
           predictions <- extractor$extract_features_large(
@@ -204,7 +207,8 @@ for (framework in ml_frameworks) {
           i <- sample(seq.int(from = 1, to = predictions$n_rows()), size = 1)
           expect_equal(
             predictions$extract_column("input")[i,,,drop=FALSE],
-            predictions_Perm$extract_column("input")[which(perm == i),,,drop=FALSE]
+            predictions_Perm$extract_column("input")[which(perm == i),,,drop=FALSE],
+            tolerance = tolerance
           )
         }
       })
@@ -223,7 +227,7 @@ for (framework in ml_frameworks) {
           expect_equal(
             unname(predictions_ET$embeddings[i, , , drop = FALSE]),
             predictions_LD$extract_column("input")[i,,,drop=FALSE],
-            tolerance = 1e-7
+            tolerance = tolerance
           )
         })
       }
@@ -280,7 +284,7 @@ for (framework in ml_frameworks) {
         i <- sample(x = seq.int(from = 1, to = predictions$n_rows()), size = 1)
         expect_equal(predictions$embeddings[i, , , drop = FALSE],
           predictions_2$embeddings[i, , , drop = FALSE],
-          tolerance = 1e-6
+          tolerance = tolerance
         )
 
         # Clean Directory

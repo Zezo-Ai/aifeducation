@@ -70,6 +70,7 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
     #' @param lr_warm_up_ratio `r get_param_doc_desc("lr_warm_up_ratio")`
     #' @param lr_scheduler `r get_param_doc_desc("lr_scheduler")`
     #' @param optimizer `r get_param_doc_desc("optimizer")`
+    #' @param amp `r get_param_doc_desc("amp")`
     #' @param Ns `r get_param_doc_desc("Ns")`
     #' @param Nq `r get_param_doc_desc("Nq")`
     #' @param loss_alpha `r get_param_doc_desc("loss_alpha")`
@@ -121,7 +122,8 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
                      lr_min=1e-4,
                      lr_scheduler="None",
                      lr_warm_up_ratio = 0.02,
-                     optimizer = "AdamW") {
+                     optimizer = "AdamW",
+                     amp = FALSE) {
       private$do_training(args = get_called_args(n = 1L))
     },
     #---------------------------------------------------------------------------
@@ -202,7 +204,7 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
     #'
     embed = function(embeddings_q = NULL, embeddings_s = NULL, classes_s = NULL, batch_size = 32L, ml_trace = 1L) {
       # Load Custom Model Scripts
-      private$load_reload_python_scripts()
+
 
       # Check arguments and forward
       forward_results <- private$forward(
@@ -450,7 +452,7 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
       }
 
       # Load Custom Model Scripts
-      private$load_reload_python_scripts()
+
 
       # prepare embeddings
       embeddings_q <- private$prepare_embeddings_for_forward(embeddings_q, batch_size = batch_size)
@@ -704,6 +706,7 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
         lr_min=self$last_training$config$lr_min,
         scheduler_type=self$last_training$config$lr_scheduler,
+        amp=self$last_training$config$amp,
         Ns = as.integer(self$last_training$config$Ns),
         Nq = as.integer(self$last_training$config$Nq),
         loss_alpha = self$last_training$config$loss_alpha,

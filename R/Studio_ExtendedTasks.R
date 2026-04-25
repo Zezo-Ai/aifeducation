@@ -28,7 +28,7 @@ long_add_texts_to_dataset <- function(source_path,
                                       excel_url_license_column,
                                       excel_text_license_column,
                                       excel_url_source_column,
-                                      log_write_interval = 2,
+                                      log_write_interval = 2L,
                                       py_environment_type,
                                       py_env_name) {
   promises::future_promise({
@@ -42,7 +42,7 @@ long_add_texts_to_dataset <- function(source_path,
 
     # Set up top level progress monitoring
     top_total <- include_txt + include_pdf + include_xlsx
-    top_value <- 0
+    top_value <- 0L
     total_message <- "File types"
 
     # Create new data set
@@ -50,11 +50,11 @@ long_add_texts_to_dataset <- function(source_path,
 
     # Start processing different file types
     if (include_txt) {
-      top_value <- top_value + 1
+      top_value <- top_value + 1L
 
       new_dataset$add_from_files_txt(
         dir_path = source_path,
-        batch_size = 2,
+        batch_size = 2L,
         log_file = log_path,
         log_top_value = top_value,
         log_top_total = top_total,
@@ -66,11 +66,11 @@ long_add_texts_to_dataset <- function(source_path,
     }
 
     if (include_pdf) {
-      top_value <- top_value + 1
+      top_value <- top_value + 1L
 
       new_dataset$add_from_files_pdf(
         dir_path = source_path,
-        batch_size = 2,
+        batch_size = 2L,
         log_file = log_path,
         log_top_value = top_value,
         log_top_total = top_total,
@@ -82,7 +82,7 @@ long_add_texts_to_dataset <- function(source_path,
     }
 
     if (include_xlsx) {
-      top_value <- top_value + 1
+      top_value <- top_value + 1L
 
       new_dataset$add_from_files_xlsx(
         dir_path = source_path,
@@ -121,7 +121,7 @@ long_transform_text_to_embeddings <- function(source_path,
                                               log_path,
                                               batch_size,
                                               model_path,
-                                              log_write_interval = 2,
+                                              log_write_interval = 2L,
                                               current_conda_env,
                                               py_environment_type,
                                               py_env_name) {
@@ -138,7 +138,7 @@ long_transform_text_to_embeddings <- function(source_path,
 
     # Set up top level progress monitoring
     # top_total <- raw_texts$n_rows()
-    # top_value <- 0
+    # top_value <- 0L
     # total_message <- "Documents"
 
     # Load the model
@@ -171,16 +171,16 @@ long_models <- function(args) {
   promises::future_promise({
     # Set up py env
     prepare_session(
-      env_type = args[[1]]$meta_args$py_environment_type,
-      envname = args[[1]]$meta_args$py_env_name,
+      env_type = args[[1L]]$meta_args$py_environment_type,
+      envname = args[[1L]]$meta_args$py_env_name,
       check_session = FALSE
     )
 
     # Create object or load object
-    if (args[[1]]$meta_args$object_class %in% BaseModelsIndex) {
-      object <- load_from_disk(args[[1]]$path_args$path_to_base_model)
+    if (args[[1L]]$meta_args$object_class %in% BaseModelsIndex) {
+      object <- load_from_disk(args[[1L]]$path_args$path_to_base_model)
     } else {
-      object <- create_object(args[[1]]$meta_args$object_class)
+      object <- create_object(args[[1L]]$meta_args$object_class)
     }
 
     requested_methods <- names(args)
@@ -196,8 +196,8 @@ long_models <- function(args) {
     }
 
     # Create dir for saving the object
-    dir_destination <- paste0(
-      args$configure$path_args$destination_path, "/",
+    dir_destination <- file.path(
+      args$configure$path_args$destination_path,
       args$configure$path_args$folder_name
     )
     create_dir(dir_destination, FALSE)
@@ -205,8 +205,8 @@ long_models <- function(args) {
     # Save
     save_to_disk(
       object = object,
-      dir_path = args[[1]]$path_args$destination_path,
-      folder_name = args[[1]]$path_args$folder_name
+      dir_path = args[[1L]]$path_args$destination_path,
+      folder_name = args[[1L]]$path_args$folder_name
     )
 
     # Returns message
@@ -220,8 +220,8 @@ long_transformers <- function(args) {
   promises::future_promise({
     # Set up py env
     prepare_session(
-      env_type = args[[1]]$meta_args$py_environment_type,
-      envname = args[[1]]$meta_args$py_env_name,
+      env_type = args[[1L]]$meta_args$py_environment_type,
+      envname = args[[1L]]$meta_args$py_env_name,
       check_session = FALSE
     )
 
@@ -242,7 +242,7 @@ long_transformers <- function(args) {
       method <- current_task$meta_args$method
 
       if (inherits(tmp_object, "BaseModelCore")) {
-        current_task$args$tokenizer <- object_list[[1]]
+        current_task$args$tokenizer <- object_list[[1L]]
       }
 
       # add missing objects to arguments by loading them
@@ -257,8 +257,8 @@ long_transformers <- function(args) {
     }
 
     # Create dir for saving the object
-    dir_destination <- paste0(
-      args$configure$path_args$destination_path, "/",
+    dir_destination <- file.path(
+      args$configure$path_args$destination_path,
       args$configure$path_args$folder_name
     )
     create_dir(dir_destination, FALSE)
@@ -266,8 +266,8 @@ long_transformers <- function(args) {
     # Save the last used object
     save_to_disk(
       object = tmp_object,
-      dir_path = args[[1]]$path_args$destination_path,
-      folder_name = args[[1]]$path_args$folder_name
+      dir_path = args[[1L]]$path_args$destination_path,
+      folder_name = args[[1L]]$path_args$folder_name
     )
 
     # Returns message

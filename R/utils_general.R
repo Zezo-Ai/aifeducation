@@ -261,3 +261,86 @@ detect_base_model_type <- function(model) {
     stop("Architecture for the model could not be detected.")
   }
 }
+
+
+#' @title ProgressIndicator
+#' @description R6 class that can be used to print the current state of a progress
+#' to the console.
+#' @return Returns a new object of this class.
+#' @family Utils Developers
+#' @keywords internal
+#' @noRd
+ProgressIndicator <- R6::R6Class(
+  classname = "ProgressIndicator",
+  inherit = NULL,
+  private = list(
+    max_iter=1,
+    inc_absolute=FALSE,
+    start_time=Sys.time(),
+    calc_eta=FALSE
+  ),
+  public=list(
+    #' @description Creates a new object of this class with the specified
+    #' configuration.
+    #'@param max_iter `double` Maximal state/iteration of the process.
+    #'@param inc_absolute `bool` If set to `TRUE` indicates the current state
+    #'  with absolute values.
+    #' @return Returns a new object of this class.
+    initialize=function(max_iter=NULL,inc_absolute=TRUE,calc_eta=FALSE){
+      private$max_iter=max_iter
+        private$inc_absolute=inc_absolute
+        private$start_time=Sys.time()
+        private$calc_eta=calc_eta
+    },
+    #' @description Prints the current state to the console.
+    #'@param iter `double` Current state/iteration of the process.
+    #'@param text_pre `string` Text displayed at the beginning of the process indicator.
+    #'  Set to `NULL` for no text.
+    #'@param text_post `string` Text displayed at the end of the process indicator.
+    #'  Set to `NULL` for no text.
+    #' @return Returns nothing. Prints an indicator of progression to console.
+    print_step=function(iter=NULL,text_pre=NULL,text_post=NULL){
+      percent=iter/private$max_iter*100
+      percent=formatC(percent,digits = 2,format ="f",flag=" ",width = 6)
+
+      if(private$inc_absolute){
+        text_absolute=paste0(" (",iter,"|",private$max_iter,")")
+      } else {
+        text_absolute=""
+      }
+
+      if(private$calc_eta){
+        time_per_iter=difftime(Sys.time(),private$start_time,units = "sec")/iter
+        remaining_time=(private$max_iter-iter)*time_per_iter
+        total_hours=remaining_time/3600
+        hh=floor(total_hours)
+        total_mins=(total_hours-hh)*60
+        mins=floor(total_mins)
+        sec=(total_mins-mins)*60
+        text_eta=paste0(
+          " ETA: ",
+          formatC(hh,width = 4,format="f",flag="0",digits = 0),"::",
+          formatC(mins,width = 2,format="f",flag="0",digits=0),"::",
+          formatC(sec,width = 2,format="f",flag="0",digits = 0)
+        )
+      } else {
+        text_eta=""
+      }
+
+      pre_text=if(is.null(text_pre)){""} else {text_pre}
+      post_text=if(is.null(text_post)){""} else {paste0(" ",text_post)}
+      cat(
+        sep="",
+        "\r",
+        pre_text," ",
+        percent," %",
+        text_absolute,
+        post_text,
+        text_eta,
+        if(iter>=private$max_iter){"\n"} else {""}
+      )
+    }
+  )
+)
+
+

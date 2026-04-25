@@ -180,10 +180,29 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
 
       # Set y_min and y_max if they are NULL
       data_colnames <- setdiff(x = colnames(plot_data), y = "epoch")
+      if (!add_min_max) {
+        data_colnames <- setdiff(
+          x = data_colnames,
+          y = c(
+            "train_min",
+            "train_max",
+            "validation_min",
+            "validation_max"
+          )
+        )
+        if ("test_mean" %in% data_colnames) {
+          data_colnames <- setdiff(
+            x = data_colnames,
+            y = c(
+              "test_min",
+              "test_max"
+            )
+          )
+        }
+      }
       if (is.null_or_na(y_min)) {
         y_min <- min(plot_data[, data_colnames])
       }
-
       if (is.null_or_na(y_max)) {
         y_max <- max(plot_data[, data_colnames])
       }
@@ -456,12 +475,12 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
         prepared_dataset <- embeddings
         tmp_np_array <- np$array(prepared_dataset)
       } else if (inherits(embeddings, "datasets.arrow_dataset.Dataset")) {
-        #prepared_dataset <- embeddings$set_format("np")
-        tmp_np_array <- extract_column_from_py_dataset(embeddings,"input")
+        # prepared_dataset <- embeddings$set_format("np")
+        tmp_np_array <- extract_column_from_py_dataset(embeddings, "input")
       } else if (inherits(embeddings, "LargeDataSetForTextEmbeddings")) {
-        #prepared_dataset <- embeddings$get_dataset()
-        #prepared_dataset$set_format("np")
-        tmp_np_array <- extract_column_from_py_dataset(embeddings$get_dataset(),"input")
+        # prepared_dataset <- embeddings$get_dataset()
+        # prepared_dataset$set_format("np")
+        tmp_np_array <- extract_column_from_py_dataset(embeddings$get_dataset(), "input")
       }
       tmp_np_array <- reticulate::np_array(tmp_np_array)
       if (!numpy_writeable(tmp_np_array)) {
@@ -476,7 +495,7 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
       } else if (inherits(embeddings, "array")) {
         return(rownames(embeddings))
       } else if (inherits(embeddings, "datasets.arrow_dataset.Dataset")) {
-        return(extract_column_from_py_dataset(embeddings,"id"))
+        return(extract_column_from_py_dataset(embeddings, "id"))
       } else if (inherits(embeddings, "LargeDataSetForTextEmbeddings")) {
         embeddings$get_ids()
       }
@@ -607,9 +626,9 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
                                         pl_step = NULL) {
       plot_data <- self$last_training$history
 
-      if (length(plot_data) <= 1L) {
-        plot_data[[1L]] <- list(loss = plot_data[[1L]])
-      }
+      #if (length(plot_data) <= 1L) {
+      #  plot_data[[1L]] <- list(loss = plot_data[[1L]])
+      #}
 
       if (is.null_or_na(final)) {
         final <- FALSE
@@ -796,7 +815,7 @@ ModelsBasedOnTextEmbeddings <- R6::R6Class(
     #---------------------------------------------------------------------------
     load_pytorch_model = function(dir_path) {
       # Load python scripts
-      private$load_reload_python_scripts()
+
 
       # Load the model---------------------------------------------------------
       path_pt <- paste0(dir_path, "/", "model_data", ".pt")

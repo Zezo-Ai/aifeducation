@@ -121,7 +121,7 @@ get_param_dict <- function() {
   )
 
   param$max_length <- param$max_token_sequence_length
-  param$max_length$test_values=400L
+  param$max_length$test_values <- 400L
   param$max_length$desc <- "Maximal number of token per chunks. Must be equal or lower
   as the maximal postional embeddings for the model."
 
@@ -174,7 +174,7 @@ get_param_dict <- function() {
     gui_label = NULL,
     default_value = 1L,
     default_historic = 1L,
-    test_values =c(1L,2L)
+    test_values = c(1L, 2L)
   )
 
   param$emb_pool_type <- list(
@@ -640,7 +640,7 @@ get_param_dict <- function() {
     gui_box = "Transformer Encoder Layers",
     gui_label = "Target Hidden Size",
     default_value = 768L,
-    test_values = c(64L)
+    test_values = 64L
   )
 
   param$d_head <- param$target_hidden_size
@@ -728,7 +728,7 @@ get_param_dict <- function() {
     gui_box = "Transformer Encoder Layers",
     gui_label = "Block Size",
     default_value = c(4L, 4L),
-    test_values = list(c(4, 4))
+    test_values = list(c(4L, 4L))
   )
 
   param$pooling_type <- list(
@@ -771,7 +771,7 @@ get_param_dict <- function() {
     gui_box = "Sequence Modeling",
     gui_label = "Min Sequence Length",
     default_value = 10L,
-    test_values = c(10L)
+    test_values = 10L
   )
 
   # Data related-----------------------------------------------------------------
@@ -1013,7 +1013,7 @@ get_param_dict <- function() {
     allow_null = TRUE,
     allowed_values = NULL,
     desc = "Region within a country. Only available for USA and Canada See the documentation of
-      codecarbon for more information. <https://docs.codecarbon.io/latest/getting-started/parameters/>",
+      codecarbon for more information. <https://docs.codecarbon.io/latest/>",
     gui_box = NULL,
     default_value = NULL,
     test_values = NULL
@@ -1058,9 +1058,11 @@ get_param_dict <- function() {
     test_values = NULL
   )
   param$loss_pt_fct_name <- param$loss_cls_fct_name
-  param$loss_pt_fct_name$allowed_values <- "MultiWayContrastiveLoss"
+  param$loss_pt_fct_name$allowed_values <- c("MultiWayContrastiveLoss","MultiWayContrastiveLossFC")
   param$loss_pt_fct_name$values_desc <- list(
-    MultiWayContrastiveLoss = "Applies the loss described by [Zhang et al. 2019](https://doi.org/10.1007/978-3-030-16145-3_24)."
+    MultiWayContrastiveLoss = "Applies the loss described by [Zhang et al. 2019](https://doi.org/10.1007/978-3-030-16145-3_24).",
+    MultiWayContrastiveLossFC = "Applies the sum of the loss described by [Zhang et al. 2019](https://doi.org/10.1007/978-3-030-16145-3_24) and the
+    Focal Loss described by [Lin et al. 2017](https://doi.org/10.48550/arXiv.1708.02002)."
   )
   param$loss_pt_fct_name$default_value <- "MultiWayContrastiveLoss"
   param$loss_pt_fct_name$gui_box <- "General Settings"
@@ -1169,6 +1171,23 @@ get_param_dict <- function() {
     default_value = 0.01,
     test_values = 0.01
   )
+
+  param$amp <- list(
+    type = "bool",
+    allow_null = FALSE,
+    min = NULL,
+    max = NULL,
+    allowed_values = NULL,
+    desc = "Apply automatic mixed precision to spped up computations. It is generally
+    recommended to set this parameter to `TRUE`. If you encounter problems set to `FALSE`.
+    * `FALSE`: Use full precision.
+    * `TRUE`: Use automatic mixed precision (amp) with gradient scaling.",
+    gui_box = "General Settings",
+    gui_label = "Apply automatic mixed precision",
+    default_value = FALSE,
+    test_values = FALSE
+  )
+
   param$dir_checkpoint <- list(
     type = "string",
     allow_null = FALSE,
@@ -1351,7 +1370,7 @@ get_param_dict <- function() {
     allow_null = FALSE,
     min = NULL,
     max = NULL,
-    allowed_values = c("matrix_exp", "cayley", "householder","None"),
+    allowed_values = c("matrix_exp", "cayley", "householder", "None"),
     desc = "Method for ensuring orthogonality of weights.",
     default_historic = "householder",
     default_value = " matrix_exp",
@@ -1454,12 +1473,13 @@ get_param_dict <- function() {
       "BatchNorm",
       "PowerNorm",
       "RMSNorm",
-      "None"),
+      "None"
+    ),
     values_desc = list(
       LayerNorm = "Applies normalization as described by [Ba, Kiros, and Hinton (2016)](https://doi.org/10.48550/arXiv.1607.06450). Implementation supports masking of sequences.",
       BatchNorm = "Applies normalization as described by [Loffe and Szegedy](https://doi.org/10.48550/arXiv.1502.03167). Implementation supports masking of sequences.",
       RMSNorm = "Applies normalization as described by  [Zhang and Sennrich](https://doi.org/10.48550/arXiv.1910.07467). Implementation supports masking of sequences.",
-      PowerNorm= "Applies normalization as described by [Shen et al.](https://doi.org/10.48550/arXiv.2003.07845). Implementation supports masking of sequences.",
+      PowerNorm = "Applies normalization as described by [Shen et al.](https://doi.org/10.48550/arXiv.2003.07845). Implementation supports masking of sequences.",
       None = "Applies no normalization."
     ),
     desc = "Type of normalization applied to all layers and stack layers.",
@@ -1527,12 +1547,12 @@ get_param_dict <- function() {
     min = NULL,
     max = NULL,
     allow_null = FALSE,
-    allowed_values = c("Regular", "PairwiseOrthogonal","PairwiseOrthogonalDense"),
+    allowed_values = c("Regular", "PairwiseOrthogonal", "PairwiseOrthogonalDense"),
     values_desc = list(
       Regular = "Applies a fully connected dense layer between the network and the
       final layer that calculates the classes.",
       PairwiseOrthogonal = "Applies a pairwise orthogonal layer as classification head as described by [Li et al. 2020](https://doi.org/10.1109/TIP.2020.2990277).",
-      PairwiseOrthogonalDense="Same as 'PairwiseOrthogonal' but with an additional dense layer before the head."
+      PairwiseOrthogonalDense = "Same as 'PairwiseOrthogonal' but with an additional dense layer before the head."
     ),
     desc = "Type of classification head.",
     gui_box = "Classifiction Pooling Layer",
@@ -1547,14 +1567,14 @@ get_param_dict <- function() {
     min = NULL,
     max = NULL,
     allow_null = FALSE,
-    allowed_values = c("Regular", "PairwiseOrthogonal","PairwiseOrthogonalDense"),
+    allowed_values = c("Regular", "PairwiseOrthogonal", "PairwiseOrthogonalDense"),
     values_desc = list(
       Regular = "Applies a fully connected dense layer for calculating the position of a point on all axes. That is,
       all neurons can contribute to every axes.",
       PairwiseOrthogonal = "Applies a pairwise orthogonal layer without activation for calculating the position of a point. That is,
       a neuron contributes only to one specific axis and an axis is influenced only by a disjoint Subsample of all neurons. The layer is described by
        [Li et al. 2020](https://doi.org/10.1109/TIP.2020.2990277) in the context of classification heads.",
-      PairwiseOrthogonalDense="Same as 'PairwiseOrthogonal' but with an additional dense layer before the head."
+      PairwiseOrthogonalDense = "Same as 'PairwiseOrthogonal' but with an additional dense layer before the head."
     ),
     desc = "Type of projection.",
     gui_box = "General Settings",
@@ -1805,7 +1825,7 @@ get_param_dict <- function() {
   param$feat_size <- param$dense_size
   param$feat_size$gui_box <- "Feature Layer"
   param$feat_size$min <- 2L
-  param$feat_size$test_values = c(4L,6L)
+  param$feat_size$test_values <- c(4L, 6L)
 
   # Transformer Layer------------------------------------------------------------
   param$encoder_dropout <- list(
@@ -1851,7 +1871,7 @@ get_param_dict <- function() {
     gui_box = "Transformer Encoder Layers",
     gui_label = "Intermediate Size",
     default_value = 128L,
-    test_values = c(20L)
+    test_values = 20L
   )
   param$tf_dense_dim <- param$intermediate_size
   param$d_inner <- param$intermediate_size
@@ -2048,7 +2068,7 @@ get_param_dict <- function() {
   )
   param$text_size <- list(
     type = "int",
-    min = 1,
+    min = 1L,
     max = Inf,
     allow_null = FALSE,
     allowed_values = NULL,
@@ -2126,7 +2146,7 @@ get_param_dict <- function() {
   )
   param$n_solutions <- list(
     type = "int",
-    min = 1,
+    min = 1L,
     max = Inf,
     allow_null = FALSE,
     allowed_values = NULL,
@@ -2140,7 +2160,7 @@ get_param_dict <- function() {
 
   param$n_samples <- list(
     type = "int",
-    min = 1,
+    min = 1L,
     max = Inf,
     allow_null = FALSE,
     allowed_values = NULL,
@@ -2217,7 +2237,7 @@ get_param_doc_desc <- function(param_name) {
       if (is.null(param_def$allowed_values)) {
         allowed_values <- "any"
       } else {
-        allowed_values <- paste(paste0("'", param_def$allowed_values, "'"), collapse = ", ")
+        allowed_values <- toString(paste0("'", param_def$allowed_values, "'"))
       }
     } else if (param_def$type %in% c("double", "(double", "double)", "(double)")) {
       if (param_def$min != -Inf) {
@@ -2255,7 +2275,7 @@ get_param_doc_desc <- function(param_name) {
       allowed_values <- NULL
     }
   } else {
-    type <- paste0("`", paste0(param_def$type, collapse = ", "), "`")
+    type <- paste0("`", toString(param_def$type), "`")
     allowed_values <- NULL
   }
 

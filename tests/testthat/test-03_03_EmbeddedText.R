@@ -10,14 +10,9 @@ test_time_start <- Sys.time()
 
 # SetUp Test---------------------------------------------------------------------
 root_path_general_data <- testthat::test_path("test_data/Embeddings")
-# root_path_data <- testthat::test_path("test_data/EmbeddedText")
-# if (dir.exists(testthat::test_path("test_artefacts")) == FALSE) {
-#  dir.create(testthat::test_path("test_artefacts"))
-# }
-# root_path_results <- testthat::test_path("test_artefacts/EmbeddedText")
-# if (dir.exists(root_path_results) == FALSE) {
-#  dir.create(root_path_results)
-# }
+create_dir(testthat::test_path("test_artefacts"), FALSE)
+root_path_results <- testthat::test_path("test_artefacts/EmbeddedTexts")
+create_dir(root_path_results, FALSE)
 
 # SetUp datasets
 # Disable tqdm progressbar
@@ -110,6 +105,72 @@ test_that("EmbeddedText - No FeatureExtractor", {
   # Correct padding value
   expect_equal(new_data_set_converted$get_pad_value(), -100)
 })
+
+# Test basic parameters--------------------------------------------------------
+test_that("EmbeddedText - Save and Load", {
+  new_embedded_text <- EmbeddedText$new()
+  new_embedded_text$configure(
+    model_name = imdb_embeddings$get_model_info()$model_name,
+    model_label = imdb_embeddings$get_model_info()$model_label,
+    model_date = imdb_embeddings$get_model_info()$model_date,
+    model_method = imdb_embeddings$get_model_info()$model_method,
+    model_version = imdb_embeddings$get_model_info()$model_version,
+    model_language = imdb_embeddings$get_model_info()$model_language,
+    param_seq_length = imdb_embeddings$get_model_info()$param_seq_length,
+    param_chunks = imdb_embeddings$get_model_info()$param_chunks,
+    param_features = imdb_embeddings$get_features(),
+    param_overlap = imdb_embeddings$get_model_info()$param_overlap,
+    param_emb_layer_min = imdb_embeddings$get_model_info()$param_emb_layer_min,
+    param_emb_layer_max = imdb_embeddings$get_model_info()$param_emb_layer_max,
+    param_emb_pool_type = imdb_embeddings$get_model_info()$param_emb_pool_type,
+    param_aggregation = imdb_embeddings$get_model_info()$param_aggregation,
+    param_pad_value = -100,
+    embeddings = imdb_embeddings$embeddings
+  )
+
+  folder_name="embedded_text_test"
+  save_to_disk(
+    object = new_embedded_text,
+    dir_path = root_path_results,
+    folder_name = folder_name
+  )
+
+  loaded_embeddings=load_from_disk(
+    dir_path = file.path(root_path_results,folder_name)
+  )
+  expect_equal(
+    loaded_embeddings$get_model_info(),
+    new_embedded_text$get_model_info()
+    )
+  expect_equal(
+    loaded_embeddings$get_times(),
+    new_embedded_text$get_times()
+  )
+  expect_equal(
+    loaded_embeddings$get_model_label(),
+    new_embedded_text$get_model_label()
+  )
+  expect_equal(
+    loaded_embeddings$is_compressed(),
+    new_embedded_text$is_compressed()
+  )
+  expect_equal(
+    loaded_embeddings$is_configured(),
+    new_embedded_text$is_configured()
+  )
+  expect_equal(
+    loaded_embeddings$embeddings,
+    new_embedded_text$embeddings
+  )
+})
+
+# Clean Directory
+if (dir.exists(root_path_results)) {
+  unlink(
+    x = root_path_results,
+    recursive = TRUE
+  )
+}
 
 # Monitor test time
 monitor_test_time_on_CI(

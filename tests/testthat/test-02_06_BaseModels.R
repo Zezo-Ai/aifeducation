@@ -35,17 +35,20 @@ raw_texts <- LargeDataSetForText$new(example_data)
 
 # Test Configuration
 object_class_names <- BaseModelsIndex
-# object_class_names <- c(
-#  "BaseModelDebertaV2")
-#  "BaseModelBert",
-#  #"BaseModelFunnel",
-#  #"BaseModelLongformer"#,
-#  "BaseModelModernBert",
-#  "BaseModelRoberta",
-#  "BaseModelMPNet"
-# )
+if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")){
+  object_class_names <- c(
+      "BaseModelDebertaV2",
+      "BaseModelBert",
+     "BaseModelFunnel",
+     #"BaseModelLongformer",
+      "BaseModelModernBert",
+      "BaseModelRoberta"#,
+    #  "BaseModelMPNet"
+  )
+}
 
-max_samples <- 4
+
+max_samples <- 3
 max_samples_CI <- 1
 
 
@@ -119,6 +122,18 @@ for (object_class_name in object_class_names) {
     create_dir(tmp_dir, trace = FALSE)
 
     #--------------------------------------------------------------------------
+    test_that(paste(
+      "Count Parameter",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      expect_gte(
+        object = base_model$count_parameter(),
+        expected = 1L
+      )
+    })
+
     test_that(paste(
       "Save Model",
       object_class_name,
@@ -248,6 +263,60 @@ for (object_class_name in object_class_names) {
       expect_gt(base_model$get_flops_estimates()$flops_bp_2, 0)
       expect_gt(base_model$get_flops_estimates()$flops_bp_3, 0)
       expect_gt(base_model$get_flops_estimates()$flops_bp_4, 0)
+    })
+
+    test_that(paste(
+      "get_n_layers",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      if (base_model$get_model_type() != "funnel") {
+        expect_gte(base_model$get_n_layers(), config_args$num_hidden_layers)
+      } else if (base_model$get_model_type() == "funnel") {
+        if (is.null(config_args$block_repeats)) {
+          expected <- sum(config_args$block_sizes)
+        } else {
+          expected <- sum(config_args$block_sizes * config_args$block_repeats)
+        }
+        expect_gte(
+          base_model$get_n_layers(),
+          expected
+        )
+      }
+    })
+
+    test_that(paste(
+      "set_publication_info",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      types <- c("developer", "modifier")
+      entries <- c("developed_by", "modified_by")
+      authors <- c("a1", "b1")
+      citation <- c("cit1", "cit2")
+      urls <- c("url1", "url2")
+      for (i in 1:2) {
+        base_model$set_publication_info(
+          type = types[i],
+          authors = authors[i],
+          citation = citation[i],
+          url = urls[i]
+        )
+        expect_equal(
+          object = base_model$get_publication_info()[[entries[i]]][["authors"]],
+          authors[i]
+        )
+        expect_equal(
+          object = base_model$get_publication_info()[[entries[i]]][["citation"]],
+          citation[i]
+        )
+        expect_equal(
+          object = base_model$get_publication_info()[[entries[i]]][["url"]],
+          urls[i]
+        )
+      }
     })
 
     #---------------------------------------------------------------------------

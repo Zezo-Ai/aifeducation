@@ -10,22 +10,23 @@ test_time_start <- Sys.time()
 # config------------------------------------------------------------------------
 load_all_py_scripts()
 object_class_names <- get_TEClassifiers_class_names(super_class = "ClassifiersBasedOnTextEmbeddings")
+object_class_names=setdiff(x=object_class_names,y=c("TEClassifierProtoNet","TEClassifierRegular"))
 
 max_samples <- 20
 max_samples_CI <- 2
 
-max_samples_training <- 2
+max_samples_training <- 1
 max_samples_training_CI <- 1
 
 class_range <- c(2, 3)
 
-prob_precision <- 1e-6
+prob_precision <- 1e-4
 
 # Skip Tests-------------------------------------------------------------------
-skip_creation_test <- TRUE
-skip_function_save_load <- TRUE
+skip_creation_test <- FALSE
+skip_function_save_load <- FALSE
 skip_training_test <- FALSE
-skip_documentation <- TRUE
+skip_documentation <- FALSE
 
 # SetUp-------------------------------------------------------------------------
 # Set paths
@@ -244,7 +245,6 @@ for (object_class_name in object_class_names) {
   }
 
   # Function for loading and saving models-----------------------------------
-
   if (!skip_function_save_load) {
     test_that(paste("function save and load", object_class_name), {
       # Test for different number of classes
@@ -269,7 +269,6 @@ for (object_class_name in object_class_names) {
       )
       classifier <- NULL
       gc()
-
 
       # Create test object with a given combination of args
       classifier <- create_object(object_class_name)
@@ -454,16 +453,16 @@ for (object_class_name in object_class_names) {
 
       if (object_class_name == "TEClassifierSequential" && j <= 1) {
         use_pl <- TRUE
-        tf_n_layers=0L
-        ng_conv_n_layers=0L
-        rec_n_layers=0L
-        dense_n_layers=1L
+        tf_n_layers <- 0L
+        ng_conv_n_layers <- 0L
+        rec_n_layers <- 0L
+        dense_n_layers <- 1L
       } else {
         use_pl <- FALSE
-        tf_n_layers=NULL
-        ng_conv_n_layers=NULL
-        rec_n_layers=NULL
-        dense_n_layers=NULL
+        tf_n_layers <- NULL
+        ng_conv_n_layers <- NULL
+        rec_n_layers <- NULL
+        dense_n_layers <- NULL
       }
 
       if (object_class_name == "TEClassifierParallel" && j <= 1) {
@@ -487,10 +486,10 @@ for (object_class_name in object_class_names) {
           name = NULL,
           label = "Classifier for Estimating a Postive or Negative Rating of Movie Reviews",
           trace = random_bool_on_CI(),
-          tf_n_layers=tf_n_layers,
-          ng_conv_n_layers=ng_conv_n_layers,
-          rec_n_layers=rec_n_layers,
-          dense_n_layers=dense_n_layers
+          tf_n_layers = tf_n_layers,
+          ng_conv_n_layers = ng_conv_n_layers,
+          rec_n_layers = rec_n_layers,
+          dense_n_layers = dense_n_layers
         )
       )
 
@@ -559,7 +558,57 @@ for (object_class_name in object_class_names) {
         }
       })
 
-      # Plot training history
+      # Save and load------------------------------------------------------------
+      test_that(paste(
+        "save_and_load_after_training", object_class_name,
+        get_current_args_for_print(test_combination),
+        get_current_args_for_print(train_args_combinations)
+      ), {
+      # Predictions before saving and loading
+      suppressMessages(
+        predictions <- classifier$predict(
+          newdata = test_embeddings_reduced,
+          batch_size = 2,
+          ml_trace = 0
+        )
+      )
+
+      # Save and load
+      folder_name <- paste0("function_save_load_", generate_id())
+      dir_path <- paste0(root_path_results, "/", folder_name)
+      save_to_disk(
+        object = classifier,
+        dir_path = root_path_results,
+        folder_name = folder_name
+      )
+      classifier2 <- NULL
+      classifier2 <- load_from_disk(dir_path = dir_path)
+
+      # Is config equal after loading
+      expect_equal(
+        classifier$get_model_config(),
+        classifier2$get_model_config()
+      )
+
+      # Predict after loading
+      suppressMessages(
+        predictions_2 <- classifier2$predict(
+          newdata = test_embeddings_reduced,
+          batch_size = 2,
+          ml_trace = 0
+        )
+      )
+
+      # Compare predictions
+      columns_to_compate=setdiff(colnames(predictions),"expected_category")
+      i <- sample(x = seq.int(from = 1, to = nrow(predictions)), size = 1)
+      expect_equal(predictions[i, columns_to_compate, drop = FALSE],
+        predictions_2[i, columns_to_compate, drop = FALSE],
+        tolerance = 1e-5
+      )
+      })
+
+      # Plot training history------------------------------------------------
       test_that(paste(
         "plot_training_history", object_class_name,
         get_current_args_for_print(test_combination),

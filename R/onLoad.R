@@ -33,6 +33,6 @@ calflops <- NULL
 
 # Message on load of the package
 packageStartupMessage(
-  "This is version 1.1.4 of aifeducation. Start a new session with prepare_session().",
+  "This is version 1.1.5 of aifeducation. Start a new session with prepare_session().",
   appendLF = TRUE
 )

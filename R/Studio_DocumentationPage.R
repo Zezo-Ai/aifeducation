@@ -17,7 +17,7 @@
 #'
 #' @param id `string` determining the id for the namespace.
 #' @return This function does nothing return. It is used to build a page for a shiny app.
-#'
+#' @importFrom utils person
 #' @family studio_gui_page_document
 #' @keywords internal
 #' @noRd
@@ -102,7 +102,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
     # Load the model and check for errors during loading-------------------------
     model_path <- shiny::eventReactive(input$button_select_model, {
       model_path <- shinyFiles::parseDirPath(volumes, input$button_select_model)
-      if (length(model_path) > 0) {
+      if (length(model_path) > 0L) {
         return(model_path)
       } else {
         return(NULL)
@@ -112,7 +112,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
     model <- shiny::eventReactive(input$button_select_model, {
       # Get model path
       model_path <- shinyFiles::parseDirPath(volumes, input$button_select_model)
-      if (length(model_path) > 0) {
+      if (length(model_path) > 0L) {
         display_processing(
           title = "Working. Please wait.",
           size = "l",
@@ -123,7 +123,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
         # Try to load the model
         model <- try(load_from_disk(model_path), silent = TRUE)
 
-        if (inherits(model, "try-error") == FALSE) {
+        if (!inherits(model, "try-error")) {
           if (type == "TextEmbeddingModel") {
             if (inherits(model, "TextEmbeddingModel")) {
               shiny::removeModal()
@@ -203,27 +203,20 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
       tmp_model <- model()
 
       tmp_person_list <- NULL
-      for (i in 1:10) {
+      for (i in 1L:10L) {
         given <- input[[paste0("doc_", "Developers", "_fist_name_", i)]]
-        family <- input[[paste0("doc_", "Developers", "_last_name_", i)]]
+        family_name <- input[[paste0("doc_", "Developers", "_last_name_", i)]]
         mail <- input[[paste0("doc_", "Developers", "_mail_", i)]]
-        print(i)
-        print(given)
-        print(family)
-        print(mail)
-        if (!is.null(given) & !is.null(family)) {
-          if (!(given == "") & !(family == "")) {
-            person <- person(given = given, family = family, email = mail)
+        if (!is.null(given) & !is.null(family_name)) {
+          if (given != "" & family_name != "") {
+            person_data <- person(given = given, family = family_name, email = mail)
             tmp_person_list <- append(
               x = tmp_person_list,
-              values = person
+              values = person_data
             )
           }
         }
       }
-
-      print(input[[paste0("doc_", "developed_by", "_citation")]])
-      print(input[[paste0("doc_", "developed_by", "_url")]])
 
       tmp_model$set_publication_info(
         type = "developer",
@@ -231,7 +224,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
         citation = input[[paste0("doc_", "developed_by", "_citation")]],
         url = input[[paste0("doc_", "developed_by", "_url")]]
       )
-      r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+      r_interface_path <- file.path(model_path(), "r_config_state.rda")
       tmp_config <- create_config_state(tmp_model)
       save(tmp_config, file = r_interface_path)
       model <- shiny::reactive({
@@ -252,16 +245,16 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
         tmp_model <- model()
 
         tmp_person_list <- NULL
-        for (i in 1:10) {
+        for (i in 1L:10L) {
           given <- input[[paste0("doc_", "Modifiers", "_fist_name_", i)]]
-          family <- input[[paste0("doc_", "Modifiers", "_last_name_", i)]]
+          family_name <- input[[paste0("doc_", "Modifiers", "_last_name_", i)]]
           mail <- input[[paste0("doc_", "Modifiers", "_mail_", i)]]
-          if (!is.null(given) & !is.null(family)) {
-            if (!(given == "") & !(family == "")) {
-              person <- person(given = given, family = family, email = mail)
+          if (!is.null(given) & !is.null(family_name)) {
+            if (given != "" & family_name != "") {
+              person_data <- person(given = given, family = family_name, email = mail)
               tmp_person_list <- append(
                 x = tmp_person_list,
-                values = person
+                values = person_data
               )
             }
           }
@@ -273,7 +266,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
           citation = input[[paste0("doc_", "modified_by", "_citation")]],
           url = input[[paste0("doc_", "modified_by", "_url")]]
         )
-        r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+        r_interface_path <- file.path(model_path(), "r_config_state.rda")
         tmp_config <- create_config_state(tmp_model)
         save(tmp_config, file = r_interface_path)
         model <- shiny::reactive({
@@ -298,7 +291,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
         abstract_eng = input$doc_editor_abstract_eng,
         keywords_eng = input$doc_editor_abstract_eng_keywords
       )
-      r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+      r_interface_path <- file.path(model_path(), "r_config_state.rda")
       tmp_config <- create_config_state(tmp_model)
       save(tmp_config, file = r_interface_path)
       model <- shiny::reactive({
@@ -325,7 +318,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
       tmp_model$set_model_description(
         eng = input$doc_editor_description_eng
       )
-      r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+      r_interface_path <- file.path(model_path(), "r_config_state.rda")
       tmp_config <- create_config_state(tmp_model)
       save(tmp_config, file = r_interface_path)
       model <- shiny::reactive({
@@ -353,7 +346,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
         abstract_native = input$doc_editor_abstract_native,
         keywords_native = input$doc_editor_abstract_native_keywords
       )
-      r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+      r_interface_path <- file.path(model_path(), "r_config_state.rda")
       tmp_config <- create_config_state(tmp_model)
       save(tmp_config, file = r_interface_path)
       model <- shiny::reactive({
@@ -381,7 +374,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
       tmp_model$set_model_description(
         native = input$doc_editor_description_native
       )
-      r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+      r_interface_path <- file.path(model_path(), "r_config_state.rda")
       tmp_config <- create_config_state(tmp_model)
       save(tmp_config, file = r_interface_path)
       model <- shiny::reactive({
@@ -409,7 +402,7 @@ DocumentPage_Server <- function(id, volumes, type = "TextEmbeddingModel") {
       tmp_model$set_documentation_license(input$doc_editor_documentation_license)
       tmp_model$set_model_license(input$doc_editor_software_license)
 
-      r_interface_path <- paste0(model_path(), "/r_config_state.rda")
+      r_interface_path <- file.path(model_path(), "r_config_state.rda")
       tmp_config <- create_config_state(tmp_model)
       save(tmp_config, file = r_interface_path)
       model <- shiny::reactive({

@@ -128,7 +128,7 @@ TEClassifierProtoNet <- R6::R6Class(
       }
 
       # Load Custom Model Scripts
-      private$load_reload_python_scripts()
+
 
       # Check number of cases in the data
       single_prediction <- private$check_single_prediction(embeddings_q)
@@ -325,7 +325,7 @@ TEClassifierProtoNet <- R6::R6Class(
     create_reset_model = function() {
       private$check_config_for_TRUE()
 
-      private$load_reload_python_scripts()
+
 
       private$model <- py$TextEmbeddingClassifierProtoNet_PT(
         features = as.integer(private$model_config$features),
@@ -438,11 +438,6 @@ TEClassifierProtoNet <- R6::R6Class(
       tmp_history <- private$prepare_history_data(tmp_history)
 
       return(tmp_history)
-    },
-    #--------------------------------------------------------------------------
-    load_reload_python_scripts = function() {
-      super$load_reload_python_scripts()
-      load_py_scripts("pytorch_old_scripts.py")
     },
     #--------------------------------------------------------------------------
     check_param_combinations_configuration = function() {

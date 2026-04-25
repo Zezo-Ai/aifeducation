@@ -178,6 +178,13 @@ read_loss_log <- function(path_loss) {
     for (i in seq_len(ncol(loss_data))) {
       loss_data[, i] <- as.numeric(loss_data[, i])
     }
+
+    loss_data=replace(
+      x=loss_data,
+      list=(loss_data==-100),
+      values = NA
+    )
+
     loss_data$epoch <- seq.int(
       from = 1L,
       to = nrow(loss_data),

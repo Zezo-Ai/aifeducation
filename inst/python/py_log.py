@@ -72,3 +72,54 @@ def write_log_performance_py(log_file, history,
   args_fn = { "file": log_file, "history": history }
               
   return _write(_write_history, args_fn, last_log, write_interval)
+
+
+class LogWriter:
+  def __init__(self,log_file,log_file_loss ,value_top = 1, value_middle = 1, value_bottom = 1,
+                  total_top = 2, total_middle = 2, total_bottom = 2, message_top = "Top", message_middle = "Middle",
+                  message_bottom = "Bottom", last_log = None, write_interval = 2):
+    self.log_file=log_file
+    self.log_file_loss=log_file_loss
+    self.value_top=value_top
+    self.value_middle=value_middle
+    self.value_bottom=value_bottom
+    self.total_top=total_top
+    self.total_middle=total_middle
+    self.total_bottom=total_bottom
+    self.message_top=message_top
+    self.message_middle=message_middle
+    self.message_bottom=message_bottom
+    self.last_log=last_log
+    self.last_log_loss=last_log
+    self.write_interval=write_interval
+  def set_value(self,value,level):
+    if level=="top":
+      self.value_top=value
+    elif level=="middle":
+      self.value_middle=value
+    elif level=="bottom":
+      self.value_bottom=value
+  def inc_value(self,level):
+    if level=="top":
+      self.value_top+=1
+    elif level=="middle":
+      self.value_middle+=1
+    elif level=="bottom":
+      self.value_bottom+=1
+  def reset_value(self,level):
+    if level=="top":
+      self.value_top=0
+    elif level=="middle":
+      self.value_middle=0
+    elif level=="bottom":
+      self.value_bottom=0   
+  def set_history_loss(self,history_loss):
+    self.history_loss=history_loss
+  def write_log(self):
+    if not (self.log_file is None):
+      self.last_log=write_log_py(log_file=self.log_file, value_top = self.value_top, value_middle = self.value_middle, value_bottom = self.value_bottom,
+                    total_top = self.total_top, total_middle = self.total_middle, total_bottom = self.total_bottom, message_top = self.message_top, message_middle = self.message_middle,
+                    message_bottom = self.message_bottom, last_log = self.last_log, write_interval = self.write_interval)
+  def write_history_log(self,history_loss):
+    if not (self.log_file is None):
+      self.last_log_loss=write_log_performance_py(log_file=self.log_file_loss, history=history_loss.tolist(), last_log = self.last_log_loss, write_interval = self.write_interval)

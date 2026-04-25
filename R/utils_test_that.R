@@ -144,8 +144,9 @@ generate_args_for_tests <- function(object_name,
 }
 
 #' @title Set sample size for argument combinations
-#' @description Function adjust the number of samples depending on the test environment.
-#' On continuous integration it is limited to a random sample of combinations.
+#' @description Depending on the test environment, the function adjusts the number of samples.
+#' For continuous integration, it is limited to a random sample of combinations.
+#' The same applies if CUDA is unavailable.
 #' @param n_samples_requested `int` Number of samples if the test do not run on continuous integration.
 #' @param n_CI `int` Number of samples if the test run on continuous integration.
 #' @return Returns an `int` depending on the test environment.
@@ -154,10 +155,14 @@ check_adjust_n_samples_on_CI <- function(
     n_samples_requested,
     n_CI = 50L) {
   # If on github use only a small random sample
-  if (Sys.getenv("CI") != "true") {
+  if (Sys.getenv("CI") == "true") {
     return(min(n_samples_requested, n_CI))
   } else {
-    return(n_samples_requested)
+    if(torch$cuda$is_available()){
+      return(n_samples_requested)
+    } else {
+      return(min(n_samples_requested, n_CI))
+    }
   }
 }
 

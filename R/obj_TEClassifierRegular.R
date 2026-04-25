@@ -100,7 +100,7 @@ TEClassifierRegular <- R6::R6Class(
     create_reset_model = function() {
       private$check_config_for_TRUE()
 
-      private$load_reload_python_scripts()
+
 
       private$model <- py$TextEmbeddingClassifier_PT(
         features = as.integer(private$model_config$features),
@@ -125,11 +125,6 @@ TEClassifierRegular <- R6::R6Class(
         act_fct = private$model_config$act_fct,
         parametrizations = private$model_config$parametrizations
       )
-    },
-    #--------------------------------------------------------------------------
-    load_reload_python_scripts = function() {
-      super$load_reload_python_scripts()
-      load_py_scripts("pytorch_old_scripts.py")
     },
     #--------------------------------------------------------------------------
     check_param_combinations_configuration = function() {

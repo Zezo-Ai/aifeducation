@@ -56,8 +56,8 @@ these sub-sequences can be interpreted as n-grams (Jacovi, Shalom & Goldberg 201
 The number of filters equals the number of features of the input tensor. Thus, the shape of the tensor is retained (Pham, Kruszewski & Boleda 2016).
 
 The layer is able to consider multiple n-grams at the same time. In this case the convolution of the n-grams is done
-seprately and the resulting tensors are concatenated along the feature dimension. The number of filters for every n-gram
-is set to num_features/num_n-grams. Thus, the resulting tensor has the same shape as the input tensor.
+seprately and the resulting tensors are concatenated along the feature dimension. The number of filters for each n-gram is set to the next smallest natural number
+of num_features/num_n-grams. A residual is added to the first n-gram. Thus, the resulting tensor has the same shape as the input tensor.
 
 Sub-sequences that are masked in the input are
 also masked in the output.

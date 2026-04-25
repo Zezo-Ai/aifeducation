@@ -119,9 +119,6 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         )
       }
 
-      # Load Custom Model Scripts
-      private$load_reload_python_scripts()
-
       # Check number of cases in the data
       single_prediction <- private$check_single_prediction(newdata)
 
@@ -1102,6 +1099,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         lr_rate = self$last_training$config$lr_rate,
         lr_min=self$last_training$config$lr_min,
         scheduler_type=self$last_training$config$lr_scheduler,
+        amp=self$last_training$config$amp,
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
         epochs = as.integer(self$last_training$config$epochs),
         trace = as.integer(self$last_training$config$ml_trace),
@@ -1325,24 +1323,6 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       private$model_config$features <- features
       private$model_config$times <- times
     },
-    #--------------------------------------------------------------------------
-    load_reload_python_scripts = function() {
-      load_py_scripts(c(
-        "pytorch_act_fct.py",
-        "pytorch_distance_fun.py",
-        "pytorch_loss_fct.py",
-        "pytorch_layers.py",
-        "pytorch_layers_normalization.py",
-        "pytorch_stack_layers.py",
-        "pytorch_autoencoder.py",
-        "py_log.py",
-        "py_functions.py",
-        "pytorch_classifier_models.py",
-        "pytorch_cls_training_loops.py",
-        "pytorch_predict_batch.py",
-        "pytorch_datacollators.py"
-      ))
-    },
     #-------------------------------------------------------------------------
     do_training = function(args) {
       # Check arguments
@@ -1393,7 +1373,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
 
       # Start Training----------------------------------------------------------
       # Load Custom Model Scripts
-      private$load_reload_python_scripts()
+
 
       # Start Loop inclusive final training
       for (iter in 1L:(self$last_training$config$n_folds + 1L)) {

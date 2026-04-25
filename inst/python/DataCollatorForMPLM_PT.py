@@ -21,28 +21,49 @@ from math import ceil
 # ======================================================================================
 
 class CollatorMaker_PT:
-    def __init__(self, tokenizer, mlm = True, mlm_probability = 0.15, plm_probability = 0.6, mask_whole_words = False):
+    def __init__(self, tokenizer,max_length, transformers_version_controll=0, mlm = True, mlm_probability = 0.15, plm_probability = 0.6, mask_whole_words = False):
         self.mask_whole_words = mask_whole_words
+        self.max_length = max_length
+        self.transformers_version_controll = transformers_version_controll
         self.collator = self.__make_collator()(tokenizer = tokenizer,
+                                               transformers_version_controll=transformers_version_controll,
+                                               max_length=self.max_length,
                                                mlm = mlm,
                                                mlm_probability = mlm_probability, 
                                                plm_probability = plm_probability)
         
     def __get_class_type(self):
-        return DataCollatorForWholeWordMask if self.mask_whole_words \
-               else DataCollatorForLanguageModeling
+        if self.transformers_version_controll<2:
+          return DataCollatorForWholeWordMask if self.mask_whole_words \
+                 else DataCollatorForLanguageModeling
+        else:
+          return DataCollatorForLanguageModeling
     
     def __make_collator(self):
         base_class = self.__get_class_type()
 
         class DataCollatorForMPLM(base_class):
-            def __init__(self, tokenizer, mlm, mlm_probability, plm_probability):
+            def __init__(self, tokenizer,transformers_version_controll, mlm, mlm_probability, plm_probability,max_length,mask_whole_words=self.mask_whole_words):
+                self.transformers_version_controll=transformers_version_controll
+                self.max_length=max_length
+                self.mask_whole_words=mask_whole_words
                 if isinstance(base_class, DataCollatorForLanguageModeling):
-                  super().__init__(tokenizer = tokenizer, mlm = mlm, mlm_probability = mlm_probability)
+                  if self.transformers_version_controll<=0:
+                    super().__init__(tokenizer = tokenizer, mlm = mlm, mlm_probability = mlm_probability)
+                  elif self.transformers_version_controll==1:
+                    super().__init__(tokenizer = tokenizer, mlm = mlm, mlm_probability = mlm_probability,mask_replace_prob = 1.0,random_replace_prob = 0.0)
+                  else:
+                    super().__init__(tokenizer = tokenizer, mlm = mlm, whole_word_mask = self.mask_whole_words, mlm_probability = mlm_probability, mask_replace_prob = 1.0,random_replace_prob = 0.0)
                 else:
-                  super().__init__(tokenizer = tokenizer,  mlm_probability = mlm_probability)
+                  if self.transformers_version_controll==0:
+                    super().__init__(tokenizer = tokenizer,  mlm_probability = mlm_probability)
+                  elif self.transformers_version_controll==1:
+                    super().__init__(tokenizer = tokenizer,  mlm_probability = mlm_probability, mask_replace_prob = 1.0,random_replace_prob = 0.0)
                 self.tokenizer = tokenizer
                 self.plm_probability = plm_probability
+                if self.transformers_version_controll==2:
+                  self.seed=10
+                  self.generator = self.get_generator(self.seed)
 
             def make_plm_labels(self, input_ids):
                 plm_labels = input_ids.clone()
