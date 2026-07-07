@@ -12,7 +12,7 @@ Objects of this class containing fields and methods used in several other classe
 This class is \strong{not} designed for a direct application and should only be used by developers.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEMaster}},
 \code{\link{BaseModelCore}},
 \code{\link{ClassifiersBasedOnTextEmbeddings}},
@@ -25,66 +25,68 @@ Other R6 Classes for Developers:
 }
 \concept{R6 Classes for Developers}
 \section{Super class}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{AIFEBaseModel}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{AIFEBaseModel}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-AIFEBaseModel-count_parameter}{\code{AIFEBaseModel$count_parameter()}}
-\item \href{#method-AIFEBaseModel-clone}{\code{AIFEBaseModel$clone()}}
+  \itemize{
+    \item \href{#method-AIFEBaseModel-count_parameter}{\code{AIFEBaseModel$count_parameter()}}
+    \item \href{#method-AIFEBaseModel-clone}{\code{AIFEBaseModel$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEBaseModel-count_parameter"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEBaseModel-count_parameter}{}}}
-\subsection{Method \code{count_parameter()}}{
-Method for counting the trainable parameters of a model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEBaseModel$count_parameter()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEBaseModel$count_parameter()}}{
+  Method for counting the trainable parameters of a model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEBaseModel$count_parameter()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the number of trainable parameters of the model.
+  }
 }
 
-\subsection{Returns}{
-Returns the number of trainable parameters of the model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEBaseModel-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEBaseModel-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEBaseModel$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{AIFEBaseModel$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEBaseModel$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

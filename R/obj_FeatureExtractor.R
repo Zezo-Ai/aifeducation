@@ -99,11 +99,12 @@ TEFeatureExtractor <- R6::R6Class(
       private$set_configuration_to_TRUE()
 
       # Create_Model
-      private$create_reset_model()
+      private$init_model()
     },
 
     #-------------------------------------------------------------------------
-    #' @description Method for training a neural net.
+    #' @description Method for training a TEFeatureExtractor.
+    #'
     #' @param data_embeddings `r get_param_doc_desc("data_embeddings")`
     #' @param data_val_size `r get_param_doc_desc("data_val_size")`
     #' @param sustain_track `r get_param_doc_desc("sustain_track")`
@@ -139,10 +140,10 @@ TEFeatureExtractor <- R6::R6Class(
                      ml_trace = 1L,
                      log_dir = NULL,
                      log_write_interval = 10L,
-                     lr_rate = 1e-3,
-                     lr_min=1e-4,
+                     lr_rate = 0.00,
+                     lr_min = 0.00,
                      lr_warm_up_ratio = 0.02,
-                     lr_scheduler="None",
+                     lr_scheduler = "None",
                      optimizer = "AdamW",
                      amp = FALSE) {
       tmp_args <- get_called_args(n = 1L)
@@ -207,15 +208,18 @@ TEFeatureExtractor <- R6::R6Class(
       # Start Sustainability Tracking-------------------------------------------
       private$init_and_start_sustainability_tracking()
 
+      # Calculate Learning Rate
+      private$calculate_learning_rate(extractor_dataset$train)
+
       # Start Training----------------------------------------------------------
       self$last_training$history <- py$AutoencoderTrain_PT_with_Datasets(
         model = private$model,
         optimizer_method = self$last_training$config$optimizer,
-        amp=self$last_training$config$amp,
+        amp = self$last_training$config$amp,
         lr_rate = self$last_training$config$lr_rate,
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
-        lr_min=self$last_training$config$lr_min,
-        scheduler_type=self$last_training$config$lr_scheduler,
+        lr_min = self$last_training$config$lr_min,
+        scheduler_type = self$last_training$config$lr_scheduler,
         epochs = as.integer(self$last_training$config$epochs),
         trace = as.integer(self$last_training$config$ml_trace),
         batch_size = as.integer(self$last_training$config$batch_size),
@@ -230,6 +234,14 @@ TEFeatureExtractor <- R6::R6Class(
         log_top_message = log_top_message
       )
       rownames(self$last_training$history$loss) <- c("train", "val")
+      for (i in seq_along(self$last_training$history)) {
+        self$last_training$history[[i]] <- replace(
+          x = self$last_training$history[[i]],
+          list = (self$last_training$history[[i]] == -100L),
+          values = NA
+        )
+      }
+
       self$last_training$history <- list(self$last_training$history)
 
       # Stop sustainability tracking if requested
@@ -371,6 +383,14 @@ TEFeatureExtractor <- R6::R6Class(
         batch_size = batch_size,
         zero_based = TRUE
       )
+
+      # Set Up progress indicator
+      PgrInd <- ProgressIndicator$new(
+        max_iter = total_number_of_bachtes,
+        inc_absolute = TRUE,
+        calc_eta = TRUE
+      )
+
       # Process every batch
       for (i in 1L:total_number_of_bachtes) {
         tmp_subset <- data_embeddings$select(as.integer(batches_index[[i]]))
@@ -414,10 +434,13 @@ TEFeatureExtractor <- R6::R6Class(
           # Add new data
           embedded_texts_large$add_embeddings_from_EmbeddedText(embeddings)
         }
-        print_message(
-          msg = paste("Compress Embeddings - Batch", i, "/", total_number_of_bachtes, "done"),
-          trace = trace
-        )
+        if (trace) {
+          PgrInd$print_step(
+            iter = i,
+            text_pre = "Compress Embeddings",
+            text_post = "done"
+          )
+        }
         gc()
       }
       return(embedded_texts_large)
@@ -446,13 +469,30 @@ TEFeatureExtractor <- R6::R6Class(
         text_size = text_size
       )
       return(tmp_plot)
+    },
+    #' @description Print method for classifiers.
+    #' @return Prints a short description of the object.
+    print = function() {
+      rows <- c("Object", "ID", "Label", "Configured", "Trained", "Times", "Features In", "Features Out", "Parameter")
+      padded_rows <- pad_str(rows, width = NULL, pad = " ", end = ": ")
+      message(
+        appendLF = FALSE,
+        padded_rows[1L], class(self)[1L], "\n",
+        padded_rows[2L], private$model_info$model_name, "\n",
+        padded_rows[3L], private$model_info$model_label, "\n",
+        padded_rows[4L], self$is_configured(), "\n",
+        padded_rows[5L], self$is_trained(), "\n",
+        padded_rows[6L], self$get_text_embedding_model()$times, "\n",
+        padded_rows[7L], self$get_text_embedding_model()$features, "\n",
+        padded_rows[8L], self$get_model_config()$features, "\n",
+        padded_rows[9L], self$count_parameter(), "\n"
+      )
     }
   ),
   private = list(
     trained = FALSE,
     #--------------------------------------------------------------------------
-    create_reset_model = function() {
-
+    init_model = function() {
       private$check_config_for_TRUE()
 
       if (private$model_config$method == "LSTM") {
@@ -480,6 +520,28 @@ TEFeatureExtractor <- R6::R6Class(
       } else {
         return(name)
       }
+    },
+    #--------------------------------------------------------------------------
+    estimate_learning_rates = function(dataset, total_epochs) {
+      lr_estimation_results <- py$calc_lr_rate(
+        trace = self$last_training$config$ml_trace,
+        epochs = as.integer(total_epochs),
+        model = private$model,
+        filepath = file.path(private$dir_checkpoint, "best_weights.pt"),
+        optimizer_method = self$last_training$config$optimizer,
+        loss_fct_name = "MSELoss",
+        dataset = dataset,
+        batch_size = as.integer(self$last_training$config$batch_size),
+        class_weights = NULL,
+        Ns = NULL,
+        Nq = NULL,
+        separate = NULL,
+        shuffle = NULL,
+        alpha = NULL,
+        margin = NULL,
+        n_classes = NULL
+      )
+      return(lr_estimation_results)
     }
   )
 )

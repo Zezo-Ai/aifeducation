@@ -53,17 +53,17 @@ LargeDataSetBase <- R6::R6Class(
     #' * `"numpy"` returns the data as numpy array.
     #' @return Returns a `vector`, `matrix` or `array` for `format="R"`. In
     #' all other cases the requestes format is returned..
-    extract_column=function(col_name, format="R"){
+    extract_column = function(col_name, format = "R") {
       check_class_and_type(
         object = col_name,
         object_name = "col_name",
         type_classes = "string",
         allow_NULL = FALSE
-        )
-      if(col_name%in%self$get_colnames()){
-        extraction=extract_column_from_py_dataset(
-          py_dataset=private$data,
-          column_name=col_name,
+      )
+      if (col_name %in% self$get_colnames()) {
+        extraction <- extract_column_from_py_dataset(
+          py_dataset = private$data,
+          column_name = col_name,
           format = format
         )
         return(extraction)
@@ -106,7 +106,7 @@ LargeDataSetBase <- R6::R6Class(
     #' @description Get ids
     #' @return Returns a `vector` containing the ids of every row as `string`s.
     get_ids = function() {
-      return(extract_column_from_py_dataset(private$data,"id"))
+      return(extract_column_from_py_dataset(private$data, "id"))
     },
 
     #--------------------------------------------------------------------------
@@ -197,6 +197,19 @@ LargeDataSetBase <- R6::R6Class(
           public = public_list,
           private = private_list
         )
+      )
+    },
+    #' @description Print method for classifiers.
+    #' @return Prints a short description of the object.
+    print = function() {
+      current_colnames <- self$get_colnames()
+      rows <- c("Object", "Columns", "Rows")
+      padded_rows <- pad_str(rows, width = NULL, pad = " ", end = ": ")
+      message(
+        appendLF = FALSE,
+        padded_rows[1L], class(self)[1L], "\n",
+        padded_rows[2L], toString(current_colnames), "\n",
+        padded_rows[3L], self$n_rows(), "\n"
       )
     }
   ),

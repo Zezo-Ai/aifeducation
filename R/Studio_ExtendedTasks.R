@@ -177,7 +177,7 @@ long_models <- function(args) {
     )
 
     # Create object or load object
-    if (args[[1L]]$meta_args$object_class %in% BaseModelsIndex) {
+    if (args[[1L]]$meta_args$object_class %in% get_entry_from_BaseModelsIndex("class_name")) {
       object <- load_from_disk(args[[1L]]$path_args$path_to_base_model)
     } else {
       object <- create_object(args[[1L]]$meta_args$object_class)
@@ -229,7 +229,6 @@ long_transformers <- function(args) {
 
     for (task in names(args)) {
       current_task <- args[[task]]
-
       # Create or select the relevant object
       if (current_task$meta_args$object_class %in% names(object_list)) {
         tmp_object <- object_list[[current_task$meta_args$object_class]]
@@ -258,8 +257,8 @@ long_transformers <- function(args) {
 
     # Create dir for saving the object
     dir_destination <- file.path(
-      args$configure$path_args$destination_path,
-      args$configure$path_args$folder_name
+      args[[1L]]$path_args$destination_path,
+      args[[1L]]$path_args$folder_name
     )
     create_dir(dir_destination, FALSE)
 

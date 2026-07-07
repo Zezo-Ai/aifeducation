@@ -1243,8 +1243,8 @@ create_widget_card <- function(id,
 
 
   # Create Main Card
-  tmp_cards["width"]=list("350px")
-  tmp_cards["heights_equal"]=list("row")
+  tmp_cards["width"] <- list("350px")
+  tmp_cards["heights_equal"] <- list("row")
   main_card <- bslib::card(
     bslib::card_header(box_title),
     bslib::card_body(
@@ -1417,7 +1417,7 @@ add_missing_args <- function(args, path_args, meta_args) {
       complete_args[param] <- list(
         load_from_disk(path_args$path_to_textual_dataset)
       )
-    } else if (max(unlist(BaseModelsIndex) %in% current_param$type) && !is.null(path_args$path_to_base_model)) {
+    } else if (max(get_entry_from_BaseModelsIndex("class_name") %in% current_param$type) && !is.null(path_args$path_to_base_model)) {
       complete_args[param] <- list(
         load_from_disk(path_args$path_to_base_model)
       )

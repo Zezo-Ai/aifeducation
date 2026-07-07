@@ -54,10 +54,10 @@ example_data_large_single$add_from_data.frame(example_data_for_large[1, ])
 
 # config
 # Set Chunks
-base_model_type_list <- BaseModelsIndex
-if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")){
-  base_model_type_list=setdiff(x=BaseModelsIndex,y="BaseModelMPNet")
-}
+base_model_type_list <- get_entry_from_BaseModelsIndex("class_name")
+#if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")) {
+#  base_model_type_list <- setdiff(x = base_model_type_list, y = "BaseModelMPNet")
+#}
 
 # Start tests--------------------------------------------------------------------
 for (base_model_type in base_model_type_list) {
@@ -69,7 +69,9 @@ for (base_model_type in base_model_type_list) {
 
   # Error Checking: Max layer greater as the number of layers
   # Load a BaseModel
-  base_model <- load_from_disk(model_path)
+  base_model <- suppressMessages(
+    load_from_disk(model_path)
+  )
 
   config <- generate_args_for_tests(
     object_name = "TextEmbeddingModel",
@@ -90,16 +92,19 @@ for (base_model_type in base_model_type_list) {
     text_embedding_model <- TextEmbeddingModel$new()
     expect_error(
       suppressMessages(
-        do.call(what = text_embedding_model$configure,
-        args = config
+        do.call(
+          what = text_embedding_model$configure,
+          args = config
+        )
       )
     )
-  )
   })
 
   # Error Checking: min layer is smaller 1
   # Load a BaseModel
-  base_model <- load_from_disk(model_path)
+  base_model <- suppressMessages(
+    load_from_disk(model_path)
+  )
 
   config <- generate_args_for_tests(
     object_name = "TextEmbeddingModel",
@@ -120,16 +125,19 @@ for (base_model_type in base_model_type_list) {
     text_embedding_model <- TextEmbeddingModel$new()
     expect_error(
       suppressMessages(
-        do.call(what = text_embedding_model$configure,
-        args = config
+        do.call(
+          what = text_embedding_model$configure,
+          args = config
+        )
       )
-    )
     )
   })
 
   # Error Checking: Configuration already set
   # Load a BaseModel
-  base_model <- load_from_disk(model_path)
+  base_model <- suppressMessages(
+    load_from_disk(model_path)
+  )
 
   config <- generate_args_for_tests(
     object_name = "TextEmbeddingModel",
@@ -149,16 +157,18 @@ for (base_model_type in base_model_type_list) {
   test_that(paste(base_model_type, get_current_args_for_print(config), "Error Checking: Configuration already set"), {
     text_embedding_model <- TextEmbeddingModel$new()
     suppressMessages(
-      do.call(what = text_embedding_model$configure,
-      args = config
-    )
-    )
-    expect_error(
-      suppressMessages(
-        do.call(what = text_embedding_model$configure,
+      do.call(
+        what = text_embedding_model$configure,
         args = config
       )
     )
+    expect_error(
+      suppressMessages(
+        do.call(
+          what = text_embedding_model$configure,
+          args = config
+        )
+      )
     )
   })
 
@@ -169,7 +179,7 @@ for (base_model_type in base_model_type_list) {
     n_CI = max_samples_CI
   )) {
     # Load a BaseModel
-    base_model <- load_from_disk(model_path)
+    base_model <- suppressMessages(load_from_disk(model_path))
 
     config <- generate_args_for_tests(
       object_name = "TextEmbeddingModel",
@@ -190,11 +200,29 @@ for (base_model_type in base_model_type_list) {
     # Central methods--------------------------------------------------------
     # Create Model
     text_embedding_model <- TextEmbeddingModel$new()
+    test_that(paste(base_model_type, get_current_args_for_print(config), "config field for configuration"), {
+      expect_false(text_embedding_model$is_configured())
+    })
+
     suppressMessages(
-      do.call(what = text_embedding_model$configure,
-              args = config
+      do.call(
+        what = text_embedding_model$configure,
+        args = config
       )
     )
+    test_that(paste(base_model_type, get_current_args_for_print(config), "config field after configuration"), {
+      expect_true(text_embedding_model$is_configured())
+    })
+
+    test_that(paste(base_model_type, get_current_args_for_print(config), "print method"), {
+      suppressMessages(
+        expect_no_error(text_embedding_model$print())
+      )
+      suppressMessages(
+        expect_no_error(print(text_embedding_model))
+      )
+    })
+
     # Check history
     test_that(paste(base_model_type, get_current_args_for_print(config), "history"), {
       history <- text_embedding_model$BaseModel$last_training$history
@@ -477,7 +505,9 @@ for (base_model_type in base_model_type_list) {
         folder_name = folder_name
       ))
       # Load Model
-      text_embedding_model_reloaded <- load_from_disk(dir_path = save_location)
+      text_embedding_model_reloaded <- suppressMessages(
+        load_from_disk(dir_path = save_location)
+      )
 
       # embeddings after loading saving
       embeddings_2 <- text_embedding_model_reloaded$embed(

@@ -5,14 +5,12 @@
 \title{Base class for tokenizers}
 \value{
 Does return a new object of this class.
-
-Returns a \code{data.frame} containing the estimates.
 }
 \description{
 Base class for tokenizers containing all methods shared by the sub-classes.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEBaseModel}},
 \code{\link{AIFEMaster}},
 \code{\link{BaseModelCore}},
@@ -25,122 +23,148 @@ Other R6 Classes for Developers:
 }
 \concept{R6 Classes for Developers}
 \section{Super class}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{TokenizerBase}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{TokenizerBase}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TokenizerBase-save}{\code{TokenizerBase$save()}}
-\item \href{#method-TokenizerBase-load_from_disk}{\code{TokenizerBase$load_from_disk()}}
-\item \href{#method-TokenizerBase-get_tokenizer_statistics}{\code{TokenizerBase$get_tokenizer_statistics()}}
-\item \href{#method-TokenizerBase-get_tokenizer}{\code{TokenizerBase$get_tokenizer()}}
-\item \href{#method-TokenizerBase-encode}{\code{TokenizerBase$encode()}}
-\item \href{#method-TokenizerBase-decode}{\code{TokenizerBase$decode()}}
-\item \href{#method-TokenizerBase-get_special_tokens}{\code{TokenizerBase$get_special_tokens()}}
-\item \href{#method-TokenizerBase-n_special_tokens}{\code{TokenizerBase$n_special_tokens()}}
-\item \href{#method-TokenizerBase-calculate_statistics}{\code{TokenizerBase$calculate_statistics()}}
-\item \href{#method-TokenizerBase-clone}{\code{TokenizerBase$clone()}}
+  \itemize{
+    \item \href{#method-TokenizerBase-save}{\code{TokenizerBase$save()}}
+    \item \href{#method-TokenizerBase-load_from_disk}{\code{TokenizerBase$load_from_disk()}}
+    \item \href{#method-TokenizerBase-get_tokenizer_statistics}{\code{TokenizerBase$get_tokenizer_statistics()}}
+    \item \href{#method-TokenizerBase-get_vocab_size}{\code{TokenizerBase$get_vocab_size()}}
+    \item \href{#method-TokenizerBase-get_tokenizer}{\code{TokenizerBase$get_tokenizer()}}
+    \item \href{#method-TokenizerBase-encode}{\code{TokenizerBase$encode()}}
+    \item \href{#method-TokenizerBase-decode}{\code{TokenizerBase$decode()}}
+    \item \href{#method-TokenizerBase-get_special_tokens}{\code{TokenizerBase$get_special_tokens()}}
+    \item \href{#method-TokenizerBase-n_special_tokens}{\code{TokenizerBase$n_special_tokens()}}
+    \item \href{#method-TokenizerBase-calculate_statistics}{\code{TokenizerBase$calculate_statistics()}}
+    \item \href{#method-TokenizerBase-calc_quantiles}{\code{TokenizerBase$calc_quantiles()}}
+    \item \href{#method-TokenizerBase-print}{\code{TokenizerBase$print()}}
+    \item \href{#method-TokenizerBase-clone}{\code{TokenizerBase$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-save"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-save}{}}}
-\subsection{Method \code{save()}}{
-Method for saving a model on disk.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$save(dir_path, folder_name)}\if{html}{\out{</div>}}
+\subsection{\code{TokenizerBase$save()}}{
+  Method for saving a model on disk.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$save(dir_path, folder_name)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path to the directory where to save the object.}
+      \item{\code{folder_name}}{\code{string} Name of the folder where the model should be saved. Allowed values:
+
+any}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does nothing return. It is used to save an object on disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path to the directory where to save the object.}
-
-\item{\code{folder_name}}{\code{string} Name of the folder where the model should be saved. Allowed values: any}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does nothing return. It is used to save an object on disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-load_from_disk"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-load_from_disk}{}}}
-\subsection{Method \code{load_from_disk()}}{
-Loads an object from disk
+\subsection{\code{TokenizerBase$load_from_disk()}}{
+  Loads an object from disk
 and updates the object to the current version of the package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$load_from_disk(dir_path)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$load_from_disk(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the object set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does nothin return. It loads an object from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the object set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does nothin return. It loads an object from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-get_tokenizer_statistics"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-get_tokenizer_statistics}{}}}
-\subsection{Method \code{get_tokenizer_statistics()}}{
-Tokenizer statistics
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$get_tokenizer_statistics()}\if{html}{\out{</div>}}
+\subsection{\code{TokenizerBase$get_tokenizer_statistics()}}{
+  Tokenizer statistics
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$get_tokenizer_statistics()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{data.frame} containing the tokenizer's statistics.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{data.frame} containing the tokenizer's statistics.
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TokenizerBase-get_vocab_size"></a>}}
+\if{latex}{\out{\hypertarget{method-TokenizerBase-get_vocab_size}{}}}
+\subsection{\code{TokenizerBase$get_vocab_size()}}{
+  Vocabulary. size
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$get_vocab_size()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{int} representing the size of the vocabulary.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-get_tokenizer"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-get_tokenizer}{}}}
-\subsection{Method \code{get_tokenizer()}}{
-Python tokenizer
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$get_tokenizer()}\if{html}{\out{</div>}}
+\subsection{\code{TokenizerBase$get_tokenizer()}}{
+  Python tokenizer
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$get_tokenizer()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the python tokenizer within the model.
+  }
 }
 
-\subsection{Returns}{
-Returns the python tokenizer within the model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-encode"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-encode}{}}}
-\subsection{Method \code{encode()}}{
-Method for encoding words of raw texts into integers.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$encode(
+\subsection{\code{TokenizerBase$encode()}}{
+  Method for encoding words of raw texts into integers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$encode(
   raw_text,
   token_overlap = 0L,
   max_token_sequence_length = 512L,
@@ -149,146 +173,219 @@ Method for encoding words of raw texts into integers.
   token_to_int = TRUE,
   return_token_type_ids = TRUE,
   trace = FALSE
-)}\if{html}{\out{</div>}}
-}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{raw_text}}{\code{vector} Raw text.}
+      \item{\code{token_overlap}}{\code{int} Number of tokens from the previous chunk that should be added at the beginng of the next chunk. Allowed values:
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{raw_text}}{\code{vector} Raw text.}
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{max_token_sequence_length}}{\code{int} Maximal number of tokens per chunk. Allowed values:
 
-\item{\code{token_overlap}}{\code{int} Number of tokens from the previous chunk that should be added at the beginng of the next chunk. Allowed values: \ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+\ifelse{latex}{$20 <= x $}{\ifelse{html}{\eqn{20 <= x }}{`20 <= x `}}}
+      \item{\code{n_chunks}}{\code{int} Maximal number chunks. Allowed values:
 
-\item{\code{max_token_sequence_length}}{\code{int} Maximal number of tokens per chunk. Allowed values: \ifelse{latex}{$20 <= x $}{\ifelse{html}{\eqn{20 <= x }}{`20 <= x `}}}
-
-\item{\code{n_chunks}}{\code{int} Maximal number chunks. Allowed values: \ifelse{latex}{$2 <= x $}{\ifelse{html}{\eqn{2 <= x }}{`2 <= x `}}}
-
-\item{\code{token_encodings_only}}{\code{bool}
+\ifelse{latex}{$2 <= x $}{\ifelse{html}{\eqn{2 <= x }}{`2 <= x `}}}
+      \item{\code{token_encodings_only}}{\code{bool}
 \itemize{
 \item \code{TRUE}: Returns a \code{list} containg only the tokens.
 \item \code{FALSE}: Returns a \code{list} containg a list for the tokens, the number of chunks, and
 the number potential number of chunks for each document/text.
 }}
-
-\item{\code{token_to_int}}{\code{bool}
+      \item{\code{token_to_int}}{\code{bool}
 \itemize{
 \item \code{TRUE}: Returns the tokens as \code{int} index.
 \item \code{FALSE}: Returns the tokens as \code{string}s.
 }}
-
-\item{\code{return_token_type_ids}}{\code{bool} If \code{TRUE} additionally returns the return_token_type_ids.}
-
-\item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{list} containing the integer or token sequences of the raw texts with
+      \item{\code{return_token_type_ids}}{\code{bool} If \code{TRUE} additionally returns the return_token_type_ids.}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} containing the integer or token sequences of the raw texts with
 special tokens.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-decode"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-decode}{}}}
-\subsection{Method \code{decode()}}{
-Method for decoding a sequence of integers into tokens
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$decode(int_seqence, to_token = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{int_seqence}}{\code{list} \code{list} of integer sequence that should be converted to tokens.}
-
-\item{\code{to_token}}{\code{bool}
+\subsection{\code{TokenizerBase$decode()}}{
+  Method for decoding a sequence of integers into tokens
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$decode(int_seqence, to_token = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{int_seqence}}{\code{list} \code{list} of integer sequence that should be converted to tokens.}
+      \item{\code{to_token}}{\code{bool}
 \itemize{
 \item \code{FALSE}: Transforms the integers to plain text.
 \item \code{TRUE}: Transforms the integers to a sequence of tokens.
 }}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} of token sequences
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{list} of token sequences
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-get_special_tokens"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-get_special_tokens}{}}}
-\subsection{Method \code{get_special_tokens()}}{
-Method for receiving the special tokens of the model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$get_special_tokens()}\if{html}{\out{</div>}}
+\subsection{\code{TokenizerBase$get_special_tokens()}}{
+  Method for receiving the special tokens of the model
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$get_special_tokens()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{matrix} containing the special tokens in the rows
+and their type, token, and id in the columns.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{matrix} containing the special tokens in the rows
-and their type, token, and id in the columns.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-n_special_tokens"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-n_special_tokens}{}}}
-\subsection{Method \code{n_special_tokens()}}{
-Method for receiving the special tokens of the model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$n_special_tokens()}\if{html}{\out{</div>}}
+\subsection{\code{TokenizerBase$n_special_tokens()}}{
+  Method for receiving the special tokens of the model
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$n_special_tokens()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an 'int' counting the number of special tokens.
+  }
 }
 
-\subsection{Returns}{
-Returns an 'int' counting the number of special tokens.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-calculate_statistics"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-calculate_statistics}{}}}
-\subsection{Method \code{calculate_statistics()}}{
-Method for calculating tokenizer statistics as suggested by
+\subsection{\code{TokenizerBase$calculate_statistics()}}{
+  Method for calculating tokenizer statistics as suggested by
 Kaya and Tantuğ (2024).
 
 Kaya, Y. B., & Tantuğ, A. C. (2024). Effect of tokenization granularity
 for Turkish large language models. Intelligent Systems with
 Applications, 21, 200335.
 \ifelse{text}{\doi{doi:10.1016/j.iswa.2024.200335}}{<https://doi.org/10.1016/j.iswa.2024.200335>}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$calculate_statistics(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$calculate_statistics(
   text_dataset,
   statistics_max_tokens_length,
   step = "creation"
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
+      \item{\code{statistics_max_tokens_length}}{\code{int} Maximum sequence length for calculating the statistics. Allowed values:
+
+\ifelse{latex}{$20 <= x <= 8192$}{\ifelse{html}{\eqn{20 <= x <= 8192}}{`20 <= x <= 8192`}}}
+      \item{\code{step}}{\code{string} describing the context of the estimation.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{data.frame} containing the estimates.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TokenizerBase-calc_quantiles"></a>}}
+\if{latex}{\out{\hypertarget{method-TokenizerBase-calc_quantiles}{}}}
+\subsection{\code{TokenizerBase$calc_quantiles()}}{
+  Method for calculating the necessary number of chunks to cover
+a specific quantile of documents completely.
 
-\item{\code{statistics_max_tokens_length}}{\code{int} Maximum sequence length for calculating the statistics. Allowed values: \ifelse{latex}{$20 <= x <= 8192$}{\ifelse{html}{\eqn{20 <= x <= 8192}}{`20 <= x <= 8192`}}}
 
-\item{\code{step}}{\code{string} describing the context of the estimation.}
+  Tokenizer split raw texts into a sequences of tokens. Most neural nets can only
+process a given sequence length. Thus, long texts must be split into a
+sequence of sequences in order to represent the whole text. This method calculates
+how many sequences are necessary. The number of sequences of sequences is called chunks.
+
+
+  You can think of these chunks as dividing a long texts into several paragraphs.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$calc_quantiles(
+  text_dataset,
+  batch_size = 32L,
+  seq_len_tokens = 512L,
+  token_overlap = 0L,
+  trace = TRUE
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
+      \item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{seq_len_tokens}}{\code{int} Length of a sequence in tokens Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{token_overlap}}{\code{int} Number of tokens from the previous chunk that should be added at the beginng of the next chunk. Allowed values:
+
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{vector} containing the number of chunks to cover a given
+quantile of documents completely.
+  }
 }
-\if{html}{\out{</div>}}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TokenizerBase-print"></a>}}
+\if{latex}{\out{\hypertarget{method-TokenizerBase-print}{}}}
+\subsection{\code{TokenizerBase$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
 }
-\subsection{Returns}{
-Returns an 'int' counting the number of special tokens.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TokenizerBase-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TokenizerBase-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TokenizerBase$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TokenizerBase$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TokenizerBase$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

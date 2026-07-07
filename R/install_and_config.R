@@ -28,7 +28,7 @@
 get_recommended_py_versions <- function(package_name = NULL) {
   check_class_and_type(object = package_name, object_name = "package_name", type_classes = "string", allow_NULL = TRUE)
   py_versions <- list(
-    transformers = c("4.56.0", "5.5.4", "4.57.6"),
+    transformers = c("4.56.0", "5.8.1"),
     tokenizers = c("0.22.0", "0.22.2"),
     pandas = c("2.3.2", "3.0.2"),
     datasets = c("3.6.0", "4.8.4"),
@@ -36,6 +36,8 @@ get_recommended_py_versions <- function(package_name = NULL) {
     safetensors = c("0.6.2", "0.7.0"),
     torcheval = c("0.0.7", "0.0.7"),
     accelerate = c("1.10.1", "1.13.0"),
+    sentencepiece = c("0.2.0", "0.2.1"),
+    google.protobuf = c("7.34.0", "7.34.1"),
     calflops = c("0.3.2", "0.3.2")
   )
 
@@ -336,7 +338,6 @@ install_py_modules <- function(envname = "aifeducation",
 
   if (!use_conda) {
     # Use virtualenv
-
     if (reticulate::virtualenv_exists(envname = envname)) {
       if (remove_first) {
         reticulate::virtualenv_remove(envname = envname, confirm = FALSE)
@@ -409,30 +410,38 @@ install_py_modules <- function(envname = "aifeducation",
 #'   available.
 #'
 #' @param trace `bool` `TRUE` if a list with all modules and their availability should be printed to the console.
+#' @param for_sentencepiece `bool` if `TRUE` checks only for 'sentencepiece' and 'google.protobuf'.
 #' @return The function prints a table with all relevant packages and shows which modules are available or unavailable.
 #' @return If all relevant modules are available, the functions returns `TRUE`. In all other cases it returns `FALSE`
 #' @family Installation and Configuration
 #' @export
-check_aif_py_modules <- function(trace = TRUE) {
-  general_modules <- c(
-    "os",
-    "transformers",
-    "tokenizers",
-    "datasets",
-    "codecarbon",
-    "calflops"
-  )
-  pytorch_modules <- c(
-    "torch",
-    "torcheval",
-    "safetensors",
-    "accelerate",
-    "pandas"
-  )
-  relevant_modules <- c(
-    general_modules,
-    pytorch_modules
-  )
+check_aif_py_modules <- function(trace = TRUE, for_sentencepiece = FALSE) {
+  if (for_sentencepiece) {
+    relevant_modules <- c(
+      "sentencepiece",
+      "google.protobuf"
+    )
+  } else {
+    general_modules <- c(
+      "os",
+      "transformers",
+      "tokenizers",
+      "datasets",
+      "codecarbon",
+      "calflops"
+    )
+    pytorch_modules <- c(
+      "torch",
+      "torcheval",
+      "safetensors",
+      "accelerate",
+      "pandas"
+    )
+    relevant_modules <- c(
+      general_modules,
+      pytorch_modules
+    )
+  }
 
   matrix_overview <- matrix(
     data = NA,
@@ -458,23 +467,36 @@ check_aif_py_modules <- function(trace = TRUE) {
 }
 
 #' @title Sets the level for logging information of the 'transformers' library
-#' @description This function changes the level for logging information of the 'transformers' library. It influences the
-#'   output printed to console for creating and training transformer models as well as [TextEmbeddingModel]s.
+#' @description This function changes the level for logging information of the 'transformers' library. .
 #'
-#' @param level `string` Minimal level that should be printed to console. Four levels are available: INFO, WARNING,
-#'   ERROR and DEBUG
+#' @param level `string` Minimal level that should be printed to console.
+#' Four levels are available: `"INFO"`, `"WARNING"`, `"ERROR"`, and `"DEBUG"`.
 #' @return This function does not return anything. It is used for its side effects.
 #' @family Installation and Configuration
 #' @export
 set_transformers_logger <- function(level = "ERROR") {
-  if (level == "ERROR") {
-    transformers$utils$logging$set_verbosity_error()
-  } else if (level == "WARNING") {
-    transformers$utils$logging$set_verbosity_warning()
-  } else if (level == "INFO") {
-    transformers$utils$logging$set_verbosity_info()
-  } else if (level == "DEBUG") {
-    transformers$utils$logging$set_verbosity_debug()
+  valid_levels <- c("INFO", "WARNING", "ERROR", "DEBUG")
+  if (level %in% valid_levels) {
+    transformers$logging$set_verbosity(as.integer(transformers$utils$logging$log_levels[tolower(level)]))
+  } else {
+    stop("Valid levels are: ", toString(valid_levels))
+  }
+}
+
+#' @title Sets the level for logging information of the 'codecarbon' library
+#' @description This function changes the level for logging information of the 'codecarbon' library.
+#'
+#' @param level `string` Minimal level that should be printed to console. Four levels are available: `"INFO"`, `"WARNING"`,
+#'   `"ERROR"`, `"CRITICAL"`, and `"DEBUG"`
+#' @return This function does not return anything. It is used for its side effects.
+#' @family Installation and Configuration
+#' @export
+set_codecarbon_logger <- function(level = "ERROR") {
+  valid_levels <- c("INFO", "WARNING", "ERROR", "CRITICAL", "DEBUG")
+  if (level %in% valid_levels) {
+    codecarbon$core$config$logger$setLevel(level)
+  } else {
+    stop("Valid levels are ", toString(valid_levels))
   }
 }
 
@@ -492,12 +514,17 @@ set_transformers_logger <- function(level = "ERROR") {
 #' available. Set this argument to `FALSE` can speed up sessions' preparation.
 #' Set this argument to `FALSE` only if you are certain that the requirements for the
 #' package are satisfied.
+#' @param set_logger_level `bool` If `TRUE` the logger level of all python packages is set to "Error" and
+#' all prints to the console are disabled.
 #'
 #' @return Function does not return anything. It is used for preparing python and R.
 #'
 #' @family Installation and Configuration
 #' @export
-prepare_session <- function(env_type = "auto", envname = "aifeducation", check_session = TRUE) {
+prepare_session <- function(env_type = "auto",
+                            envname = "aifeducation",
+                            check_session = TRUE,
+                            set_logger_level = TRUE) {
   if (!reticulate::py_available(FALSE)) {
     message("Python is not initalized.")
     if (env_type == "auto") {
@@ -559,22 +586,42 @@ prepare_session <- function(env_type = "auto", envname = "aifeducation", check_s
   message("Detected OS: ", detec_os())
   if (check_session) {
     message("Checking python packages. This can take a moment.")
-    if (check_aif_py_modules(trace = FALSE)) {
+    if (check_aif_py_modules(trace = FALSE, for_sentencepiece = FALSE)) {
       message("All necessary python packages are available.")
     } else {
       stop("Not all required python packages are available. Call check_aif_py_modules for details.")
     }
-    pkg_versions <- get_py_package_versions()
-    message(paste(paste0(names(pkg_versions), ":"), pkg_versions, collapse = "\n"))
-    message("GPU Acceleration: ", torch$cuda$is_available())
-
+    pkg_versions <- get_py_package_versions(sentencepiece = FALSE)
+    print_strings <- pad_str(c(names(pkg_versions), "GPU Acceleration", "sentencepiece available"), width = NULL, pad = " ", end = " : ")
+    message(
+      paste0(
+        print_strings,
+        c(
+          pkg_versions,
+          torch$cuda$is_available(),
+          check_aif_py_modules(trace = FALSE, for_sentencepiece = TRUE)
+        ),
+        collapse = "\n"
+      )
+    )
     if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")) {
-      message("Version of python package 'transformers' is 5.0.0 or higher. Some older models
-              from hugging face may not work.")
+      message(
+        "Version of python package 'transformers' is 5.0.0 or higher. ",
+        "Some older models from hugging face may not work."
+      )
     }
   }
+
   message("Load all python objects and functions.")
   load_all_py_scripts()
+  # Set logger level of python packages
+  if (set_logger_level) {
+    message("Set logger level of python packages.")
+    datasets$disable_progress_bars()
+    transformers$logging$disable_progress_bar()
+    set_transformers_logger("ERROR")
+    set_codecarbon_logger("ERROR")
+  }
   message("Location for Temporary Files:", create_and_get_tmp_dir())
 }
 
@@ -597,4 +644,47 @@ detec_os <- function() {
   } else {
     return(sys_name)
   }
+}
+
+#' @title Install protocol buffer compiler
+#' @description This function is a support function to install the protocol buffer
+#' compiler which is necessary for using the python libraries 'protobuf' and
+#' 'sentencepiece'. Details can be found here
+#' <https://protobuf.dev/installation/>.
+#' @description On Windows the function uses Winget requiring Windows 10 or higher.
+#' On MacOS it uses Homebrew. On Linux it uses apt.
+#' @return This function does not return anything. It installs
+#' the protocol buffer compiler
+#' @family Installation and Configuration
+#' @export
+install_protocol_buffer_compiler <- function() {
+  os <- detec_os()
+  if (os == "windows") {
+    command <- "winget install protobuf"
+  } else if (os == "linux") {
+    command <- "apt install -y protobuf-compiler"
+  } else if (os == "mac") {
+    command <- "brew install protobuf"
+  } else {
+    stop("OS could not be detected.")
+  }
+  cat("Using the command'", command, "' to install.\n")
+  results <- suppressWarnings(
+    system(
+      command = command,
+      intern = TRUE,
+      wait = TRUE,
+      invisible = FALSE,
+      show.output.on.console = FALSE
+    )
+  )
+  cat(toString(results), "\n")
+  version <- system(
+    command = "protoc --version",
+    intern = TRUE,
+    wait = TRUE,
+    invisible = FALSE,
+    show.output.on.console = FALSE
+  )
+  return(toString(version))
 }

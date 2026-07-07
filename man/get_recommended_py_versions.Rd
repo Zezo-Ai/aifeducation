@@ -21,13 +21,15 @@ python packages used in \emph{aifeducation}. It is recommended to use packages o
 these version. Packages of other versions can result in errors or unexpected results.
 }
 \seealso{
-Other Installation and Configuration: 
-\code{\link{check_aif_py_modules}()},
-\code{\link{install_aifeducation}()},
-\code{\link{install_aifeducation_studio}()},
-\code{\link{install_py_modules}()},
-\code{\link{prepare_session}()},
-\code{\link{set_transformers_logger}()},
-\code{\link{update_aifeducation}()}
+Other Installation and Configuration:
+\code{\link[=check_aif_py_modules]{check_aif_py_modules()}},
+\code{\link[=install_aifeducation]{install_aifeducation()}},
+\code{\link[=install_aifeducation_studio]{install_aifeducation_studio()}},
+\code{\link[=install_protocol_buffer_compiler]{install_protocol_buffer_compiler()}},
+\code{\link[=install_py_modules]{install_py_modules()}},
+\code{\link[=prepare_session]{prepare_session()}},
+\code{\link[=set_codecarbon_logger]{set_codecarbon_logger()}},
+\code{\link[=set_transformers_logger]{set_transformers_logger()}},
+\code{\link[=update_aifeducation]{update_aifeducation()}}
 }
 \concept{Installation and Configuration}

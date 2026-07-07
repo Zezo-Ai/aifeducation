@@ -8,9 +8,8 @@
 **GitHub** [![Project Status: Active - The project has reached a stable,
 usable state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![](https://img.shields.io/badge/devel%20version-1.1.3-green.svg)](https://github.com/fberding/aifeducation)
+[![](https://img.shields.io/badge/devel%20version-1.1.6-green.svg)](https://github.com/fberding/aifeducation)
 [![R-CMD-check](https://github.com/FBerding/aifeducation/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FBerding/aifeducation/actions/workflows/R-CMD-check.yaml)
-[![CodeFactor](https://www.codefactor.io/repository/github/fberding/aifeducation/badge)](https://www.codefactor.io/repository/github/fberding/aifeducation)
 [![Codecov test
 coverage](https://codecov.io/gh/FBerding/aifeducation/graph/badge.svg)](https://app.codecov.io/gh/FBerding/aifeducation)
 
@@ -45,8 +44,10 @@ special conditions of the educational and social sciences.
   computational speed and allowing the use of very large data sets.
 - Uses safetensors for saving models in ‘PyTorch’.
 - Supports pre-trained language models from Hugging Face.
-- Supports ModernBERT, MPNet, BERT, RoBERTa, DeBERTa, and Funnel
-  Transformer for creating context-sensitive text embeddings.
+- Supports ModernBERT, MPNet, BERT, RoBERTa, DeBERTa, Funnel Transformer
+  and more for creating context-sensitive text embeddings. A list of all
+  supported models can be found
+  [here](https://fberding.github.io/aifeducation/articles/a02_base_model_types.html).
 - Makes sharing pre-trained models very easy.
 - Integrates sustainability tracking for training and inference.
 - Integrates an approach to calculate FLOPS based on model’s

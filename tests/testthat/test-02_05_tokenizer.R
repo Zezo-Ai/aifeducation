@@ -25,10 +25,6 @@ create_dir(test_art_path, FALSE)
 create_dir(test_art_tmp_path, FALSE)
 create_dir(tmp_full_models_pt_path, FALSE)
 
-# Data Mangement
-example_data <- imdb_movie_reviews
-raw_texts <- LargeDataSetForText$new(example_data)
-
 # Test Configuration
 object_class_names <- setdiff(x = TokenizerIndex, y = "HuggingFaceTokenizer")
 samples_per_object <- 5
@@ -39,6 +35,10 @@ samples_per_object <- 5
 # Tests
 for (object_class_name in object_class_names) {
   for (i in 1:samples_per_object) {
+    # Data Mangement
+    example_data <- imdb_movie_reviews
+    raw_texts <- LargeDataSetForText$new(example_data)
+
     config_args <- generate_args_for_tests(
       object_name = object_class_name,
       method = "configure",
@@ -114,6 +114,27 @@ for (object_class_name in object_class_names) {
       expect_equal(
         tokenizer$encode(raw_text = "This is a test.", token_encodings_only = TRUE),
         tokenizer2$encode(raw_text = "This is a test.", token_encodings_only = TRUE)
+      )
+
+      # Calculate quantiles
+      quantiles <- tokenizer$calc_quantiles(
+        text_dataset = raw_texts,
+        batch_size = 32L,
+        seq_len_tokens = 512L,
+        token_overlap = 256L,
+        trace = FALSE
+      )
+      expect_equal(object = length(quantiles), expected = 17L)
+      for (i in seq_along(quantiles)) {
+        expect_gte(quantiles[i], 1L)
+      }
+
+      # print method
+      suppressMessages(
+        expect_no_error(tokenizer$print())
+      )
+      suppressMessages(
+        expect_no_error(print(tokenizer))
       )
 
       # Clear directory for next test

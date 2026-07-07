@@ -198,7 +198,7 @@ tensor_list_to_numpy <- function(tensor_list) {
 #'
 #' @family Utils Python Data Management Developers
 #' @export
-extract_column_from_py_dataset <- function(py_dataset, column_name,format="R") {
+extract_column_from_py_dataset <- function(py_dataset, column_name, format = "R") {
   check_class_and_type(
     object = column_name,
     object_name = "column_name",
@@ -218,7 +218,7 @@ extract_column_from_py_dataset <- function(py_dataset, column_name,format="R") {
     b = "3.6.0"
   )) {
     data_column <- py_dataset$select_columns(column_name)
-    if(format=="R"){
+    if (format == "R") {
       data_column$set_format("numpy")
       if (data_column$num_rows == 1L) {
         data_column <- data_column$`repeat`(2L)
@@ -227,7 +227,7 @@ extract_column_from_py_dataset <- function(py_dataset, column_name,format="R") {
         r_column <- r_column[seq.int(from = 0, to = data_column$num_rows - 1L)]
 
         if (is.array(r_column) || is.matrix(r_column)) {
-          r_column <- utils::head(r_column,n=1L)
+          r_column <- utils::head(r_column, n = 1L)
         }
       } else {
         r_column <- data_column[column_name]
@@ -239,29 +239,32 @@ extract_column_from_py_dataset <- function(py_dataset, column_name,format="R") {
       }
       rm(data_column)
       gc()
+      if (is.list(r_column)){
+        r_column=unlist(r_column)
+      }
       return(r_column)
     } else {
       data_column$set_format(format)
       r_column <- data_column[column_name]
       r_column <- r_column[seq.int(from = 0, to = data_column$num_rows - 1L)]
-      if(format=="numpy"){
-        r_column=reticulate::r_to_py(r_column)
+      if (format == "numpy") {
+        r_column <- reticulate::r_to_py(r_column)
       }
       return(r_column)
     }
   } else {
-    if(format=="R"){
+    if (format == "R") {
       py_dataset$set_format("numpy")
-      r_column=py_dataset[[column_name]]
+      r_column <- py_dataset[[column_name]]
       if (length(dim(r_column)) <= 1L) {
         r_column <- as.vector(r_column)
       }
       return(r_column)
     } else {
       py_dataset$set_format(format)
-      r_column=py_dataset[[column_name]]
-      if(format=="numpy"){
-        r_column=reticulate::r_to_py(r_column)
+      r_column <- py_dataset[[column_name]]
+      if (format == "numpy") {
+        r_column <- reticulate::r_to_py(r_column)
       }
       return(r_column)
     }

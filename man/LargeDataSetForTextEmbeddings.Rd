@@ -22,63 +22,63 @@ embedding model are used for training and predicting.
 This class is not designed for a direct use.
 }
 \seealso{
-Other Data Management: 
+Other Data Management:
 \code{\link{EmbeddedText}},
 \code{\link{LargeDataSetForText}}
 }
 \concept{Data Management}
 \section{Super class}{
-\code{\link[aifeducation:LargeDataSetBase]{aifeducation::LargeDataSetBase}} -> \code{LargeDataSetForTextEmbeddings}
+\code{\link[aifeducation:LargeDataSetBase]{LargeDataSetBase}} -> \code{LargeDataSetForTextEmbeddings}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-LargeDataSetForTextEmbeddings-configure}{\code{LargeDataSetForTextEmbeddings$configure()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-is_configured}{\code{LargeDataSetForTextEmbeddings$is_configured()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_text_embedding_model_name}{\code{LargeDataSetForTextEmbeddings$get_text_embedding_model_name()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_model_info}{\code{LargeDataSetForTextEmbeddings$get_model_info()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-load_from_disk}{\code{LargeDataSetForTextEmbeddings$load_from_disk()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_model_label}{\code{LargeDataSetForTextEmbeddings$get_model_label()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-add_feature_extractor_info}{\code{LargeDataSetForTextEmbeddings$add_feature_extractor_info()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_feature_extractor_info}{\code{LargeDataSetForTextEmbeddings$get_feature_extractor_info()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-is_compressed}{\code{LargeDataSetForTextEmbeddings$is_compressed()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_times}{\code{LargeDataSetForTextEmbeddings$get_times()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_features}{\code{LargeDataSetForTextEmbeddings$get_features()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_original_features}{\code{LargeDataSetForTextEmbeddings$get_original_features()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-get_pad_value}{\code{LargeDataSetForTextEmbeddings$get_pad_value()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-add_embeddings_from_array}{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_array()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-add_embeddings_from_EmbeddedText}{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_EmbeddedText()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-add_embeddings_from_LargeDataSetForTextEmbeddings}{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_LargeDataSetForTextEmbeddings()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-convert_to_EmbeddedText}{\code{LargeDataSetForTextEmbeddings$convert_to_EmbeddedText()}}
-\item \href{#method-LargeDataSetForTextEmbeddings-clone}{\code{LargeDataSetForTextEmbeddings$clone()}}
+  \itemize{
+    \item \href{#method-LargeDataSetForTextEmbeddings-configure}{\code{LargeDataSetForTextEmbeddings$configure()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-is_configured}{\code{LargeDataSetForTextEmbeddings$is_configured()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_text_embedding_model_name}{\code{LargeDataSetForTextEmbeddings$get_text_embedding_model_name()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_model_info}{\code{LargeDataSetForTextEmbeddings$get_model_info()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-load_from_disk}{\code{LargeDataSetForTextEmbeddings$load_from_disk()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_model_label}{\code{LargeDataSetForTextEmbeddings$get_model_label()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-add_feature_extractor_info}{\code{LargeDataSetForTextEmbeddings$add_feature_extractor_info()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_feature_extractor_info}{\code{LargeDataSetForTextEmbeddings$get_feature_extractor_info()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-is_compressed}{\code{LargeDataSetForTextEmbeddings$is_compressed()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_times}{\code{LargeDataSetForTextEmbeddings$get_times()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_features}{\code{LargeDataSetForTextEmbeddings$get_features()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_original_features}{\code{LargeDataSetForTextEmbeddings$get_original_features()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-get_pad_value}{\code{LargeDataSetForTextEmbeddings$get_pad_value()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-add_embeddings_from_array}{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_array()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-add_embeddings_from_EmbeddedText}{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_EmbeddedText()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-add_embeddings_from_LargeDataSetForTextEmbeddings}{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_LargeDataSetForTextEmbeddings()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-convert_to_EmbeddedText}{\code{LargeDataSetForTextEmbeddings$convert_to_EmbeddedText()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-print}{\code{LargeDataSetForTextEmbeddings$print()}}
+    \item \href{#method-LargeDataSetForTextEmbeddings-clone}{\code{LargeDataSetForTextEmbeddings$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="extract_column"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-extract_column'><code>aifeducation::LargeDataSetBase$extract_column()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_all_fields"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_all_fields'><code>aifeducation::LargeDataSetBase$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_colnames"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_colnames'><code>aifeducation::LargeDataSetBase$get_colnames()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_dataset"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_dataset'><code>aifeducation::LargeDataSetBase$get_dataset()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_ids'><code>aifeducation::LargeDataSetBase$get_ids()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_package_versions'><code>aifeducation::LargeDataSetBase$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="load"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-load'><code>aifeducation::LargeDataSetBase$load()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_cols"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_cols'><code>aifeducation::LargeDataSetBase$n_cols()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_rows"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_rows'><code>aifeducation::LargeDataSetBase$n_rows()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="reduce_to_unique_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-reduce_to_unique_ids'><code>aifeducation::LargeDataSetBase$reduce_to_unique_ids()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="save"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-save'><code>aifeducation::LargeDataSetBase$save()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="select"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-select'><code>aifeducation::LargeDataSetBase$select()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="set_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-set_package_versions'><code>aifeducation::LargeDataSetBase$set_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="extract_column"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-extract_column'><code>LargeDataSetBase$extract_column()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_all_fields"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_all_fields'><code>LargeDataSetBase$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_colnames"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_colnames'><code>LargeDataSetBase$get_colnames()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_dataset"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_dataset'><code>LargeDataSetBase$get_dataset()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_ids'><code>LargeDataSetBase$get_ids()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_package_versions'><code>LargeDataSetBase$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="load"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-load'><code>LargeDataSetBase$load()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_cols"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_cols'><code>LargeDataSetBase$n_cols()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_rows"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_rows'><code>LargeDataSetBase$n_rows()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="reduce_to_unique_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-reduce_to_unique_ids'><code>LargeDataSetBase$reduce_to_unique_ids()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="save"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-save'><code>LargeDataSetBase$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="select"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-select'><code>LargeDataSetBase$select()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="set_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-set_package_versions'><code>LargeDataSetBase$set_package_versions()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-configure"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-configure}{}}}
-\subsection{Method \code{configure()}}{
-Creates a new object representing text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$configure(
+\subsection{\code{LargeDataSetForTextEmbeddings$configure()}}{
+  Creates a new object representing text embeddings.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$configure(
   model_name = NA,
   model_label = NA,
   model_date = NA,
@@ -94,351 +94,384 @@ Creates a new object representing text embeddings.
   param_emb_pool_type = NULL,
   param_pad_value = -100L,
   param_aggregation = NULL
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{model_name}}{\code{string} Name of the model that generates this embedding.}
-
-\item{\code{model_label}}{\code{string} Label of the model that generates this embedding.}
-
-\item{\code{model_date}}{\code{string} Date when the embedding generating model was created.}
-
-\item{\code{model_method}}{\code{string} Method of the underlying embedding model.}
-
-\item{\code{model_version}}{\code{string} Version of the model that generated this embedding.}
-
-\item{\code{model_language}}{\code{string} Language of the model that generated this embedding.}
-
-\item{\code{param_seq_length}}{\code{int} Maximum number of tokens that processes the generating model for a chunk.}
-
-\item{\code{param_chunks}}{\code{int} Maximum number of chunks which are supported by the generating model.}
-
-\item{\code{param_features}}{\code{int} Number of dimensions of the text embeddings.}
-
-\item{\code{param_overlap}}{\code{int} Number of tokens that were added at the beginning of the sequence for the next chunk
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{model_name}}{\code{string} Name of the model that generates this embedding.}
+      \item{\code{model_label}}{\code{string} Label of the model that generates this embedding.}
+      \item{\code{model_date}}{\code{string} Date when the embedding generating model was created.}
+      \item{\code{model_method}}{\code{string} Method of the underlying embedding model.}
+      \item{\code{model_version}}{\code{string} Version of the model that generated this embedding.}
+      \item{\code{model_language}}{\code{string} Language of the model that generated this embedding.}
+      \item{\code{param_seq_length}}{\code{int} Maximum number of tokens that processes the generating model for a chunk.}
+      \item{\code{param_chunks}}{\code{int} Maximum number of chunks which are supported by the generating model.}
+      \item{\code{param_features}}{\code{int} Number of dimensions of the text embeddings.}
+      \item{\code{param_overlap}}{\code{int} Number of tokens that were added at the beginning of the sequence for the next chunk
 by this model.}
-
-\item{\code{param_emb_layer_min}}{\code{int} or \code{string} determining the first layer to be included in the creation of
+      \item{\code{param_emb_layer_min}}{\code{int} or \code{string} determining the first layer to be included in the creation of
 embeddings.}
-
-\item{\code{param_emb_layer_max}}{\code{int} or \code{string} determining the last layer to be included in the creation of
+      \item{\code{param_emb_layer_max}}{\code{int} or \code{string} determining the last layer to be included in the creation of
 embeddings.}
-
-\item{\code{param_emb_pool_type}}{\code{string} determining the method for pooling the token embeddings within each layer.}
-
-\item{\code{param_pad_value}}{\code{int} Value indicating padding. This value should no be in the range of
+      \item{\code{param_emb_pool_type}}{\code{string} determining the method for pooling the token embeddings within each layer.}
+      \item{\code{param_pad_value}}{\code{int} Value indicating padding. This value should no be in the range of
 regluar values for computations. Thus it is not recommended to chance this value.
-Default is \code{-100}. Allowed values: \ifelse{latex}{$ x <= -1$}{\ifelse{html}{\eqn{ x <= -1}}{` x <= -1`}}}
+Default is \code{-100}. Allowed values:
 
-\item{\code{param_aggregation}}{\code{string} Aggregation method of the hidden states. Deprecated. Only included for backward
+\ifelse{latex}{$ x <= -1$}{\ifelse{html}{\eqn{ x <= -1}}{` x <= -1`}}}
+      \item{\code{param_aggregation}}{\code{string} Aggregation method of the hidden states. Deprecated. Only included for backward
 compatibility.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method returns a new object of this class.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method returns a new object of this class.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-is_configured"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-is_configured}{}}}
-\subsection{Method \code{is_configured()}}{
-Method for checking if the model was successfully configured. An object can only be used if this
+\subsection{\code{LargeDataSetForTextEmbeddings$is_configured()}}{
+  Method for checking if the model was successfully configured. An object can only be used if this
 value is \code{TRUE}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$is_configured()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$is_configured()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{bool} \code{TRUE} if the model is fully configured. \code{FALSE} if not.
+  }
 }
 
-\subsection{Returns}{
-\code{bool} \code{TRUE} if the model is fully configured. \code{FALSE} if not.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_text_embedding_model_name"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_text_embedding_model_name}{}}}
-\subsection{Method \code{get_text_embedding_model_name()}}{
-Method for requesting the name (unique id) of the underlying text embedding model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_text_embedding_model_name()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$get_text_embedding_model_name()}}{
+  Method for requesting the name (unique id) of the underlying text embedding model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_text_embedding_model_name()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{string} describing name of the text embedding model.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{string} describing name of the text embedding model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_model_info"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_model_info}{}}}
-\subsection{Method \code{get_model_info()}}{
-Method for retrieving information about the model that generated this embedding.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_model_info()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$get_model_info()}}{
+  Method for retrieving information about the model that generated this embedding.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_model_info()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} containing all saved information about the underlying text embedding model.
+  }
 }
 
-\subsection{Returns}{
-\code{list} containing all saved information about the underlying text embedding model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-load_from_disk"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-load_from_disk}{}}}
-\subsection{Method \code{load_from_disk()}}{
-loads an object of class \link{LargeDataSetForTextEmbeddings} from disk and updates the object to the
+\subsection{\code{LargeDataSetForTextEmbeddings$load_from_disk()}}{
+  loads an object of class \link{LargeDataSetForTextEmbeddings} from disk and updates the object to the
 current version of the package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$load_from_disk(dir_path)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$load_from_disk(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the data set set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It loads an object from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the data set set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It loads an object from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_model_label"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_model_label}{}}}
-\subsection{Method \code{get_model_label()}}{
-Method for retrieving the label of the model that generated this embedding.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_model_label()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$get_model_label()}}{
+  Method for retrieving the label of the model that generated this embedding.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_model_label()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{string} Label of the corresponding text embedding model
+  }
 }
 
-\subsection{Returns}{
-\code{string} Label of the corresponding text embedding model
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-add_feature_extractor_info"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-add_feature_extractor_info}{}}}
-\subsection{Method \code{add_feature_extractor_info()}}{
-Method setting information on the \link{TEFeatureExtractor} that was used to reduce the number of
+\subsection{\code{LargeDataSetForTextEmbeddings$add_feature_extractor_info()}}{
+  Method setting information on the \link{TEFeatureExtractor} that was used to reduce the number of
 dimensions of the text embeddings. This information should only be used if a \link{TEFeatureExtractor} was applied.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$add_feature_extractor_info(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$add_feature_extractor_info(
   model_name,
   model_label = NA,
   features = NA,
   method = NA,
   noise_factor = NA,
   optimizer = NA
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{model_name}}{\code{string} Name of the underlying \link{TextEmbeddingModel}.}
-
-\item{\code{model_label}}{\code{string} Label of the underlying \link{TextEmbeddingModel}.}
-
-\item{\code{features}}{\code{int} Number of dimension (features) for the \strong{compressed} text embeddings.}
-
-\item{\code{method}}{\code{string} Method that the \link{TEFeatureExtractor} applies for genereating the compressed text
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{model_name}}{\code{string} Name of the underlying \link{TextEmbeddingModel}.}
+      \item{\code{model_label}}{\code{string} Label of the underlying \link{TextEmbeddingModel}.}
+      \item{\code{features}}{\code{int} Number of dimension (features) for the \strong{compressed} text embeddings.}
+      \item{\code{method}}{\code{string} Method that the \link{TEFeatureExtractor} applies for genereating the compressed text
 embeddings.}
+      \item{\code{noise_factor}}{\code{double} Noise factor of the \link{TEFeatureExtractor}.}
+      \item{\code{optimizer}}{\code{string} Optimizer used during training the \link{TEFeatureExtractor}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does nothing return. It sets information on a \link{TEFeatureExtractor}.
+  }
+}
 
-\item{\code{noise_factor}}{\code{double} Noise factor of the \link{TEFeatureExtractor}.}
-
-\item{\code{optimizer}}{\code{string} Optimizer used during training the \link{TEFeatureExtractor}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does nothing return. It sets information on a \link{TEFeatureExtractor}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_feature_extractor_info"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_feature_extractor_info}{}}}
-\subsection{Method \code{get_feature_extractor_info()}}{
-Method for receiving information on the \link{TEFeatureExtractor} that was used to reduce the number of
+\subsection{\code{LargeDataSetForTextEmbeddings$get_feature_extractor_info()}}{
+  Method for receiving information on the \link{TEFeatureExtractor} that was used to reduce the number of
 dimensions of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_feature_extractor_info()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_feature_extractor_info()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} with information on the \link{TEFeatureExtractor}. If no \link{TEFeatureExtractor} was used it
+returns \code{NULL}.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} with information on the \link{TEFeatureExtractor}. If no \link{TEFeatureExtractor} was used it
-returns \code{NULL}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-is_compressed"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-is_compressed}{}}}
-\subsection{Method \code{is_compressed()}}{
-Checks if the text embedding were reduced by a \link{TEFeatureExtractor}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$is_compressed()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$is_compressed()}}{
+  Checks if the text embedding were reduced by a \link{TEFeatureExtractor}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$is_compressed()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns \code{TRUE} if the number of dimensions was reduced by a \link{TEFeatureExtractor}. If not return \code{FALSE}.
+  }
 }
 
-\subsection{Returns}{
-Returns \code{TRUE} if the number of dimensions was reduced by a \link{TEFeatureExtractor}. If not return \code{FALSE}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_times"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_times}{}}}
-\subsection{Method \code{get_times()}}{
-Number of chunks/times of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_times()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$get_times()}}{
+  Number of chunks/times of the text embeddings.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_times()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of chunks/times of the text embeddings.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of chunks/times of the text embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_features"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_features}{}}}
-\subsection{Method \code{get_features()}}{
-Number of actual features/dimensions of the text embeddings.In the case a \link{TEFeatureExtractor} was
+\subsection{\code{LargeDataSetForTextEmbeddings$get_features()}}{
+  Number of actual features/dimensions of the text embeddings.In the case a \link{TEFeatureExtractor} was
 used the number of features is smaller as the original number of features. To receive the original number of
 features (the number of features before applying a \link{TEFeatureExtractor}) you can use the method
 \code{get_original_features} of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_features()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_features()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of features/dimensions of the text embeddings.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of features/dimensions of the text embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_original_features"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_original_features}{}}}
-\subsection{Method \code{get_original_features()}}{
-Number of original features/dimensions of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_original_features()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$get_original_features()}}{
+  Number of original features/dimensions of the text embeddings.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_original_features()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of features/dimensions if no \link{TEFeatureExtractor}) is used or
+before a \link{TEFeatureExtractor}) is applied.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of features/dimensions if no \link{TEFeatureExtractor}) is used or
-before a \link{TEFeatureExtractor}) is applied.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-get_pad_value"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-get_pad_value}{}}}
-\subsection{Method \code{get_pad_value()}}{
-Value for indicating padding.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$get_pad_value()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$get_pad_value()}}{
+  Value for indicating padding.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$get_pad_value()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the value used for padding.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the value used for padding.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-add_embeddings_from_array"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-add_embeddings_from_array}{}}}
-\subsection{Method \code{add_embeddings_from_array()}}{
-Method for adding new data to the data set from an \code{array}. Please note that the method does not
+\subsection{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_array()}}{
+  Method for adding new data to the data set from an \code{array}. Please note that the method does not
 check if cases already exist in the data set. To reduce the data set to unique cases call the method
 \code{reduce_to_unique_ids}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$add_embeddings_from_array(embedding_array)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$add_embeddings_from_array(embedding_array)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{embedding_array}}{\code{array} containing the text embeddings.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new data to the data set.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{embedding_array}}{\code{array} containing the text embeddings.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new data to the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-add_embeddings_from_EmbeddedText"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-add_embeddings_from_EmbeddedText}{}}}
-\subsection{Method \code{add_embeddings_from_EmbeddedText()}}{
-Method for adding new data to the data set from an \link{EmbeddedText}. Please note that the method does
+\subsection{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_EmbeddedText()}}{
+  Method for adding new data to the data set from an \link{EmbeddedText}. Please note that the method does
 not check if cases already exist in the data set. To reduce the data set to unique cases call the method
 \code{reduce_to_unique_ids}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$add_embeddings_from_EmbeddedText(EmbeddedText)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$add_embeddings_from_EmbeddedText(EmbeddedText)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{EmbeddedText}}{Object of class \link{EmbeddedText}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new data to the data set.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{EmbeddedText}}{Object of class \link{EmbeddedText}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new data to the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-add_embeddings_from_LargeDataSetForTextEmbeddings"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-add_embeddings_from_LargeDataSetForTextEmbeddings}{}}}
-\subsection{Method \code{add_embeddings_from_LargeDataSetForTextEmbeddings()}}{
-Method for adding new data to the data set from an \link{LargeDataSetForTextEmbeddings}. Please note that
+\subsection{\code{LargeDataSetForTextEmbeddings$add_embeddings_from_LargeDataSetForTextEmbeddings()}}{
+  Method for adding new data to the data set from an \link{LargeDataSetForTextEmbeddings}. Please note that
 the method does not check if cases already exist in the data set. To reduce the data set to unique cases call
 the method \code{reduce_to_unique_ids}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$add_embeddings_from_LargeDataSetForTextEmbeddings(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$add_embeddings_from_LargeDataSetForTextEmbeddings(
   dataset
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dataset}}{Object of class \link{LargeDataSetForTextEmbeddings}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new data to the data set.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dataset}}{Object of class \link{LargeDataSetForTextEmbeddings}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new data to the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-convert_to_EmbeddedText"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-convert_to_EmbeddedText}{}}}
-\subsection{Method \code{convert_to_EmbeddedText()}}{
-Method for converting this object to an object of class \link{EmbeddedText}.
+\subsection{\code{LargeDataSetForTextEmbeddings$convert_to_EmbeddedText()}}{
+  Method for converting this object to an object of class \link{EmbeddedText}.
 
 \strong{Attention} This object uses memory mapping to allow the usage of data sets
 that do not fit into memory. By calling this method the data set will be loaded and stored into memory/RAM.
 This may lead to an out-of-memory error.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$convert_to_EmbeddedText()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$convert_to_EmbeddedText()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    LargeDataSetForTextEmbeddings an object of class \link{EmbeddedText} which is stored in the memory/RAM.
+  }
 }
 
-\subsection{Returns}{
-LargeDataSetForTextEmbeddings an object of class \link{EmbeddedText} which is stored in the memory/RAM.
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-print"></a>}}
+\if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-print}{}}}
+\subsection{\code{LargeDataSetForTextEmbeddings$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForTextEmbeddings-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForTextEmbeddings-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForTextEmbeddings$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForTextEmbeddings$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForTextEmbeddings$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

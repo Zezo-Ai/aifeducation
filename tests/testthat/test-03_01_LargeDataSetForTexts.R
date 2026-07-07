@@ -29,6 +29,22 @@ test_that("LargeDataSetForTexts - Create", {
 # Test read of multiple text files-----------------------------------------------
 root_path_data_multiple_texts <- paste0(root_path_data, "/texts")
 
+test_that("LargeDataSetForTexts - print method", {
+  new_dataset <- LargeDataSetForText$new()
+  expect_no_error(
+    new_dataset$add_from_files_txt(
+      dir_path = root_path_data_multiple_texts,
+      trace = FALSE
+    )
+  )
+  suppressMessages(
+    expect_no_error(new_dataset$print())
+  )
+  suppressMessages(
+    expect_no_error(print(new_dataset))
+  )
+})
+
 test_that("LargeDataSetForTexts - Add txt", {
   new_dataset <- LargeDataSetForText$new()
   expect_no_error(

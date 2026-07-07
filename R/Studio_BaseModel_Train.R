@@ -209,7 +209,7 @@ BaseModel_Train_Server <- function(id, log_dir, volumes) {
         type <- unlist(
           intersect(
             x = class(model),
-            y = BaseModelsIndex
+            y = get_entry_from_BaseModelsIndex("class_name")
           )
         )
         return(type)

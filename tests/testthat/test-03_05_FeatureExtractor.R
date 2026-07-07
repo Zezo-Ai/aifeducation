@@ -15,7 +15,7 @@ root_path_general_data <- testthat::test_path("test_data/Embeddings")
 create_dir(testthat::test_path("test_artefacts"), FALSE)
 root_path_results <- testthat::test_path("test_artefacts/FeatureExtractor")
 create_dir(root_path_results, FALSE)
-tolerance=1e-5
+tolerance <- 1e-5
 
 # SetUp datasets
 # Disable tqdm progressbar
@@ -42,6 +42,26 @@ method_list <- list(
 for (framework in ml_frameworks) {
   for (data_type in names(dataset_list)) {
     for (method in method_list[[framework]]) {
+      test_that(paste(framework, method, data_type, "print method"), {
+        extractor <- TEFeatureExtractor$new()
+        extractor$configure(
+          name = "Test_extractor",
+          label = "Test Extractor",
+          text_embeddings = dataset_list[[data_type]],
+          features = 128,
+          method = method,
+          orthogonal_method = "matrix_exp",
+          noise_factor = 0.2
+        )
+
+        suppressMessages(
+          expect_no_error(extractor$print())
+        )
+        suppressMessages(
+          expect_no_error(print(extractor))
+        )
+      })
+
       # Create----------------------------------------------------------------
       extractor <- TEFeatureExtractor$new()
       extractor$configure(
@@ -79,6 +99,10 @@ for (framework in ml_frameworks) {
         expect_true(extractor$get_sustainability_data()$sustainability_tracked)
       })
       gc()
+
+      test_that(paste(framework, method, data_type, "plot_learning_rate"), {
+        expect_s3_class(object = extractor$plot_learning_rate(), class = "ggplot")
+      })
 
       test_that(paste(framework, method, data_type, "train with log"), {
         train_path <- paste0(root_path_results, "/", "train_", generate_id())
@@ -154,7 +178,7 @@ for (framework in ml_frameworks) {
             data_embeddings = dataset_list[[data_type]],
             batch_size = 50
           )
-          expect_equal(predictions, predictions_2,tolerance = tolerance)
+          expect_equal(predictions, predictions_2, tolerance = tolerance)
         } else {
           predictions <- extractor$extract_features_large(
             data_embeddings = dataset_list[[data_type]],
@@ -167,8 +191,8 @@ for (framework in ml_frameworks) {
 
           i <- sample(seq.int(from = 1, to = predictions$n_rows()))
           expect_equal(
-            predictions$extract_column("input")[i,,,drop=FALSE],
-            predictions_2$extract_column("input")[i,,,drop=FALSE],
+            predictions$extract_column("input")[i, , , drop = FALSE],
+            predictions_2$extract_column("input")[i, , , drop = FALSE],
             tolerance = tolerance
           )
         }
@@ -206,8 +230,8 @@ for (framework in ml_frameworks) {
           )
           i <- sample(seq.int(from = 1, to = predictions$n_rows()), size = 1)
           expect_equal(
-            predictions$extract_column("input")[i,,,drop=FALSE],
-            predictions_Perm$extract_column("input")[which(perm == i),,,drop=FALSE],
+            predictions$extract_column("input")[i, , , drop = FALSE],
+            predictions_Perm$extract_column("input")[which(perm == i), , , drop = FALSE],
             tolerance = tolerance
           )
         }
@@ -226,7 +250,7 @@ for (framework in ml_frameworks) {
           i <- sample(seq.int(from = 1, to = predictions_ET$n_rows()), size = 1)
           expect_equal(
             unname(predictions_ET$embeddings[i, , , drop = FALSE]),
-            predictions_LD$extract_column("input")[i,,,drop=FALSE],
+            predictions_LD$extract_column("input")[i, , , drop = FALSE],
             tolerance = tolerance
           )
         })

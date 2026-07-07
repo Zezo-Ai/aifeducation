@@ -16,8 +16,8 @@ This function does nothing return. It is used to build a page for a shiny app.
 Functions generates the tab within a page for displaying infomration on the reliability of classifiers.
 }
 \seealso{
-Other studio_gui_page_classifier_reliability: 
-\code{\link{Reliability_Server}()}
+Other studio_gui_page_classifier_reliability:
+\code{\link[=Reliability_Server]{Reliability_Server()}}
 }
 \concept{studio_gui_page_classifier_reliability}
 \keyword{internal}

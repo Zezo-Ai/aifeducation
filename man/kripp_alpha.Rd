@@ -29,12 +29,12 @@ Krippendorff, K. (2019). Content Analysis: An Introduction to
 Its Methodology (4th Ed.). SAGE
 }
 \seealso{
-Other performance measures: 
-\code{\link{calc_standard_classification_measures}()},
-\code{\link{cohens_kappa}()},
-\code{\link{fleiss_kappa}()},
-\code{\link{get_coder_metrics}()},
-\code{\link{gwet_ac}()},
-\code{\link{kendalls_w}()}
+Other performance measures:
+\code{\link[=calc_standard_classification_measures]{calc_standard_classification_measures()}},
+\code{\link[=cohens_kappa]{cohens_kappa()}},
+\code{\link[=fleiss_kappa]{fleiss_kappa()}},
+\code{\link[=get_coder_metrics]{get_coder_metrics()}},
+\code{\link[=gwet_ac]{gwet_ac()}},
+\code{\link[=kendalls_w]{kendalls_w()}}
 }
 \concept{performance measures}

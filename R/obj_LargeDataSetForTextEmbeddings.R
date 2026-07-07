@@ -546,6 +546,22 @@ LargeDataSetForTextEmbeddings <- R6::R6Class(
         )
       }
       return(new_data_set)
+    },
+    #' @description Print method for classifiers.
+    #' @return Prints a short description of the object.
+    print = function() {
+      current_colnames <- self$get_colnames()
+      rows <- c("Object", "Columns", "Rows", "Times", "Features", "Pad Value")
+      padded_rows <- pad_str(rows, width = NULL, pad = " ", end = ": ")
+      message(
+        appendLF = FALSE,
+        padded_rows[1L], class(self)[1L], "\n",
+        padded_rows[2L], toString(current_colnames), "\n",
+        padded_rows[3L], self$n_rows(), "\n",
+        padded_rows[4L], self$get_times(), "\n",
+        padded_rows[5L], self$get_features(), "\n",
+        padded_rows[6L], self$get_pad_value(), "\n"
+      )
     }
   )
 )

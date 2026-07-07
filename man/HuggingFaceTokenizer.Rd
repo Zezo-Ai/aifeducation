@@ -10,87 +10,110 @@ Does return a new object of this class.
 Abstract class for all tokenizers used with the 'transformers' library.
 }
 \seealso{
-Other Tokenizer: 
+Other Tokenizer:
 \code{\link{WordPieceTokenizer}}
 }
 \concept{Tokenizer}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:TokenizerBase]{aifeducation::TokenizerBase}} -> \code{HuggingFaceTokenizer}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:TokenizerBase]{TokenizerBase}} -> \code{HuggingFaceTokenizer}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-HuggingFaceTokenizer-create_from_hf}{\code{HuggingFaceTokenizer$create_from_hf()}}
-\item \href{#method-HuggingFaceTokenizer-clone}{\code{HuggingFaceTokenizer$clone()}}
+  \itemize{
+    \item \href{#method-HuggingFaceTokenizer-create_from_hf}{\code{HuggingFaceTokenizer$create_from_hf()}}
+    \item \href{#method-HuggingFaceTokenizer-get_vocab_size}{\code{HuggingFaceTokenizer$get_vocab_size()}}
+    \item \href{#method-HuggingFaceTokenizer-clone}{\code{HuggingFaceTokenizer$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="calculate_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-calculate_statistics'><code>aifeducation::TokenizerBase$calculate_statistics()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="decode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-decode'><code>aifeducation::TokenizerBase$decode()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="encode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-encode'><code>aifeducation::TokenizerBase$encode()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_special_tokens'><code>aifeducation::TokenizerBase$get_special_tokens()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer'><code>aifeducation::TokenizerBase$get_tokenizer()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer_statistics'><code>aifeducation::TokenizerBase$get_tokenizer_statistics()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="load_from_disk"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-load_from_disk'><code>aifeducation::TokenizerBase$load_from_disk()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="n_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-n_special_tokens'><code>aifeducation::TokenizerBase$n_special_tokens()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="save"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-save'><code>aifeducation::TokenizerBase$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="calc_quantiles"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-calc_quantiles'><code>TokenizerBase$calc_quantiles()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="calculate_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-calculate_statistics'><code>TokenizerBase$calculate_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="decode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-decode'><code>TokenizerBase$decode()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="encode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-encode'><code>TokenizerBase$encode()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_special_tokens'><code>TokenizerBase$get_special_tokens()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer'><code>TokenizerBase$get_tokenizer()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer_statistics'><code>TokenizerBase$get_tokenizer_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="load_from_disk"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-load_from_disk'><code>TokenizerBase$load_from_disk()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="n_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-n_special_tokens'><code>TokenizerBase$n_special_tokens()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="print"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-print'><code>TokenizerBase$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="save"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-save'><code>TokenizerBase$save()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-HuggingFaceTokenizer-create_from_hf"></a>}}
 \if{latex}{\out{\hypertarget{method-HuggingFaceTokenizer-create_from_hf}{}}}
-\subsection{Method \code{create_from_hf()}}{
-Creates a tokenizer from a pretrained model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HuggingFaceTokenizer$create_from_hf(model_dir)}\if{html}{\out{</div>}}
+\subsection{\code{HuggingFaceTokenizer$create_from_hf()}}{
+  Creates a tokenizer from a pretrained model
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{HuggingFaceTokenizer$create_from_hf(model_dir, tokenizer_type = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{model_dir}}{Path where the model is stored.}
+      \item{\code{tokenizer_type}}{\code{string} Name of the tokenizer belonging to a base
+model (e.g. BertTokenizer). This parameter is only used if an error occurs during
+loading as fall back option.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Does return a new object of this class.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{model_dir}}{Path where the model is stored.}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-HuggingFaceTokenizer-get_vocab_size"></a>}}
+\if{latex}{\out{\hypertarget{method-HuggingFaceTokenizer-get_vocab_size}{}}}
+\subsection{\code{HuggingFaceTokenizer$get_vocab_size()}}{
+  Vocabulary. size
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{HuggingFaceTokenizer$get_vocab_size()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{int} representing the size of the vocabulary.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Does return a new object of this class.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-HuggingFaceTokenizer-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-HuggingFaceTokenizer-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{HuggingFaceTokenizer$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{HuggingFaceTokenizer$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{HuggingFaceTokenizer$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

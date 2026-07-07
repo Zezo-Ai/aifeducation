@@ -17,7 +17,7 @@ Returns an object of class \link{TEClassifierRegular}, \link{TEClassifierProtoNe
 Function for loading objects created with 'aifeducation'.
 }
 \seealso{
-Other Saving and Loading: 
-\code{\link{save_to_disk}()}
+Other Saving and Loading:
+\code{\link[=save_to_disk]{save_to_disk()}}
 }
 \concept{Saving and Loading}

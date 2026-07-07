@@ -34,23 +34,10 @@ example_data <- imdb_movie_reviews
 raw_texts <- LargeDataSetForText$new(example_data)
 
 # Test Configuration
-object_class_names <- BaseModelsIndex
-if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")){
-  object_class_names <- c(
-      "BaseModelDebertaV2",
-      "BaseModelBert",
-     "BaseModelFunnel",
-     #"BaseModelLongformer",
-      "BaseModelModernBert",
-      "BaseModelRoberta"#,
-    #  "BaseModelMPNet"
-  )
-}
-
+object_class_names <- get_entry_from_BaseModelsIndex("class_name")
 
 max_samples <- 3
 max_samples_CI <- 1
-
 
 samples_config <- check_adjust_n_samples_on_CI(
   n_samples_requested = max_samples,
@@ -100,20 +87,67 @@ for (object_class_name in object_class_names) {
       )
     )
 
-    # Create and train model
+    # Create Base Model
     base_model <- create_object(object_class_name)
+
+    # Check config-------------------------------------------------------------
+    test_that(paste(
+      "config field for configuration",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      expect_false(base_model$is_configured())
+    })
+
     suppressMessages(
       do.call(
         what = base_model$configure,
         args = config_args
       )
     )
+
+    test_that(paste(
+      "config field after configuration",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      expect_true(base_model$is_configured())
+    })
+
+    # check trained -----------------------------------------------------------
+    test_that(paste(
+      "train field for training",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      expect_false(base_model$is_trained())
+    })
     suppressMessages(
       do.call(
         what = base_model$train,
         args = train_args
       )
     )
+    test_that(paste(
+      "train field after training",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      expect_gt(base_model$is_trained(), 0L)
+    })
+
+    test_that(paste(
+      "get_max_seq_len",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      expect_gte(base_model$get_max_seq_len(), 1L)
+    })
 
     # Prepare directory
     tmp_dir <- paste0(test_art_tmp_path, "/", object_class_name)
@@ -122,6 +156,20 @@ for (object_class_name in object_class_names) {
     create_dir(tmp_dir, trace = FALSE)
 
     #--------------------------------------------------------------------------
+    test_that(paste(
+      "Print Method",
+      object_class_name,
+      get_current_args_for_print(config_args),
+      get_current_args_for_print(train_args)
+    ), {
+      suppressMessages(
+        expect_no_error(base_model$print())
+      )
+      suppressMessages(
+        expect_no_error(print(base_model))
+      )
+    })
+
     test_that(paste(
       "Count Parameter",
       object_class_name,
@@ -271,8 +319,10 @@ for (object_class_name in object_class_names) {
       get_current_args_for_print(config_args),
       get_current_args_for_print(train_args)
     ), {
-      if (base_model$get_model_type() != "funnel") {
+      if (!any(base_model$get_model_type() %in% c("funnel", "distilbert"))) {
         expect_gte(base_model$get_n_layers(), config_args$num_hidden_layers)
+      } else if (base_model$get_model_type() == "distilbert") {
+        expect_gte(base_model$get_n_layers(), config_args$n_layers)
       } else if (base_model$get_model_type() == "funnel") {
         if (is.null(config_args$block_repeats)) {
           expected <- sum(config_args$block_sizes)
@@ -321,8 +371,11 @@ for (object_class_name in object_class_names) {
 
     #---------------------------------------------------------------------------
     # Re-Load Base Model and compare with the initial model
-    base_model_reloaded <- load_from_disk(
-      dir_path = tmp_dir
+
+    base_model_reloaded <- suppressMessages(
+      load_from_disk(
+        dir_path = tmp_dir
+      )
     )
 
     test_that(paste(
@@ -354,6 +407,11 @@ for (object_class_name in object_class_names) {
       expect_equal(
         base_model$Tokenizer$get_sustainability_data("inference"),
         base_model_reloaded$Tokenizer$get_sustainability_data("inference")
+      )
+
+      expect_equal(
+        base_model$Tokenizer$encode("This is a test.", token_encodings_only = TRUE),
+        base_model_reloaded$Tokenizer$encode("This is a test.", token_encodings_only = TRUE)
       )
 
       expect_equal(

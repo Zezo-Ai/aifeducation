@@ -163,7 +163,7 @@ for (method in methods) {
               if (original_cases_per_seq[r, c] > 3) {
                 expect_gte(
                   object = original_cases_per_seq[r, c] + synthetic_cases_per_seq[r, c],
-                  expected = max(original_cases_per_seq[r, ])-2
+                  expected = max(original_cases_per_seq[r, ]) - 2
                 )
               }
             }

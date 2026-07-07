@@ -18,7 +18,7 @@ only check arguments that are defined in the central parameter dictionary. See
 \link{get_param_dict} for more details.
 }
 \seealso{
-Other Utils Checks Developers: 
-\code{\link{check_class_and_type}()}
+Other Utils Checks Developers:
+\code{\link[=check_class_and_type]{check_class_and_type()}}
 }
 \concept{Utils Checks Developers}

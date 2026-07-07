@@ -108,14 +108,16 @@ class LSTMAutoencoder_with_Mask_PT(torch.nn.Module):
         x=self.switch_pad_value_final(x)
       return x
     def get_mask(self,x):
-      time_sums=torch.sum(x,dim=2)
-      mask=(time_sums==0)
-      mask_long=torch.reshape(torch.repeat_interleave(mask,repeats=self.features_in,dim=1),(x.size(dim=0),x.size(dim=1),self.features_in))
-      mask_long=mask_long.to(x.device)
+      with torch.no_grad():
+        time_sums=torch.sum(x,dim=2)
+        mask=(time_sums==0)
+        mask_long=torch.reshape(torch.repeat_interleave(mask,repeats=self.features_in,dim=1),(x.size(dim=0),x.size(dim=1),self.features_in))
+        mask_long=mask_long.to(x.device)
       return mask_long
     def add_noise(self, x):
-      noise=self.noise_factor*torch.rand(size=x.size())
-      noise=noise.to(x.device)
+      with torch.no_grad():
+        noise=self.noise_factor*torch.rand(size=x.size())
+        noise=noise.to(x.device)
       return(noise)
       
 class DenseAutoencoder_with_Mask_PT(torch.nn.Module):
@@ -187,14 +189,16 @@ class DenseAutoencoder_with_Mask_PT(torch.nn.Module):
         return x
       
     def get_mask(self,x):
-      time_sums=torch.sum(x,dim=2)
-      mask=(time_sums==0)
-      mask_long=torch.reshape(torch.repeat_interleave(mask,repeats=self.features_in,dim=1),(x.size(dim=0),x.size(dim=1),self.features_in))
-      mask_long=mask_long.to(x.device)
+      with torch.no_grad():
+        time_sums=torch.sum(x,dim=2)
+        mask=(time_sums==0)
+        mask_long=torch.reshape(torch.repeat_interleave(mask,repeats=self.features_in,dim=1),(x.size(dim=0),x.size(dim=1),self.features_in))
+        mask_long=mask_long.to(x.device)
       return mask_long
     def add_noise(self, x):
-      noise=self.noise_factor*torch.rand(size=x.size())
-      noise=noise.to(x.device,x.dtype)
+      with torch.no_grad():
+        noise=self.noise_factor*torch.rand(size=x.size())
+        noise=noise.to(x.device,x.dtype)
       return(noise)
     
 class ConvAutoencoder_with_Mask_PT(torch.nn.Module):
@@ -296,7 +300,11 @@ def run_epoch_autoencoder(model,dataloader,loss_fct,optimizer,scaler,scheduler,a
       labels=labels.to(device,dtype=current_dtype)
       if cblock=="train":
         optimizer.zero_grad()
-      with torch.autocast(device_type=device, dtype=None, enabled=amp):  
+      if torch.cuda.is_available() and torch.cuda.is_bf16_supported():
+        amp_dtype=torch.bfloat16
+      else:
+        amp_dtype=None  
+      with torch.autocast(device_type=device, dtype=amp_dtype, enabled=amp):  
         outputs=model(inputs,encoder_mode=False)
         loss=loss_fct(outputs,labels)
       if cblock=="train":
@@ -324,13 +332,14 @@ def run_epoch_autoencoder(model,dataloader,loss_fct,optimizer,scaler,scheduler,a
   )
   return results
 
-def check_and_set_checkpoints_loss(use_callback,model,filepath,epoch,metric_storage,best_val_loss,val_loss):
+def check_and_set_checkpoints_loss(use_callback,model,filepath,epoch,metric_storage,best_val_loss,val_loss,elc):
   if use_callback==True:
       if val_loss<=best_val_loss:
         torch.save(model.state_dict(),filepath)
         best_val_loss=val_loss
         metric_storage["checkpoints"][epoch]=1
-  return best_val_loss
+        elc=epoch+1
+  return best_val_loss, elc
     
 def AutoencoderTrain_PT_with_Datasets(model,optimizer_method,scheduler_type,amp, lr_rate,lr_min, lr_warm_up_ratio, epochs, trace,batch_size,
 train_data,val_data,filepath,use_callback,
@@ -377,7 +386,10 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
   )
   # Init checkpoint values
   best_val_loss=float('inf')
+  elc=0
   #Logger
+  PrgInd=ProgressLogger()
+  PrgInd.set_start_time()
   total_steps=len(trainloader)+len(valloader)
   if not (test_data is None):
     total_steps=total_steps+len(testloader)
@@ -448,17 +460,18 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     logger.reset_value(level="bottom")
     logger.inc_value(level="middle") 
     #Callback-------------------------------------------------------------------
-    best_val_loss=check_and_set_checkpoints_loss(
+    best_val_loss,elc=check_and_set_checkpoints_loss(
       use_callback=use_callback,
       model=model,
       filepath=filepath,
       epoch=epoch,
       metric_storage=metric_storage,
       best_val_loss=best_val_loss,
-      val_loss=val_results["loss"]
+      val_loss=val_results["loss"],
+      elc=elc
     )
     #Trace---------------------------------------------------------------------
-    print_epoch_results(
+    PrgInd.print_epoch_results(
       trace=trace,
       loss_only=True,
       metric_storage=metric_storage,
@@ -466,14 +479,14 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
       epochs=epochs,
       metric_criterion="loss",
       best_metric=None,
-      best_loss=best_val_loss
+      best_loss=best_val_loss,
+      elc=elc
     )
   #Finalize--------------------------------------------------------------------
   if use_callback==True:
     if trace>=1:
       print("Load Best Weights from {}".format(filepath))
     model.load_state_dict(torch.load(filepath,weights_only=True))
-
   return metric_storage
 
 @torch.inference_mode()

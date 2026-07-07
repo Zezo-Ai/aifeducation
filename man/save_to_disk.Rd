@@ -24,7 +24,7 @@ No return value, called for side effects.
 Function for saving objects created with 'aifeducation'.
 }
 \seealso{
-Other Saving and Loading: 
-\code{\link{load_from_disk}()}
+Other Saving and Loading:
+\code{\link[=load_from_disk]{load_from_disk()}}
 }
 \concept{Saving and Loading}

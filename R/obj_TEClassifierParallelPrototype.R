@@ -147,11 +147,11 @@ TEClassifierParallelPrototype <- R6::R6Class(
                          tf_normalization_type = "LayerNorm",
                          tf_normalization_position = "Pre",
                          tf_residual_type = "ResidualGate",
-                         merge_attention_type = "multi_head",
+                         merge_attention_type = "MultiHead",
                          merge_num_heads = 1L,
                          merge_normalization_type = "LayerNorm",
                          merge_pooling_features = 50L,
-                         merge_pooling_type = "MinMax",
+                         merge_pooling_type = "MinMaxTimes",
                          embedding_dim = 2L) {
       arguments <- get_called_args(n = 1L)
       arguments$core_net_type <- "parallel"
@@ -160,11 +160,8 @@ TEClassifierParallelPrototype <- R6::R6Class(
   ),
   private = list(
     # Private--------------------------------------------------------------------------
-    create_reset_model = function() {
+    init_model = function() {
       private$check_config_for_TRUE()
-
-      
-
       private$model <- py$TEClassifierPrototype(
         features = as.integer(private$model_config$features),
         times = as.integer(private$model_config$times),
@@ -225,7 +222,6 @@ TEClassifierParallelPrototype <- R6::R6Class(
         embedding_dim = as.integer(private$model_config$embedding_dim),
         core_net_type = private$model_config$core_net_type
       )
-
       private$set_random_prototypes()
     },
     #--------------------------------------------------------------------------

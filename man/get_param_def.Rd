@@ -19,16 +19,16 @@ only definitions of arguments can be requested which are used for transformers o
 classifier models.
 }
 \seealso{
-Other Parameter Dictionary: 
+Other Parameter Dictionary:
 \code{\link{BaseModelsIndex}},
 \code{\link{DataSetsIndex}},
 \code{\link{TokenizerIndex}},
-\code{\link{doc_formula}()},
-\code{\link{get_TEClassifiers_class_names}()},
-\code{\link{get_called_args}()},
-\code{\link{get_depr_obj_names}()},
-\code{\link{get_magnitude_values}()},
-\code{\link{get_param_dict}()},
-\code{\link{get_param_doc_desc}()}
+\code{\link[=doc_formula]{doc_formula()}},
+\code{\link[=get_TEClassifiers_class_names]{get_TEClassifiers_class_names()}},
+\code{\link[=get_called_args]{get_called_args()}},
+\code{\link[=get_depr_obj_names]{get_depr_obj_names()}},
+\code{\link[=get_magnitude_values]{get_magnitude_values()}},
+\code{\link[=get_param_dict]{get_param_dict()}},
+\code{\link[=get_param_doc_desc]{get_param_doc_desc()}}
 }
 \concept{Parameter Dictionary}

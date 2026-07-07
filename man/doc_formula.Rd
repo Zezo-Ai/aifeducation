@@ -18,17 +18,17 @@ Function returns the syntax for displaying a formula depending on
 the output format.
 }
 \seealso{
-Other Parameter Dictionary: 
+Other Parameter Dictionary:
 \code{\link{BaseModelsIndex}},
 \code{\link{DataSetsIndex}},
 \code{\link{TokenizerIndex}},
-\code{\link{get_TEClassifiers_class_names}()},
-\code{\link{get_called_args}()},
-\code{\link{get_depr_obj_names}()},
-\code{\link{get_magnitude_values}()},
-\code{\link{get_param_def}()},
-\code{\link{get_param_dict}()},
-\code{\link{get_param_doc_desc}()}
+\code{\link[=get_TEClassifiers_class_names]{get_TEClassifiers_class_names()}},
+\code{\link[=get_called_args]{get_called_args()}},
+\code{\link[=get_depr_obj_names]{get_depr_obj_names()}},
+\code{\link[=get_magnitude_values]{get_magnitude_values()}},
+\code{\link[=get_param_def]{get_param_def()}},
+\code{\link[=get_param_dict]{get_param_dict()}},
+\code{\link[=get_param_doc_desc]{get_param_doc_desc()}}
 }
 \concept{Parameter Dictionary}
 \keyword{internal}

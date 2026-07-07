@@ -135,22 +135,19 @@ TEClassifierParallel <- R6::R6Class(
                          tf_normalization_type = "LayerNorm",
                          tf_normalization_position = "Pre",
                          tf_residual_type = "ResidualGate",
-                         merge_attention_type = "multi_head",
+                         merge_attention_type = "MultiHead",
                          merge_num_heads = 1L,
                          merge_normalization_type = "LayerNorm",
                          merge_pooling_features = 50L,
-                         merge_pooling_type = "MinMax") {
+                         merge_pooling_type = "MinMaxTimes") {
       private$do_configuration(args = get_called_args(n = 1L))
     }
   ),
   # Private---------------------------------------------------------------------
   private = list(
     #--------------------------------------------------------------------------
-    create_reset_model = function() {
+    init_model = function() {
       private$check_config_for_TRUE()
-
-      
-
       private$model <- py$TEClassifierParallel(
         features = as.integer(private$model_config$features),
         times = as.integer(private$model_config$times),

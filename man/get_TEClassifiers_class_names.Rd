@@ -18,16 +18,16 @@ Function returns the names of all classifiers which
 are child classes of a specific super class.
 }
 \seealso{
-Other Parameter Dictionary: 
+Other Parameter Dictionary:
 \code{\link{BaseModelsIndex}},
 \code{\link{DataSetsIndex}},
 \code{\link{TokenizerIndex}},
-\code{\link{doc_formula}()},
-\code{\link{get_called_args}()},
-\code{\link{get_depr_obj_names}()},
-\code{\link{get_magnitude_values}()},
-\code{\link{get_param_def}()},
-\code{\link{get_param_dict}()},
-\code{\link{get_param_doc_desc}()}
+\code{\link[=doc_formula]{doc_formula()}},
+\code{\link[=get_called_args]{get_called_args()}},
+\code{\link[=get_depr_obj_names]{get_depr_obj_names()}},
+\code{\link[=get_magnitude_values]{get_magnitude_values()}},
+\code{\link[=get_param_def]{get_param_def()}},
+\code{\link[=get_param_dict]{get_param_dict()}},
+\code{\link[=get_param_doc_desc]{get_param_doc_desc()}}
 }
 \concept{Parameter Dictionary}

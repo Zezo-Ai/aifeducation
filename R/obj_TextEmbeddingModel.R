@@ -169,6 +169,7 @@ TextEmbeddingModel <- R6::R6Class(
     #' @param model_language `r get_param_doc_desc("model_language")`
     #' @param base_model `r get_param_doc_desc("base_model")`
     #' @param max_length `r get_param_doc_desc("max_length")`
+    #' @param emb_insert_mask_tokens `r get_param_doc_desc("emb_insert_mask_tokens")`
     #' @param chunks `r get_param_doc_desc("chunks")`
     #' @param overlap `r get_param_doc_desc("overlap")`
     #' @param emb_layer_min `r get_param_doc_desc("emb_layer_min")`
@@ -189,12 +190,10 @@ TextEmbeddingModel <- R6::R6Class(
                          overlap = 0L,
                          emb_layer_min = 1L,
                          emb_layer_max = 2L,
+                         emb_insert_mask_tokens = 0.15,
                          emb_pool_type = "Average",
                          pad_value = -100L,
                          base_model = NULL) {
-      # Load or reload python scripts
-
-
       # Check if the object is not configured
       private$check_config_for_FALSE()
 
@@ -238,9 +237,6 @@ TextEmbeddingModel <- R6::R6Class(
     load_from_disk = function(dir_path) {
       # Load private and public config files
       private$load_config_file(dir_path)
-
-      # Load or reload python scripts
-
 
       # Load Base model
       version_lower <- check_versions(
@@ -385,7 +381,7 @@ TextEmbeddingModel <- R6::R6Class(
 
       n_documents <- length(raw_text)
 
-      PgrInd=ProgressIndicator$new(
+      PgrInd <- ProgressIndicator$new(
         max_iter = n_documents,
         inc_absolute = TRUE,
         calc_eta = TRUE
@@ -406,15 +402,27 @@ TextEmbeddingModel <- R6::R6Class(
           return_tensors = "pt"
         )
 
+        if (private$model_config$emb_insert_mask_tokens > 0.0) {
+          special_tokens <- self$BaseModel$Tokenizer$get_special_tokens()
+          input_ids <- py$inject_mask_tokens(
+            input_ids = tokens["input_ids"],
+            mask_freq = ceiling(1 / private$model_config$emb_insert_mask_tokens),
+            mask_id = as.integer(special_tokens["mask_token", "id"]),
+            pad_id = as.integer(special_tokens["pad_token", "id"])
+          )
+        } else {
+          input_ids <- tokens["input_ids"]
+        }
+
         if (require_token_type_ids) {
           tmp_embeddings <- pytorch_embedding_model(
-            input_ids = tokens["input_ids"]$to(device = pytorch_device),
+            input_ids = input_ids$to(device = pytorch_device),
             attention_mask = tokens["attention_mask"]$to(device = pytorch_device),
             token_type_ids = tokens["token_type_ids"]$to(device = pytorch_device)
           )
         } else {
           tmp_embeddings <- pytorch_embedding_model(
-            input_ids = tokens["input_ids"]$to(device = pytorch_device),
+            input_ids = input_ids$to(device = pytorch_device),
             attention_mask = tokens["attention_mask"]$to(device = pytorch_device)
           )
         }
@@ -427,9 +435,9 @@ TextEmbeddingModel <- R6::R6Class(
 
         if (trace) {
           PgrInd$print_step(
-            iter=i,
-            text_pre="Document",
-            text_post="done"
+            iter = i,
+            text_pre = "Document",
+            text_post = "done"
           )
         }
       }
@@ -514,7 +522,7 @@ TextEmbeddingModel <- R6::R6Class(
 
       # Process every batch
 
-      PgrInd=ProgressIndicator$new(
+      PgrInd <- ProgressIndicator$new(
         max_iter = total_number_of_bachtes,
         inc_absolute = TRUE,
         calc_eta = TRUE
@@ -523,8 +531,8 @@ TextEmbeddingModel <- R6::R6Class(
       for (i in 1L:total_number_of_bachtes) {
         tmp_subset <- text_dataset$select(as.integer(batches_index[[i]]))
         embeddings <- self$embed(
-          raw_text = extract_column_from_py_dataset(tmp_subset,"text"),
-          doc_id = extract_column_from_py_dataset(tmp_subset,"id"),
+          raw_text = extract_column_from_py_dataset(tmp_subset, "text"),
+          doc_id = extract_column_from_py_dataset(tmp_subset, "id"),
           batch_size = batch_size,
           trace = FALSE
         )
@@ -555,9 +563,9 @@ TextEmbeddingModel <- R6::R6Class(
         }
         if (trace) {
           PgrInd$print_step(
-            iter=i,
-            text_pre="Batch",
-            text_post="done"
+            iter = i,
+            text_pre = "Calculating Embeddings",
+            text_post = "done"
           )
         }
 
@@ -713,6 +721,42 @@ TextEmbeddingModel <- R6::R6Class(
           results
         )
       }
+    },
+    #---------------------------------------------------------------------------
+    #' @description Print method for classifiers.
+    #' @return Prints a short description of the object.
+    print = function() {
+      rows <- c(
+        "Object", "Label", "Configured",
+        "BaseModel Type", "BaseModel Parameter", "Seq. Len.", "Features",
+        "N Layer", "Vocab Size",
+        "Tokens/Word", "Mask Token", "Pad Token", "Unk token",
+        "Chunks", "Min Layer", "Max Layer", "Pooling Type"
+      )
+      padded_rows <- pad_str(rows, width = NULL, pad = " ", end = ": ")
+      statistics <- self$BaseModel$Tokenizer$get_tokenizer_statistics()
+      special_tokens <- self$BaseModel$Tokenizer$get_special_tokens()
+      model_config <- self$get_model_config()
+      message(
+        appendLF = FALSE,
+        padded_rows[1L], class(self)[1L], "\n",
+        padded_rows[2L], self$get_model_info()$model_label, "\n",
+        padded_rows[3L], self$is_configured(), "\n",
+        padded_rows[4L], class(self$BaseModel)[1L], "\n",
+        padded_rows[5L], self$BaseModel$count_parameter(), "\n",
+        padded_rows[6L], self$BaseModel$get_model_config()$max_position_embeddings, "\n",
+        padded_rows[7L], self$BaseModel$get_final_size(), "\n",
+        padded_rows[8L], self$BaseModel$get_n_layers(), "\n",
+        padded_rows[9L], self$BaseModel$Tokenizer$get_vocab_size(), "\n",
+        padded_rows[10L], statistics[1L, "mu_g"], "\n",
+        padded_rows[11L], special_tokens["mask_token", "token"], "\n",
+        padded_rows[12L], special_tokens["pad_token", "token"], "\n",
+        padded_rows[13L], special_tokens["unk_token", "token"], "\n",
+        padded_rows[14L], model_config$chunks, "\n",
+        padded_rows[15L], model_config$emb_layer_min, "\n",
+        padded_rows[16L], model_config$emb_layer_max, "\n",
+        padded_rows[17L], model_config$emb_pool_type, "\n"
+      )
     }
   )
 )

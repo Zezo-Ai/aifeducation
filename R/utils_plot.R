@@ -61,6 +61,7 @@ get_best_state_point <- function(plot_data, measure) {
 #' @param plot_data `matrix` containing the training history in an aggregated format. In most cases
 #' the matrix is generated with the private method `prepare_history_data`. If available the function
 #' expects the matrix stored in `$aggregated`.
+#' @param checkpoints `vector` which uses `1` to indicate an epoch where a checkpoint was set.
 #' @param `string` determining the measure the point should refer to.
 #' @returns Returns a `list` with the epoch and the corresponding value representing
 #' the final state of a model during training.
@@ -71,21 +72,25 @@ get_best_state_point <- function(plot_data, measure) {
 #' @family Utils Plots Developers
 #' @keywords internal
 #' @noRd
-get_used_state_point <- function(plot_data, measure) {
+get_used_state_point <- function(plot_data, measure, checkpoints) {
   values_avg_iota <- plot_data[["avg_iota"]][, "validation_mean"]
   values_bbc <- plot_data[["balanced_accuracy"]][, "validation_mean"]
   values_loss <- plot_data[["loss"]][, "validation_mean"]
   values_epoch <- plot_data[["loss"]][, "epoch"]
   values_acc <- plot_data[["accuracy"]][, "validation_mean"]
+  values_s_avg_iota <- plot_data[["s_avg_iota"]][, "validation_mean"]
 
-  complete_values <- cbind(values_epoch, values_avg_iota, values_bbc, values_loss, values_acc)
-  colnames(complete_values) <- c("epoch", "avg_iota", "balanced_accuracy", "loss", "accuracy")
+  complete_values <- cbind(values_epoch, values_avg_iota, values_bbc, values_loss, values_acc, values_s_avg_iota)
+  colnames(complete_values) <- c("epoch", "avg_iota", "balanced_accuracy", "loss", "accuracy", "s_avg_iota")
 
-  best_values <- subset(complete_values, subset = complete_values[, 2L] == max(complete_values[, 2L]))
-  best_values <- subset(best_values, subset = (best_values[, 3L] == max(best_values[, 3L])))
-  best_values <- subset(best_values, subset = (best_values[, 4L] == min(best_values[, 4L])))
-
-  used_state_epoch <- as.numeric(best_values[nrow(best_values), 1])
+  if (is.null(checkpoints)) {
+    best_values <- subset(complete_values, subset = complete_values[, 2L] == max(complete_values[, 2L]))
+    best_values <- subset(best_values, subset = (best_values[, 3L] == max(best_values[, 3L])))
+    best_values <- subset(best_values, subset = (best_values[, 4L] == min(best_values[, 4L])))
+    used_state_epoch <- as.numeric(best_values[nrow(best_values), 1])
+  } else {
+    used_state_epoch <- as.numeric(max(which(checkpoints == 1L)))
+  }
   value_state_epoch <- as.numeric(complete_values[which(complete_values[, "epoch"] == used_state_epoch), measure])
   return(
     list(
@@ -149,6 +154,7 @@ get_best_states_from_folds <- function(data_folds, measure) {
 #' the matrix is generated with the private method `prepare_history_data`. If available the function
 #' expects the matrix stored in `$folds`.
 #' @param `string` determining the measure the point should refer to.
+#' @param checkpoints `list` of `vector`s indicating where a checkpoint was set.
 #' @returns Returns a `list` with the epochs and the corresponding values as `vector`s representing
 #' the final state of a model during training.
 #' @note During training the model state with the best value for average iota is used.
@@ -158,7 +164,7 @@ get_best_states_from_folds <- function(data_folds, measure) {
 #' @family Utils Plots Developers
 #' @keywords internal
 #' @noRd
-get_selected_states_from_folds <- function(data_folds, measure) {
+get_selected_states_from_folds <- function(data_folds, measure, checkpoints) {
   n_folds <- ncol(data_folds[[measure]]$folds_val)
   x_values <- vector(length = n_folds)
   y_values <- vector(length = n_folds)
@@ -170,15 +176,20 @@ get_selected_states_from_folds <- function(data_folds, measure) {
     values_bbc <- data_folds[["balanced_accuracy"]]$folds_val[, i]
     values_loss <- data_folds[["loss"]]$folds_val[, i]
     values_acc <- data_folds[["accuracy"]]$folds_val[, i]
+    values_s_avg_iota <- data_folds[["s_avg_iota"]]$folds_val[, i]
 
-    complete_values <- cbind(values_epoch, values_avg_iota, values_bbc, values_loss, values_acc)
-    colnames(complete_values) <- c("epoch", "avg_iota", "balanced_accuracy", "loss", "accuracy")
+    complete_values <- cbind(values_epoch, values_avg_iota, values_bbc, values_loss, values_acc, values_s_avg_iota)
+    colnames(complete_values) <- c("epoch", "avg_iota", "balanced_accuracy", "loss", "accuracy", "s_avg_iota")
 
-    best_values <- subset(complete_values, subset = complete_values[, 2L] == max(complete_values[, 2L]))
-    best_values <- subset(best_values, subset = (best_values[, 3L] == max(best_values[, 3L])))
-    best_values <- subset(best_values, subset = (best_values[, 4L] == min(best_values[, 4L])))
+    if (is.null(checkpoints)) {
+      best_values <- subset(complete_values, subset = complete_values[, 2L] == max(complete_values[, 2L]))
+      best_values <- subset(best_values, subset = (best_values[, 3L] == max(best_values[, 3L])))
+      best_values <- subset(best_values, subset = (best_values[, 4L] == min(best_values[, 4L])))
+      used_state_epoch <- as.numeric(best_values[nrow(best_values), 1])
+    } else {
+      used_state_epoch <- max(which(checkpoints[[i]] == 1L))
+    }
 
-    used_state_epoch <- as.numeric(best_values[nrow(best_values), 1])
     value_state_epoch <- as.numeric(complete_values[which(complete_values[, "epoch"] == used_state_epoch), measure])
 
     x_values[i] <- used_state_epoch
@@ -281,19 +292,19 @@ add_breaks <- function(plot_object, x_min, x_max, y_min, y_max, special_x = NULL
   )
 
   if (!is.null(special_x)) {
-    distances_x=(max(breaks_x)-min(breaks_x))/10
-    distances_x=distances_x*0.10
+    distances_x <- (max(breaks_x) - min(breaks_x)) / 10
     for (sp_x in special_x) {
-      breaks_x <- breaks_x[(breaks_x-distances_x) > sp_x & (breaks_x+ distances_x)< sp_x]
+      x_selection <- !((breaks_x > (sp_x - distances_x)) & (breaks_x < (sp_x + distances_x)))
+      breaks_x <- breaks_x[x_selection]
     }
     breaks_x <- c(breaks_x, special_x)
   }
 
   if (!is.null(special_y)) {
-    distances_y=(max(breaks_y)-min(breaks_y))/5
-    distances_y=distances_y*0.10
+    distances_y <- (max(breaks_y) - min(breaks_y)) / 5
     for (sp_y in special_y) {
-      breaks_y <- breaks_y[(breaks_y-distances_y) > sp_y  & (breaks_y+distances_y) < sp_y]
+      y_selection <- !((breaks_y > (sp_y - distances_y)) & (breaks_y < (sp_y + distances_y)))
+      breaks_y <- breaks_y[y_selection]
     }
     breaks_y <- c(breaks_y, special_y)
   }

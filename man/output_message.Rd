@@ -22,14 +22,14 @@ Prints a message \code{msg} if \code{trace} parameter is \code{TRUE} with curren
 function.
 }
 \seealso{
-Other Utils Log Developers: 
-\code{\link{cat_message}()},
-\code{\link{clean_pytorch_log_transformers}()},
-\code{\link{print_message}()},
-\code{\link{read_log}()},
-\code{\link{read_loss_log}()},
-\code{\link{reset_log}()},
-\code{\link{reset_loss_log}()},
-\code{\link{write_log}()}
+Other Utils Log Developers:
+\code{\link[=cat_message]{cat_message()}},
+\code{\link[=clean_pytorch_log_transformers]{clean_pytorch_log_transformers()}},
+\code{\link[=print_message]{print_message()}},
+\code{\link[=read_log]{read_log()}},
+\code{\link[=read_loss_log]{read_loss_log()}},
+\code{\link[=reset_log]{reset_log()}},
+\code{\link[=reset_loss_log]{reset_loss_log()}},
+\code{\link[=write_log]{write_log()}}
 }
 \concept{Utils Log Developers}

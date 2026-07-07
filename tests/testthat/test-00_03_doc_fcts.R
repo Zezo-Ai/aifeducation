@@ -10,13 +10,19 @@ testthat::skip_if_not(
 # Start time
 test_time_start <- Sys.time()
 
-test_that("build_layer_stack_documentation_for_vignette",{
-expect_no_error(
-  build_layer_stack_documentation_for_vignette()
-)
+test_that("build_layer_stack_documentation_for_vignette", {
+  expect_no_error(
+    build_layer_stack_documentation_for_vignette()
+  )
 })
 
-test_that("build_documentation_for_model",{
+test_that("build_layer_overview_base_models", {
+  expect_no_error(
+    build_layer_overview_base_models()
+  )
+})
+
+test_that("build_documentation_for_model", {
   expect_no_error(
     build_documentation_for_model(
       model_name = "TEClassifierSequentialPrototype",
@@ -50,7 +56,6 @@ test_that("build_documentation_for_model",{
     )
   )
 })
-
 
 
 # Monitor test time

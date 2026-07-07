@@ -18,6 +18,7 @@ import numpy as np
 import math
 import safetensors
 
+
 #Functions that are part of the training loop
 def get_device():
   return 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -49,6 +50,11 @@ def get_loss_cls_pt_fct(name,margin,alpha):
     fct=multi_way_contrastive_loss_fc(
       alpha=alpha,
       margin=margin)
+  elif name=="FocalLoss":
+    fct=focal_loss_pt(
+      class_weights=None,
+      gamma=2
+    )
   return fct
 
 def build_data_loaders(train_data, val_data, batch_size, test_data=None, pin_memory=False):
@@ -83,13 +89,40 @@ def create_metric_storage(metric_names,epochs,inc_test):
   storage["checkpoints"]=np.zeros((epochs))
   return storage
 
-def calc_cls_performance_measures(confusion_matrix,n_classes):
+prob=torch.from_numpy(np.array([[1,2,3],[2,3,4],[3,4,5],[4,5,6],[5,6,7]]))
+
+def create_p_confusion_matrix(prob,label_idx,num_classes):
   with torch.no_grad():
-      acc=torch.sum(torch.diagonal(confusion_matrix))/torch.sum(confusion_matrix)
-      bacc=torch.sum(torch.diagonal(confusion_matrix)/torch.sum(confusion_matrix,dim=1))/n_classes
-      avg_iota=torch.diagonal(confusion_matrix)/(torch.sum(confusion_matrix,dim=0)+torch.sum(confusion_matrix,dim=1)-torch.diagonal(confusion_matrix))
-      avg_iota=torch.sum(avg_iota)/n_classes
-  return {"accuracy":acc, "balanced_accuracy":bacc, "avg_iota":avg_iota}
+    one_hot=torch.nn.functional.one_hot(label_idx, num_classes=num_classes) # B,T
+    one_hot=torch.unsqueeze(one_hot,dim=2) # B, T, 1
+    one_hot=one_hot.expand((one_hot.size(0),one_hot.size(1),one_hot.size(1))) #B,T,A
+
+    prob_exp=torch.unsqueeze(prob,dim=1) # B,1,A
+    prob_exp=prob_exp.expand(one_hot.size()) #B,T,A
+    
+    confusion_matrix=torch.sum(one_hot*prob_exp,dim=0) # T, A
+  return confusion_matrix
+
+def calc_cls_performance_measures(confusion_matrix,prob_confusion_matrix,n_classes):
+  with torch.no_grad():
+    diagonal=torch.diagonal(confusion_matrix) #(n_classes)
+    total_sum=torch.sum(confusion_matrix) #()
+    true_classes=torch.sum(confusion_matrix,dim=1) #(n_classes)
+    col_sum=torch.sum(confusion_matrix,dim=0) #(n_classes)
+  
+    acc=torch.sum(diagonal)/total_sum
+    bacc=torch.sum(diagonal/true_classes)/n_classes
+    avg_iota=diagonal/(col_sum+true_classes-diagonal)
+    avg_iota=torch.sum(avg_iota)/n_classes
+    
+    diagonal_p=torch.diagonal(prob_confusion_matrix) #(n_classes)
+    true_classes_p=torch.sum(prob_confusion_matrix,dim=1) #(n_classes)
+    col_sum_p=torch.sum(prob_confusion_matrix,dim=0) #(n_classes)
+    
+    avg_iota_p=diagonal_p/(col_sum_p+true_classes_p-diagonal_p)
+    avg_iota_p=torch.sum(avg_iota_p)/n_classes
+    
+  return {"accuracy":acc, "balanced_accuracy":bacc, "avg_iota":avg_iota, "s_avg_iota":avg_iota_p}
 
 def add_metrics(metrics,storage,cblock,epoch):
   if cblock=="train":
@@ -101,46 +134,196 @@ def add_metrics(metrics,storage,cblock,epoch):
   for key in metrics.keys():
     storage[key][idx,epoch]=metrics[key]
 
-def print_epoch_results(trace,loss_only,metric_storage,epoch,epochs,metric_criterion,best_metric,best_loss):
-  if trace:
-    if (epoch+1)==epochs:
-      end_string="\n"
-    else:
-      end_string="\r"
-    if loss_only:
-      loss=metric_storage["loss"]
-      train_loss=loss[0,epoch]
-      val_loss=loss[1,epoch]
-      print("{:.4f} % | Train Loss {:.8f} | Val Loss {:.8f} Best {:.8f}".format(
-              (epoch+1)/epochs,
-              train_loss,
-              val_loss,
-              best_loss
-              ),
-            end=end_string
-      )
-    else:
-      metric=metric_storage[metric_criterion]
-      train_metric=metric[0,epoch]
-      val_metric=metric[1,epoch]
-      loss=metric_storage["loss"]
-      train_loss=loss[0,epoch]
-      val_loss=loss[1,epoch]
-      print("{:.4f} % | Train Loss {:.4f} {} {:.4f} | Val Loss {:.4f} Best {:.4f} {} {:.4f} Best {:.4f}".format(
-              (epoch+1)/epochs,
-              train_loss,
-              metric_criterion,
-              train_metric,
-              val_loss,
-              best_loss,
-              metric_criterion,
-              val_metric,
-              best_metric
-              ),
-            end=end_string
-      )
+#=============================================================
 
-def check_and_set_checkpoints_cls(use_callback,model,filepath,epoch,metric_storage,best_val_avg_iota,best_val_loss,best_acc,best_bacc,acc_val,bacc_val,avg_iota_val,val_loss):
+def calc_lr_rate_loss(model,device,current_dtype,optimizer,loss_fct,dataloader,n_classes=None,Ns=None,Nq=None,start_mode=True):
+    loss_complete=0
+    model.train()
+
+    if isinstance(model,TEClassifierSequential) or isinstance(model,TEClassifierParallel):
+      for batch in dataloader:
+        inputs=batch["input"]
+        labels=batch["labels"]
+        inputs = inputs.to(device,dtype=current_dtype)
+        labels=labels.to(device,dtype=current_dtype)
+        if "sample_weights" in batch.keys():
+          sample_weights=batch["sample_weights"]
+          sample_weights=torch.reshape(input=sample_weights,shape=(sample_weights.size(dim=0),1))
+          sample_weights=sample_weights.to(device,dtype=current_dtype)
+        else:
+           sample_weights=torch.ones((inputs.size(0)),device=device,dtype=current_dtype)/inputs.size(0)
+        if not start_mode:
+          optimizer.zero_grad()
+        outputs=model(inputs,prediction_mode=False)
+        loss=loss_fct(outputs,labels)*sample_weights.detach()
+        loss=loss.mean()
+        if not start_mode:
+          loss.backward()
+          optimizer.step()
+        loss_complete+=loss
+    elif isinstance(model,TEClassifierPrototype):
+      for batch in dataloader:
+        inputs=batch["input"]
+        labels=batch["labels"]
+        sample_inputs=inputs[0:(n_classes*Ns)].clone()
+        query_inputs=inputs[(n_classes*Ns):(n_classes*(Ns+Nq))].clone()
+        sample_classes=labels[0:(n_classes*Ns)].clone()
+        query_classes=labels[(n_classes*Ns):(n_classes*(Ns+Nq))].clone()
+        sample_inputs = sample_inputs.to(device,dtype=current_dtype)
+        query_inputs = query_inputs.to(device,dtype=current_dtype)
+        sample_classes = sample_classes.to(device,dtype=current_dtype)
+        query_classes = query_classes.to(device,dtype=current_dtype)
+        if not start_mode:
+          optimizer.zero_grad()
+        outputs=model(
+          input_q=query_inputs,
+          classes_q=query_classes,
+          input_s=sample_inputs,
+          classes_s=sample_classes,
+          prediction_mode=False
+        )
+        loss=loss_fct(
+          classes_q=outputs[2],
+          distance_matrix=outputs[1],
+          metric_scale_factor=model.get_metric_scale_factor().detach(),
+          logits=outputs[0]
+        )
+        if not start_mode:
+          loss.backward()
+          optimizer.step()      
+        loss_complete+=loss
+    else:
+      for batch in dataloader:
+        inputs=batch["input"]
+        labels=batch["labels"]
+        inputs = inputs.to(device,dtype=current_dtype)
+        labels=labels.to(device,dtype=current_dtype)
+        if not start_mode:
+          optimizer.zero_grad()
+        outputs=model(inputs,encoder_mode=False)
+        loss=loss_fct(outputs,labels)
+        loss=loss.mean()
+        if not start_mode:
+          loss.backward()
+          optimizer.step()
+        loss_complete+=loss
+    return loss_complete
+
+def calc_lr_rate(trace,model,epochs,filepath,optimizer_method,loss_fct_name,dataset,batch_size,class_weights,Ns=None,Nq=None,n_classes=None,separate=None,shuffle=None,alpha=None,margin=None):
+  #Prepare objects
+  device=get_device()
+  current_dtype=get_dtype(device)
+  model.to(device=device,dtype=current_dtype)
+  
+  if isinstance(model,TEClassifierPrototype):
+    loss_fct=get_loss_cls_pt_fct(
+      name=loss_fct_name,
+      alpha=alpha,
+      margin=margin
+    )
+  elif isinstance(model,TEClassifierSequential) or isinstance(model,TEClassifierParallel):
+    loss_fct=get_loss_cls_fct(name=loss_fct_name,class_weights=class_weights)
+  elif isinstance(model,LSTMAutoencoder_with_Mask_PT) or isinstance(model,DenseAutoencoder_with_Mask_PT):
+    loss_fct=torch.nn.MSELoss()
+  
+  loss_fct.to(device=device,dtype=current_dtype)  
+  
+  if isinstance(model,TEClassifierPrototype):
+    ProtoNetSampler_Train=MetaLernerBatchSampler(
+    targets=dataset["labels"][range(0,len(dataset))],
+    Ns=Ns,
+    Nq=Nq,
+    separate=separate,
+    shuffle=shuffle)
+    dataloader=torch.utils.data.DataLoader(
+      dataset,
+      pin_memory = True if device=="cuda" else False,
+      batch_sampler=ProtoNetSampler_Train
+    )
+  else:
+    dataloader=torch.utils.data.DataLoader(
+      dataset,
+      batch_size=batch_size,
+      pin_memory=True if device=="cuda" else False,
+      shuffle=True
+    )
+  #Save model weights
+  torch.save(model.state_dict(),filepath)
+  
+  counter=0
+  learning_rates=np.zeros((30))
+  for i in range(1,6):
+    if i==0:
+      tmp_range=range(0,3)
+    else:
+      tmp_range=range(0,4)
+    for j in tmp_range:
+      base=(j+1)/4
+      learning_rates[counter]=base/(10**i)
+      counter+=1
+
+  results=np.zeros((4,30))
+
+  #Set up logger
+  PrgInd=ProgressLogger()
+  PrgInd.set_start_time()
+  total_iter=len(learning_rates)
+  for j in range(0,total_iter):
+    #Reset model
+    model.load_state_dict(torch.load(filepath,weights_only=False))
+    #set learning rate
+    tmp_lr_rate=learning_rates[j]
+    #Create a new Optimizer for every test
+    optimizer=get_Optimizer(
+      optimizer_method,
+      params=model.parameters(),
+      lr_rate=tmp_lr_rate
+    )
+    # Calculate start loss
+    start_loss=calc_lr_rate_loss(
+      device=device,
+      current_dtype=current_dtype,
+      Ns=Ns,
+      Nq=Nq,
+      n_classes=n_classes,
+      model=model,
+      optimizer=optimizer,
+      loss_fct=loss_fct,
+      dataloader=dataloader,
+      start_mode=True
+    )
+    start_loss=start_loss/len(dataloader) 
+    # Calculate tranining data
+    epoch_loss_m=start_loss
+    for i in range(0,epochs):
+      epoch_loss=calc_lr_rate_loss(
+        device=device,
+        current_dtype=current_dtype,
+        Ns=Ns,
+        Nq=Nq,
+        n_classes=n_classes,
+        model=model,
+        optimizer=optimizer,
+        loss_fct=loss_fct,
+        dataloader=dataloader,
+        start_mode=False
+      )
+      epoch_loss=epoch_loss/len(dataloader)
+      #Count improvments
+      if(epoch_loss<=epoch_loss_m):
+        results[1,j]+=1
+      #Set current loss to as the other loss  
+      epoch_loss_m=epoch_loss
+    #Update logger  
+    PrgInd.print_progress(trace=trace,epoch=j,epochs=total_iter)
+    #Add final data
+    results[0,j]=tmp_lr_rate
+    results[2,j]=start_loss.detach()
+    results[3,j]=epoch_loss.detach()
+  return results
+
+#=============================================================
+def check_and_set_checkpoints_cls(use_callback,model,filepath,epoch,metric_storage,best_val_avg_iota,best_val_loss,best_acc,best_bacc,acc_val,bacc_val,avg_iota_val,val_loss,elc):
   if use_callback==True:
       if (avg_iota_val>best_val_avg_iota) or (avg_iota_val==best_val_avg_iota and acc_val>best_acc) or (avg_iota_val==best_val_avg_iota and acc_val==best_acc and val_loss<best_val_loss):
         torch.save(model.state_dict(),filepath)
@@ -149,12 +332,14 @@ def check_and_set_checkpoints_cls(use_callback,model,filepath,epoch,metric_stora
         best_acc=acc_val
         best_val_loss=val_loss
         metric_storage["checkpoints"][epoch]=1
-  return best_val_loss, best_acc,best_bacc,best_val_avg_iota  
+        elc=epoch+1
+  return best_val_loss, best_acc,best_bacc,best_val_avg_iota,elc  
 
 
 def run_epoch_cls(model,dataloader,loss_fct,optimizer,scaler,scheduler,amp,epoch,n_classes,device,current_dtype,cblock,metric_storage,logger):
   total_loss=0.0
   confusion_matrix=torch.zeros(size=(n_classes,n_classes),device=device,dtype=current_dtype)
+  prob_confusion_matrix=torch.zeros(size=(n_classes,n_classes),device=device,dtype=current_dtype)
 
   if cblock=="train":
     optimizer.zero_grad()
@@ -181,7 +366,7 @@ def run_epoch_cls(model,dataloader,loss_fct,optimizer,scaler,scheduler,amp,epoch
         optimizer.zero_grad()
       with torch.autocast(device_type=device, dtype=None, enabled=amp):  
         outputs=model(inputs,prediction_mode=False)
-        loss=loss_fct(outputs,labels)*sample_weights
+        loss=loss_fct(outputs,labels)*sample_weights.detach()
         loss=loss.mean()
       if cblock=="train":
         scaler.scale(loss).backward()
@@ -194,7 +379,8 @@ def run_epoch_cls(model,dataloader,loss_fct,optimizer,scaler,scheduler,amp,epoch
       #Metrics
       total_loss +=loss.item()
       label_idx=labels.max(dim=1).indices
-    confusion_matrix+=multiclass_confusion_matrix(input=outputs,target=label_idx,num_classes=n_classes)
+    confusion_matrix+=multiclass_confusion_matrix(input=outputs,target=label_idx,num_classes=n_classes,normalize = None)
+    prob_confusion_matrix+=create_p_confusion_matrix(torch.nn.Softmax(dim=1)(outputs),label_idx=label_idx,num_classes=n_classes)
     
     #Update log file
     logger.inc_value("bottom")
@@ -203,6 +389,7 @@ def run_epoch_cls(model,dataloader,loss_fct,optimizer,scaler,scheduler,amp,epoch
   #Calc final metrics for epoch
   results=calc_cls_performance_measures(
     confusion_matrix=confusion_matrix,
+    prob_confusion_matrix=prob_confusion_matrix,
     n_classes=n_classes
   )
   results.update({"loss":total_loss/len(dataloader)})
@@ -218,6 +405,7 @@ def run_epoch_cls(model,dataloader,loss_fct,optimizer,scaler,scheduler,amp,epoch
 def run_epoch_cls_pt(model,dataloader,loss_fct,optimizer,scaler, scheduler,amp,epoch,Ns,Nq,n_classes,device,current_dtype,cblock,metric_storage,logger):
   total_loss=0.0
   confusion_matrix=torch.zeros(size=(n_classes,n_classes),device=device,dtype=current_dtype)
+  prob_confusion_matrix=torch.zeros(size=(n_classes,n_classes),device=device,dtype=current_dtype)
 
   if cblock=="train":
     optimizer.zero_grad()
@@ -242,7 +430,11 @@ def run_epoch_cls_pt(model,dataloader,loss_fct,optimizer,scaler, scheduler,amp,e
         query_classes = query_classes.to(device,dtype=current_dtype)
 
         optimizer.zero_grad()
-        with torch.autocast(device_type=device, dtype=None, enabled=amp):
+        if torch.cuda.is_available() and torch.cuda.is_bf16_supported():
+          amp_dtype=torch.bfloat16
+        else:
+          amp_dtype=None
+        with torch.autocast(device_type=device, dtype=amp_dtype, enabled=amp):
           outputs=model(
             input_q=query_inputs,
             classes_q=query_classes,
@@ -253,7 +445,8 @@ def run_epoch_cls_pt(model,dataloader,loss_fct,optimizer,scaler, scheduler,amp,e
           loss=loss_fct(
             classes_q=outputs[2],
             distance_matrix=outputs[1],
-            metric_scale_factor=model.get_metric_scale_factor().detach()
+            metric_scale_factor=model.get_metric_scale_factor().detach(),
+            logits=outputs[0]
           )
         scaler.scale(loss).backward()
         scaler.step(optimizer)
@@ -269,18 +462,25 @@ def run_epoch_cls_pt(model,dataloader,loss_fct,optimizer,scaler, scheduler,amp,e
       else:
         inputs = inputs.to(device,dtype=current_dtype)
         labels=labels.to(device,dtype=current_dtype)
-        with torch.autocast(device_type=device, dtype=None, enabled=amp):
+        if torch.cuda.is_available() and torch.cuda.is_bf16_supported():
+          amp_dtype=torch.bfloat16
+        else:
+          amp_dtype=None
+        with torch.autocast(device_type=device, dtype=amp_dtype, enabled=amp):
           outputs=model(input_q=inputs,classes_q=labels,prediction_mode=False)
           loss=loss_fct(
             classes_q=outputs[2],
             distance_matrix=outputs[1],
-            metric_scale_factor=model.get_metric_scale_factor().detach()
+            metric_scale_factor=model.get_metric_scale_factor().detach(),
+            logits=outputs[0]
           )
         #Metrics
         total_loss +=loss.item()
         pred_idx=outputs[0].max(dim=1).indices.to(dtype=torch.long,device=device)
         label_idx=outputs[2].to(dtype=torch.long,device=device)
-    confusion_matrix+=multiclass_confusion_matrix(input=pred_idx,target=label_idx,num_classes=n_classes)
+    confusion_matrix+=multiclass_confusion_matrix(input=pred_idx,target=label_idx,num_classes=n_classes,normalize = None)
+    prob_confusion_matrix+=create_p_confusion_matrix(torch.nn.Softmax(dim=1)(outputs[0]),label_idx=label_idx,num_classes=n_classes)
+    
     #Update log file
     logger.inc_value("bottom")
     logger.write_log()
@@ -302,6 +502,7 @@ def run_epoch_cls_pt(model,dataloader,loss_fct,optimizer,scaler, scheduler,amp,e
   #Calc final metrics for epoch
   results=calc_cls_performance_measures(
     confusion_matrix=confusion_matrix,
+    prob_confusion_matrix=prob_confusion_matrix,
     n_classes=n_classes
   )
   results.update({"loss":total_loss/len(dataloader)})
@@ -352,7 +553,7 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
   amp_scaler=torch.amp.GradScaler(device ,enabled=amp)
   #Numpys for Saving Training History
   metric_storage=create_metric_storage(
-    metric_names=["loss","accuracy","balanced_accuracy","avg_iota"],
+    metric_names=["loss","accuracy","balanced_accuracy","avg_iota","s_avg_iota"],
     epochs=epochs,
     inc_test=True if not (test_data is None) else False
   )
@@ -361,7 +562,10 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
   best_acc=float('-inf')
   best_val_loss=float('inf')
   best_val_avg_iota=float('-inf')
+  elc=0
   #Logger
+  PrgInd=ProgressLogger()
+  PrgInd.set_start_time()
   total_steps=len(trainloader)+len(valloader)
   if not (test_data is None):
     total_steps=total_steps+len(testloader)
@@ -435,7 +639,7 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     logger.reset_value(level="bottom")
     logger.inc_value(level="middle")
     #Callback-------------------------------------------------------------------
-    best_val_loss, best_acc, best_bacc, best_val_avg_iota = check_and_set_checkpoints_cls(
+    best_val_loss, best_acc, best_bacc, best_val_avg_iota,elc = check_and_set_checkpoints_cls(
       use_callback=use_callback,
       model=model,
       filepath=filepath,
@@ -447,25 +651,31 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
       best_bacc=best_bacc,
       acc_val=val_results["accuracy"],
       bacc_val=val_results["balanced_accuracy"],
-      avg_iota_val=val_results["avg_iota"],
-      val_loss=val_results["loss"]
+      avg_iota_val=val_results["s_avg_iota"],
+      val_loss=val_results["loss"],
+      elc=elc
     )
     #Trace---------------------------------------------------------------------
-    print_epoch_results(
+    PrgInd.print_epoch_results(
       trace=trace,
       loss_only=False,
       metric_storage=metric_storage,
       epoch=epoch,
       epochs=epochs,
-      metric_criterion="avg_iota",
+      metric_criterion="s_avg_iota",
       best_metric=best_val_avg_iota,
-      best_loss=best_val_loss
+      best_loss=best_val_loss,
+      elc=elc
     )
     #Check if there are furhter information for training-----------------------
     # If there are no addtiononal information. Stop training and continue
-    if train_results["loss"]<1e-3 and train_results["accuracy"]==1 and train_results["balanced_accuracy"]==1 and train_results["avg_iota"]==1:
+    if train_results["loss"]<1e-3 and train_results["s_avg_iota"]>=.98:
+      if trace:
+        print("\n")
       break
   #Finalize--------------------------------------------------------------------
+  PrgInd.print_final_performance(trace=trace,metric_storage=metric_storage,elc=elc)
+  
   if use_callback==True:
     model.load_state_dict(torch.load(filepath,weights_only=True))
   return metric_storage
@@ -485,7 +695,7 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
   )
   #Numpys for Saving Training History
   metric_storage=create_metric_storage(
-    metric_names=["loss","accuracy","balanced_accuracy","avg_iota"],
+    metric_names=["loss","accuracy","balanced_accuracy","avg_iota","s_avg_iota"],
     epochs=epochs,
     inc_test=True if not (test_data is None) else False
   )
@@ -494,6 +704,7 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
   best_acc=float('-inf')
   best_val_loss=float('inf')
   best_val_avg_iota=float('-inf')
+  elc=0
   #Set Up Loaders
   ProtoNetSampler_Train=MetaLernerBatchSampler(
   targets=train_data["labels"][range(0,len(train_data))],
@@ -534,7 +745,9 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     min_lr=lr_min
   )
   amp_scaler=torch.amp.GradScaler(device ,enabled=amp)
- #Logger
+  #Logger
+  PrgInd=ProgressLogger()
+  PrgInd.set_start_time()
   total_steps=len(trainloader)+len(valloader)
   if not (test_data is None):
     total_steps=total_steps+len(testloader)
@@ -614,7 +827,7 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
     logger.reset_value(level="bottom")
     logger.inc_value(level="middle")
     #Callback-------------------------------------------------------------------
-    best_val_loss, best_acc, best_bacc, best_val_avg_iota = check_and_set_checkpoints_cls(
+    best_val_loss, best_acc, best_bacc, best_val_avg_iota, elc = check_and_set_checkpoints_cls(
       use_callback=use_callback,
       model=model,
       filepath=filepath,
@@ -626,25 +839,30 @@ log_dir=None, log_write_interval=10, log_top_value=0, log_top_total=1, log_top_m
       best_bacc=best_bacc,
       acc_val=val_results["accuracy"],
       bacc_val=val_results["balanced_accuracy"],
-      avg_iota_val=val_results["avg_iota"],
-      val_loss=val_results["loss"]
+      avg_iota_val=val_results["s_avg_iota"],
+      val_loss=val_results["loss"],
+      elc=elc
     )
     #Trace---------------------------------------------------------------------
-    print_epoch_results(
+    PrgInd.print_epoch_results(
       trace=trace,
       loss_only=False,
       metric_storage=metric_storage,
       epoch=epoch,
       epochs=epochs,
-      metric_criterion="avg_iota",
+      metric_criterion="s_avg_iota",
       best_metric=best_val_avg_iota,
-      best_loss=best_val_loss
+      best_loss=best_val_loss,
+      elc=elc
     )
     #Check if there are furhter information for training-----------------------
     # If there are no addtiononal information. Stop training and continue
-    if train_results["loss"]<1e-3 and train_results["accuracy"]==1 and train_results["balanced_accuracy"]==1 and train_results["avg_iota"]==1:
+    if train_results["loss"]<1e-3 and train_results["s_avg_iota"]>=.98:
+      if trace:
+        print("\n")
       break
   #Finalize--------------------------------------------------------------------
+  PrgInd.print_final_performance(trace=trace,metric_storage=metric_storage,elc=elc)
   if use_callback==True:
     model.load_state_dict(torch.load(filepath,weights_only=True))
   return metric_storage

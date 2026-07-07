@@ -51,12 +51,12 @@ This function calculates different reliability measures which are based on the e
 of content analysis.
 }
 \seealso{
-Other performance measures: 
-\code{\link{calc_standard_classification_measures}()},
-\code{\link{cohens_kappa}()},
-\code{\link{fleiss_kappa}()},
-\code{\link{gwet_ac}()},
-\code{\link{kendalls_w}()},
-\code{\link{kripp_alpha}()}
+Other performance measures:
+\code{\link[=calc_standard_classification_measures]{calc_standard_classification_measures()}},
+\code{\link[=cohens_kappa]{cohens_kappa()}},
+\code{\link[=fleiss_kappa]{fleiss_kappa()}},
+\code{\link[=gwet_ac]{gwet_ac()}},
+\code{\link[=kendalls_w]{kendalls_w()}},
+\code{\link[=kripp_alpha]{kripp_alpha()}}
 }
 \concept{performance measures}

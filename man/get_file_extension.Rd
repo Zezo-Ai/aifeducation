@@ -16,7 +16,7 @@ Returns the extension of a file as a string.
 Function for requesting the file extension
 }
 \seealso{
-Other Utils File Management Developers: 
-\code{\link{create_dir}()}
+Other Utils File Management Developers:
+\code{\link[=create_dir]{create_dir()}}
 }
 \concept{Utils File Management Developers}

@@ -17,10 +17,10 @@ This function returns nothing.
 Used to run python files with \code{reticulate::py_run_file()} from folder \code{python}.
 }
 \seealso{
-Other Utils Python Developers: 
-\code{\link{get_py_package_version}()},
-\code{\link{get_py_package_versions}()},
-\code{\link{load_all_py_scripts}()},
-\code{\link{load_py_scripts}()}
+Other Utils Python Developers:
+\code{\link[=get_py_package_version]{get_py_package_version()}},
+\code{\link[=get_py_package_versions]{get_py_package_versions()}},
+\code{\link[=load_all_py_scripts]{load_all_py_scripts()}},
+\code{\link[=load_py_scripts]{load_py_scripts()}}
 }
 \concept{Utils Python Developers}

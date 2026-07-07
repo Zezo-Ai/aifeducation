@@ -14,34 +14,24 @@
 
 import torch 
 import numpy as np
-x=torch.rand((2,2))
-y=x
+
 # CosineDistance for all possible pairs
-def CosineDistance(x,y,eps=1e-8):
-  tmp_tensors=torch.cat((x,y),dim=0)
-  x_expanded=torch.unsqueeze(tmp_tensors,dim=0)
-  x_expanded=x_expanded.expand(tmp_tensors.size(0),tmp_tensors.size(0),tmp_tensors.size(1))
-  
-  y_expanded=torch.unsqueeze(tmp_tensors,dim=1)
-  y_expanded=y_expanded.expand(tmp_tensors.size(0),tmp_tensors.size(0),tmp_tensors.size(1))
-  
-  similarity=torch.nn.functional.cosine_similarity(
-    x1=x_expanded,
-    x2=y_expanded,
-    dim=-1,
-    eps=eps
-  )
-  similarity=torch.index_select(
-    input=similarity,
-    dim=0,
-    index=torch.arange(start=0,end=x.size(0)).to(similarity.device)
-  )
-  similarity=torch.index_select(
-    input=similarity,
-    dim=1,
-    index=torch.arange(start=x.size(0),end=(similarity.size(1))).to(similarity.device)
-  )
-  
-  distance=1-similarity
-  return distance
+def CosineDistance(
+    x: torch.Tensor,
+    y: torch.Tensor,
+    eps: float = 1e-8,
+):
+    """
+    Memory-efficient cosine distance.
+
+    x: (T, F) or (B, T, F)
+    y: (V, F) or (B, V, F)
+    returns: (T, V) or (B, T, V)
+    """
+    x = torch.nn.functional.normalize(x, p=2, dim=-1, eps=eps)  # L2 normalize: x / ||x||
+    y = torch.nn.functional.normalize(y, p=2, dim=-1, eps=eps)  # L2 normalize: y / ||y||
+
+    # cosine distance = 1 - cosine similarity
+    # since normalized: cosine(x, y) = x @ y^T
+    return 1.0 - torch.matmul(x, y.transpose(-1, -2))
 

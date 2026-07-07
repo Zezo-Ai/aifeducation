@@ -30,14 +30,15 @@ Function for generating the documentation of a model.
 Function is designed to be used with roxygen2 in the regular documentation.
 }
 \seealso{
-Other Utils Documentation: 
-\code{\link{build_layer_stack_documentation_for_vignette}()},
-\code{\link{get_desc_for_core_model_architecture}()},
-\code{\link{get_dict_cls_type}()},
-\code{\link{get_dict_core_models}()},
-\code{\link{get_dict_input_types}()},
-\code{\link{get_layer_dict}()},
-\code{\link{get_layer_documentation}()},
-\code{\link{get_parameter_documentation}()}
+Other Utils Documentation:
+\code{\link[=build_layer_overview_base_models]{build_layer_overview_base_models()}},
+\code{\link[=build_layer_stack_documentation_for_vignette]{build_layer_stack_documentation_for_vignette()}},
+\code{\link[=get_desc_for_core_model_architecture]{get_desc_for_core_model_architecture()}},
+\code{\link[=get_dict_cls_type]{get_dict_cls_type()}},
+\code{\link[=get_dict_core_models]{get_dict_core_models()}},
+\code{\link[=get_dict_input_types]{get_dict_input_types()}},
+\code{\link[=get_layer_dict]{get_layer_dict()}},
+\code{\link[=get_layer_documentation]{get_layer_documentation()}},
+\code{\link[=get_parameter_documentation]{get_parameter_documentation()}}
 }
 \concept{Utils Documentation}

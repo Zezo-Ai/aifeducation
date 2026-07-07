@@ -17,6 +17,13 @@ import numpy as np
 import math
 import safetensors
 
+def init_weights_orthogonal(m):
+    # Check if the layer type has a weight attribute
+    if isinstance(m, (torch.nn.Linear, torch.nn.Conv2d, torch.nn.Conv3d)):
+        nn.init.orthogonal_(m.weight, gain=1.0)
+        if m.bias is not None:
+            nn.init.constant_(m.bias, 0.0)
+
 class TEClassifierSequential(torch.nn.Module):
   def __init__(self,times, features, cls_pooling_features, pad_value,n_target_levels,inc_cls_head=True,skip_connection_type="ResidualGate",cls_type="Regular",cls_pooling_type="MinMax", 
               feat_act_fct="ELU",feat_size=50,feat_bias=True,feat_dropout=0.0,feat_parametrizations="None",feat_normalization_type="LayerNorm",
@@ -27,7 +34,17 @@ class TEClassifierSequential(torch.nn.Module):
               device=None, dtype=None):
       super().__init__()
       self.inc_cls_head=inc_cls_head
- 
+      
+      self.cls_pooling_type=cls_pooling_type
+      if self.cls_pooling_type=="Max" or self.cls_pooling_type=="MaxTimes":
+        self.cls_pooling_type_times="Max"
+      elif self.cls_pooling_type=="MinMax" or self.cls_pooling_type=="MinMaxTimes":
+        self.cls_pooling_type_times="MinMax"
+      elif self.cls_pooling_type=="Min":
+        self.cls_pooling_type_times="Min"
+      
+      self.feat_size=feat_size
+      self.pad_value=pad_value
       self.masking_layer=masking_layer(
         pad_value=pad_value
       )
@@ -131,28 +148,35 @@ class TEClassifierSequential(torch.nn.Module):
             )
       else:
         self.stack_dense_layer=identity_layer(pad_value=pad_value,apply_masking=True)
+      
         
       self.summarize_layer_time=exreme_pooling_over_time(
-        times=times,
-        features=feat_size,
-        pooling_type=cls_pooling_type,
-        pad_value=pad_value)
-        
-      self.summarize_layer_features=layer_adaptive_extreme_pooling_1d(
-        output_size=cls_pooling_features,
-        pooling_type=cls_pooling_type
-      )
-      
+          times=times,
+          features=feat_size,
+          pooling_type=self.cls_pooling_type_times,
+          pad_value=pad_value)
+      if self.cls_pooling_type == "Max" or self.cls_pooling_type == "Min" or self.cls_pooling_type == "MinMax":     
+          self.cls_pooling_features=cls_pooling_features
+          self.summarize_layer_features=layer_adaptive_extreme_pooling_1d(
+            output_size=cls_pooling_features,
+            pooling_type=cls_pooling_type
+          )
+      elif self.cls_pooling_type == "MaxTimes":
+          self.cls_pooling_features=self.feat_size
+          self.summarize_layer_features=torch.nn.Identity()
+      elif self.cls_pooling_type == "MinMaxTimes":
+          self.cls_pooling_features=2*self.feat_size
+          self.summarize_layer_features=torch.nn.Identity()     
       self.residual_connection=layer_residual_connection(skip_connection_type,pad_value)  
       
       if inc_cls_head==True:
         if cls_type=="Regular":
           self.classification_head=torch.nn.Linear(
-                in_features=cls_pooling_features,
+                in_features=self.cls_pooling_features,
                 out_features=n_target_levels)
         elif cls_type=="PairwiseOrthogonal":
           self.classification_head=pairwise_orthogonal_dense(
-                input_size=cls_pooling_features,
+                input_size=self.cls_pooling_features,
                 output_size=n_target_levels,
                 bias=False,
                 pre_dense=False,
@@ -160,7 +184,7 @@ class TEClassifierSequential(torch.nn.Module):
                 dtype=dtype)
         elif cls_type=="PairwiseOrthogonalDense":
           self.classification_head=pairwise_orthogonal_dense(
-                input_size=cls_pooling_features,
+                input_size=self.cls_pooling_features,
                 output_size=n_target_levels,
                 bias=False,
                 pre_dense=True,
@@ -175,8 +199,8 @@ class TEClassifierSequential(torch.nn.Module):
     y,mask=self.stack_n_gram_convolution(y,mask)
     y,mask=self.stack_dense_layer(y,mask)
     y,mask=self.residual_connection(y_original,y,mask)
-    y=self.summarize_layer_time(y,get_FeatureMask_from_mask(mask,y.size(2)))
-    y=self.summarize_layer_features(y)
+    y=self.summarize_layer_time(y,get_FeatureMask_from_mask(mask,y.size(2))) #(B,F)
+    y=self.summarize_layer_features(y) #(B,C)
     if self.inc_cls_head==True:
       y=self.classification_head(y)
     if prediction_mode==False:
@@ -198,6 +222,13 @@ class TEClassifierParallel(torch.nn.Module):
       self.inc_cls_head=inc_cls_head
       self.shared_feat_layer=shared_feat_layer
       self.n_streams=1
+      
+      if merge_pooling_type=="MaxTimes":
+        self.merge_pooling_features=feat_size
+      elif merge_pooling_type=="MinMaxTimes":
+        self.merge_pooling_features=2*feat_size
+      else:
+        self.merge_pooling_features=merge_pooling_features
  
       self.masking_layer=masking_layer(
         pad_value=pad_value
@@ -392,12 +423,11 @@ class TEClassifierParallel(torch.nn.Module):
       else:
         self.stack_dense_layer=None
         self.features_resize_layer_dense=None
-
         
       self.merge_layer=merge_layer(
         times=times,
         features=feat_size,
-        n_extracted_features=merge_pooling_features,
+        n_extracted_features=self.merge_pooling_features,
         n_input_streams=self.n_streams,
         pooling_type=merge_pooling_type,
         normalization_type=merge_normalization_type,
@@ -411,11 +441,11 @@ class TEClassifierParallel(torch.nn.Module):
       if inc_cls_head==True:
         if cls_type=="Regular":
           self.classification_head=torch.nn.Linear(
-                in_features=merge_pooling_features,
+                in_features=self.merge_pooling_features,
                 out_features=n_target_levels)
         elif cls_type=="PairwiseOrthogonal":
           self.classification_head=pairwise_orthogonal_dense(
-                input_size=merge_pooling_features,
+                input_size=self.merge_pooling_features,
                 output_size=n_target_levels,
                 bias=False,
                 pre_dense=False,
@@ -423,7 +453,7 @@ class TEClassifierParallel(torch.nn.Module):
                 dtype=dtype)
         elif cls_type=="PairwiseOrthogonalDense":
           self.classification_head=pairwise_orthogonal_dense(
-                input_size=merge_pooling_features,
+                input_size=self.merge_pooling_features,
                 output_size=n_target_levels,
                 bias=False,
                 pre_dense=True,
@@ -494,6 +524,12 @@ class TEClassifierPrototype(torch.nn.Module):
     n_target_levels=len(target_levels)
 
     if core_net_type=="sequential":
+      if cls_pooling_type=="MaxTimes":
+        self.cls_pooling_features=feat_size
+      elif cls_pooling_type=="MinMaxTimes":
+        self.cls_pooling_features=2*feat_size
+      else:
+        self.cls_pooling_features=cls_pooling_features
       self.core_net=TEClassifierSequential(
         times=times, 
         features=features, 
@@ -503,7 +539,7 @@ class TEClassifierPrototype(torch.nn.Module):
         skip_connection_type=skip_connection_type,
         cls_type="regular",
         cls_pooling_type=cls_pooling_type,
-        cls_pooling_features=cls_pooling_features, 
+        cls_pooling_features=self.cls_pooling_features, 
         feat_act_fct=feat_act_fct,
         feat_size=feat_size,
         feat_bias=feat_bias,
@@ -552,6 +588,12 @@ class TEClassifierPrototype(torch.nn.Module):
         dtype=dtype
       )
     elif core_net_type=="parallel":
+      if merge_pooling_type=="MaxTimes":
+        self.merge_pooling_features=feat_size
+      elif merge_pooling_type=="MinMaxTimes":
+        self.merge_pooling_features=2*feat_size
+      else:
+        self.merge_pooling_features=merge_pooling_features
       self.core_net=TEClassifierParallel(
         times=times, 
         features=features, 
@@ -615,7 +657,7 @@ class TEClassifierPrototype(torch.nn.Module):
     self.embedding_dim=embedding_dim
     self.classes=torch.from_numpy(np.copy(target_levels))
     self.n_classes=n_target_levels
-    
+
     self.trained_prototypes=torch.ones(1)
     self.class_labels=torch.ones(1)
     self.projection_type=projection_type
@@ -623,37 +665,37 @@ class TEClassifierPrototype(torch.nn.Module):
     if self.projection_type=="Regular":
       if core_net_type=="sequential":
         self.embedding_head=torch.nn.Linear(
-          in_features=cls_pooling_features,
+          in_features=self.cls_pooling_features,
           out_features=self.embedding_dim,
           bias=True)
       elif core_net_type=="parallel":
         self.embedding_head=torch.nn.Linear(
-          in_features=merge_pooling_features,
+          in_features=self.merge_pooling_features,
           out_features=self.embedding_dim,
           bias=True)
     elif self.projection_type=="PairwiseOrthogonal":
       if core_net_type=="sequential":
         self.embedding_head=pairwise_orthogonal_dense(
-          input_size=cls_pooling_features,
+          input_size=self.cls_pooling_features,
           output_size=self.embedding_dim,
           pre_dense=False,
           bias=True)
       elif core_net_type=="parallel":
         self.embedding_head=pairwise_orthogonal_dense(
-          input_size=merge_pooling_features,
+          input_size=self.merge_pooling_features,
           output_size=self.embedding_dim,
           pre_dense=False,
           bias=True)
     elif self.projection_type=="PairwiseOrthogonalDense":
       if core_net_type=="sequential":
         self.embedding_head=pairwise_orthogonal_dense(
-          input_size=cls_pooling_features,
+          input_size=self.cls_pooling_features,
           output_size=self.embedding_dim,
           pre_dense=True,
           bias=True)
       elif core_net_type=="parallel":
         self.embedding_head=pairwise_orthogonal_dense(
-          input_size=merge_pooling_features,
+          input_size=self.merge_pooling_features,
           output_size=self.embedding_dim,
           pre_dense=True,
           bias=True)          
@@ -676,21 +718,23 @@ class TEClassifierPrototype(torch.nn.Module):
 
       #Calculate Prototypes      
       prototypes=self.calc_prototypes(input_s=input_s,classes=sample_classes,total_classes=n_classes)
-
+      
     #Query set
     query_embeddings=self.embed(input_q)
 
     #Calc distance from query embeddings to global prototypes
     distances=self.metric(x=query_embeddings,prototypes=prototypes)
-    probabilities=torch.nn.Softmax(dim=1)(torch.exp(-distances))
-      
+    logits=torch.exp(-distances)
+
     if prediction_mode==False:
       if classes_q==None:
         query_classes=None
       else:
         query_classes=self.recode_classes(classes_q,class_labels)
+      probabilities=logits  
       return probabilities, distances, query_classes, query_embeddings, prototypes
     else:
+      probabilities=torch.nn.Softmax(dim=1)(logits)
       return probabilities
     
   def recode_classes(self,class_vector,class_labels):

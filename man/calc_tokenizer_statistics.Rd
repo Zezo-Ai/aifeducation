@@ -23,7 +23,9 @@ sequence.}
 \item \code{"training"} for a training run of the transformer.
 }}
 
-\item{statistics_max_tokens_length}{\code{int} Maximum sequence length for calculating the statistics. Allowed values: \ifelse{latex}{$20 <= x <= 8192$}{\ifelse{html}{\eqn{20 <= x <= 8192}}{`20 <= x <= 8192`}}}
+\item{statistics_max_tokens_length}{\code{int} Maximum sequence length for calculating the statistics. Allowed values:
+
+\ifelse{latex}{$20 <= x <= 8192$}{\ifelse{html}{\eqn{20 <= x <= 8192}}{`20 <= x <= 8192`}}}
 }
 \value{
 Returns a \code{list} with the following entries:

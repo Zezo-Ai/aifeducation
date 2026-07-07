@@ -13,10 +13,10 @@ Function does nothing return. It loads the requested scripts.
 Function loads or re-loads all python scripts within the package 'aifeducation'.
 }
 \seealso{
-Other Utils Python Developers: 
-\code{\link{get_py_package_version}()},
-\code{\link{get_py_package_versions}()},
-\code{\link{load_py_scripts}()},
-\code{\link{run_py_file}()}
+Other Utils Python Developers:
+\code{\link[=get_py_package_version]{get_py_package_version()}},
+\code{\link[=get_py_package_versions]{get_py_package_versions()}},
+\code{\link[=load_py_scripts]{load_py_scripts()}},
+\code{\link[=run_py_file]{run_py_file()}}
 }
 \concept{Utils Python Developers}

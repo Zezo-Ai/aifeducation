@@ -17,15 +17,15 @@ Function for generating an ID suffix for objects of class \link{TextEmbeddingMod
 \link{TEClassifierRegular}, and \link{TEClassifierProtoNet}.
 }
 \seealso{
-Other Utils Developers: 
-\code{\link{auto_n_cores}()},
-\code{\link{create_object}()},
-\code{\link{create_synthetic_units_from_matrix}()},
-\code{\link{get_n_chunks}()},
-\code{\link{get_synthetic_cases_from_matrix}()},
-\code{\link{get_time_stamp}()},
-\code{\link{matrix_to_array_c}()},
-\code{\link{tensor_to_matrix_c}()},
-\code{\link{to_categorical_c}()}
+Other Utils Developers:
+\code{\link[=auto_n_cores]{auto_n_cores()}},
+\code{\link[=create_object]{create_object()}},
+\code{\link[=create_synthetic_units_from_matrix]{create_synthetic_units_from_matrix()}},
+\code{\link[=get_n_chunks]{get_n_chunks()}},
+\code{\link[=get_synthetic_cases_from_matrix]{get_synthetic_cases_from_matrix()}},
+\code{\link[=get_time_stamp]{get_time_stamp()}},
+\code{\link[=matrix_to_array_c]{matrix_to_array_c()}},
+\code{\link[=tensor_to_matrix_c]{tensor_to_matrix_c()}},
+\code{\link[=to_categorical_c]{to_categorical_c()}}
 }
 \concept{Utils Developers}

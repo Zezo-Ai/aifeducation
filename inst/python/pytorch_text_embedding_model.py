@@ -94,4 +94,15 @@ class TextEmbeddingModel(torch.nn.Module):
     
     final_embeddings=torch.unsqueeze(final_embeddings,dim=0)
     return final_embeddings
-    
+  
+@torch.no_grad()    
+def inject_mask_tokens(input_ids,mask_freq,mask_id,pad_id):
+  B,T=input_ids.size()
+  insert_mask=torch.zeros((B,T))
+  mask_idx=torch.arange(start=1, end=T, step=mask_freq).long()
+  insert_mask[:,mask_idx]=1
+  insert_mask=insert_mask.masked_fill(mask=(input_ids==pad_id),value=0)
+  insert_mask=insert_mask.bool()
+  input_ids=input_ids.masked_fill(mask=insert_mask,value=mask_id)
+  return input_ids
+  

@@ -22,12 +22,12 @@ with and without correction.
 This function calculates Kendall's coefficient of concordance w with and without correction.
 }
 \seealso{
-Other performance measures: 
-\code{\link{calc_standard_classification_measures}()},
-\code{\link{cohens_kappa}()},
-\code{\link{fleiss_kappa}()},
-\code{\link{get_coder_metrics}()},
-\code{\link{gwet_ac}()},
-\code{\link{kripp_alpha}()}
+Other performance measures:
+\code{\link[=calc_standard_classification_measures]{calc_standard_classification_measures()}},
+\code{\link[=cohens_kappa]{cohens_kappa()}},
+\code{\link[=fleiss_kappa]{fleiss_kappa()}},
+\code{\link[=get_coder_metrics]{get_coder_metrics()}},
+\code{\link[=gwet_ac]{gwet_ac()}},
+\code{\link[=kripp_alpha]{kripp_alpha()}}
 }
 \concept{performance measures}

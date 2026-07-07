@@ -19,12 +19,12 @@ the columns.
 Function for calculating recall, precision, and f1-scores.
 }
 \seealso{
-Other performance measures: 
-\code{\link{cohens_kappa}()},
-\code{\link{fleiss_kappa}()},
-\code{\link{get_coder_metrics}()},
-\code{\link{gwet_ac}()},
-\code{\link{kendalls_w}()},
-\code{\link{kripp_alpha}()}
+Other performance measures:
+\code{\link[=cohens_kappa]{cohens_kappa()}},
+\code{\link[=fleiss_kappa]{fleiss_kappa()}},
+\code{\link[=get_coder_metrics]{get_coder_metrics()}},
+\code{\link[=gwet_ac]{gwet_ac()}},
+\code{\link[=kendalls_w]{kendalls_w()}},
+\code{\link[=kripp_alpha]{kripp_alpha()}}
 }
 \concept{performance measures}

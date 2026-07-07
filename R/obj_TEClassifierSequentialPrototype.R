@@ -98,7 +98,7 @@ TEClassifierSequentialPrototype <- R6::R6Class(
                          target_levels = NULL,
                          skip_connection_type = "ResidualGate",
                          cls_pooling_features = 50L,
-                         cls_pooling_type = "MinMax",
+                         cls_pooling_type = "MinMaxTimes",
                          projection_type = "Regular",
                          metric_type = "Euclidean",
                          feat_act_fct = "ELU",
@@ -153,11 +153,8 @@ TEClassifierSequentialPrototype <- R6::R6Class(
   ),
   private = list(
     # Private--------------------------------------------------------------------------
-    create_reset_model = function() {
+    init_model = function() {
       private$check_config_for_TRUE()
-
-      
-
       private$model <- py$TEClassifierPrototype(
         features = as.integer(private$model_config$features),
         times = as.integer(private$model_config$times),
@@ -215,7 +212,6 @@ TEClassifierSequentialPrototype <- R6::R6Class(
         embedding_dim = as.integer(private$model_config$embedding_dim),
         core_net_type = private$model_config$core_net_type
       )
-
       private$set_random_prototypes()
     },
     #--------------------------------------------------------------------------

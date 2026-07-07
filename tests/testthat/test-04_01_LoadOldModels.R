@@ -37,7 +37,7 @@ for (version in versions) {
   test_that(paste("CLS", version), {
     tem_path <- file.path(root_path_general_data, paste("Version", version), "tem_model")
     cls_path <- file.path(root_path_general_data, paste("Version", version), "cls_model")
-    if(dir.exists(cls_path)){
+    if (dir.exists(cls_path)) {
       cls_model <- load_from_disk(cls_path)
     }
     if (dir.exists(tem_path) && dir.exists(cls_path)) {

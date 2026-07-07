@@ -18,82 +18,87 @@ Bridging the Gap between Human and Machine Translation.
 \ifelse{text}{\doi{doi:10.48550/arXiv.1609.08144}}{<https://doi.org/10.48550/arXiv.1609.08144>}
 }
 \seealso{
-Other Tokenizer: 
+Other Tokenizer:
 \code{\link{HuggingFaceTokenizer}}
 }
 \concept{Tokenizer}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:TokenizerBase]{aifeducation::TokenizerBase}} -> \code{WordPieceTokenizer}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:TokenizerBase]{TokenizerBase}} -> \code{WordPieceTokenizer}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-WordPieceTokenizer-configure}{\code{WordPieceTokenizer$configure()}}
-\item \href{#method-WordPieceTokenizer-train}{\code{WordPieceTokenizer$train()}}
-\item \href{#method-WordPieceTokenizer-clone}{\code{WordPieceTokenizer$clone()}}
+  \itemize{
+    \item \href{#method-WordPieceTokenizer-configure}{\code{WordPieceTokenizer$configure()}}
+    \item \href{#method-WordPieceTokenizer-train}{\code{WordPieceTokenizer$train()}}
+    \item \href{#method-WordPieceTokenizer-clone}{\code{WordPieceTokenizer$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="calculate_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-calculate_statistics'><code>aifeducation::TokenizerBase$calculate_statistics()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="decode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-decode'><code>aifeducation::TokenizerBase$decode()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="encode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-encode'><code>aifeducation::TokenizerBase$encode()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_special_tokens'><code>aifeducation::TokenizerBase$get_special_tokens()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer'><code>aifeducation::TokenizerBase$get_tokenizer()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer_statistics'><code>aifeducation::TokenizerBase$get_tokenizer_statistics()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="load_from_disk"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-load_from_disk'><code>aifeducation::TokenizerBase$load_from_disk()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="n_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-n_special_tokens'><code>aifeducation::TokenizerBase$n_special_tokens()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="save"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-save'><code>aifeducation::TokenizerBase$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="calc_quantiles"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-calc_quantiles'><code>TokenizerBase$calc_quantiles()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="calculate_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-calculate_statistics'><code>TokenizerBase$calculate_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="decode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-decode'><code>TokenizerBase$decode()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="encode"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-encode'><code>TokenizerBase$encode()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_special_tokens'><code>TokenizerBase$get_special_tokens()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer'><code>TokenizerBase$get_tokenizer()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_tokenizer_statistics"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_tokenizer_statistics'><code>TokenizerBase$get_tokenizer_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="get_vocab_size"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-get_vocab_size'><code>TokenizerBase$get_vocab_size()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="load_from_disk"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-load_from_disk'><code>TokenizerBase$load_from_disk()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="n_special_tokens"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-n_special_tokens'><code>TokenizerBase$n_special_tokens()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="print"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-print'><code>TokenizerBase$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TokenizerBase" data-id="save"><a href='../../aifeducation/html/TokenizerBase.html#method-TokenizerBase-save'><code>TokenizerBase$save()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-WordPieceTokenizer-configure"></a>}}
 \if{latex}{\out{\hypertarget{method-WordPieceTokenizer-configure}{}}}
-\subsection{Method \code{configure()}}{
-Configures a new object of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{WordPieceTokenizer$configure(vocab_size = 10000L, vocab_do_lower_case = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{WordPieceTokenizer$configure()}}{
+  Configures a new object of this class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{WordPieceTokenizer$configure(vocab_size = 10000L, vocab_do_lower_case = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{vocab_size}}{\code{int} Size of the vocabulary. Allowed values:
+
+\ifelse{latex}{$1000 <= x <= 500000$}{\ifelse{html}{\eqn{1000 <= x <= 500000}}{`1000 <= x <= 500000`}}}
+      \item{\code{vocab_do_lower_case}}{\code{bool} \code{TRUE} if all tokens should be lower case.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Does nothing return.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{vocab_size}}{\code{int} Size of the vocabulary. Allowed values: \ifelse{latex}{$1000 <= x <= 500000$}{\ifelse{html}{\eqn{1000 <= x <= 500000}}{`1000 <= x <= 500000`}}}
-
-\item{\code{vocab_do_lower_case}}{\code{bool} \code{TRUE} if all tokens should be lower case.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Does nothing return.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-WordPieceTokenizer-train"></a>}}
 \if{latex}{\out{\hypertarget{method-WordPieceTokenizer-train}{}}}
-\subsection{Method \code{train()}}{
-Trains a new object of this class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{WordPieceTokenizer$train(
+\subsection{\code{WordPieceTokenizer$train()}}{
+  Trains a new object of this class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{WordPieceTokenizer$train(
   text_dataset,
   statistics_max_tokens_length = 512L,
   sustain_track = FALSE,
@@ -102,52 +107,63 @@ Trains a new object of this class
   sustain_interval = 15L,
   sustain_log_level = "warning",
   trace = FALSE
-)}\if{html}{\out{</div>}}
-}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
+      \item{\code{statistics_max_tokens_length}}{\code{int} Maximum sequence length for calculating the statistics. Allowed values:
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
-
-\item{\code{statistics_max_tokens_length}}{\code{int} Maximum sequence length for calculating the statistics. Allowed values: \ifelse{latex}{$20 <= x <= 8192$}{\ifelse{html}{\eqn{20 <= x <= 8192}}{`20 <= x <= 8192`}}}
-
-\item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
-
-\item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
+\ifelse{latex}{$20 <= x <= 8192$}{\ifelse{html}{\eqn{20 <= x <= 8192}}{`20 <= x <= 8192`}}}
+      \item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
+      \item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
 sustainability should be tracked. A list can be found on Wikipedia:
-\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
+\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values:
 
-\item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values: any}
+any}
+      \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values:
 
-\item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+any}
+      \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values:
 
-\item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values: 'debug', 'info', 'warning', 'error', 'critical'}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values:
+\itemize{
+\item 'debug'
+\item 'info'
+\item 'warning'
+\item 'error'
+\item 'critical'
+}}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Does nothing return.
+  }
+}
 
-\item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Does nothing return.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-WordPieceTokenizer-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-WordPieceTokenizer-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{WordPieceTokenizer$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{WordPieceTokenizer$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{WordPieceTokenizer$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -29,13 +29,13 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
   inherit = ClassifiersBasedOnTextEmbeddings,
   public = list(
     #-------------------------------------------------------------------------
-    #' @description Method for training a neural net.
+    #' @description Method for training classifier based on prototypes.
     #'
-    #'   Training includes a routine for early stopping. In the case that loss<0.0001 and Accuracy=1.00 and Average
-    #'   Iota=1.00 training stops. The history uses the values of the last trained epoch for the remaining epochs.
+    #' Training loop uses an early stopping mechanism. Training stops
+    #' if the performance on the validation set does not increase within 250 epochs
     #'
-    #'   After training the model with the best values for Average Iota, Accuracy, and Loss on the validation data set
-    #'   is used as the final model.
+    #' After training the model with the best values for smoothed Average Iota
+    #' on the validation data set is used as the final model.
     #'
     #' @param data_embeddings `r get_param_doc_desc("data_embeddings")`
     #' @param data_targets `r get_param_doc_desc("data_targets")`.
@@ -118,9 +118,9 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
                      log_dir = NULL,
                      log_write_interval = 10L,
                      n_cores = auto_n_cores(),
-                     lr_rate = 1e-3,
-                     lr_min=1e-4,
-                     lr_scheduler="None",
+                     lr_rate = 0.0,
+                     lr_min = 0.0,
+                     lr_scheduler = "None",
                      lr_warm_up_ratio = 0.02,
                      optimizer = "AdamW",
                      amp = FALSE) {
@@ -539,7 +539,7 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
         }
         if (!is.null(embeddings_s)) {
           embeddings_s <- embeddings_s["input"][0L:embeddings_s$num_rows]
-          embeddings_s=embeddings_s$to(device, dtype = dtype)
+          embeddings_s <- embeddings_s$to(device, dtype = dtype)
         }
         private$model$to(device, dtype = dtype)
         private$model$eval()
@@ -645,6 +645,72 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
       )
     },
     #--------------------------------------------------------------------------
+    estimate_learning_rates = function(data_manager, total_epochs) {
+      data_manager$set_state(
+        iteration = self$last_training$config$n_folds + 1L,
+        step = NULL
+      )
+      lr_dataset <- data_manager$get_dataset(
+        inc_labeled = TRUE,
+        inc_synthetic = FALSE,
+        inc_pseudo_data = FALSE,
+        inc_unlabeled = FALSE
+      )
+
+
+      #------
+      # Adjust Ns and Nq to current frequencies
+      min_total_freq <- min(table(extract_column_from_py_dataset(py_dataset = lr_dataset, column_name = "labels", format = "R")))
+      if (min_total_freq < (self$last_training$config$Ns + self$last_training$config$Nq)) {
+        factor <- (self$last_training$config$Ns) * (self$last_training$config$Ns + self$last_training$config$Nq)
+        tmp_ns <- floor(min_total_freq * factor)
+        tmp_ns <- max(1, min(tmp_ns, min_total_freq - 1))
+        tmp_ns <- min(tmp_ns, self$last_training$config$Ns)
+        tmp_nq <- min_total_freq - tmp_ns
+        message(
+          "Absolute frequencies of some classes are not sufficent for the chosen Nq and Ns.\n",
+          "Change value for Ns from ", self$last_training$config$Ns, " to ", tmp_ns, "\n",
+          "Change value for Nq from ", self$last_training$config$Nq, " to ", tmp_nq
+        )
+      } else {
+        tmp_ns <- self$last_training$config$Ns
+        tmp_nq <- self$last_training$config$Nq
+      }
+
+      # Set target column
+      if (!private$model_config$require_one_hot) {
+        target_column <- "labels"
+      } else {
+        target_column <- "one_hot_encoding"
+      }
+
+      lr_dataset <- lr_dataset$select_columns(c("input", target_column))
+      if (private$model_config$require_one_hot) {
+        lr_dataset <- lr_dataset$rename_column(target_column, "labels")
+      }
+
+      lr_dataset <- lr_dataset$with_format("torch")
+
+      lr_estimation_results <- py$calc_lr_rate(
+        trace = self$last_training$config$ml_trace,
+        epochs = as.integer(total_epochs),
+        model = private$model,
+        filepath = file.path(private$dir_checkpoint, "best_weights.pt"),
+        optimizer_method = self$last_training$config$optimizer,
+        loss_fct_name = self$last_training$config$loss_pt_fct_name,
+        dataset = lr_dataset,
+        batch_size = as.integer(self$last_training$config$batch_size),
+        class_weights = NULL,
+        Ns = as.integer(tmp_ns),
+        Nq = as.integer(tmp_nq),
+        separate = self$last_training$config$sampling_separate,
+        shuffle = self$last_training$config$sampling_shuffle,
+        alpha = self$last_training$config$loss_alpha,
+        margin = self$last_training$config$loss_margin,
+        n_classes = as.integer(length(private$model_config$target_levels))
+      )
+    },
+    #--------------------------------------------------------------------------
     basic_train = function(train_data = NULL,
                            val_data = NULL,
                            test_data = NULL,
@@ -662,11 +728,26 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
 
       # Reset model if requested
       if (reset_model) {
-        private$create_reset_model()
+        private$init_model()
       }
 
-      # Set loss function
-      loss_cls_fct_name <- "ProtoNetworkMargin"
+      # Adjust Ns and Nq to current frequencies
+      min_total_freq <- min(table(extract_column_from_py_dataset(py_dataset = train_data, column_name = "labels", format = "R")))
+      if (min_total_freq < (self$last_training$config$Ns + self$last_training$config$Nq)) {
+        factor <- (self$last_training$config$Ns) * (self$last_training$config$Ns + self$last_training$config$Nq)
+        tmp_ns <- floor(min_total_freq * factor)
+        tmp_ns <- max(1, min(tmp_ns, min_total_freq - 1))
+        tmp_ns <- min(tmp_ns, self$last_training$config$Ns)
+        tmp_nq <- min_total_freq - tmp_ns
+        message(
+          "Absolute frequencies of some classes are not sufficent for the chosen Nq and Ns.\n",
+          "Change value for Ns from ", self$last_training$config$Ns, " to ", tmp_ns, "\n",
+          "Change value for Nq from ", self$last_training$config$Nq, " to ", tmp_nq
+        )
+      } else {
+        tmp_ns <- self$last_training$config$Ns
+        tmp_nq <- self$last_training$config$Nq
+      }
 
       # Set target column
       if (!private$model_config$require_one_hot) {
@@ -698,17 +779,17 @@ TEClassifiersBasedOnProtoNet <- R6::R6Class(
         pytorch_test_data <- NULL
       }
 
-       tmp_history <- py$TeClassifierTrainPrototype(
+      tmp_history <- py$TeClassifierTrainPrototype(
         model = private$model,
         loss_pt_fct_name = self$last_training$config$loss_pt_fct_name,
         optimizer_method = self$last_training$config$optimizer,
         lr_rate = self$last_training$config$lr_rate,
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
-        lr_min=self$last_training$config$lr_min,
-        scheduler_type=self$last_training$config$lr_scheduler,
-        amp=self$last_training$config$amp,
-        Ns = as.integer(self$last_training$config$Ns),
-        Nq = as.integer(self$last_training$config$Nq),
+        lr_min = self$last_training$config$lr_min,
+        scheduler_type = self$last_training$config$lr_scheduler,
+        amp = self$last_training$config$amp,
+        Ns = as.integer(tmp_ns),
+        Nq = as.integer(tmp_nq),
         loss_alpha = self$last_training$config$loss_alpha,
         loss_margin = self$last_training$config$loss_margin,
         trace = as.integer(self$last_training$config$ml_trace),

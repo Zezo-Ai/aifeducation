@@ -26,15 +26,15 @@ cases the requested format is returned.
 Function extracts the content of a column from a python data set in order to allow further operations in \emph{R}.
 }
 \seealso{
-Other Utils Python Data Management Developers: 
-\code{\link{class_vector_to_py_dataset}()},
-\code{\link{create_py_dataset_cache_file_path}()},
-\code{\link{data.frame_to_py_dataset}()},
-\code{\link{get_batches_index}()},
-\code{\link{prepare_r_array_for_dataset}()},
-\code{\link{py_dataset_to_embeddings}()},
-\code{\link{reduce_to_unique}()},
-\code{\link{tensor_list_to_numpy}()},
-\code{\link{tensor_to_numpy}()}
+Other Utils Python Data Management Developers:
+\code{\link[=class_vector_to_py_dataset]{class_vector_to_py_dataset()}},
+\code{\link[=create_py_dataset_cache_file_path]{create_py_dataset_cache_file_path()}},
+\code{\link[=data.frame_to_py_dataset]{data.frame_to_py_dataset()}},
+\code{\link[=get_batches_index]{get_batches_index()}},
+\code{\link[=prepare_r_array_for_dataset]{prepare_r_array_for_dataset()}},
+\code{\link[=py_dataset_to_embeddings]{py_dataset_to_embeddings()}},
+\code{\link[=reduce_to_unique]{reduce_to_unique()}},
+\code{\link[=tensor_list_to_numpy]{tensor_list_to_numpy()}},
+\code{\link[=tensor_to_numpy]{tensor_to_numpy()}}
 }
 \concept{Utils Python Data Management Developers}

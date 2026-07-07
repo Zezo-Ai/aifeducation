@@ -122,24 +122,53 @@ test_that("LargeDataSetForTextEmbeddings - No FeatureExtractor", {
   multiple_cases <- new_dataset$select(c(0, 1, 2, 3))
   expect_equal(multiple_cases$num_rows, 4)
 
-  #Column extraction test
+  # Column extraction test
   expect_all_true(
     inherits(
-      new_dataset$extract_column("input",format="R"),
+      new_dataset$extract_column("input", format = "R"),
       "array"
     )
   )
   expect_all_true(
     inherits(
-      new_dataset$extract_column("input",format="torch"),
+      new_dataset$extract_column("input", format = "torch"),
       "torch.Tensor"
     )
   )
   expect_all_true(
     inherits(
-      new_dataset$extract_column("input",format="numpy"),
+      new_dataset$extract_column("input", format = "numpy"),
       "numpy.ndarray"
     )
+  )
+})
+
+# Print Method-------------------------------------------------------------------
+test_that("LargeDataSetForTexts - print method", {
+  new_dataset <- LargeDataSetForTextEmbeddings$new()
+  new_dataset$configure(
+    model_name = imdb_embeddings$get_model_info()$model_name,
+    model_label = imdb_embeddings$get_model_info()$model_label,
+    model_date = imdb_embeddings$get_model_info()$model_date,
+    model_method = imdb_embeddings$get_model_info()$model_method,
+    model_version = imdb_embeddings$get_model_info()$model_version,
+    model_language = imdb_embeddings$get_model_info()$model_language,
+    param_seq_length = imdb_embeddings$get_model_info()$param_seq_length,
+    param_chunks = imdb_embeddings$get_model_info()$param_chunks,
+    param_features = imdb_embeddings$get_features(),
+    param_overlap = imdb_embeddings$get_model_info()$param_overlap,
+    param_emb_layer_min = imdb_embeddings$get_model_info()$param_emb_layer_min,
+    param_emb_layer_max = imdb_embeddings$get_model_info()$param_emb_layer_max,
+    param_emb_pool_type = imdb_embeddings$get_model_info()$param_emb_pool_type,
+    param_aggregation = imdb_embeddings$get_model_info()$param_aggregation,
+    param_pad_value = -100
+  )
+  new_dataset$add_embeddings_from_array(imdb_embeddings$embeddings)
+  suppressMessages(
+    expect_no_error(new_dataset$print())
+  )
+  suppressMessages(
+    expect_no_error(print(new_dataset))
   )
 })
 

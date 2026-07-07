@@ -127,7 +127,7 @@ check_type <- function(object, object_name = NULL, type = "bool", allow_NULL = F
       } else {
         if (!is.null(allowed_values)) {
           if (!object %in% allowed_values) {
-            stop(tmp_name, " must be one of the following: ", allowed_values, collapse = ", ")
+            stop(tmp_name, " must be one of the following: ", toString(allowed_values))
           }
         }
       }

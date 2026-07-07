@@ -210,7 +210,7 @@ class FourierEncoder_PT(torch.nn.Module):
     self.layernorm_1=LayerNorm_with_Mask_PT(features=self.features)
     self.dense_proj=torch.nn.Sequential(
       torch.nn.Linear(in_features=self.features,out_features=self.dense_dim,bias=self.bias),
-      get_act_fct(act_fct),
+      get_act_fct(act_fct,input_dim=self.dense_dim,output_dim=self.dense_dim),
       torch.nn.Linear(in_features=self.dense_dim,out_features=self.features,bias=self.bias)
     )
     self.layernorm_2=LayerNorm_with_Mask_PT(features=self.features)
@@ -251,7 +251,7 @@ class TransformerEncoder_PT(torch.nn.Module):
     self.layernorm_1=LayerNorm_with_Mask_PT(features=self.embed_dim)
     self.dense_proj=torch.nn.Sequential(
       torch.nn.Linear(in_features=self.embed_dim,out_features=self.dense_dim,bias=self.bias),
-      get_act_fct(act_fct),
+      get_act_fct(act_fct,input_dim=self.dense_dim,output_dim=self.dense_dim),
       torch.nn.Linear(in_features=self.dense_dim,out_features=self.embed_dim,bias=self.bias))
     self.layernorm_2=LayerNorm_with_Mask_PT(features=self.embed_dim)
   
@@ -432,7 +432,7 @@ class TextEmbeddingClassifier_PT(torch.nn.Module):
         layer_list.update({"dense_"+str(i+1): tmp_dense_layer})
         
         layer_list.update({"dense_act_fct_"+str(i+1):
-             get_act_fct(act_fct)})
+             get_act_fct(act_fct,input_dim=dense_size,output_dim=dense_size)})
         if i!=(dense_layers-1):
           layer_list.update({"dense_dropout_"+str(i+1):torch.nn.Dropout(p=dense_dropout)})
       

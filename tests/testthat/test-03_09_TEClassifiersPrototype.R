@@ -12,8 +12,8 @@ load_all_py_scripts()
 object_class_names <- get_TEClassifiers_class_names(super_class = "TEClassifiersBasedOnProtoNet")
 # Do not use these test for the old ProtoNet Classifier
 object_class_names <- setdiff(x = object_class_names, y = "TEClassifierProtoNet")
-#Select on class randomly
-object_class_names=sample(object_class_names,size=1L)
+# Select on class randomly
+object_class_names <- sample(object_class_names, size = 1L)
 max_samples <- 10
 max_samples_CI <- 1
 
@@ -26,7 +26,7 @@ create_dir(testthat::test_path("test_artefacts"), FALSE)
 root_path_results <- testthat::test_path("test_artefacts/TeClassifierProtoNet")
 create_dir(root_path_results, FALSE)
 root_path_feature_extractor <- testthat::test_path("test_data_tmp/classifier/feature_extractor_pytorch")
-tolerance=1e-4
+tolerance <- 1e-4
 
 # SetUp datasets
 # Disable tqdm progressbar
@@ -78,8 +78,8 @@ for (object_class_name in object_class_names) {
         name = NULL,
         label = "Classifier for Estimating a Postive or Negative Rating of Movie Reviews",
         trace = random_bool_on_CI(),
-        tf_n_layers=0L,
-        ng_conv_n_layers=0L
+        tf_n_layers = 0L,
+        ng_conv_n_layers = 0L
       )
     )
 

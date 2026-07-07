@@ -14,7 +14,7 @@
 
 #' @title BERT-Transformer
 #' @description Represents models based on BERT.
-#' @references Devlin, J., Chang, M.‑W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of Deep Bidirectional
+#' @references Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of Deep Bidirectional
 #'   Transformers for Language Understanding. In J. Burstein, C. Doran, & T. Solorio (Eds.), Proceedings of the 2019
 #'   Conference of the North (pp. 4171--4186). Association for Computational Linguistics. \doi{10.18653/v1/N19-1423}
 #' @return `r get_description("return_object")`
@@ -25,9 +25,9 @@ BaseModelBert <- R6::R6Class(
   inherit = BaseModelCore,
   private = list(
     model_type = "bert",
+    slow_tokenizer = "BertTokenizer",
     create_model = function(args) {
       configuration <- transformers$BertConfig(
-        # vocab_size = as.integer(length(args$tokenizer$get_tokenizer()$get_vocab())+length(unique(args$tokenizer$get_tokenizer()$special_tokens_map))),
         vocab_size = as.integer(length(args$tokenizer$get_tokenizer()$get_vocab())),
         max_position_embeddings = as.integer(args$max_position_embeddings),
         hidden_size = as.integer(args$hidden_size),
@@ -89,4 +89,11 @@ BaseModelBert <- R6::R6Class(
 )
 
 # Add the model to the user list
-BaseModelsIndex$Bert <- ("BaseModelBert")
+BaseModelsIndex$Bert <- list(
+  class_name = "BaseModelBert",
+  model_type = "bert",
+  reference = "Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of Deep Bidirectional
+  Transformers for Language Understanding. In J. Burstein, C. Doran, & T. Solorio (Eds.), Proceedings of the 2019
+  Conference of the North (pp. 4171--4186). Association for Computational Linguistics. doi: [10.18653/v1/N19-1423](https://doi.org/10.18653/v1/N19-1423)",
+  req_sentencepiece = FALSE
+)

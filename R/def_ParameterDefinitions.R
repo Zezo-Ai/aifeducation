@@ -149,6 +149,20 @@ get_param_dict <- function() {
   param$chunks <- param$n_chunks
   param$chunks$min <- 2L
 
+  param$emb_insert_mask_tokens <- list(
+    type = "double",
+    min = 0.0,
+    max = 0.5,
+    allow_null = FALSE,
+    allowed_values = NULL,
+    desc = "Percentage of mask tokens that should replace tokens in the sequence. Replaces every 1/emb_insert_mask_tokens token.",
+    gui_box = NULL,
+    gui_label = NULL,
+    default_value = 0.15,
+    default_historic = 0.0,
+    test_values = c(0.0, 0.15)
+  )
+
   param$emb_layer_min <- list(
     type = "int",
     min = 1L,
@@ -554,8 +568,8 @@ get_param_dict <- function() {
     allowed_values = NULL,
     desc = "Number of maximum position embeddings. This parameter also determines the maximum length of a sequence which
   can be processed with the model.",
-    gui_box = "Sequence Modeling",
-    gui_label = "Max Sequence Length",
+    gui_box = "Transformer Encoder Layers",
+    gui_label = "Max. Sequence Length",
     default_value = 512L,
     test_values = 512L
   )
@@ -587,6 +601,7 @@ get_param_dict <- function() {
     test_values = c(12L, 20L)
   )
   param$d_model <- param$hidden_size
+  param$dim <- param$hidden_size
 
   param$hidden_act <- list(
     type = "string",
@@ -601,6 +616,7 @@ get_param_dict <- function() {
     test_values = NULL
   )
   param$hidden_activation <- param$hidden_act
+  param$activation <- param$hidden_act
 
   param$num_hidden_layers <- list(
     type = "int",
@@ -615,6 +631,58 @@ get_param_dict <- function() {
     test_values = c(2L, 4L)
   )
   param$num_hidden_layer <- param$num_hidden_layers
+  param$n_layers <- param$num_hidden_layers
+
+  param$num_hidden_groups <- list(
+    type = "int",
+    allow_null = FALSE,
+    min = 1L,
+    max = Inf,
+    allowed_values = NULL,
+    desc = "Number of groups for the hidden layers. Layers belonging to the same group share parameters.",
+    gui_box = "Transformer Encoder Layers",
+    gui_label = "Number of Hidden Groups",
+    default_value = 1L,
+    test_values = c(1L, 2L)
+  )
+
+  param$embedding_size <- list(
+    type = "int",
+    allow_null = FALSE,
+    min = 1L,
+    max = Inf,
+    allowed_values = NULL,
+    desc = "Dimensionality of the token embeddings.",
+    gui_box = "Transformer Encoder Layers",
+    gui_label = "Embedding Size",
+    default_value = 128L,
+    test_values = c(128L, 256L)
+  )
+
+  param$languages <- list(
+    type = "string",
+    allow_null = FALSE,
+    min = NULL,
+    max = NULL,
+    allowed_values = NULL,
+    desc = "`vector` of strings representing the Language codes.",
+    gui_box = "Transformer Encoder Layers",
+    gui_label = "Language Codes",
+    default_value = c("eng", "deu"),
+    test_values = "deu"
+  )
+  param$default_language <- list(
+    type = "string",
+    allow_null = FALSE,
+    min = NULL,
+    max = NULL,
+    allowed_values = NULL,
+    desc = "`string` representing the language code of the default language.",
+    gui_box = "Transformer Encoder Layers",
+    gui_label = "Default Language Codes",
+    default_value = "deu",
+    test_values = "deu"
+  )
 
   param$num_decoder_layers <- list(
     type = "int",
@@ -623,9 +691,9 @@ get_param_dict <- function() {
     max = Inf,
     allowed_values = NULL,
     desc = "Number of decoding layers.",
-    gui_box = "Decoder Layers",
+    gui_box = "Transformer Encoder Layers",
     gui_label = "Number of Decoding Layers",
-    default_value = 7L,
+    default_value = 2L,
     test_values = c(1L, 2L)
   )
 
@@ -644,7 +712,8 @@ get_param_dict <- function() {
   )
 
   param$d_head <- param$target_hidden_size
-  param$d_head$desc <- "Number of neurons of the final layer."
+  param$d_head$gui_label <- "Dimension of the attention head."
+  param$d_head$desc <- "Number of neurons of the layer."
   param$d_head$default_value <- 64L
 
   param$hidden_dropout_prob <- list(
@@ -661,6 +730,8 @@ get_param_dict <- function() {
   )
   param$embedding_dropout <- param$hidden_dropout_prob
   param$embedding_dropout$desc <- "Dropout chance for the embeddings."
+
+  param$dropout <- param$hidden_dropout_prob
 
   param$mlp_dropout <- param$hidden_dropout_prob
   param$mlp_dropout$desc <- "Dropout rate for the mlp layer."
@@ -772,6 +843,19 @@ get_param_dict <- function() {
     gui_label = "Min Sequence Length",
     default_value = 10L,
     test_values = 10L
+  )
+
+  param$seq_len_tokens <- list(
+    type = "int",
+    allow_null = FALSE,
+    min = 1L,
+    max = Inf,
+    allowed_values = NULL,
+    desc = "Length of a sequence in tokens",
+    gui_box = "Sequence Modeling",
+    gui_label = "Sequence Length",
+    default_value = 512L,
+    test_values = 512L
   )
 
   # Data related-----------------------------------------------------------------
@@ -1058,11 +1142,12 @@ get_param_dict <- function() {
     test_values = NULL
   )
   param$loss_pt_fct_name <- param$loss_cls_fct_name
-  param$loss_pt_fct_name$allowed_values <- c("MultiWayContrastiveLoss","MultiWayContrastiveLossFC")
+  param$loss_pt_fct_name$allowed_values <- c("MultiWayContrastiveLoss", "MultiWayContrastiveLossFC", "FocalLoss")
   param$loss_pt_fct_name$values_desc <- list(
     MultiWayContrastiveLoss = "Applies the loss described by [Zhang et al. 2019](https://doi.org/10.1007/978-3-030-16145-3_24).",
     MultiWayContrastiveLossFC = "Applies the sum of the loss described by [Zhang et al. 2019](https://doi.org/10.1007/978-3-030-16145-3_24) and the
-    Focal Loss described by [Lin et al. 2017](https://doi.org/10.48550/arXiv.1708.02002)."
+    Focal Loss described by [Lin et al. 2017](https://doi.org/10.48550/arXiv.1708.02002).",
+    FocalLoss = "Applies the focal loss described by [Lin et al. 2017](https://doi.org/10.48550/arXiv.1708.02002)."
   )
   param$loss_pt_fct_name$default_value <- "MultiWayContrastiveLoss"
   param$loss_pt_fct_name$gui_box <- "General Settings"
@@ -1102,7 +1187,7 @@ get_param_dict <- function() {
     gui_box = "General Settings",
     gui_label = "Batch Size",
     default_value = 32L,
-    test_values = 2L
+    test_values = 32L
   )
 
   param$n_batches <- list(
@@ -1118,28 +1203,30 @@ get_param_dict <- function() {
   )
 
   param$lr_rate <- list(
-    type = "(double",
+    type = "double",
     allow_null = FALSE,
     min = 0L,
     max = 1L,
-    desc = "Initial learning rate for the training. Sets the maximal learning rate.",
+    desc = "Initial learning rate for the training. Sets the maximal learning rate.
+    Set this value to `0.0` requests an automatic search for a good learning rate.",
     magnitude = 0.1,
     gui_box = "Learning Rate",
     gui_label = "Learning Rate",
-    default_value = 1e-3,
+    default_value = 0.0,
     test_values = 1e-3
   )
   param$learning_rate <- param$lr_rate
   param$lr_min <- list(
-    type = "(double",
+    type = "double",
     allow_null = FALSE,
     min = 0L,
     max = 1L,
-    desc = "Minimal learning rate during training.",
+    desc = "Minimal learning rate during training.
+    Set this value to `0.0` requests an automatic search for a good learning rate.",
     magnitude = 0.1,
     gui_box = "Learning Rate",
     gui_label = "Minimal Learning Rate",
-    default_value = 1e-4,
+    default_value = 0.0,
     test_values = 1e-4
   )
   param$lr_scheduler <- list(
@@ -1402,6 +1489,7 @@ get_param_dict <- function() {
     desc = "Object of class [TEFeatureExtractor] which should be used in order to reduce
     the number of dimensions of the text embeddings. If no feature extractor should be applied set `NULL`.",
     gui_label = "Feature Extractor",
+    default_historic = NULL,
     default_value = NULL,
     test_values = NULL
   )
@@ -1477,9 +1565,9 @@ get_param_dict <- function() {
     ),
     values_desc = list(
       LayerNorm = "Applies normalization as described by [Ba, Kiros, and Hinton (2016)](https://doi.org/10.48550/arXiv.1607.06450). Implementation supports masking of sequences.",
-      BatchNorm = "Applies normalization as described by [Loffe and Szegedy](https://doi.org/10.48550/arXiv.1502.03167). Implementation supports masking of sequences.",
-      RMSNorm = "Applies normalization as described by  [Zhang and Sennrich](https://doi.org/10.48550/arXiv.1910.07467). Implementation supports masking of sequences.",
-      PowerNorm = "Applies normalization as described by [Shen et al.](https://doi.org/10.48550/arXiv.2003.07845). Implementation supports masking of sequences.",
+      BatchNorm = "Applies normalization as described by [Loffe and Szegedy (2015)](https://doi.org/10.48550/arXiv.1502.03167). Implementation supports masking of sequences.",
+      RMSNorm = "Applies normalization as described by  [Zhang and Sennrich (2019)](https://doi.org/10.48550/arXiv.1910.07467). Implementation supports masking of sequences.",
+      PowerNorm = "Applies normalization as described by [Shen et al. (2020)](https://doi.org/10.48550/arXiv.2003.07845). Implementation supports masking of sequences.",
       None = "Applies no normalization."
     ),
     desc = "Type of normalization applied to all layers and stack layers.",
@@ -1533,7 +1621,8 @@ get_param_dict <- function() {
     min = 1L,
     max = Inf,
     allowed_values = NULL,
-    desc = "Number of features to be extracted at the end of the model.",
+    desc = "Number of features to be extracted at the end of the model.
+      Only relevant if pooling type is 'Max', 'Min' or 'MinMax'.",
     gui_box = "Classifiction Pooling Layer",
     gui_label = "Size",
     default_value = 32L,
@@ -1589,11 +1678,11 @@ get_param_dict <- function() {
     min = NULL,
     max = NULL,
     allow_null = FALSE,
-    allowed_values = c("Max", "Min", "MinMax"),
+    allowed_values = c("Max", "Min", "MinMax", "MaxTimes", "MinMaxTimes"),
     desc = "Type of extracting intermediate features.",
     gui_box = "Classifiction Pooling Layer",
     gui_label = "Feature Extraction Method",
-    default_value = "MinMax",
+    default_value = "MinMaxTimes",
     default_historic = NULL,
     test_values = NULL
   )
@@ -1663,30 +1752,40 @@ get_param_dict <- function() {
   param$feat_bias$gui_box <- "Feature Layer"
 
   # Activation functions---------------------------------------------------------
+  act_fct_allowed_values=c("ELU", "LeakyReLU", "ReLU", "GELU", "Sigmoid", "Tanh", "PReLU","SwiGLU")
   param$act_fct <- list(
     type = "string",
     min = NULL,
     max = NULL,
     allow_null = FALSE,
-    allowed_values = c("ELU", "LeakyReLU", "ReLU", "GELU", "Sigmoid", "Tanh", "PReLU"),
-    desc = "Activation function for all layers.",
+    allowed_values = setdiff(x=act_fct_allowed_values,y="SwiGLU"),
+    desc = "Activation function for the specified layers.",
     gui_box = "General Settings",
     gui_label = "Activation Function",
-    default_value = "ELU",
+    default_value = "SwiGLU",
     default_historic = "GELU",
     test_values = NULL
   )
-  param$feat_act_fct <- param$act_fct
+
+  param$feat_act_fct=param$act_fct
+  param$feat_act_fct$allowed_values <- setdiff(x=act_fct_allowed_values,y="SwiGLU")
   param$feat_act_fct$gui_box <- "Feature Layer"
-  param$ng_conv_act_fct <- param$act_fct
+
+  param$ng_conv_act_fct=param$act_fct
+  param$ng_conv_act_fct$allowed_values <- setdiff(x=act_fct_allowed_values,y="SwiGLU")
   param$ng_conv_act_fct$gui_box <- "Multiple N-Gram Layers"
+
   param$dense_act_fct <- param$act_fct
+  param$dense_act_fct$allowed_values <- setdiff(x=act_fct_allowed_values,y="SwiGLU")
   param$dense_act_fct$gui_box <- "Dense Layers"
-  param$rec_act_fct <- param$act_fct
+
+  param$rec_act_fct=param$act_fct
   param$rec_act_fct$allowed_values <- "Tanh"
   param$rec_act_fct$gui_box <- "Recurrent Layers"
+
   param$tf_act_fct <- param$act_fct
   param$tf_act_fct$gui_box <- "Transformer Encoder Layers"
+  param$tf_act_fct$allowed_values <- act_fct_allowed_values
 
   # Recurrent Layer--------------------------------------------------------------
   param$rec_dropout <- list(
@@ -1851,14 +1950,15 @@ get_param_dict <- function() {
     min = 0L,
     max = Inf,
     allowed_values = NULL,
-    desc = "determining the number of attention heads for a self-attention layer. Only relevant if `attention_type='multihead'`",
+    desc = "determining the number of attention heads for a self-attention layer. Only relevant if `attention_type='MultiHead'`",
     gui_box = "Transformer Encoder Layers",
     gui_label = "Number of Attention Heads",
-    default_value = 2L,
+    default_value = 4L,
     test_values = 2L
   )
   param$num_attention_heads <- param$self_attention_head
   param$n_head <- param$self_attention_head
+  param$n_heads <- param$self_attention_head
   param$tf_num_heads <- param$self_attention_head
 
   param$intermediate_size <- list(
@@ -1875,6 +1975,7 @@ get_param_dict <- function() {
   )
   param$tf_dense_dim <- param$intermediate_size
   param$d_inner <- param$intermediate_size
+  param$hidden_dim <- param$intermediate_size
 
   param$attention_type <- list(
     type = "string",
@@ -2237,7 +2338,7 @@ get_param_doc_desc <- function(param_name) {
       if (is.null(param_def$allowed_values)) {
         allowed_values <- "any"
       } else {
-        allowed_values <- toString(paste0("'", param_def$allowed_values, "'"))
+        allowed_values <- paste("\n",paste0("* '", param_def$allowed_values, "'\n"),collapse = " ")
       }
     } else if (param_def$type %in% c("double", "(double", "double)", "(double)")) {
       if (param_def$min != -Inf) {
@@ -2280,7 +2381,11 @@ get_param_doc_desc <- function(param_name) {
   }
 
   if (!is.null(allowed_values)) {
-    allowed_values <- paste("Allowed values:", allowed_values)
+    allowed_values <- paste(
+      "Allowed values:\n\n",
+      allowed_values,
+      "\n\n"
+    )
   } else {
     allowed_values <- ""
   }

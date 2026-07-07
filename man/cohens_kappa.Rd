@@ -29,12 +29,12 @@ Cohen, J (1960). A Coefficient of Agreement for Nominal Scales.
 Educational and Psychological Measurement, 20(1), 37–46. \url{doi:10.1177/001316446002000104}
 }
 \seealso{
-Other performance measures: 
-\code{\link{calc_standard_classification_measures}()},
-\code{\link{fleiss_kappa}()},
-\code{\link{get_coder_metrics}()},
-\code{\link{gwet_ac}()},
-\code{\link{kendalls_w}()},
-\code{\link{kripp_alpha}()}
+Other performance measures:
+\code{\link[=calc_standard_classification_measures]{calc_standard_classification_measures()}},
+\code{\link[=fleiss_kappa]{fleiss_kappa()}},
+\code{\link[=get_coder_metrics]{get_coder_metrics()}},
+\code{\link[=gwet_ac]{gwet_ac()}},
+\code{\link[=kendalls_w]{kendalls_w()}},
+\code{\link[=kripp_alpha]{kripp_alpha()}}
 }
 \concept{performance measures}

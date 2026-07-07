@@ -33,8 +33,6 @@
 #' @keywords internal
 #' @noRd
 #'
-
-# TODO (Yuliia): session has no visible binding
 create_process_modal <- function(ns,
                                  string_update_interval = "",
                                  title = "In progress. Please wait.",

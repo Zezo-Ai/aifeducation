@@ -49,7 +49,8 @@ load_all_py_scripts <- function() {
   )
   python_files <- list.files(
     path = python_dir,
-    full.names = TRUE
+    full.names = TRUE,
+    pattern="\\.py"
   )
 
   for (file in python_files) {
@@ -212,28 +213,35 @@ get_current_venv <- function() {
 #' @return Returns a list that contains the version number of python and
 #' the versions of critical python packages. If a package is not available
 #' version is set to `NA`.
-#'
+#' @param sentencepiece `bool` If `TRUE` the packages 'google.protobuf' and
+#' 'sentencepiece' are checked.
 #' @family Utils Python Developers
 #' @importFrom reticulate py_module_available
 #' @importFrom reticulate py_config
 #' @importFrom reticulate import
 #' @export
-#'
-get_py_package_versions <- function() {
-  list_of_packages <- c(
-    "torch",
-    "pyarrow",
-    "transformers",
-    "tokenizers",
-    "pandas",
-    "datasets",
-    "calflops",
-    "codecarbon",
-    "safetensors",
-    "torcheval",
-    "accelerate",
-    "numpy"
-  )
+get_py_package_versions <- function(sentencepiece = FALSE) {
+  if (sentencepiece) {
+    list_of_packages <- c(
+      "sentencepiece",
+      "google.protobuf"
+    )
+  } else {
+    list_of_packages <- c(
+      "torch",
+      "pyarrow",
+      "transformers",
+      "tokenizers",
+      "pandas",
+      "datasets",
+      "calflops",
+      "codecarbon",
+      "safetensors",
+      "torcheval",
+      "accelerate",
+      "numpy"
+    )
+  }
 
   versions <- vector(length = length(list_of_packages) + 1L)
   names(versions) <- c("python", list_of_packages)

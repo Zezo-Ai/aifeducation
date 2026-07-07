@@ -95,10 +95,10 @@ get_layer_dict <- function(layer) {
 
   documentation$cls_pooling_layer <- list(
     title = "Classifiction Pooling Layer",
-    desc = "Layer transforms sequences into a lower dimensional space that can be passed to dense layers. It
-    performs two types of pooling. First, it extractes features across the time dimension selecting the maximal
+    desc = "Layer transforms sequences into a lower dimensional space that can be passed to dense layers. It can
+    perform two types of pooling. First, it extractes features across the time dimension selecting the maximal
     and/or minimal features. Second, it performs pooling over the remaining features selecting a specific number of
-    the heighest and/or lowest features.
+    the heighest and/or lowest features. Pooling over time is mandatory. Pooling over features is optional and can lead to a lose of information.
     \n In the case of selecting the minmal *and* maximal features at the same time the minmal
     features are concatenated to the tensor of the maximal features resulting in the shape $(Batch, Times, 2*Features)$ at the end of the first step.
     In the second step the
@@ -115,8 +115,9 @@ get_layer_dict <- function(layer) {
     First, pooling over time is applied extracting the minimal and/or maximal features.
     Second, the pooled tensors are combined by calculating their weighted sum. Different attention mechanism can be used
     to dynamically calculate the corresponding weights. This allows the model to decide which part of the data is most usefull.
-    Finally, pooling over features is applied extracting a specific number of maximal and/or minimal features. A normalization of all input
-    at the begining of the layer is possible.",
+    Finally, pooling over features can be applied extracting a specific number of maximal and/or minimal features.
+    Pooling over times is mandatory. Pooling over features is optional and can lead to a lose of information.\n
+    A normalization of all input at the begining of the layer is possible.",
     img = "layers_merge.png",
     references = NULL,
     param_prefix = "merge_"
@@ -559,6 +560,44 @@ build_aife_site <- function(clear_docs = FALSE) {
   pkgdown::preview_site()
 }
 
+
+#' @title Generate documentation of supported BaseModels for an vignette or article
+#' @description Function for generating the whole documentation for an article
+#' used on the package's home page.
+#' @returns Returns a `string` containing the description written in rmarkdown.
+#' @note Function is designed to be used with inline r code in rmarkdown vignettes/articles.
+#' @importFrom stringi stri_replace_all
+#' @family Utils Documentation
+#' @export
+build_layer_overview_base_models <- function() {
+  requireNamespace("knitr")
+  ov_clm_names <- c("class_name", "reference", "req_sentencepiece")
+  final_clm_names <- c("BaseModel", "Reference", "Require Sentencepiece")
+  overview_table <- matrix(
+    nrow = length(BaseModelsIndex),
+    ncol = length(ov_clm_names),
+    dimnames = list(
+      NULL,
+      ov_clm_names
+    )
+  )
+  for (i in seq_along(BaseModelsIndex)) {
+    for (clm_name in ov_clm_names) {
+      overview_table[i, clm_name] <- stringi::stri_replace_all(
+        str = BaseModelsIndex[[i]][[clm_name]],
+        replacement = "",
+        regex = "\\n"
+      )
+    }
+  }
+  overview_table <- overview_table[order(overview_table[, "class_name"]), ]
+  colnames(overview_table) <- final_clm_names
+  return(
+    knitr::kable(
+      x = overview_table
+    )
+  )
+}
 
 # ==============================================================================
 

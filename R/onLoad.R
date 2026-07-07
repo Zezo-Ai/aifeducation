@@ -6,7 +6,6 @@ codecarbon <- NULL
 torch <- NULL
 torcheval <- NULL
 os <- NULL
-keras <- NULL
 accelerate <- NULL
 safetensors <- NULL
 pandas <- NULL
@@ -17,6 +16,7 @@ calflops <- NULL
   # use superassignment to update the global reference
   os <<- reticulate::import("os", delay_load = TRUE)
   transformers <<- reticulate::import("transformers", delay_load = TRUE)
+  codecarbon <<- reticulate::import("codecarbon", delay_load = TRUE)
   datasets <<- reticulate::import("datasets", delay_load = TRUE)
   tok <<- reticulate::import("tokenizers", delay_load = TRUE)
   np <<- reticulate::import("numpy", delay_load = TRUE)
@@ -26,13 +26,14 @@ calflops <- NULL
   safetensors <<- reticulate::import("safetensors", delay_load = TRUE)
   pandas <<- reticulate::import("pandas", delay_load = TRUE)
   pyarrow <<- reticulate::import("pyarrow", delay_load = TRUE)
-  codecarbon <<- reticulate::import("codecarbon", delay_load = TRUE)
   calflops <<- reticulate::import("calflops", delay_load = TRUE)
 }
 
 
 # Message on load of the package
 packageStartupMessage(
-  "This is version 1.1.5 of aifeducation. Start a new session with prepare_session().",
+  "This is version 1.1.6 of aifeducation. Start a new session with prepare_session().",
+  "\n\nPlease note that some of the new BaseModels require 'sentencepiece', 'protobuf', and Protocol Buffer Compiler.",
+  "\nSee the vignette '01 Get started' and 'A02 Supported Base Models' for more details.",
   appendLF = TRUE
 )

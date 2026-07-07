@@ -11,7 +11,7 @@ This object contains public and private methods which may be useful for every la
 of this class are not intended to be used directly.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEBaseModel}},
 \code{\link{AIFEMaster}},
 \code{\link{BaseModelCore}},
@@ -25,276 +25,319 @@ Other R6 Classes for Developers:
 \concept{R6 Classes for Developers}
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-LargeDataSetBase-n_cols}{\code{LargeDataSetBase$n_cols()}}
-\item \href{#method-LargeDataSetBase-n_rows}{\code{LargeDataSetBase$n_rows()}}
-\item \href{#method-LargeDataSetBase-get_colnames}{\code{LargeDataSetBase$get_colnames()}}
-\item \href{#method-LargeDataSetBase-extract_column}{\code{LargeDataSetBase$extract_column()}}
-\item \href{#method-LargeDataSetBase-get_dataset}{\code{LargeDataSetBase$get_dataset()}}
-\item \href{#method-LargeDataSetBase-reduce_to_unique_ids}{\code{LargeDataSetBase$reduce_to_unique_ids()}}
-\item \href{#method-LargeDataSetBase-select}{\code{LargeDataSetBase$select()}}
-\item \href{#method-LargeDataSetBase-get_ids}{\code{LargeDataSetBase$get_ids()}}
-\item \href{#method-LargeDataSetBase-save}{\code{LargeDataSetBase$save()}}
-\item \href{#method-LargeDataSetBase-load_from_disk}{\code{LargeDataSetBase$load_from_disk()}}
-\item \href{#method-LargeDataSetBase-load}{\code{LargeDataSetBase$load()}}
-\item \href{#method-LargeDataSetBase-set_package_versions}{\code{LargeDataSetBase$set_package_versions()}}
-\item \href{#method-LargeDataSetBase-get_package_versions}{\code{LargeDataSetBase$get_package_versions()}}
-\item \href{#method-LargeDataSetBase-get_all_fields}{\code{LargeDataSetBase$get_all_fields()}}
-\item \href{#method-LargeDataSetBase-clone}{\code{LargeDataSetBase$clone()}}
-}
+  \itemize{
+    \item \href{#method-LargeDataSetBase-n_cols}{\code{LargeDataSetBase$n_cols()}}
+    \item \href{#method-LargeDataSetBase-n_rows}{\code{LargeDataSetBase$n_rows()}}
+    \item \href{#method-LargeDataSetBase-get_colnames}{\code{LargeDataSetBase$get_colnames()}}
+    \item \href{#method-LargeDataSetBase-extract_column}{\code{LargeDataSetBase$extract_column()}}
+    \item \href{#method-LargeDataSetBase-get_dataset}{\code{LargeDataSetBase$get_dataset()}}
+    \item \href{#method-LargeDataSetBase-reduce_to_unique_ids}{\code{LargeDataSetBase$reduce_to_unique_ids()}}
+    \item \href{#method-LargeDataSetBase-select}{\code{LargeDataSetBase$select()}}
+    \item \href{#method-LargeDataSetBase-get_ids}{\code{LargeDataSetBase$get_ids()}}
+    \item \href{#method-LargeDataSetBase-save}{\code{LargeDataSetBase$save()}}
+    \item \href{#method-LargeDataSetBase-load_from_disk}{\code{LargeDataSetBase$load_from_disk()}}
+    \item \href{#method-LargeDataSetBase-load}{\code{LargeDataSetBase$load()}}
+    \item \href{#method-LargeDataSetBase-set_package_versions}{\code{LargeDataSetBase$set_package_versions()}}
+    \item \href{#method-LargeDataSetBase-get_package_versions}{\code{LargeDataSetBase$get_package_versions()}}
+    \item \href{#method-LargeDataSetBase-get_all_fields}{\code{LargeDataSetBase$get_all_fields()}}
+    \item \href{#method-LargeDataSetBase-print}{\code{LargeDataSetBase$print()}}
+    \item \href{#method-LargeDataSetBase-clone}{\code{LargeDataSetBase$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-n_cols"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-n_cols}{}}}
-\subsection{Method \code{n_cols()}}{
-Number of columns in the data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$n_cols()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$n_cols()}}{
+  Number of columns in the data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$n_cols()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{int} describing the number of columns in the data set.
+  }
 }
 
-\subsection{Returns}{
-\code{int} describing the number of columns in the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-n_rows"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-n_rows}{}}}
-\subsection{Method \code{n_rows()}}{
-Number of rows in the data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$n_rows()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$n_rows()}}{
+  Number of rows in the data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$n_rows()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{int} describing the number of rows in the data set.
+  }
 }
 
-\subsection{Returns}{
-\code{int} describing the number of rows in the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-get_colnames"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-get_colnames}{}}}
-\subsection{Method \code{get_colnames()}}{
-Get names of the columns in the data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$get_colnames()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$get_colnames()}}{
+  Get names of the columns in the data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$get_colnames()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{vector} containing the names of the columns as \code{string}s.
+  }
 }
 
-\subsection{Returns}{
-\code{vector} containing the names of the columns as \code{string}s.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-extract_column"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-extract_column}{}}}
-\subsection{Method \code{extract_column()}}{
-Extracts the data from a python data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$extract_column(col_name, format = "R")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{col_name}}{\code{string} Name of the column.}
-
-\item{\code{format}}{\code{string} Format of the data.
+\subsection{\code{LargeDataSetBase$extract_column()}}{
+  Extracts the data from a python data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$extract_column(col_name, format = "R")}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{col_name}}{\code{string} Name of the column.}
+      \item{\code{format}}{\code{string} Format of the data.
 \itemize{
 \item \code{"R"} returns the data as a R object.
 \item \code{"torch"} returns the data as PyTorch tensors.
 \item \code{"numpy"} returns the data as numpy array.
 }}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a \code{vector}, \code{matrix} or \code{array} for \code{format="R"}. In
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{vector}, \code{matrix} or \code{array} for \code{format="R"}. In
 all other cases the requestes format is returned..
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-get_dataset"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-get_dataset}{}}}
-\subsection{Method \code{get_dataset()}}{
-Get data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$get_dataset()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$get_dataset()}}{
+  Get data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$get_dataset()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the data set of this object as an object of class \code{datasets.arrow_dataset.Dataset}.
+  }
 }
 
-\subsection{Returns}{
-Returns the data set of this object as an object of class \code{datasets.arrow_dataset.Dataset}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-reduce_to_unique_ids"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-reduce_to_unique_ids}{}}}
-\subsection{Method \code{reduce_to_unique_ids()}}{
-Reduces the data set to a data set containing only unique ids. In the case an id exists multiple
+\subsection{\code{LargeDataSetBase$reduce_to_unique_ids()}}{
+  Reduces the data set to a data set containing only unique ids. In the case an id exists multiple
 times in the data set the first case remains in the data set. The other cases are dropped.
 
 \strong{Attention} Calling this method will change the data set in place.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$reduce_to_unique_ids()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$reduce_to_unique_ids()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It changes the data set of this object in place.
+  }
 }
 
-\subsection{Returns}{
-Method does not return anything. It changes the data set of this object in place.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-select"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-select}{}}}
-\subsection{Method \code{select()}}{
-Returns a data set which contains only the cases belonging to the specific indices.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$select(indicies)}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$select()}}{
+  Returns a data set which contains only the cases belonging to the specific indices.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$select(indicies)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{indicies}}{\code{vector} of \code{int} for selecting rows in the data set. \strong{Attention} The indices are zero-based.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a data set of class \code{datasets.arrow_dataset.Dataset} with the selected rows.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{indicies}}{\code{vector} of \code{int} for selecting rows in the data set. \strong{Attention} The indices are zero-based.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a data set of class \code{datasets.arrow_dataset.Dataset} with the selected rows.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-get_ids"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-get_ids}{}}}
-\subsection{Method \code{get_ids()}}{
-Get ids
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$get_ids()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$get_ids()}}{
+  Get ids
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$get_ids()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{vector} containing the ids of every row as \code{string}s.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{vector} containing the ids of every row as \code{string}s.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-save"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-save}{}}}
-\subsection{Method \code{save()}}{
-Saves a data set to disk.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$save(dir_path, folder_name, create_dir = TRUE)}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$save()}}{
+  Saves a data set to disk.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$save(dir_path, folder_name, create_dir = TRUE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where to store the data set.}
+      \item{\code{folder_name}}{\code{string} Name of the folder for storing the data set.}
+      \item{\code{create_dir}}{\code{bool} If \code{True} the directory will be created if it does not exist.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It write the data set to disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where to store the data set.}
-
-\item{\code{folder_name}}{\code{string} Name of the folder for storing the data set.}
-
-\item{\code{create_dir}}{\code{bool} If \code{True} the directory will be created if it does not exist.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It write the data set to disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-load_from_disk"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-load_from_disk}{}}}
-\subsection{Method \code{load_from_disk()}}{
-loads an object of class \link{LargeDataSetBase} from disk 'and updates the object to the current version
+\subsection{\code{LargeDataSetBase$load_from_disk()}}{
+  loads an object of class \link{LargeDataSetBase} from disk 'and updates the object to the current version
 of the package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$load_from_disk(dir_path)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$load_from_disk(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the data set set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It loads an object from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the data set set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It loads an object from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-load"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-load}{}}}
-\subsection{Method \code{load()}}{
-Loads a data set from disk.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$load(dir_path)}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$load()}}{
+  Loads a data set from disk.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$load(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the data set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It loads a data set from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the data set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It loads a data set from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-set_package_versions"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-set_package_versions}{}}}
-\subsection{Method \code{set_package_versions()}}{
-Method for setting the package version for 'aifeducation',
+\subsection{\code{LargeDataSetBase$set_package_versions()}}{
+  Method for setting the package version for 'aifeducation',
 'reticulate', 'torch', and 'numpy' to the currently used versions.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$set_package_versions()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$set_package_versions()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It is used to set the private
+fields fo package versions.
+  }
 }
 
-\subsection{Returns}{
-Method does not return anything. It is used to set the private
-fields fo package versions.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-get_package_versions"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-get_package_versions}{}}}
-\subsection{Method \code{get_package_versions()}}{
-Method for requesting a summary of the R and python packages'
+\subsection{\code{LargeDataSetBase$get_package_versions()}}{
+  Method for requesting a summary of the R and python packages'
 versions used for creating the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$get_package_versions()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$get_package_versions()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} containing the versions of the relevant
+R and python packages.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} containing the versions of the relevant
-R and python packages.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-get_all_fields"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-get_all_fields}{}}}
-\subsection{Method \code{get_all_fields()}}{
-Return all fields.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$get_all_fields()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$get_all_fields()}}{
+  Return all fields.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$get_all_fields()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method returns a \code{list} containing all public and private fields of the object.
+  }
 }
 
-\subsection{Returns}{
-Method returns a \code{list} containing all public and private fields of the object.
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LargeDataSetBase-print"></a>}}
+\if{latex}{\out{\hypertarget{method-LargeDataSetBase-print}{}}}
+\subsection{\code{LargeDataSetBase$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetBase-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetBase-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetBase$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetBase$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetBase$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

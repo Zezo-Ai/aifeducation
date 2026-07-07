@@ -18,8 +18,8 @@ Function for summarizing the tracked sustainability data with a tracker of the p
 'codecarbon'.
 }
 \seealso{
-Other Utils Sustainability Developers: 
-\code{\link{get_alpha_3_codes}()}
+Other Utils Sustainability Developers:
+\code{\link[=get_alpha_3_codes]{get_alpha_3_codes()}}
 }
 \concept{Utils Sustainability Developers}
 \keyword{internal}

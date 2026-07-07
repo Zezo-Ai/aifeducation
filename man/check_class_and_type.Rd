@@ -42,7 +42,7 @@ parameter \code{min}, \code{max}, and \code{allowed_values} do not apply if \cod
 allowed_values does only apply if \code{type_classes} is \code{string}.
 }
 \seealso{
-Other Utils Checks Developers: 
-\code{\link{check_all_args}()}
+Other Utils Checks Developers:
+\code{\link[=check_all_args]{check_all_args()}}
 }
 \concept{Utils Checks Developers}

@@ -4,10 +4,12 @@
 \alias{check_aif_py_modules}
 \title{Check if all necessary python modules are available}
 \usage{
-check_aif_py_modules(trace = TRUE)
+check_aif_py_modules(trace = TRUE, for_sentencepiece = FALSE)
 }
 \arguments{
 \item{trace}{\code{bool} \code{TRUE} if a list with all modules and their availability should be printed to the console.}
+
+\item{for_sentencepiece}{\code{bool} if \code{TRUE} checks only for 'sentencepiece' and 'google.protobuf'.}
 }
 \value{
 The function prints a table with all relevant packages and shows which modules are available or unavailable.
@@ -19,13 +21,15 @@ This function checks if all  python modules necessary for the package 'aifeducat
 available.
 }
 \seealso{
-Other Installation and Configuration: 
-\code{\link{get_recommended_py_versions}()},
-\code{\link{install_aifeducation}()},
-\code{\link{install_aifeducation_studio}()},
-\code{\link{install_py_modules}()},
-\code{\link{prepare_session}()},
-\code{\link{set_transformers_logger}()},
-\code{\link{update_aifeducation}()}
+Other Installation and Configuration:
+\code{\link[=get_recommended_py_versions]{get_recommended_py_versions()}},
+\code{\link[=install_aifeducation]{install_aifeducation()}},
+\code{\link[=install_aifeducation_studio]{install_aifeducation_studio()}},
+\code{\link[=install_protocol_buffer_compiler]{install_protocol_buffer_compiler()}},
+\code{\link[=install_py_modules]{install_py_modules()}},
+\code{\link[=prepare_session]{prepare_session()}},
+\code{\link[=set_codecarbon_logger]{set_codecarbon_logger()}},
+\code{\link[=set_transformers_logger]{set_transformers_logger()}},
+\code{\link[=update_aifeducation]{update_aifeducation()}}
 }
 \concept{Installation and Configuration}

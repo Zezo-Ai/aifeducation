@@ -174,6 +174,27 @@ class pairwise_orthogonal_dense(torch.nn.Module):
       y=y+self.beta
     return y
 
+#FlattenLayer with Mask--------------------------------------------------------
+class flatten_layer_with_mask(torch.nn.Module):
+  def __init__(self,pad_value):
+    super().__init__()
+    if isinstance(pad_value, torch.Tensor):
+      self.pad_value=pad_value.detach()
+    else:
+      self.pad_value=torch.tensor(pad_value)
+    self.flatten=torch.nn.modules.flatten.Flatten(start_dim=1, end_dim=-1)
+  def get_mask(self,mask_times,features):
+    with torch.no_grad():
+      mask_flatten=get_FeatureMask_from_mask(mask_times,features)
+      mask_flatten=self.flatten(mask_flatten)
+    return mask_flatten
+  def forward(self,x,mask_times):
+    y=self.flatten(x)
+    mask_flatten=self.get_mask(mask_times,x.size(2))
+    y=y.masked_fill(mask=mask_flatten,value=self.pad_value)
+    return y, mask_flatten
+    
+
 #DenseLayer_with_mask-----------------------------------------------------------
 #Dense layer that can handel masked sequences
 # Returns a list with the following tensors
@@ -229,9 +250,9 @@ class dense_layer_with_mask(torch.nn.Module):
     elif self.parametrizations=="SpectralNorm":
       torch.nn.utils.spectral_norm(module=self.dense, name='weight', n_power_iterations=1, eps=1e-12, dim=None)
     
-    self.act_fct=get_act_fct(self.act_fct_name)
+    self.act_fct=get_act_fct(self.act_fct_name,input_dim=self.input_size,output_dim=self.output_size)
     
-    if self.dropout >0:
+    if self.dropout>0:
       self.dropout=layer_dropout_with_mask(p=self.dropout,pad_value=self.pad_value)
     else:
       self.dropout=identity_layer(pad_value=self.pad_value,apply_masking=True)
@@ -241,7 +262,10 @@ class dense_layer_with_mask(torch.nn.Module):
   def forward(self,x,mask_times):
     y=self.dense(x)
     y,mask_times=self.normalization_layer(y,mask_times)
-    y=self.act_fct(y)
+    if self.act_fct_name=="SwiGLU":
+      y=self.act_fct(y,x)
+    else:  
+      y=self.act_fct(y)
     y,mask_times=self.dropout(x=y,mask_times=mask_times)
     y,mask_times=self.residual_connection(x=x,y=y,mask_times=mask_times)
     return y,mask_times
@@ -377,7 +401,12 @@ class layer_n_gram_convolution(torch.nn.Module):
       padding_mode='zeros',
       device=self.device, 
       dtype=self.dtype)
-    self.act_fct=get_act_fct(self.act_fct_name)
+    self.act_fct=get_act_fct(
+      self.act_fct_name,
+      input_dim=self.kernel_size_features,
+      output_dim=self.kernel_size_features
+    )
+    
     
     if self.parametrizations=="OrthogonalWeights":
       torch.nn.utils.parametrizations.orthogonal(module=self.conv_layer, name='weight',orthogonal_map="matrix_exp")
@@ -467,7 +496,11 @@ class layer_mutiple_n_gram_convolution(torch.nn.Module):
       )
     
     self.act_fct_name=act_fct_name
-    self.act_fct=get_act_fct(self.act_fct_name)
+    self.act_fct=get_act_fct(
+      self.act_fct_name,
+      input_dim=self.features,
+      output_dim=self.features
+    )
     self.normalization_layer=get_layer_normalization(
       name=normalization_type,
       times=self.times,
@@ -681,7 +714,7 @@ class layer_tf_encoder(torch.nn.Module):
   
       #Sub Layer 2    
       proj_output,proj_mask=self.dense_1(y,mask_times)
-      #Actvation function is part of dense_1. This it does not need a layer
+      #Actvation function is part of dense_1. Thus it does not need a layer
       proj_output,proj_mask=self.dense_2(proj_output,proj_mask)
       proj_dropout=self.dropout_2(proj_output)
       proj_dropout=proj_dropout.masked_fill(mask=mask_features,value=self.pad_value)
@@ -724,10 +757,19 @@ class merge_layer(torch.nn.Module):
     
     self.times=times
     self.features=features
+    
     if isinstance(pad_value, torch.Tensor):
       self.pad_value=pad_value.detach()
     else:
       self.pad_value=torch.tensor(pad_value)
+    
+    self.pooling_type=pooling_type
+    if self.pooling_type=="Max" or self.pooling_type=="MaxTimes":
+      self.merge_pooling_type_times="Max"
+    elif self.pooling_type=="MinMax" or self.pooling_type=="MinMaxTimes":
+      self.merge_pooling_type_times="MinMax"
+    elif self.pooling_type=="Min":
+      self.merge_pooling_type_times="Min"
     
     self.n_extracted_features=n_extracted_features
     self.n_input_streams=n_input_streams
@@ -735,26 +777,40 @@ class merge_layer(torch.nn.Module):
     self.attention_type=attention_type
     self.num_heads=num_heads
     
-    self.normalization_type=normalization_type
-    self.norm_layer_list=torch.nn.ModuleList()
-    for r in range(self.n_input_streams):
-      self.norm_layer_list.append(
-        get_layer_normalization(name= self.normalization_type,times=self.times, features=self.features,pad_value=self.pad_value,eps=1e-5)
-        )
-    
-    if pooling_type=="MinMax":
+    if self.merge_pooling_type_times=="MinMax":
       self.n_pooling_features=2*self.features
     else:
       self.n_pooling_features=self.features
     
+    self.normalization_type=normalization_type
+    self.norm_layer_list=torch.nn.ModuleList()
+    for r in range(self.n_input_streams):
+      self.norm_layer_list.append(
+        get_layer_normalization(
+          name= self.normalization_type,
+          times=self.times, 
+          features=self.features,
+          pad_value=self.pad_value,
+          eps=1e-5
+          )
+        )
+
     self.pooling_layer=exreme_pooling_over_time(
       times=self.times,
       features=self.features,
-      pooling_type=self.pooling_type,
+      pooling_type=self.merge_pooling_type_times,
       pad_value=self.pad_value
       )
       
-    if self.attention_type=="MultiHead":  
+    if self.pooling_type == "Max" or self.pooling_type == "Min" or self.pooling_type == "MinMax":  
+      self.pooling_over_features=layer_adaptive_extreme_pooling_1d(
+        output_size=self.n_extracted_features,
+        pooling_type=self.pooling_type
+        )  
+    else:
+      self.pooling_over_features=torch.nn.Identity()
+      
+    if self.attention_type=="MultiHead":
       self.attention_layer=torch.nn.MultiheadAttention(
         embed_dim=self.n_pooling_features, 
         num_heads=self.num_heads, 
@@ -778,10 +834,6 @@ class merge_layer(torch.nn.Module):
       bias=True, 
       device=device, 
       dtype=dtype)
-      
-    self.pooling_over_features=layer_adaptive_extreme_pooling_1d(
-      output_size=self.n_extracted_features,
-      pooling_type=self.pooling_type)
 
   def forward(self,tensor_list,mask_times):
     #Extract features by pooling and conotate to a new sequence
@@ -790,12 +842,12 @@ class merge_layer(torch.nn.Module):
       tmp_norm_layer=self.norm_layer_list[r]
       extracted=tmp_norm_layer(x=tmp_tensor,mask_times=mask_times)
       extracted=self.pooling_layer(extracted[0],get_FeatureMask_from_mask(extracted[1],extracted[0].size(2)))
-      extracted=torch.unsqueeze(extracted,dim=1)
+      extracted=torch.unsqueeze(extracted,dim=1) #(B,1,F)
       if r==0:
         extracted_seq=extracted
       else:
-        extracted_seq=torch.cat((extracted_seq,extracted),dim=1)
-      
+        extracted_seq=torch.cat((extracted_seq,extracted),dim=1) #(B,n,F) or (B,N,2*F)
+
     # calculate weights for merging
     if self.attention_type=="MultiHead":
       attn=self.attention_layer(extracted_seq,extracted_seq,extracted_seq)[0]

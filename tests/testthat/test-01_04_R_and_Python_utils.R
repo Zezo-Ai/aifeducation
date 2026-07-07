@@ -17,8 +17,8 @@ test_that("class_vector_to_py_dataset", {
   dataset <- class_vector_to_py_dataset(vec)
 
   expect_s3_class(object = dataset, class = "datasets.arrow_dataset.Dataset")
-  expect_equal(extract_column_from_py_dataset(dataset,"id"), name_vector)
-  expect_equal(extract_column_from_py_dataset(dataset,"labels"), unname(vec))
+  expect_equal(extract_column_from_py_dataset(dataset, "id"), name_vector)
+  expect_equal(extract_column_from_py_dataset(dataset, "labels"), unname(vec))
 })
 
 test_that("is_venv ", {

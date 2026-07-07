@@ -22,15 +22,15 @@ Function written in C++ for reshaping a matrix containing sequential data into
 an array for use with keras.
 }
 \seealso{
-Other Utils Developers: 
-\code{\link{auto_n_cores}()},
-\code{\link{create_object}()},
-\code{\link{create_synthetic_units_from_matrix}()},
-\code{\link{generate_id}()},
-\code{\link{get_n_chunks}()},
-\code{\link{get_synthetic_cases_from_matrix}()},
-\code{\link{get_time_stamp}()},
-\code{\link{tensor_to_matrix_c}()},
-\code{\link{to_categorical_c}()}
+Other Utils Developers:
+\code{\link[=auto_n_cores]{auto_n_cores()}},
+\code{\link[=create_object]{create_object()}},
+\code{\link[=create_synthetic_units_from_matrix]{create_synthetic_units_from_matrix()}},
+\code{\link[=generate_id]{generate_id()}},
+\code{\link[=get_n_chunks]{get_n_chunks()}},
+\code{\link[=get_synthetic_cases_from_matrix]{get_synthetic_cases_from_matrix()}},
+\code{\link[=get_time_stamp]{get_time_stamp()}},
+\code{\link[=tensor_to_matrix_c]{tensor_to_matrix_c()}},
+\code{\link[=to_categorical_c]{to_categorical_c()}}
 }
 \concept{Utils Developers}

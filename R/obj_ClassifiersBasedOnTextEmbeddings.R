@@ -287,7 +287,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
           return(FALSE)
         }
       } else if (inherits(text_embeddings, "datasets.arrow_dataset.Dataset")) {
-        tensors <-extract_column_from_py_dataset(text_embeddings,"input")[1L, , , drop = FALSE]
+        tensors <- extract_column_from_py_dataset(text_embeddings, "input")[1L, , , drop = FALSE]
         if (dim(tensors)[3L] > private$model_config$features) {
           return(TRUE)
         } else {
@@ -408,6 +408,25 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         text_size = text_size
       )
       return(tmp_plot)
+    },
+    #' @description Print method for classifiers.
+    #' @return Prints a short description of the object.
+    print = function() {
+      rows <- c("Object", "ID", "Label", "Configured", "Trained", "Classes", "Times", "Features", "Parameter", "req. FE")
+      padded_rows <- pad_str(rows, width = NULL, pad = " ", end = ": ")
+      message(
+        appendLF = FALSE,
+        padded_rows[1L], class(self)[1L], "\n",
+        padded_rows[2L], private$model_info$model_name, "\n",
+        padded_rows[3L], private$model_info$model_label, "\n",
+        padded_rows[4L], self$is_configured(), "\n",
+        padded_rows[5L], self$is_trained(), "\n",
+        padded_rows[6L], toString(private$model_config$target_levels), "\n",
+        padded_rows[7L], self$get_model_config()$times, "\n",
+        padded_rows[8L], self$get_model_config()$features, "\n",
+        padded_rows[9L], self$count_parameter(), "\n",
+        padded_rows[10L], self$get_model_config()$use_fe, "\n"
+      )
     }
   ),
   private = list(
@@ -462,13 +481,13 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       )
       test_pred_cat <- test_predictions$expected_category
       names(test_pred_cat) <- rownames(test_predictions)
-      test_pred_cat <- test_pred_cat[extract_column_from_py_dataset(test_data,"id")]
+      test_pred_cat <- test_pred_cat[extract_column_from_py_dataset(test_data, "id")]
       true_values <- factor(
-        x = extract_column_from_py_dataset(test_data,"labels"),
+        x = extract_column_from_py_dataset(test_data, "labels"),
         levels = 0L:(length(private$model_config$target_levels) - 1L),
         labels = private$model_config$target_levels
       )
-      names(true_values) <- extract_column_from_py_dataset(test_data,"id")
+      names(true_values) <- extract_column_from_py_dataset(test_data, "id")
       test_res <- get_coder_metrics(
         true_values = true_values,
         predicted_values = test_pred_cat
@@ -495,15 +514,15 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         )
         test_pred_cat <- test_predictions$expected_category
         names(test_pred_cat) <- rownames(test_predictions)
-        test_pred_cat <- test_pred_cat[extract_column_from_py_dataset(test_data,"id")]
+        test_pred_cat <- test_pred_cat[extract_column_from_py_dataset(test_data, "id")]
 
         # Calculate standard measures
         true_values <- factor(
-          x = extract_column_from_py_dataset(test_data,"labels"),
+          x = extract_column_from_py_dataset(test_data, "labels"),
           levels = 0L:(length(private$model_config$target_levels) - 1L),
           labels = private$model_config$target_levels
         )
-        names(true_values) <- extract_column_from_py_dataset(test_data,"id")
+        names(true_values) <- extract_column_from_py_dataset(test_data, "id")
         self$reliability$standard_measures_end[iteration] <- list(
           calc_standard_classification_measures(
             true_values = true_values,
@@ -514,7 +533,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         # Calculate iota objects
         self$reliability$iota_objects_end[iteration] <- list(iotarelr::check_new_rater(
           true_values = factor(
-            x = extract_column_from_py_dataset(test_data,"labels"),
+            x = extract_column_from_py_dataset(test_data, "labels"),
             levels = 0L:(length(private$model_config$target_levels) - 1L),
             labels = private$model_config$target_levels
           ),
@@ -523,7 +542,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         ))
         self$reliability$iota_objects_end_free[iteration] <- list(iotarelr::check_new_rater(
           true_values = factor(
-            x = extract_column_from_py_dataset(test_data,"labels"),
+            x = extract_column_from_py_dataset(test_data, "labels"),
             levels = 0L:(length(private$model_config$target_levels) - 1L),
             labels = private$model_config$target_levels
           ),
@@ -938,8 +957,8 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       )
 
       # get the corresponding input
-      embeddings <-extract_column_from_py_dataset(unlabeled_data,"input")
-      rownames(embeddings) <- extract_column_from_py_dataset(unlabeled_data,"id")
+      embeddings <- extract_column_from_py_dataset(unlabeled_data, "input")
+      rownames(embeddings) <- extract_column_from_py_dataset(unlabeled_data, "id")
       embeddings <- embeddings[names_final_new_categories, , ]
 
       # Return results
@@ -960,12 +979,12 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       )
       val_pred_cat <- val_predictions$expected_category
       names(val_pred_cat) <- rownames(val_predictions)
-      val_pred_cat <- val_pred_cat[extract_column_from_py_dataset(val_data,"id")]
+      val_pred_cat <- val_pred_cat[extract_column_from_py_dataset(val_data, "id")]
 
       # Calculate Assignment Error Matrix
       val_iota_object <- iotarelr::check_new_rater(
         true_values = factor(
-          x = extract_column_from_py_dataset(val_data,"labels"),
+          x = extract_column_from_py_dataset(val_data, "labels"),
           levels = 0L:(length(private$model_config$target_levels) - 1L),
           labels = private$model_config$target_levels
         ),
@@ -1007,40 +1026,15 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         torch$cuda$empty_cache()
       }
 
-
       # Generating class weights
-      if (self$last_training$config$loss_balance_class_weights) {
-        abs_freq_classes <- table(
-          extract_column_from_py_dataset(train_data,"labels")
-          )
-        class_weights <- as.vector(sum(abs_freq_classes) / (length(abs_freq_classes) * abs_freq_classes))
-      } else {
-        class_weights <- rep(x = 1L, times = length(private$model_config$target_levels))
-      }
+      class_weights <- private$generate_class_weights(train_data)
 
       # Generating weights for sequence length
-      if (self$last_training$config$loss_balance_sequence_length) {
-        sequence_length <- extract_column_from_py_dataset(train_data,"length")
-        abs_freq_length <- table(sequence_length)
-
-        sample_weight_per_sequence_length <- as.vector(
-          sum(abs_freq_length) / (length(abs_freq_length) * abs_freq_length)
-        )
-        sequence_order <- names(abs_freq_length)
-
-        sample_weights <- vector(length = length(sequence_length))
-        for (i in seq_along(sample_weights)) {
-          idx <- which(sequence_length[i] == sequence_order)
-          sample_weights[i] <- sample_weight_per_sequence_length[idx]
-        }
-      } else {
-        sequence_length <- extract_column_from_py_dataset(train_data,"length")
-        sample_weights <- rep.int(x = 1L, times = length(sequence_length))
-      }
+      sample_weights <- private$generate_sample_weights(train_data)
 
       # Reset model if requested
       if (reset_model) {
-        private$create_reset_model()
+        private$load_init_weights()
       }
 
       # Set loss function
@@ -1066,8 +1060,10 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         ))
       )
 
-      dataset_train <- train_data$add_column("sample_weights",
-                                             extract_column_from_py_dataset(data_set_weights,"sample_weights"))
+      dataset_train <- train_data$add_column(
+        "sample_weights",
+        extract_column_from_py_dataset(data_set_weights, "sample_weights")
+      )
       dataset_train <- dataset_train$select_columns(c("input", target_column, "sample_weights"))
 
       if (private$model_config$require_one_hot) {
@@ -1097,9 +1093,9 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
         loss_cls_fct_name = self$last_training$config$loss_cls_fct_name,
         optimizer_method = self$last_training$config$optimizer,
         lr_rate = self$last_training$config$lr_rate,
-        lr_min=self$last_training$config$lr_min,
-        scheduler_type=self$last_training$config$lr_scheduler,
-        amp=self$last_training$config$amp,
+        lr_min = self$last_training$config$lr_min,
+        scheduler_type = self$last_training$config$lr_scheduler,
+        amp = self$last_training$config$amp,
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
         epochs = as.integer(self$last_training$config$epochs),
         trace = as.integer(self$last_training$config$ml_trace),
@@ -1217,7 +1213,7 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       private$set_configuration_to_TRUE()
 
       # Create_Model
-      private$create_reset_model()
+      private$init_model()
     },
     #---------------------------------------------------------------------------
     check_param_combinations_training = function() {
@@ -1353,6 +1349,9 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       # Check and create temporary directory for checkpoints
       private$create_checkpoint_directory()
 
+      # Save init weights of the model
+      private$save_init_weights()
+
       # Start-------------------------------------------------------------------
       if (self$last_training$config$trace) {
         message(
@@ -1371,10 +1370,10 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       # Start Sustainability Tracking-------------------------------------------
       private$init_and_start_sustainability_tracking()
 
+      # Calculate learning rate if requested
+      private$calculate_learning_rate(data_manager)
+
       # Start Training----------------------------------------------------------
-      # Load Custom Model Scripts
-
-
       # Start Loop inclusive final training
       for (iter in 1L:(self$last_training$config$n_folds + 1L)) {
         base::gc(verbose = FALSE, full = TRUE)
@@ -1454,6 +1453,101 @@ ClassifiersBasedOnTextEmbeddings <- R6::R6Class(
       } else {
         return(name)
       }
+    },
+    #-------------------------------------------------------------------------
+    generate_class_weights = function(data_set) {
+      if (self$last_training$config$loss_balance_class_weights) {
+        abs_freq_classes <- table(
+          extract_column_from_py_dataset(data_set, "labels")
+        )
+        class_weights <- as.vector(sum(abs_freq_classes) / (length(abs_freq_classes) * abs_freq_classes))
+      } else {
+        class_weights <- rep(x = 1L, times = length(private$model_config$target_levels))
+      }
+      return(class_weights)
+    },
+    #-------------------------------------------------------------------------
+    generate_sample_weights = function(data_set) {
+      if (self$last_training$config$loss_balance_sequence_length) {
+        sequence_length <- extract_column_from_py_dataset(data_set, "length")
+        abs_freq_length <- table(sequence_length)
+        print(which(is.na(sequence_length)))
+
+        sample_weight_per_sequence_length <- as.vector(
+          sum(abs_freq_length) / (length(abs_freq_length) * abs_freq_length)
+        )
+        sequence_order <- names(abs_freq_length)
+
+        sample_weights <- vector(length = length(sequence_length))
+        for (i in seq_along(sample_weights)) {
+          idx <- which(sequence_length[i] == sequence_order)
+          sample_weights[i] <- sample_weight_per_sequence_length[idx]
+        }
+      } else {
+        sequence_length <- extract_column_from_py_dataset(data_set, "length")
+        sample_weights <- rep.int(x = 1L, times = length(sequence_length))
+      }
+      return(sample_weights)
+    },
+    #-------------------------------------------------------------------------
+    estimate_learning_rates = function(data_manager, total_epochs) {
+      data_manager$set_state(
+        iteration = self$last_training$config$n_folds + 1L,
+        step = NULL
+      )
+      lr_dataset <- data_manager$get_dataset(
+        inc_labeled = TRUE,
+        inc_synthetic = FALSE,
+        inc_pseudo_data = FALSE,
+        inc_unlabeled = FALSE
+      )
+
+      # Generating class weights
+      class_weights <- private$generate_class_weights(lr_dataset)
+
+      # Generating weights for sequence length
+      sample_weights <- private$generate_sample_weights(lr_dataset)
+
+      data_set_weights <- datasets$Dataset$from_dict(
+        reticulate::dict(list(
+          sample_weights = sample_weights
+        ))
+      )
+
+      if (!private$model_config$require_one_hot) {
+        target_column <- "labels"
+      } else {
+        target_column <- "one_hot_encoding"
+      }
+      lr_dataset <- lr_dataset$add_column(
+        "sample_weights",
+        extract_column_from_py_dataset(data_set_weights, "sample_weights")
+      )
+      lr_dataset <- lr_dataset$select_columns(c("input", target_column, "sample_weights"))
+
+      if (private$model_config$require_one_hot) {
+        lr_dataset <- lr_dataset$rename_column(target_column, "labels")
+      }
+
+      lr_estimation_results <- py$calc_lr_rate(
+        trace = self$last_training$config$ml_trace,
+        epochs = as.integer(total_epochs),
+        model = private$model,
+        filepath = file.path(private$dir_checkpoint, "best_weights.pt"),
+        optimizer_method = self$last_training$config$optimizer,
+        loss_fct_name = self$last_training$config$loss_cls_fct_name,
+        dataset = lr_dataset,
+        batch_size = as.integer(self$last_training$config$batch_size),
+        class_weights = torch$tensor(np$array(class_weights)),
+        Ns = NULL,
+        Nq = NULL,
+        separate = NULL,
+        shuffle = NULL,
+        alpha = NULL,
+        margin = NULL,
+        n_classes = as.integer(length(private$model_config$target_levels))
+      )
+      return(lr_estimation_results)
     }
   )
 )

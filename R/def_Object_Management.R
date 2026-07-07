@@ -86,10 +86,14 @@ get_depr_obj_names <- function() {
 #' @export
 create_object <- function(class) {
   # Create list of all objects on user level
+
+  base_model <- get_entry_from_BaseModelsIndex("class_name")
+  names(base_model) <- get_entry_from_BaseModelsIndex("model_type")
+
   object_list <- c(
     DataSetsIndex,
     TokenizerIndex,
-    BaseModelsIndex,
+    base_model,
     TextEmbeddingObjectsIndex,
     TEClassifiers_class_names
   )
@@ -108,4 +112,21 @@ create_object <- function(class) {
   } else {
     stop("Object ", class, " is not implemented in this function.")
   }
+}
+
+# ===================BaseModels===============================================
+
+#' @title Get entries from BaseModelsIndex
+#' @description Returns the values for all BaseModels in the specific entry.
+#' @param entry `string` Name of the entry for which the values should be returned.
+#' @return Returns a `vector`.
+#' @family Utils Developers
+#' @keywords internal
+#' @noRd
+get_entry_from_BaseModelsIndex <- function(entry = "class_name") {
+  results <- vector(length = length(BaseModelsIndex))
+  for (i in seq_along(BaseModelsIndex)) {
+    results[i] <- BaseModelsIndex[[i]][[entry]]
+  }
+  return(results)
 }

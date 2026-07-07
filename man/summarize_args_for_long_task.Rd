@@ -62,9 +62,9 @@ a method or to add value for arguments which are not part of shiny input
 Please not that all list are named list of the format (argument_name=values).
 }
 \seealso{
-Other Utils Studio Developers: 
-\code{\link{add_missing_args}()},
-\code{\link{create_data_embeddings_description}()},
-\code{\link{long_load_target_data}()}
+Other Utils Studio Developers:
+\code{\link[=add_missing_args]{add_missing_args()}},
+\code{\link[=create_data_embeddings_description]{create_data_embeddings_description()}},
+\code{\link[=long_load_target_data]{long_load_target_data()}}
 }
 \concept{Utils Studio Developers}

@@ -17,10 +17,10 @@ Function generates a description for the underling \link{TextEmbeddingModel} of
 give text embeddings.
 }
 \seealso{
-Other Utils Studio Developers: 
-\code{\link{add_missing_args}()},
-\code{\link{long_load_target_data}()},
-\code{\link{summarize_args_for_long_task}()}
+Other Utils Studio Developers:
+\code{\link[=add_missing_args]{add_missing_args()}},
+\code{\link[=long_load_target_data]{long_load_target_data()}},
+\code{\link[=summarize_args_for_long_task]{summarize_args_for_long_task()}}
 }
 \concept{Utils Studio Developers}
 \keyword{internal}

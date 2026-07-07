@@ -18,8 +18,8 @@ This function does nothing return. It is used to create the functionality of a p
 Functions generates the functionality of a page on the server.
 }
 \seealso{
-Other studio_gui_page_classifier_reliability: 
-\code{\link{Reliability_UI}()}
+Other studio_gui_page_classifier_reliability:
+\code{\link[=Reliability_UI]{Reliability_UI()}}
 }
 \concept{studio_gui_page_classifier_reliability}
 \keyword{internal}

@@ -4,7 +4,11 @@
 \alias{get_py_package_versions}
 \title{Get versions of python components}
 \usage{
-get_py_package_versions()
+get_py_package_versions(sentencepiece = FALSE)
+}
+\arguments{
+\item{sentencepiece}{\code{bool} If \code{TRUE} the packages 'google.protobuf' and
+'sentencepiece' are checked.}
 }
 \value{
 Returns a list that contains the version number of python and
@@ -16,10 +20,10 @@ Function for requesting a summary of the versions of all
 critical python components.
 }
 \seealso{
-Other Utils Python Developers: 
-\code{\link{get_py_package_version}()},
-\code{\link{load_all_py_scripts}()},
-\code{\link{load_py_scripts}()},
-\code{\link{run_py_file}()}
+Other Utils Python Developers:
+\code{\link[=get_py_package_version]{get_py_package_version()}},
+\code{\link[=load_all_py_scripts]{load_all_py_scripts()}},
+\code{\link[=load_py_scripts]{load_py_scripts()}},
+\code{\link[=run_py_file]{run_py_file()}}
 }
 \concept{Utils Python Developers}

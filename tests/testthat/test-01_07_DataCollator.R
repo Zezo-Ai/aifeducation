@@ -19,7 +19,7 @@ datasets$disable_progress_bars()
 
 # Load python scripts
 load_all_py_scripts()
-run_py_file("data_collator.py")
+run_py_file("data_collator_factory.py")
 
 # Path Management
 test_art_path <- testthat::test_path("test_artefacts")
@@ -59,7 +59,13 @@ Tokenizer$train(
 mlm_prob <- 0.5
 
 tokenizer <- Tokenizer$get_tokenizer()
-collator <- py$AifeDataCollatorForWholeWordMask(tokenizer, mlm_probability = mlm_prob)
+# collator <- py$AifeDataCollatorForWholeWordMask(tokenizer, mlm_probability = mlm_prob)
+collator <- py$make_collator(
+  "WordMLM",
+  tokenizer = tokenizer,
+  mlm_probability = mlm_prob,
+  masking_strategy = "mask_only"
+)
 
 lines <- list(
   "Whole word masking is fun",

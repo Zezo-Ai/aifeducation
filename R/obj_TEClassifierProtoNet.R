@@ -322,9 +322,8 @@ TEClassifierProtoNet <- R6::R6Class(
   ),
   private = list(
     # Private--------------------------------------------------------------------------
-    create_reset_model = function() {
+    init_model = function() {
       private$check_config_for_TRUE()
-
 
 
       private$model <- py$TextEmbeddingClassifierProtoNet_PT(
@@ -369,7 +368,7 @@ TEClassifierProtoNet <- R6::R6Class(
 
       # Reset model if requested
       if (reset_model) {
-        private$create_reset_model()
+        private$init_model()
       }
 
       # Set loss function
@@ -411,8 +410,8 @@ TEClassifierProtoNet <- R6::R6Class(
         optimizer_method = self$last_training$config$optimizer,
         lr_rate = self$last_training$config$lr_rate,
         lr_warm_up_ratio = self$last_training$config$lr_warm_up_ratio,
-        lr_min=self$last_training$config$lr_min,
-        scheduler_type=self$last_training$config$lr_scheduler,
+        lr_min = self$last_training$config$lr_min,
+        scheduler_type = self$last_training$config$lr_scheduler,
         Ns = as.integer(self$last_training$config$Ns),
         Nq = as.integer(self$last_training$config$Nq),
         loss_alpha = self$last_training$config$loss_alpha,

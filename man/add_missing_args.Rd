@@ -25,9 +25,9 @@ In general these are arguments that rely on objects of class R6 which can not
 be exported to a new R session.
 }
 \seealso{
-Other Utils Studio Developers: 
-\code{\link{create_data_embeddings_description}()},
-\code{\link{long_load_target_data}()},
-\code{\link{summarize_args_for_long_task}()}
+Other Utils Studio Developers:
+\code{\link[=create_data_embeddings_description]{create_data_embeddings_description()}},
+\code{\link[=long_load_target_data]{long_load_target_data()}},
+\code{\link[=summarize_args_for_long_task]{summarize_args_for_long_task()}}
 }
 \concept{Utils Studio Developers}

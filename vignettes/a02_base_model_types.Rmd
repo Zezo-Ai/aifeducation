@@ -1,0 +1,30 @@
+---
+title: "A02 Supported Base Models"
+author: "Florian Berding, Yuliia Tykhonova, Julia Pargmann, Andreas Slopinski, Elisabeth Riebenbauer, Karin Rebmann"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A02 Supported Base Models}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(aifeducation)
+```
+
+> All models created with 'aifeducation' do **not** need 'sentencepiece' even if this
+> requirment is displayed in the table. 'aifeducation' uses a WordPieceTokenizer
+> for all newly created models.
+
+`r build_layer_overview_base_models()`
+

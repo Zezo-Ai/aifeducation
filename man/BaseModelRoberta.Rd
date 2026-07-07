@@ -14,75 +14,81 @@ Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M., Z
 Stoyanov, V. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. \doi{10.48550/arXiv.1907.11692}
 }
 \seealso{
-Other Base Model: 
+Other Base Model:
+\code{\link{BaseModelAlbert}},
 \code{\link{BaseModelBert}},
 \code{\link{BaseModelDebertaV2}},
+\code{\link{BaseModelDistilBERT}},
+\code{\link{BaseModelEuroBert}},
 \code{\link{BaseModelFunnel}},
 \code{\link{BaseModelMPNet}},
-\code{\link{BaseModelModernBert}}
+\code{\link{BaseModelModernBert}},
+\code{\link{BaseModelRobertaXML}},
+\code{\link{BaseModelXmod}}
 }
 \concept{Base Model}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{aifeducation::AIFEBaseModel}} -> \code{\link[aifeducation:BaseModelCore]{aifeducation::BaseModelCore}} -> \code{BaseModelRoberta}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{AIFEBaseModel}} -> \code{\link[aifeducation:BaseModelCore]{BaseModelCore}} -> \code{BaseModelRoberta}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-BaseModelRoberta-configure}{\code{BaseModelRoberta$configure()}}
-\item \href{#method-BaseModelRoberta-clone}{\code{BaseModelRoberta$clone()}}
+  \itemize{
+    \item \href{#method-BaseModelRoberta-configure}{\code{BaseModelRoberta$configure()}}
+    \item \href{#method-BaseModelRoberta-clone}{\code{BaseModelRoberta$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="calc_flops_architecture_based"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-calc_flops_architecture_based'><code>aifeducation::BaseModelCore$calc_flops_architecture_based()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="count_parameter"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-count_parameter'><code>aifeducation::BaseModelCore$count_parameter()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="create_from_hf"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-create_from_hf'><code>aifeducation::BaseModelCore$create_from_hf()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="estimate_sustainability_inference_fill_mask"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-estimate_sustainability_inference_fill_mask'><code>aifeducation::BaseModelCore$estimate_sustainability_inference_fill_mask()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="fill_mask"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-fill_mask'><code>aifeducation::BaseModelCore$fill_mask()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_final_size"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_final_size'><code>aifeducation::BaseModelCore$get_final_size()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_flops_estimates"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_flops_estimates'><code>aifeducation::BaseModelCore$get_flops_estimates()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_model"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_model'><code>aifeducation::BaseModelCore$get_model()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_model_type"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_model_type'><code>aifeducation::BaseModelCore$get_model_type()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_n_layers"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_n_layers'><code>aifeducation::BaseModelCore$get_n_layers()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_special_tokens"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_special_tokens'><code>aifeducation::BaseModelCore$get_special_tokens()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_tokenizer_statistics"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_tokenizer_statistics'><code>aifeducation::BaseModelCore$get_tokenizer_statistics()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="load_from_disk"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-load_from_disk'><code>aifeducation::BaseModelCore$load_from_disk()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="plot_training_history"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-plot_training_history'><code>aifeducation::BaseModelCore$plot_training_history()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="save"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-save'><code>aifeducation::BaseModelCore$save()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="set_publication_info"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-set_publication_info'><code>aifeducation::BaseModelCore$set_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="train"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-train'><code>aifeducation::BaseModelCore$train()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="calc_flops_architecture_based"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-calc_flops_architecture_based'><code>BaseModelCore$calc_flops_architecture_based()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="count_parameter"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-count_parameter'><code>BaseModelCore$count_parameter()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="create_from_hf"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-create_from_hf'><code>BaseModelCore$create_from_hf()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="estimate_sustainability_inference_fill_mask"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-estimate_sustainability_inference_fill_mask'><code>BaseModelCore$estimate_sustainability_inference_fill_mask()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="fill_mask"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-fill_mask'><code>BaseModelCore$fill_mask()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_final_size"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_final_size'><code>BaseModelCore$get_final_size()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_flops_estimates"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_flops_estimates'><code>BaseModelCore$get_flops_estimates()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_max_seq_len"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_max_seq_len'><code>BaseModelCore$get_max_seq_len()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_model"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_model'><code>BaseModelCore$get_model()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_model_type"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_model_type'><code>BaseModelCore$get_model_type()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_n_layers"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_n_layers'><code>BaseModelCore$get_n_layers()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_special_tokens"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_special_tokens'><code>BaseModelCore$get_special_tokens()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="get_tokenizer_statistics"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-get_tokenizer_statistics'><code>BaseModelCore$get_tokenizer_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="load_from_disk"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-load_from_disk'><code>BaseModelCore$load_from_disk()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="plot_training_history"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-plot_training_history'><code>BaseModelCore$plot_training_history()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="print"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-print'><code>BaseModelCore$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="save"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-save'><code>BaseModelCore$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="set_publication_info"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-set_publication_info'><code>BaseModelCore$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="BaseModelCore" data-id="train"><a href='../../aifeducation/html/BaseModelCore.html#method-BaseModelCore-train'><code>BaseModelCore$train()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelRoberta-configure"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelRoberta-configure}{}}}
-\subsection{Method \code{configure()}}{
-Configures a new object of this class.
+\subsection{\code{BaseModelRoberta$configure()}}{
+  Configures a new object of this class.
 Please ensure that your chosen configuration comply with the following
 guidelines:
 \itemize{
 \item hidden_size is a multiple of num_attention_heads.
 }
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelRoberta$configure(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelRoberta$configure(
   tokenizer,
   max_position_embeddings = 512L,
   hidden_size = 768L,
@@ -92,53 +98,68 @@ guidelines:
   hidden_act = "GELU",
   hidden_dropout_prob = 0.1,
   attention_probs_dropout_prob = 0.1
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{tokenizer}}{\code{TokenizerBase} Tokenizer for the model.}
+      \item{\code{max_position_embeddings}}{\code{int} Number of maximum position embeddings. This parameter also determines the maximum length of a sequence which
+can be processed with the model. Allowed values:
+
+\ifelse{latex}{$10 <= x <= 4048$}{\ifelse{html}{\eqn{10 <= x <= 4048}}{`10 <= x <= 4048`}}}
+      \item{\code{hidden_size}}{\code{int} Number of neurons in each layer. This parameter determines the dimensionality of the resulting text
+embedding. Allowed values:
+
+\ifelse{latex}{$1 <= x <= 2048$}{\ifelse{html}{\eqn{1 <= x <= 2048}}{`1 <= x <= 2048`}}}
+      \item{\code{num_hidden_layers}}{\code{int} Number of hidden layers. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{num_attention_heads}}{\code{int} determining the number of attention heads for a self-attention layer. Only relevant if \code{attention_type='MultiHead'} Allowed values:
+
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{intermediate_size}}{\code{int} determining the size of the projection layer within a each transformer encoder. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{hidden_act}}{\code{string} Name of the activation function. Allowed values:
+\itemize{
+\item 'GELU'
+\item 'relu'
+\item 'silu'
+\item 'gelu_new'
+}}
+      \item{\code{hidden_dropout_prob}}{\code{double} Ratio of dropout. Allowed values:
+
+\ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
+      \item{\code{attention_probs_dropout_prob}}{\code{double} Ratio of dropout for attention probabilities. Allowed values:
+
+\ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Does nothing return.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{tokenizer}}{\code{TokenizerBase} Tokenizer for the model.}
-
-\item{\code{max_position_embeddings}}{\code{int} Number of maximum position embeddings. This parameter also determines the maximum length of a sequence which
-can be processed with the model. Allowed values: \ifelse{latex}{$10 <= x <= 4048$}{\ifelse{html}{\eqn{10 <= x <= 4048}}{`10 <= x <= 4048`}}}
-
-\item{\code{hidden_size}}{\code{int} Number of neurons in each layer. This parameter determines the dimensionality of the resulting text
-embedding. Allowed values: \ifelse{latex}{$1 <= x <= 2048$}{\ifelse{html}{\eqn{1 <= x <= 2048}}{`1 <= x <= 2048`}}}
-
-\item{\code{num_hidden_layers}}{\code{int} Number of hidden layers. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-
-\item{\code{num_attention_heads}}{\code{int} determining the number of attention heads for a self-attention layer. Only relevant if \code{attention_type='multihead'} Allowed values: \ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
-
-\item{\code{intermediate_size}}{\code{int} determining the size of the projection layer within a each transformer encoder. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-
-\item{\code{hidden_act}}{\code{string} Name of the activation function. Allowed values: 'GELU', 'relu', 'silu', 'gelu_new'}
-
-\item{\code{hidden_dropout_prob}}{\code{double} Ratio of dropout. Allowed values: \ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
-
-\item{\code{attention_probs_dropout_prob}}{\code{double} Ratio of dropout for attention probabilities. Allowed values: \ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Does nothing return.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelRoberta-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelRoberta-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelRoberta$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelRoberta$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelRoberta$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

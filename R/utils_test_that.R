@@ -37,17 +37,17 @@ generate_args_for_tests <- function(object_name,
   arg_names <- names(arg_list)
   param_dict <- get_param_dict()
 
-  #Check var_override for NULL entries and remove null entries
-  not_null_indices=c()
-  for(i in seq_along(var_override)){
-    if(!is.null(var_override[[i]])){
-      not_null_indices=append(not_null_indices,i)
+  # Check var_override for NULL entries and remove null entries
+  not_null_indices <- c()
+  for (i in seq_along(var_override)) {
+    if (!is.null(var_override[[i]])) {
+      not_null_indices <- append(not_null_indices, i)
     }
   }
-  if(length(not_null_indices)>0){
-    var_override=var_override[not_null_indices]
+  if (length(not_null_indices) > 0) {
+    var_override <- var_override[not_null_indices]
   } else {
-    var_override=list()
+    var_override <- list()
   }
 
   # Generate list of values for every parameter that can vary
@@ -118,13 +118,13 @@ generate_args_for_tests <- function(object_name,
   override_subset <- intersect(arg_names, names(var_override))
   necessary_subset <- intersect(arg_names, names(necessary_objects))
 
-  arg_comb_list=arg_value_list
-  #for(param in names(override_subset)){
+  arg_comb_list <- arg_value_list
+  # for(param in names(override_subset)){
   #  arg_comb_list[param]=list(override_subset[[param]])
-  #}
-  #for(param in names(necessary_subset)){
+  # }
+  # for(param in names(necessary_subset)){
   #  arg_comb_list[param]=list(necessary_subset[[param]])
-  #}
+  # }
 
   arg_comb_list <- append(x = arg_value_list, values = var_override[override_subset])
   arg_comb_list <- append(x = arg_comb_list, values = necessary_objects[necessary_subset])
@@ -152,13 +152,14 @@ generate_args_for_tests <- function(object_name,
 #' @return Returns an `int` depending on the test environment.
 #' @family Utils TestThat Developers
 check_adjust_n_samples_on_CI <- function(
-    n_samples_requested,
-    n_CI = 50L) {
+  n_samples_requested,
+  n_CI = 50L
+) {
   # If on github use only a small random sample
   if (Sys.getenv("CI") == "true") {
     return(min(n_samples_requested, n_CI))
   } else {
-    if(torch$cuda$is_available()){
+    if (torch$cuda$is_available()) {
       return(n_samples_requested)
     } else {
       return(min(n_samples_requested, n_CI))
@@ -359,7 +360,7 @@ get_fixed_test_tensor <- function(pad_value) {
 is_on_CI <- function() {
   if (
     Sys.getenv("CI") == "true" ||
-      #Sys.getenv("NOT_CRAN") == "true" ||
+      # Sys.getenv("NOT_CRAN") == "true" ||
       Sys.getenv("_R_CHECK_LIMIT_CORES_") == "true"
   ) {
     return(TRUE)

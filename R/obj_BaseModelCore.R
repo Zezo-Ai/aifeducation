@@ -22,6 +22,7 @@ BaseModelCore <- R6::R6Class(
   inherit = AIFEBaseModel,
   private = list(
     model_type = NULL,
+    slow_tokenizer = NULL,
     adjust_max_sequence_length = 0L,
     return_token_type_ids = FALSE,
     sequence_mode = "equal",
@@ -170,48 +171,68 @@ BaseModelCore <- R6::R6Class(
         trace = self$last_training$config$trace
       )
       if (self$last_training$config$whole_word) {
-        tmp_data_collator <- py$AifeDataCollatorForWholeWordMask(
+        run_py_file("data_collator_factory.py")
+
+        # tmp_data_collator <- py$AifeDataCollatorForWholeWordMask(
+        #   tokenizer = self$Tokenizer$get_tokenizer(),
+        #   mlm_probability = self$last_training$config$p_mask,
+        #   pad_input = FALSE
+        # )
+        # TODO: pad_input = FALSE?
+
+        tmp_data_collator <- py$make_collator(
+          "WordMLM",
           tokenizer = self$Tokenizer$get_tokenizer(),
           mlm_probability = self$last_training$config$p_mask,
-          pad_input = FALSE
+          mlm = TRUE,
+          masking_strategy = "mask_only"
         )
       } else {
-        if (
-          check_versions(a = get_py_package_version("transformers"), operator = "<", b = "4.49.0")
-        ) {
-          tmp_data_collator <- transformers$DataCollatorForLanguageModeling(
-            tokenizer = self$Tokenizer$get_tokenizer(),
-            mlm = TRUE,
-            mlm_probability = self$last_training$config$p_mask,
-            return_tensors = "pt"
-          )
-        }
-        else if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "4.49.0") &&
-          check_versions(a = get_py_package_version("transformers"), operator = "<", b = "5.0.0")
-        ) {
-          tmp_data_collator <- transformers$DataCollatorForLanguageModeling(
-            tokenizer = self$Tokenizer$get_tokenizer(),
-            mlm = TRUE,
-            mlm_probability = self$last_training$config$p_mask,
-            mask_replace_prob = 1.0,
-            random_replace_prob = 0.0,
-            return_tensors = "pt"
-          )
-        } else if (
-          check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")
-        ) {
-          tmp_data_collator <- transformers$DataCollatorForLanguageModeling(
-            tokenizer = self$Tokenizer$get_tokenizer(),
-            mlm = TRUE,
-            whole_word_mask = FALSE,
-            mlm_probability = self$last_training$config$p_mask,
-            mask_replace_prob = 1.0,
-            random_replace_prob = 0.0,
-            return_tensors = "pt"
-          )
-        } else {
-          stop("Version not implemented. Version of transformers is ",get_py_package_version("transformers"))
-        }
+
+        tmp_data_collator <- py$make_collator(
+          "TokenMLM",
+          tokenizer = self$Tokenizer$get_tokenizer(),
+          mlm_probability = self$last_training$config$p_mask,
+          mlm = TRUE,
+          masking_strategy = "bert"
+        )
+        
+        # if (
+        #   check_versions(a = get_py_package_version("transformers"), operator = "<", b = "4.49.0")
+        # ) {
+        #   tmp_data_collator <- transformers$DataCollatorForLanguageModeling(
+        #     tokenizer = self$Tokenizer$get_tokenizer(),
+        #     mlm = TRUE,
+        #     mlm_probability = self$last_training$config$p_mask,
+        #     return_tensors = "pt"
+        #   )
+        # }
+        # else if (check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "4.49.0") &&
+        #   check_versions(a = get_py_package_version("transformers"), operator = "<", b = "5.0.0")
+        # ) {
+        #   tmp_data_collator <- transformers$DataCollatorForLanguageModeling(
+        #     tokenizer = self$Tokenizer$get_tokenizer(),
+        #     mlm = TRUE,
+        #     mlm_probability = self$last_training$config$p_mask,
+        #     mask_replace_prob = 1.0,
+        #     random_replace_prob = 0.0,
+        #     return_tensors = "pt"
+        #   )
+        # } else if (
+        #   check_versions(a = get_py_package_version("transformers"), operator = ">=", b = "5.0.0")
+        # ) {
+        #   tmp_data_collator <- transformers$DataCollatorForLanguageModeling(
+        #     tokenizer = self$Tokenizer$get_tokenizer(),
+        #     mlm = TRUE,
+        #     whole_word_mask = FALSE,
+        #     mlm_probability = self$last_training$config$p_mask,
+        #     mask_replace_prob = 1.0,
+        #     random_replace_prob = 0.0,
+        #     return_tensors = "pt"
+        #   )
+        # } else {
+        #   stop("Version not implemented. Version of transformers is ",get_py_package_version("transformers"))
+        # }
       }
 
       return(tmp_data_collator)
@@ -437,9 +458,6 @@ BaseModelCore <- R6::R6Class(
         self$last_training$config$whole_word <- FALSE
       }
 
-      # Load or reload python scripts
-
-
       # set up logger
       private$set_up_logger(log_dir = args$log_dir, log_write_interval = args$log_write_interval)
       private$log_state$value_top <- 0L
@@ -499,6 +517,9 @@ BaseModelCore <- R6::R6Class(
         msg = "Finish",
         trace = self$last_training$config$trace
       )
+
+      # Set trained to TRUE
+      private$trained <- TRUE
     }
   ),
   public = list(
@@ -518,8 +539,6 @@ BaseModelCore <- R6::R6Class(
 
       # Load the BaseModel
       tmp_model <- private$load_BaseModel(model_dir)
-      # transformers$AutoModelForMaskedLM$from_pretrained(model_dir)
-
       # Check if the model is the correct model type
       detected_model_type <- detect_base_model_type(tmp_model)
       if (detected_model_type != private$model_type) {
@@ -543,11 +562,14 @@ BaseModelCore <- R6::R6Class(
 
       # Create and Load the Tokenizer
       tokenizer <- HuggingFaceTokenizer$new()
-      tokenizer$create_from_hf(tokenizer_dir)
+      tokenizer$create_from_hf(tokenizer_dir, private$slow_tokenizer)
       self$Tokenizer <- tokenizer
 
       # Set configured to TRUE to avoid changes in the model
       private$set_configuration_to_TRUE()
+
+      # Set trained to TRUE
+      private$trained <- TRUE
     },
     #--------------------------------------------------------------------------
     #' @description Traines a BaseModel
@@ -633,10 +655,10 @@ BaseModelCore <- R6::R6Class(
       }
 
       if (is.null_or_na(y_min)) {
-        y_min <- min(plot_data[, c("loss", "val_loss")])
+        y_min <- min(plot_data[, c("loss", "val_loss")], na.rm = TRUE)
       }
       if (is.null_or_na(y_max)) {
-        y_max <- max(plot_data[, c("loss", "val_loss")])
+        y_max <- max(plot_data[, c("loss", "val_loss")], na.rm = TRUE)
       }
 
       tmp_colnames <- c("epoch", "val_loss", "loss")
@@ -907,6 +929,14 @@ BaseModelCore <- R6::R6Class(
       return(private$model$config$num_hidden_layers)
     },
     #--------------------------------------------------------------------------
+    #' @description Maximum sequence length.
+    #' @return Returns an `int` describing the maximum sequence length.
+    get_max_seq_len = function() {
+      return(
+        self$get_model_config()$max_position_embeddings
+      )
+    },
+    #--------------------------------------------------------------------------
     #' @description Flop estimates
     #' @return Returns a `data.frame` containing statistics about the flops.
     get_flops_estimates = function() {
@@ -1097,6 +1127,35 @@ BaseModelCore <- R6::R6Class(
       results[1L, "date"] <- get_time_stamp()
 
       return(results)
+    },
+    #---------------------------------------------------------------------------
+    #' @description Print method for classifiers.
+    #' @return Prints a short description of the object.
+    print = function() {
+      rows <- c(
+        "Object", "Configured", "Trained", "Parameter", "Seq. Len.", "Features",
+        "N Layer", "Vocab Size", "Tokens/Word", "Mask Token", "Pad Token",
+        "Unk token"
+      )
+      padded_rows <- pad_str(rows, width = NULL, pad = " ", end = ": ")
+      statistics <- self$Tokenizer$get_tokenizer_statistics()
+      special_tokens <- self$Tokenizer$get_special_tokens()
+
+      message(
+        appendLF = FALSE,
+        padded_rows[1L], class(self)[1L], "\n",
+        padded_rows[2L], self$is_configured(), "\n",
+        padded_rows[3L], self$is_trained(), "\n",
+        padded_rows[4L], self$count_parameter(), "\n",
+        padded_rows[5L], self$get_max_seq_len(), "\n",
+        padded_rows[6L], self$get_final_size(), "\n",
+        padded_rows[7L], self$get_n_layers(), "\n",
+        padded_rows[8L], self$Tokenizer$get_vocab_size(), "\n",
+        padded_rows[9L], statistics[1L, "mu_g"], "\n",
+        padded_rows[10L], special_tokens["mask_token", "token"], "\n",
+        padded_rows[11L], special_tokens["pad_token", "token"], "\n",
+        padded_rows[12L], special_tokens["unk_token", "token"], "\n"
+      )
     }
   )
 )

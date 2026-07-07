@@ -35,60 +35,62 @@ This model requires that the underlying \link{TextEmbeddingModel} uses \code{pad
 this condition is not met the pad value is switched before training.
 }
 \seealso{
-Other Text Embedding: 
+Other Text Embedding:
 \code{\link{TextEmbeddingModel}}
 }
 \concept{Text Embedding}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{aifeducation::AIFEBaseModel}} -> \code{\link[aifeducation:ModelsBasedOnTextEmbeddings]{aifeducation::ModelsBasedOnTextEmbeddings}} -> \code{TEFeatureExtractor}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{AIFEBaseModel}} -> \code{\link[aifeducation:ModelsBasedOnTextEmbeddings]{ModelsBasedOnTextEmbeddings}} -> \code{TEFeatureExtractor}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TEFeatureExtractor-configure}{\code{TEFeatureExtractor$configure()}}
-\item \href{#method-TEFeatureExtractor-train}{\code{TEFeatureExtractor$train()}}
-\item \href{#method-TEFeatureExtractor-extract_features}{\code{TEFeatureExtractor$extract_features()}}
-\item \href{#method-TEFeatureExtractor-extract_features_large}{\code{TEFeatureExtractor$extract_features_large()}}
-\item \href{#method-TEFeatureExtractor-plot_training_history}{\code{TEFeatureExtractor$plot_training_history()}}
-\item \href{#method-TEFeatureExtractor-clone}{\code{TEFeatureExtractor$clone()}}
+  \itemize{
+    \item \href{#method-TEFeatureExtractor-configure}{\code{TEFeatureExtractor$configure()}}
+    \item \href{#method-TEFeatureExtractor-train}{\code{TEFeatureExtractor$train()}}
+    \item \href{#method-TEFeatureExtractor-extract_features}{\code{TEFeatureExtractor$extract_features()}}
+    \item \href{#method-TEFeatureExtractor-extract_features_large}{\code{TEFeatureExtractor$extract_features_large()}}
+    \item \href{#method-TEFeatureExtractor-plot_training_history}{\code{TEFeatureExtractor$plot_training_history()}}
+    \item \href{#method-TEFeatureExtractor-print}{\code{TEFeatureExtractor$print()}}
+    \item \href{#method-TEFeatureExtractor-clone}{\code{TEFeatureExtractor$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEBaseModel" data-id="count_parameter"><a href='../../aifeducation/html/AIFEBaseModel.html#method-AIFEBaseModel-count_parameter'><code>aifeducation::AIFEBaseModel$count_parameter()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="check_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-check_embedding_model'><code>aifeducation::ModelsBasedOnTextEmbeddings$check_embedding_model()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model'><code>aifeducation::ModelsBasedOnTextEmbeddings$get_text_embedding_model()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model_name"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model_name'><code>aifeducation::ModelsBasedOnTextEmbeddings$get_text_embedding_model_name()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="load_from_disk"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-load_from_disk'><code>aifeducation::ModelsBasedOnTextEmbeddings$load_from_disk()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="save"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-save'><code>aifeducation::ModelsBasedOnTextEmbeddings$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEBaseModel" data-id="count_parameter"><a href='../../aifeducation/html/AIFEBaseModel.html#method-AIFEBaseModel-count_parameter'><code>AIFEBaseModel$count_parameter()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="check_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-check_embedding_model'><code>ModelsBasedOnTextEmbeddings$check_embedding_model()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_lr_statistics"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_lr_statistics'><code>ModelsBasedOnTextEmbeddings$get_lr_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model'><code>ModelsBasedOnTextEmbeddings$get_text_embedding_model()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model_name"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model_name'><code>ModelsBasedOnTextEmbeddings$get_text_embedding_model_name()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="load_from_disk"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-load_from_disk'><code>ModelsBasedOnTextEmbeddings$load_from_disk()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="plot_learning_rate"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-plot_learning_rate'><code>ModelsBasedOnTextEmbeddings$plot_learning_rate()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="save"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-save'><code>ModelsBasedOnTextEmbeddings$save()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEFeatureExtractor-configure"></a>}}
 \if{latex}{\out{\hypertarget{method-TEFeatureExtractor-configure}{}}}
-\subsection{Method \code{configure()}}{
-Creating a new instance of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEFeatureExtractor$configure(
+\subsection{\code{TEFeatureExtractor$configure()}}{
+  Creating a new instance of this class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$configure(
   name = NULL,
   label = NULL,
   text_embeddings = NULL,
@@ -96,42 +98,56 @@ Creating a new instance of this class.
   method = "dense",
   orthogonal_method = "matrix_exp",
   noise_factor = 0.2
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{\code{string} Name of the new model. Please refer to common name conventions.
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{\code{string} Name of the new model. Please refer to common name conventions.
 Free text can be used with parameter \code{label}. If set to \code{NULL} a unique ID
-is generated automatically. Allowed values: any}
+is generated automatically. Allowed values:
 
-\item{\code{label}}{\code{string} Label for the new model. Here you can use free text. Allowed values: any}
+any}
+      \item{\code{label}}{\code{string} Label for the new model. Here you can use free text. Allowed values:
 
-\item{\code{text_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
+any}
+      \item{\code{text_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
+      \item{\code{features}}{\code{int} Number of features the model should use. Allowed values:
 
-\item{\code{features}}{\code{int} Number of features the model should use. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{method}}{\code{string} Method to use for the feature extraction. \code{'lstm'} for an extractor based on LSTM-layers or \code{'Dense'} for dense layers. Allowed values:
+\itemize{
+\item 'Dense'
+\item 'LSTM'
+}}
+      \item{\code{orthogonal_method}}{\code{string} Method for ensuring orthogonality of weights. Allowed values:
+\itemize{
+\item 'matrix_exp'
+\item 'cayley'
+\item 'householder'
+\item 'None'
+}}
+      \item{\code{noise_factor}}{\code{double} Value between 0 and a value lower 1 indicating how much noise should
+be added to the input during training. Allowed values:
 
-\item{\code{method}}{\code{string} Method to use for the feature extraction. \code{'lstm'} for an extractor based on LSTM-layers or \code{'Dense'} for dense layers. Allowed values: 'Dense', 'LSTM'}
-
-\item{\code{orthogonal_method}}{\code{string} Method for ensuring orthogonality of weights. Allowed values: 'matrix_exp', 'cayley', 'householder', 'None'}
-
-\item{\code{noise_factor}}{\code{double} Value between 0 and a value lower 1 indicating how much noise should
-be added to the input during training. Allowed values: \ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+\ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \link{TEFeatureExtractor} which is ready for training.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns an object of class \link{TEFeatureExtractor} which is ready for training.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEFeatureExtractor-train"></a>}}
 \if{latex}{\out{\hypertarget{method-TEFeatureExtractor-train}{}}}
-\subsection{Method \code{train()}}{
-Method for training a neural net.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEFeatureExtractor$train(
+\subsection{\code{TEFeatureExtractor$train()}}{
+  Method for training a TEFeatureExtractor.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$train(
   data_embeddings = NULL,
   data_val_size = 0.25,
   sustain_track = TRUE,
@@ -145,182 +161,234 @@ Method for training a neural net.
   ml_trace = 1L,
   log_dir = NULL,
   log_write_interval = 10L,
-  lr_rate = 0.001,
-  lr_min = 1e-04,
+  lr_rate = 0,
+  lr_min = 0,
   lr_warm_up_ratio = 0.02,
   lr_scheduler = "None",
   optimizer = "AdamW",
   amp = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
-
-\item{\code{data_val_size}}{\code{double} between 0 and 1, indicating the proportion of cases which should be
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
+      \item{\code{data_val_size}}{\code{double} between 0 and 1, indicating the proportion of cases which should be
 used for the validation sample during the estimation of the model.
-The remaining cases are part of the training data. Allowed values: \ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
+The remaining cases are part of the training data. Allowed values:
 
-\item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
-
-\item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
+\ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
+      \item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
+      \item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
 sustainability should be tracked. A list can be found on Wikipedia:
-\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
+\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values:
 
-\item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values: any}
+any}
+      \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values:
 
-\item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+any}
+      \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values:
 
-\item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values: 'debug', 'info', 'warning', 'error', 'critical'}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values:
+\itemize{
+\item 'debug'
+\item 'info'
+\item 'warning'
+\item 'error'
+\item 'critical'
+}}
+      \item{\code{epochs}}{\code{int} Number of training epochs. Allowed values:
 
-\item{\code{epochs}}{\code{int} Number of training epochs. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values:
 
-\item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+      \item{\code{ml_trace}}{\code{int} \code{ml_trace=0} does not print any information about the training process from pytorch on the console. Allowed values:
 
-\item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+\ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+      \item{\code{log_dir}}{\code{string} Path to the directory where the log files should be saved.
+If no logging is desired set this argument to \code{NULL}. Allowed values:
 
-\item{\code{ml_trace}}{\code{int} \code{ml_trace=0} does not print any information about the training process from pytorch on the console. Allowed values: \ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+any}
+      \item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
+the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed values:
 
-\item{\code{log_dir}}{\code{string} Path to the directory where the log files should be saved.
-If no logging is desired set this argument to \code{NULL}. Allowed values: any}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{lr_rate}}{\code{double} Initial learning rate for the training. Sets the maximal learning rate.
+Set this value to \code{0.0} requests an automatic search for a good learning rate. Allowed values:
 
-\item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
-the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+      \item{\code{lr_min}}{\code{double} Minimal learning rate during training.
+Set this value to \code{0.0} requests an automatic search for a good learning rate. Allowed values:
 
-\item{\code{lr_rate}}{\code{double} Initial learning rate for the training. Sets the maximal learning rate. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
+\ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+      \item{\code{lr_warm_up_ratio}}{\code{double} Number of epochs used for warm up. To disable warm up set this value to 0.0. Allowed values:
 
-\item{\code{lr_min}}{\code{double} Minimal learning rate during training. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
-
-\item{\code{lr_warm_up_ratio}}{\code{double} Number of epochs used for warm up. To disable warm up set this value to 0.0. Allowed values: \ifelse{latex}{$0 < x < 0.5$}{\ifelse{html}{\eqn{0 < x < 0.5}}{`0 < x < 0.5`}}}
-
-\item{\code{lr_scheduler}}{\code{string} Learning rate scheduler. To use a constant learning rate for the whole training set this parameter to 'None'. Allowed values: 'None', 'Linear', 'Cyclic'}
-
-\item{\code{optimizer}}{\code{string} determining the optimizer used for training. Allowed values: 'Adam', 'RMSprop', 'AdamW', 'SGD'}
-
-\item{\code{amp}}{\code{bool} Apply automatic mixed precision to spped up computations. It is generally
+\ifelse{latex}{$0 < x < 0.5$}{\ifelse{html}{\eqn{0 < x < 0.5}}{`0 < x < 0.5`}}}
+      \item{\code{lr_scheduler}}{\code{string} Learning rate scheduler. To use a constant learning rate for the whole training set this parameter to 'None'. Allowed values:
+\itemize{
+\item 'None'
+\item 'Linear'
+\item 'Cyclic'
+}}
+      \item{\code{optimizer}}{\code{string} determining the optimizer used for training. Allowed values:
+\itemize{
+\item 'Adam'
+\item 'RMSprop'
+\item 'AdamW'
+\item 'SGD'
+}}
+      \item{\code{amp}}{\code{bool} Apply automatic mixed precision to spped up computations. It is generally
 recommended to set this parameter to \code{TRUE}. If you encounter problems set to \code{FALSE}.
 * \code{FALSE}: Use full precision.
 * \code{TRUE}: Use automatic mixed precision (amp) with gradient scaling.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It changes the object into a trained classifier.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It changes the object into a trained classifier.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEFeatureExtractor-extract_features"></a>}}
 \if{latex}{\out{\hypertarget{method-TEFeatureExtractor-extract_features}{}}}
-\subsection{Method \code{extract_features()}}{
-Method for extracting features. Applying this method reduces the number of dimensions of the text
+\subsection{\code{TEFeatureExtractor$extract_features()}}{
+  Method for extracting features. Applying this method reduces the number of dimensions of the text
 embeddings. Please note that this method should only be used if a small number of cases should be compressed
 since the data is loaded completely into memory. For a high number of cases please use the method
 \code{extract_features_large}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEFeatureExtractor$extract_features(data_embeddings, batch_size)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_embeddings}}{Object of class \link{EmbeddedText},\link{LargeDataSetForTextEmbeddings},
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$extract_features(data_embeddings, batch_size)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data_embeddings}}{Object of class \link{EmbeddedText},\link{LargeDataSetForTextEmbeddings},
 \code{datasets.arrow_dataset.Dataset} or \code{array} containing the text embeddings which should be reduced in their
 dimensions.}
+      \item{\code{batch_size}}{\code{int} batch size.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \link{EmbeddedText} containing the compressed embeddings.
+  }
+}
 
-\item{\code{batch_size}}{\code{int} batch size.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns an object of class \link{EmbeddedText} containing the compressed embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEFeatureExtractor-extract_features_large"></a>}}
 \if{latex}{\out{\hypertarget{method-TEFeatureExtractor-extract_features_large}{}}}
-\subsection{Method \code{extract_features_large()}}{
-Method for extracting features from a large number of cases. Applying this method reduces the number
+\subsection{\code{TEFeatureExtractor$extract_features_large()}}{
+  Method for extracting features from a large number of cases. Applying this method reduces the number
 of dimensions of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEFeatureExtractor$extract_features_large(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$extract_features_large(
   data_embeddings,
   batch_size,
   trace = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_embeddings}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings} containing the text
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data_embeddings}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings} containing the text
 embeddings which should be reduced in their dimensions.}
+      \item{\code{batch_size}}{\code{int} batch size.}
+      \item{\code{trace}}{\code{bool} If \code{TRUE} information about the progress is printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \link{LargeDataSetForTextEmbeddings} containing the compressed embeddings.
+  }
+}
 
-\item{\code{batch_size}}{\code{int} batch size.}
-
-\item{\code{trace}}{\code{bool} If \code{TRUE} information about the progress is printed to the console.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns an object of class \link{LargeDataSetForTextEmbeddings} containing the compressed embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEFeatureExtractor-plot_training_history"></a>}}
 \if{latex}{\out{\hypertarget{method-TEFeatureExtractor-plot_training_history}{}}}
-\subsection{Method \code{plot_training_history()}}{
-Method for requesting a plot of the training history.
+\subsection{\code{TEFeatureExtractor$plot_training_history()}}{
+  Method for requesting a plot of the training history.
 This method requires the \emph{R} package 'ggplot2' to work.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEFeatureExtractor$plot_training_history(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$plot_training_history(
   x_min = NULL,
   x_max = NULL,
   y_min = NULL,
   y_max = NULL,
   ind_best_model = TRUE,
   text_size = 10L
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x_min}}{\code{int} Minimal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{x_max}}{\code{int} Maximal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{y_min}}{\code{int} Minimal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{y_max}}{\code{int} Maximal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{ind_best_model}}{\code{bool} If \code{TRUE} the plot indicates the best states of the model according to the chosen measure.}
+      \item{\code{text_size}}{\code{int} Size of text elements. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a plot of class \code{ggplot} visualizing the training process.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x_min}}{\code{int} Minimal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{x_max}}{\code{int} Maximal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{y_min}}{\code{int} Minimal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{y_max}}{\code{int} Maximal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{ind_best_model}}{\code{bool} If \code{TRUE} the plot indicates the best states of the model according to the chosen measure.}
-
-\item{\code{text_size}}{\code{int} Size of text elements. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TEFeatureExtractor-print"></a>}}
+\if{latex}{\out{\hypertarget{method-TEFeatureExtractor-print}{}}}
+\subsection{\code{TEFeatureExtractor$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a plot of class \code{ggplot} visualizing the training process.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEFeatureExtractor-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TEFeatureExtractor-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEFeatureExtractor$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TEFeatureExtractor$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEFeatureExtractor$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

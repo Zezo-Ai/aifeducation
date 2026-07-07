@@ -21,7 +21,7 @@ BaseModel_Create_UI <- function(id) {
         shiny::tags$hr(),
         shiny::selectInput(
           inputId = shiny::NS(id, "base_model_type"),
-          choices = unname(unlist(BaseModelsIndex)),
+          choices = get_entry_from_BaseModelsIndex("class_name"),
           label = "Base Model Type"
         ),
         shiny::selectInput(

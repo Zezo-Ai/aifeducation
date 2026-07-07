@@ -17,10 +17,10 @@ or no version is available.
 Function for requesting the version of a specific python package.
 }
 \seealso{
-Other Utils Python Developers: 
-\code{\link{get_py_package_versions}()},
-\code{\link{load_all_py_scripts}()},
-\code{\link{load_py_scripts}()},
-\code{\link{run_py_file}()}
+Other Utils Python Developers:
+\code{\link[=get_py_package_versions]{get_py_package_versions()}},
+\code{\link[=load_all_py_scripts]{load_all_py_scripts()}},
+\code{\link[=load_py_scripts]{load_py_scripts()}},
+\code{\link[=run_py_file]{run_py_file()}}
 }
 \concept{Utils Python Developers}

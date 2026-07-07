@@ -179,9 +179,9 @@ read_loss_log <- function(path_loss) {
       loss_data[, i] <- as.numeric(loss_data[, i])
     }
 
-    loss_data=replace(
-      x=loss_data,
-      list=(loss_data==-100),
+    loss_data <- replace(
+      x = loss_data,
+      list = (loss_data == -100),
       values = NA
     )
 
@@ -285,9 +285,9 @@ cat_message <- function(msg, trace) {
 #' @family Utils Log Developers
 #' @export
 clean_pytorch_log_transformers <- function(log) {
-  if (is.data.frame(log)){
+  if (is.data.frame(log)) {
     history_data <- log
-  } else if (inherits(x=log,what = "pandas.DataFrame")){
+  } else if (inherits(x = log, what = "pandas.DataFrame")) {
     python_bulit_ins <- reticulate::import_builtins()
     data_colnames <- python_bulit_ins$list(log$columns)
     history_data <- log$to_numpy()

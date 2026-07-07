@@ -103,8 +103,8 @@ test_that("Masking Layer", {
   # Check Masking times
   expect_equal(rowSums(tensor_to_numpy(y[[2]])), times - sequence_length)
 
-  #Check Masking Features
-  expect_equal(rowSums(tensor_to_numpy(py$get_FeatureMask_from_mask(y[[2]],as.integer(features)))), (times - sequence_length)*features)
+  # Check Masking Features
+  expect_equal(rowSums(tensor_to_numpy(py$get_FeatureMask_from_mask(y[[2]], as.integer(features)))), (times - sequence_length) * features)
 })
 
 # Identity Layer----------------------------------------------------------------
@@ -266,7 +266,7 @@ test_that("BatchNorm with Mask", {
   layer <- py$BatchNorm_with_Mask(
     features = as.integer(features),
     pad_value = as.integer(pad_value),
-    alpha=0.1,
+    alpha = 0.1,
     eps = 1e-05
   )$to(device)
   layer$eval()
@@ -293,8 +293,8 @@ test_that("BatchNorm with Mask", {
     num_features = example_tensor$size(2L),
     eps = 1e-05,
     affine = TRUE,
-    momentum=0.1,
-    track_running_stats=TRUE,
+    momentum = 0.1,
+    track_running_stats = TRUE,
     device = NULL,
     dtype = example_tensor$dtype
   )$to(device)
@@ -303,10 +303,10 @@ test_that("BatchNorm with Mask", {
     torch$permute(
       comparison_layer(
         torch$permute(
-          example_tensor,reticulate::tuple(list(0L,2L,1L))
+          example_tensor, reticulate::tuple(list(0L, 2L, 1L))
         )
       ),
-      reticulate::tuple(list(0L,2L,1L))
+      reticulate::tuple(list(0L, 2L, 1L))
     )
   )
   values <- masking_layer(example_tensor)
@@ -352,32 +352,32 @@ test_that("RMSNorm with Mask", {
 
 
   # Test that the computations are correct for sequences with full length
-  #example_tensor <- generate_tensors(
+  # example_tensor <- generate_tensors(
   #  times = times,
   #  features = features,
   #  seq_len = rep.int(times, times = 10),
   #  pad_value = pad_value
-  #)$to(device)
-  #comparison_layer <- torch.nn.RMSNorm(
+  # )$to(device)
+  # comparison_layer <- torch.nn.RMSNorm(
   #  normalized_shape = example_tensor$size(2L),
   #  eps = 1e-05,
   #  elementwise_affine = TRUE,
   #  device = NULL,
   #  dtype = example_tensor$dtype
-  #)$to(device)
-  #res_expected <- tensor_to_numpy(comparison_layer(example_tensor))
-  #values <- masking_layer(example_tensor)
+  # )$to(device)
+  # res_expected <- tensor_to_numpy(comparison_layer(example_tensor))
+  # values <- masking_layer(example_tensor)
 
-  #results <- tensor_to_numpy(layer(
+  # results <- tensor_to_numpy(layer(
   #  x = values[[1]],
   #  seq_len = values[[2]],
   #  mask_times = values[[3]],
   #  mask_features = values[[4]]
-  #)[[1]])
-  #expect_equal(results, res_expected, tolerance = 1e-5)
+  # )[[1]])
+  # expect_equal(results, res_expected, tolerance = 1e-5)
 })
 
-#PowerNorm with mask-----------------------------------------------------------
+# PowerNorm with mask-----------------------------------------------------------
 test_that("PowerNorm with Mask", {
   device <- ifelse(torch$cuda$is_available(), "cuda", "cpu")
   pad_value <- sample(x = seq(from = -200, to = -10, by = 10), size = 1)
@@ -396,7 +396,7 @@ test_that("PowerNorm with Mask", {
   layer <- py$PowerNorm_with_Mask(
     features = as.integer(features),
     pad_value = as.integer(pad_value),
-    alpha=0.9,
+    alpha = 0.9,
     eps = 1e-05
   )$to(device)
   layer$eval()
@@ -587,7 +587,7 @@ test_that("exreme_pooling_over_time", {
       pad_value = as.integer(pad_value),
       pooling_type = pooling_type
     )$to(device)
-    y_1 <- layer(values[[1]], py$get_FeatureMask_from_mask(values[[2]],as.integer(features)))
+    y_1 <- layer(values[[1]], py$get_FeatureMask_from_mask(values[[2]], as.integer(features)))
     if (pooling_type != "MinMax") {
       expect_equal(dim(tensor_to_numpy(y_1)), c(length(sequence_length), features))
     } else {
@@ -913,7 +913,7 @@ test_that("layer_global_average_pooling_1d", {
 
   results <- layer(
     x = values[[1]],
-    mask =values[[2]]
+    mask = values[[2]]
   )
 
   true_mean_source <- tensor_to_numpy(example_tensor)

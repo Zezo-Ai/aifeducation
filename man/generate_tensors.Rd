@@ -29,14 +29,14 @@ testing methods and functions based on 'PyTorch'. The tensors have the shape
 To request a \emph{R} array please use \link{generate_embeddings}.
 }
 \seealso{
-Other Utils TestThat Developers: 
-\code{\link{check_adjust_n_samples_on_CI}()},
-\code{\link{generate_args_for_tests}()},
-\code{\link{generate_embeddings}()},
-\code{\link{get_current_args_for_print}()},
-\code{\link{get_fixed_test_tensor}()},
-\code{\link{get_test_data_for_classifiers}()},
-\code{\link{monitor_test_time_on_CI}()},
-\code{\link{random_bool_on_CI}()}
+Other Utils TestThat Developers:
+\code{\link[=check_adjust_n_samples_on_CI]{check_adjust_n_samples_on_CI()}},
+\code{\link[=generate_args_for_tests]{generate_args_for_tests()}},
+\code{\link[=generate_embeddings]{generate_embeddings()}},
+\code{\link[=get_current_args_for_print]{get_current_args_for_print()}},
+\code{\link[=get_fixed_test_tensor]{get_fixed_test_tensor()}},
+\code{\link[=get_test_data_for_classifiers]{get_test_data_for_classifiers()}},
+\code{\link[=monitor_test_time_on_CI]{monitor_test_time_on_CI()}},
+\code{\link[=random_bool_on_CI]{random_bool_on_CI()}}
 }
 \concept{Utils TestThat Developers}

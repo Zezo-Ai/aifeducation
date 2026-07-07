@@ -12,7 +12,7 @@ Objects of this class containing fields and methods used in several other classe
 This class is \strong{not} designed for a direct application and should only be used by developers.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEBaseModel}},
 \code{\link{BaseModelCore}},
 \code{\link{ClassifiersBasedOnTextEmbeddings}},
@@ -25,9 +25,9 @@ Other R6 Classes for Developers:
 }
 \concept{R6 Classes for Developers}
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{last_training}}{('list()')\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{last_training}}{('list()')\cr
 List for storing the history, the configuration, and the results of the last
 training. This information will be overwritten if a new training is started.
 \itemize{
@@ -38,348 +38,367 @@ training. This information will be overwritten if a new training is started.
 \item \code{last_training$data}: Object of class \code{table} storing the initial frequencies of the passed data.
 \item \code{last_training$config}: List storing the configuration used for the last training.
 }}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-AIFEMaster-get_model_info}{\code{AIFEMaster$get_model_info()}}
-\item \href{#method-AIFEMaster-set_publication_info}{\code{AIFEMaster$set_publication_info()}}
-\item \href{#method-AIFEMaster-get_publication_info}{\code{AIFEMaster$get_publication_info()}}
-\item \href{#method-AIFEMaster-set_model_license}{\code{AIFEMaster$set_model_license()}}
-\item \href{#method-AIFEMaster-get_model_license}{\code{AIFEMaster$get_model_license()}}
-\item \href{#method-AIFEMaster-set_documentation_license}{\code{AIFEMaster$set_documentation_license()}}
-\item \href{#method-AIFEMaster-get_documentation_license}{\code{AIFEMaster$get_documentation_license()}}
-\item \href{#method-AIFEMaster-set_model_description}{\code{AIFEMaster$set_model_description()}}
-\item \href{#method-AIFEMaster-get_model_description}{\code{AIFEMaster$get_model_description()}}
-\item \href{#method-AIFEMaster-get_package_versions}{\code{AIFEMaster$get_package_versions()}}
-\item \href{#method-AIFEMaster-get_sustainability_data}{\code{AIFEMaster$get_sustainability_data()}}
-\item \href{#method-AIFEMaster-get_ml_framework}{\code{AIFEMaster$get_ml_framework()}}
-\item \href{#method-AIFEMaster-is_configured}{\code{AIFEMaster$is_configured()}}
-\item \href{#method-AIFEMaster-is_trained}{\code{AIFEMaster$is_trained()}}
-\item \href{#method-AIFEMaster-get_private}{\code{AIFEMaster$get_private()}}
-\item \href{#method-AIFEMaster-get_all_fields}{\code{AIFEMaster$get_all_fields()}}
-\item \href{#method-AIFEMaster-get_model_config}{\code{AIFEMaster$get_model_config()}}
-\item \href{#method-AIFEMaster-clone}{\code{AIFEMaster$clone()}}
-}
+  \itemize{
+    \item \href{#method-AIFEMaster-get_model_info}{\code{AIFEMaster$get_model_info()}}
+    \item \href{#method-AIFEMaster-set_publication_info}{\code{AIFEMaster$set_publication_info()}}
+    \item \href{#method-AIFEMaster-get_publication_info}{\code{AIFEMaster$get_publication_info()}}
+    \item \href{#method-AIFEMaster-set_model_license}{\code{AIFEMaster$set_model_license()}}
+    \item \href{#method-AIFEMaster-get_model_license}{\code{AIFEMaster$get_model_license()}}
+    \item \href{#method-AIFEMaster-set_documentation_license}{\code{AIFEMaster$set_documentation_license()}}
+    \item \href{#method-AIFEMaster-get_documentation_license}{\code{AIFEMaster$get_documentation_license()}}
+    \item \href{#method-AIFEMaster-set_model_description}{\code{AIFEMaster$set_model_description()}}
+    \item \href{#method-AIFEMaster-get_model_description}{\code{AIFEMaster$get_model_description()}}
+    \item \href{#method-AIFEMaster-get_package_versions}{\code{AIFEMaster$get_package_versions()}}
+    \item \href{#method-AIFEMaster-get_sustainability_data}{\code{AIFEMaster$get_sustainability_data()}}
+    \item \href{#method-AIFEMaster-get_ml_framework}{\code{AIFEMaster$get_ml_framework()}}
+    \item \href{#method-AIFEMaster-is_configured}{\code{AIFEMaster$is_configured()}}
+    \item \href{#method-AIFEMaster-is_trained}{\code{AIFEMaster$is_trained()}}
+    \item \href{#method-AIFEMaster-get_private}{\code{AIFEMaster$get_private()}}
+    \item \href{#method-AIFEMaster-get_all_fields}{\code{AIFEMaster$get_all_fields()}}
+    \item \href{#method-AIFEMaster-get_model_config}{\code{AIFEMaster$get_model_config()}}
+    \item \href{#method-AIFEMaster-clone}{\code{AIFEMaster$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_model_info"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_model_info}{}}}
-\subsection{Method \code{get_model_info()}}{
-Method for requesting the model information.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_model_info()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_model_info()}}{
+  Method for requesting the model information.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_model_info()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} of all relevant model information.
+  }
 }
 
-\subsection{Returns}{
-\code{list} of all relevant model information.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-set_publication_info"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-set_publication_info}{}}}
-\subsection{Method \code{set_publication_info()}}{
-Method for setting publication information of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$set_publication_info(authors, citation, url = NULL)}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$set_publication_info()}}{
+  Method for setting publication information of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$set_publication_info(authors, citation, url = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{authors}}{List of authors.}
+      \item{\code{citation}}{Free text citation.}
+      \item{\code{url}}{URL of a corresponding homepage.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It is used for setting the private members for publication information.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{authors}}{List of authors.}
-
-\item{\code{citation}}{Free text citation.}
-
-\item{\code{url}}{URL of a corresponding homepage.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It is used for setting the private members for publication information.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_publication_info"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_publication_info}{}}}
-\subsection{Method \code{get_publication_info()}}{
-Method for requesting the bibliographic information of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_publication_info()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_publication_info()}}{
+  Method for requesting the bibliographic information of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_publication_info()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} with all saved bibliographic information.
+  }
 }
 
-\subsection{Returns}{
-\code{list} with all saved bibliographic information.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-set_model_license"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-set_model_license}{}}}
-\subsection{Method \code{set_model_license()}}{
-Method for setting the license of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$set_model_license(license = "CC BY")}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$set_model_license()}}{
+  Method for setting the license of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$set_model_license(license = "CC BY")}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{license}}{\code{string} containing the abbreviation of the license or the license text.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It is used for setting the private member for the software license of
+the model.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{license}}{\code{string} containing the abbreviation of the license or the license text.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It is used for setting the private member for the software license of
-the model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_model_license"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_model_license}{}}}
-\subsection{Method \code{get_model_license()}}{
-Method for getting the license of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_model_license()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_model_license()}}{
+  Method for getting the license of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_model_license()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{string} representing the license for the model.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{license}}{\code{string} containing the abbreviation of the license or the license text.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{string} representing the license for the model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-set_documentation_license"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-set_documentation_license}{}}}
-\subsection{Method \code{set_documentation_license()}}{
-Method for setting the license of the model's documentation.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$set_documentation_license(license = "CC BY")}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$set_documentation_license()}}{
+  Method for setting the license of the model's documentation.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$set_documentation_license(license = "CC BY")}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{license}}{\code{string} containing the abbreviation of the license or the license text.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It is used for setting the private member for the documentation license
+of the model.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{license}}{\code{string} containing the abbreviation of the license or the license text.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It is used for setting the private member for the documentation license
-of the model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_documentation_license"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_documentation_license}{}}}
-\subsection{Method \code{get_documentation_license()}}{
-Method for getting the license of the model's documentation.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_documentation_license()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_documentation_license()}}{
+  Method for getting the license of the model's documentation.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_documentation_license()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the license as a \code{string}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{license}}{\code{string} containing the abbreviation of the license or the license text.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns the license as a \code{string}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-set_model_description"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-set_model_description}{}}}
-\subsection{Method \code{set_model_description()}}{
-Method for setting a description of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$set_model_description(
+\subsection{\code{AIFEMaster$set_model_description()}}{
+  Method for setting a description of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$set_model_description(
   eng = NULL,
   native = NULL,
   abstract_eng = NULL,
   abstract_native = NULL,
   keywords_eng = NULL,
   keywords_native = NULL
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{eng}}{\code{string} A text describing the training, its theoretical and empirical background, and output in
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{eng}}{\code{string} A text describing the training, its theoretical and empirical background, and output in
 English.}
-
-\item{\code{native}}{\code{string} A text describing the training , its theoretical and empirical background, and output in
+      \item{\code{native}}{\code{string} A text describing the training , its theoretical and empirical background, and output in
 the native language of the model.}
-
-\item{\code{abstract_eng}}{\code{string} A text providing a summary of the description in English.}
-
-\item{\code{abstract_native}}{\code{string} A text providing a summary of the description in the native language of the
+      \item{\code{abstract_eng}}{\code{string} A text providing a summary of the description in English.}
+      \item{\code{abstract_native}}{\code{string} A text providing a summary of the description in the native language of the
 model.}
-
-\item{\code{keywords_eng}}{\code{vector} of keyword in English.}
-
-\item{\code{keywords_native}}{\code{vector} of keyword in the native language of the model.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It is used for setting the private members for the description of the
+      \item{\code{keywords_eng}}{\code{vector} of keyword in English.}
+      \item{\code{keywords_native}}{\code{vector} of keyword in the native language of the model.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It is used for setting the private members for the description of the
 model.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_model_description"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_model_description}{}}}
-\subsection{Method \code{get_model_description()}}{
-Method for requesting the model description.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_model_description()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_model_description()}}{
+  Method for requesting the model description.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_model_description()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} with the description of the classifier in English and the native language.
+  }
 }
 
-\subsection{Returns}{
-\code{list} with the description of the classifier in English and the native language.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_package_versions"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_package_versions}{}}}
-\subsection{Method \code{get_package_versions()}}{
-Method for requesting a summary of the R and python packages' versions used for creating the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_package_versions()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_package_versions()}}{
+  Method for requesting a summary of the R and python packages' versions used for creating the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_package_versions()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} containing the versions of the relevant R and python packages.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} containing the versions of the relevant R and python packages.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_sustainability_data"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_sustainability_data}{}}}
-\subsection{Method \code{get_sustainability_data()}}{
-Method for requesting a summary of tracked energy consumption during training and an estimate of the
+\subsection{\code{AIFEMaster$get_sustainability_data()}}{
+  Method for requesting a summary of tracked energy consumption during training and an estimate of the
 resulting CO2 equivalents in kg.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_sustainability_data(track_mode = "training")}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_sustainability_data(track_mode = "training")}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{track_mode}}{\code{string} Determines the stept to which the data refer. Allowed values:
+\itemize{
+\item 'training'
+\item 'inference'
+}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} containing the tracked energy consumption, CO2 equivalents in kg, information on the
+tracker used, and technical information on the training infrastructure.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{track_mode}}{\code{string} Determines the stept to which the data refer. Allowed values: 'training', 'inference'}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a \code{list} containing the tracked energy consumption, CO2 equivalents in kg, information on the
-tracker used, and technical information on the training infrastructure.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_ml_framework"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_ml_framework}{}}}
-\subsection{Method \code{get_ml_framework()}}{
-Method for requesting the machine learning framework used for the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_ml_framework()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_ml_framework()}}{
+  Method for requesting the machine learning framework used for the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_ml_framework()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{string} describing the machine learning framework used for the classifier.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{string} describing the machine learning framework used for the classifier.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-is_configured"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-is_configured}{}}}
-\subsection{Method \code{is_configured()}}{
-Method for checking if the model was successfully configured. An object can only be used if this
+\subsection{\code{AIFEMaster$is_configured()}}{
+  Method for checking if the model was successfully configured. An object can only be used if this
 value is \code{TRUE}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$is_configured()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$is_configured()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{bool} \code{TRUE} if the model is fully configured. \code{FALSE} if not.
+  }
 }
 
-\subsection{Returns}{
-\code{bool} \code{TRUE} if the model is fully configured. \code{FALSE} if not.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-is_trained"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-is_trained}{}}}
-\subsection{Method \code{is_trained()}}{
-Check if the \link{TEFeatureExtractor} is trained.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$is_trained()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$is_trained()}}{
+  Check if the \link{TEFeatureExtractor} is trained.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$is_trained()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns \code{TRUE} if the object is trained and \code{FALSE} if not.
+  }
 }
 
-\subsection{Returns}{
-Returns \code{TRUE} if the object is trained and \code{FALSE} if not.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_private"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_private}{}}}
-\subsection{Method \code{get_private()}}{
-Method for requesting all private fields and methods. Used for loading and updating an object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_private()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_private()}}{
+  Method for requesting all private fields and methods. Used for loading and updating an object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_private()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} with all private fields and methods.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} with all private fields and methods.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_all_fields"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_all_fields}{}}}
-\subsection{Method \code{get_all_fields()}}{
-Return all fields.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_all_fields()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_all_fields()}}{
+  Return all fields.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_all_fields()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method returns a \code{list} containing all public and private fields
+of the object.
+  }
 }
 
-\subsection{Returns}{
-Method returns a \code{list} containing all public and private fields
-of the object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-get_model_config"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-get_model_config}{}}}
-\subsection{Method \code{get_model_config()}}{
-Method for requesting the model configuration.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$get_model_config()}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$get_model_config()}}{
+  Method for requesting the model configuration.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$get_model_config()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} with all configuration parameters used during configuration.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} with all configuration parameters used during configuration.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AIFEMaster-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-AIFEMaster-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AIFEMaster$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{AIFEMaster$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{AIFEMaster$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

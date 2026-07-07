@@ -68,13 +68,15 @@ MAC OS is detected 'PyTorch' is installed without support for cuda.
 Supported versions of the packages can be requested with \verb{get_recommended_py_versions())}
 }
 \seealso{
-Other Installation and Configuration: 
-\code{\link{check_aif_py_modules}()},
-\code{\link{get_recommended_py_versions}()},
-\code{\link{install_aifeducation}()},
-\code{\link{install_aifeducation_studio}()},
-\code{\link{prepare_session}()},
-\code{\link{set_transformers_logger}()},
-\code{\link{update_aifeducation}()}
+Other Installation and Configuration:
+\code{\link[=check_aif_py_modules]{check_aif_py_modules()}},
+\code{\link[=get_recommended_py_versions]{get_recommended_py_versions()}},
+\code{\link[=install_aifeducation]{install_aifeducation()}},
+\code{\link[=install_aifeducation_studio]{install_aifeducation_studio()}},
+\code{\link[=install_protocol_buffer_compiler]{install_protocol_buffer_compiler()}},
+\code{\link[=prepare_session]{prepare_session()}},
+\code{\link[=set_codecarbon_logger]{set_codecarbon_logger()}},
+\code{\link[=set_transformers_logger]{set_transformers_logger()}},
+\code{\link[=update_aifeducation]{update_aifeducation()}}
 }
 \concept{Installation and Configuration}

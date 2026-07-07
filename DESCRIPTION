@@ -1,7 +1,7 @@
 Type: Package
 Package: aifeducation
 Title: Artificial Intelligence for Education
-Version: 1.1.5
+Version: 1.1.6
 Authors@R: c(
     person("Berding", "Florian", , "florian.berding@uni-hamburg.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3593-1695")),
@@ -44,7 +44,7 @@ License: GPL-3
 URL: https://fberding.github.io/aifeducation/
 BugReports: https://github.com/FBerding/aifeducation/issues
 Depends: R (>= 3.5.0)
-Imports: doParallel, foreach, iotarelr(>= 0.1.5), methods, Rcpp (>=
+Imports: doParallel, foreach, iotarelr (>= 0.1.9), methods, Rcpp (>=
         1.0.10), reshape2, reticulate (>= 1.42.0), rlang, stringi,
         utils
 Suggests: bslib, DT, fs, future, ggplot2, knitr, pkgdown, promises,
@@ -55,11 +55,12 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 SystemRequirements: PyTorch (see vignette "Get started")
 Config/Needs/website: rmarkdown
+Config/roxygen2/version: 8.0.0
+RoxygenNote: 8.0.0
 NeedsCompilation: yes
-Packaged: 2026-04-25 18:42:07 UTC; User
+Packaged: 2026-07-07 07:35:01 UTC; User
 Author: Berding Florian [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-3593-1695>),
   Tykhonova Yuliia [aut] (ORCID: <https://orcid.org/0009-0006-9015-1006>),
@@ -71,4 +72,4 @@ Author: Berding Florian [aut, cre] (ORCID:
   Slopinski Andreas [ctb]
 Maintainer: Berding Florian <florian.berding@uni-hamburg.de>
 Repository: CRAN
-Date/Publication: 2026-04-25 23:30:08 UTC
+Date/Publication: 2026-07-07 08:00:02 UTC

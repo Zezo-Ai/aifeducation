@@ -17,14 +17,14 @@ Functions prints the used arguments. The aim of this function is
 to print the arguments to the console that resulted in a failed test.
 }
 \seealso{
-Other Utils TestThat Developers: 
-\code{\link{check_adjust_n_samples_on_CI}()},
-\code{\link{generate_args_for_tests}()},
-\code{\link{generate_embeddings}()},
-\code{\link{generate_tensors}()},
-\code{\link{get_fixed_test_tensor}()},
-\code{\link{get_test_data_for_classifiers}()},
-\code{\link{monitor_test_time_on_CI}()},
-\code{\link{random_bool_on_CI}()}
+Other Utils TestThat Developers:
+\code{\link[=check_adjust_n_samples_on_CI]{check_adjust_n_samples_on_CI()}},
+\code{\link[=generate_args_for_tests]{generate_args_for_tests()}},
+\code{\link[=generate_embeddings]{generate_embeddings()}},
+\code{\link[=generate_tensors]{generate_tensors()}},
+\code{\link[=get_fixed_test_tensor]{get_fixed_test_tensor()}},
+\code{\link[=get_test_data_for_classifiers]{get_test_data_for_classifiers()}},
+\code{\link[=monitor_test_time_on_CI]{monitor_test_time_on_CI()}},
+\code{\link[=random_bool_on_CI]{random_bool_on_CI()}}
 }
 \concept{Utils TestThat Developers}

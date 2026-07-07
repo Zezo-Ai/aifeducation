@@ -19,14 +19,14 @@ Function prints the duration of a test to console if the test is
 running on CI. If not no output appears in console.
 }
 \seealso{
-Other Utils TestThat Developers: 
-\code{\link{check_adjust_n_samples_on_CI}()},
-\code{\link{generate_args_for_tests}()},
-\code{\link{generate_embeddings}()},
-\code{\link{generate_tensors}()},
-\code{\link{get_current_args_for_print}()},
-\code{\link{get_fixed_test_tensor}()},
-\code{\link{get_test_data_for_classifiers}()},
-\code{\link{random_bool_on_CI}()}
+Other Utils TestThat Developers:
+\code{\link[=check_adjust_n_samples_on_CI]{check_adjust_n_samples_on_CI()}},
+\code{\link[=generate_args_for_tests]{generate_args_for_tests()}},
+\code{\link[=generate_embeddings]{generate_embeddings()}},
+\code{\link[=generate_tensors]{generate_tensors()}},
+\code{\link[=get_current_args_for_print]{get_current_args_for_print()}},
+\code{\link[=get_fixed_test_tensor]{get_fixed_test_tensor()}},
+\code{\link[=get_test_data_for_classifiers]{get_test_data_for_classifiers()}},
+\code{\link[=random_bool_on_CI]{random_bool_on_CI()}}
 }
 \concept{Utils TestThat Developers}

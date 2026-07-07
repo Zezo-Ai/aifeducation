@@ -14,9 +14,11 @@
 
 #' @title ModernBert
 #' @description Represents models based on Modern Bert.
-#' @references Devlin, J., Chang, M.‑W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of Deep Bidirectional
-#'   Transformers for Language Understanding. In J. Burstein, C. Doran, & T. Solorio (Eds.), Proceedings of the 2019
-#'   Conference of the North (pp. 4171--4186). Association for Computational Linguistics. \doi{10.18653/v1/N19-1423}
+#' @references Warner, B., Chaffin, A., Clavie, B., Weller, O., Hallstroem, O., Taghadouini, S.,
+#' Gallagher, A., Biswas, R., Ladhak, F., Aarsen, T., Cooper, N., Adams, G.,
+#' Howard, J. & Poli, I. (2024). Smarter, Better, Faster, Longer: A Modern Bidirectional
+#' Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference.
+#' \doi{10.48550/arXiv.2412.13663}
 #' @return `r get_description("return_object")`
 #' @family Base Model
 #' @export
@@ -25,6 +27,7 @@ BaseModelModernBert <- R6::R6Class(
   inherit = BaseModelCore,
   private = list(
     model_type = "modernbert",
+    slow_tokenizer = NULL,
     create_model = function(args) {
       configuration <- transformers$ModernBertConfig(
         vocab_size = as.integer(length(args$tokenizer$get_tokenizer()$get_vocab())),
@@ -113,4 +116,13 @@ BaseModelModernBert <- R6::R6Class(
 )
 
 # Add the model to the user list
-BaseModelsIndex$ModernBert <- ("BaseModelModernBert")
+BaseModelsIndex$ModernBert <- list(
+  class_name = "BaseModelModernBert",
+  model_type = "modernbert",
+  reference = "Warner, B., Chaffin, A., Clavie, B., Weller, O., Hallstroem, O., Taghadouini, S.,
+  Gallagher, A., Biswas, R., Ladhak, F., Aarsen, T., Cooper, N., Adams, G.,
+  Howard, J. & Poli, I. (2024). Smarter, Better, Faster, Longer: A Modern Bidirectional
+  Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference.
+  doi: [10.48550/arXiv.2412.13663](https://doi.org/10.48550/arXiv.2412.13663)",
+  req_sentencepiece = FALSE
+)

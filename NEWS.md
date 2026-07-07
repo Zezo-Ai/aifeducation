@@ -4,6 +4,75 @@ editor_options:
     wrap: 72
 ---
 
+# aifeducation 1.1.6
+
+**General**
+
+- Change load and save methods to allow the usage of older models (created with 'transformers<5.0.0') with 
+  'transformers>=5.0.0'.
+- Add print method to all objects.
+- Change dependencies. The package requires now 'iotarelr>=0.1.9'.
+- Add **optional** dependencies to two new python packages ('protbuf' and 'sentencepiece') and 
+  the Protocol Buffer Compiler. These are required for some of the open source models.
+- Add function 'install_protocol_buffer_compiler' for installing the 
+  Protocol Buffer Compiler.
+- Add a faster version for calculating CosineDistance.
+- Improved error messages for string arguments.
+- Fixed an error in calculating the breaks for training histories.
+
+**BaseModels**
+
+- Add support for ALBERT.
+- Add support for EuroBert.
+- Add support for DistilBert..
+- Add support for XML-Roberta.
+- Add support for Xmod.
+- Add method get_max_seq_len to BaseModels allowing to request the maximum number
+  of tokens a model supports.
+- MPNet is now available.
+
+**Tokenizer**
+
+- Add Method to calculate the necessary number of parts/chunks to cover
+  a given quantile of texts completely.
+
+**Classifiers**
+
+- Classifiers with prototypes: Fixed a problem in 'MetaLernerBatchSampler'. 
+  Now all true classes are always part of a training step.
+- Changed the minimum absolute frequencies for every fold from 3 to 4.
+- Classifiers with prototypes: Ns and Nq are now adjusted to the minimal
+  absolute frequencies of the train test data set. This
+  ensures that Ns and Nq are equal for all classes.
+- Pooling over features is now optional.
+- Improve progress indicator for training. It now displays the remaining time and the epoch of
+  the last checkpoint.
+- Add [SwiGLU (Shazeer, 2020)](https://doi.org/10.48550/arXiv.2002.05202) for 
+  transformer encoder layers.
+- Add FocalLoss to classifiers based on prototypes.
+- Add automatic detection of learning rates and a method for plotting the corresponding analysis.
+- Replaced average_iota with a smoothed version of average_iota for an improved detection of
+  good checkpoints.
+
+**TEFeatureExtractor**
+
+- Add new progress indicator to extract_features_large of 'TEFeatureExtractor'.
+- Improve progress indicator for training. It now displays the remaining time and the epoch of
+  the last checkpoint.
+- Add automatic detection of learning rates and a method for plotting the corresponding analysis.  
+
+**TextEmbeddingModel**
+
+- Embeddings can now inject a specific amount of mask tokens to match training
+  and application contexts better.
+  
+**AI for Education - Studio**
+
+- Tab for creating a TextEmbeddingModel now supports the calculation of 
+  quantiles for ensuring that a specific percentage of documents is 
+  fully covered by a model.
+- Fix error in tab for creating BaseModels.
+
 # aifeducation 1.1.5
 
 **General**
@@ -68,9 +137,9 @@ editor_options:
 **Classifiers**
 
 - Added new normalization layers
-    - BatchNorm by [Loffe and Szegedy](https://doi.org/10.48550/arXiv.1502.03167)
-    - RMSNorm by [Zhang and Sennrich](https://doi.org/10.48550/arXiv.1910.07467)
-    - PowerNorm by [Shen et al.](https://doi.org/10.48550/arXiv.2003.07845)
+    - BatchNorm by [Loffe and Szegedy (2015)](https://doi.org/10.48550/arXiv.1502.03167)
+    - RMSNorm by [Zhang and Sennrich (2019)](https://doi.org/10.48550/arXiv.1910.07467)
+    - PowerNorm by [Shen et al. (2020)](https://doi.org/10.48550/arXiv.2003.07845)
 - Fixed bug in Masking Layer during the calculation of the mask for features.
 
 **FeatureExtractors**
@@ -97,7 +166,7 @@ editor_options:
 - Added new options for plotting training history.
 - Fixed an errors causing pseudo labeling to crash in some cases.
 - Added a new type of classification head: OLS-Layer described by 
-  [Li et al. 2020](https://doi.org/10.1109/TIP.2020.2990277). The new head
+  [Li et al. (2020)](https://doi.org/10.1109/TIP.2020.2990277). The new head
   is available for TEClassifierSequential and TEClassifierParallel. For the
   classifiers working with prototypes the layer can be used to change the
   projection into the embedding space (parameter projection_type).

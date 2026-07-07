@@ -11,72 +11,73 @@ This object stores raw texts. The data of this objects is not stored in memory d
 mapping these objects allow to work with data sets which do not fit into memory/RAM.
 }
 \seealso{
-Other Data Management: 
+Other Data Management:
 \code{\link{EmbeddedText}},
 \code{\link{LargeDataSetForTextEmbeddings}}
 }
 \concept{Data Management}
 \section{Super class}{
-\code{\link[aifeducation:LargeDataSetBase]{aifeducation::LargeDataSetBase}} -> \code{LargeDataSetForText}
+\code{\link[aifeducation:LargeDataSetBase]{LargeDataSetBase}} -> \code{LargeDataSetForText}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-LargeDataSetForText-new}{\code{LargeDataSetForText$new()}}
-\item \href{#method-LargeDataSetForText-add_from_files_txt}{\code{LargeDataSetForText$add_from_files_txt()}}
-\item \href{#method-LargeDataSetForText-add_from_files_pdf}{\code{LargeDataSetForText$add_from_files_pdf()}}
-\item \href{#method-LargeDataSetForText-add_from_files_xlsx}{\code{LargeDataSetForText$add_from_files_xlsx()}}
-\item \href{#method-LargeDataSetForText-add_from_data.frame}{\code{LargeDataSetForText$add_from_data.frame()}}
-\item \href{#method-LargeDataSetForText-get_private}{\code{LargeDataSetForText$get_private()}}
-\item \href{#method-LargeDataSetForText-clone}{\code{LargeDataSetForText$clone()}}
+  \itemize{
+    \item \href{#method-LargeDataSetForText-initialize}{\code{LargeDataSetForText$new()}}
+    \item \href{#method-LargeDataSetForText-add_from_files_txt}{\code{LargeDataSetForText$add_from_files_txt()}}
+    \item \href{#method-LargeDataSetForText-add_from_files_pdf}{\code{LargeDataSetForText$add_from_files_pdf()}}
+    \item \href{#method-LargeDataSetForText-add_from_files_xlsx}{\code{LargeDataSetForText$add_from_files_xlsx()}}
+    \item \href{#method-LargeDataSetForText-add_from_data.frame}{\code{LargeDataSetForText$add_from_data.frame()}}
+    \item \href{#method-LargeDataSetForText-get_private}{\code{LargeDataSetForText$get_private()}}
+    \item \href{#method-LargeDataSetForText-clone}{\code{LargeDataSetForText$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="extract_column"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-extract_column'><code>aifeducation::LargeDataSetBase$extract_column()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_all_fields"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_all_fields'><code>aifeducation::LargeDataSetBase$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_colnames"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_colnames'><code>aifeducation::LargeDataSetBase$get_colnames()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_dataset"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_dataset'><code>aifeducation::LargeDataSetBase$get_dataset()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_ids'><code>aifeducation::LargeDataSetBase$get_ids()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_package_versions'><code>aifeducation::LargeDataSetBase$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="load"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-load'><code>aifeducation::LargeDataSetBase$load()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="load_from_disk"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-load_from_disk'><code>aifeducation::LargeDataSetBase$load_from_disk()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_cols"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_cols'><code>aifeducation::LargeDataSetBase$n_cols()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_rows"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_rows'><code>aifeducation::LargeDataSetBase$n_rows()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="reduce_to_unique_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-reduce_to_unique_ids'><code>aifeducation::LargeDataSetBase$reduce_to_unique_ids()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="save"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-save'><code>aifeducation::LargeDataSetBase$save()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="select"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-select'><code>aifeducation::LargeDataSetBase$select()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="set_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-set_package_versions'><code>aifeducation::LargeDataSetBase$set_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="extract_column"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-extract_column'><code>LargeDataSetBase$extract_column()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_all_fields"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_all_fields'><code>LargeDataSetBase$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_colnames"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_colnames'><code>LargeDataSetBase$get_colnames()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_dataset"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_dataset'><code>LargeDataSetBase$get_dataset()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_ids'><code>LargeDataSetBase$get_ids()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="get_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-get_package_versions'><code>LargeDataSetBase$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="load"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-load'><code>LargeDataSetBase$load()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="load_from_disk"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-load_from_disk'><code>LargeDataSetBase$load_from_disk()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_cols"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_cols'><code>LargeDataSetBase$n_cols()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="n_rows"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-n_rows'><code>LargeDataSetBase$n_rows()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="print"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-print'><code>LargeDataSetBase$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="reduce_to_unique_ids"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-reduce_to_unique_ids'><code>LargeDataSetBase$reduce_to_unique_ids()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="save"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-save'><code>LargeDataSetBase$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="select"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-select'><code>LargeDataSetBase$select()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="LargeDataSetBase" data-id="set_package_versions"><a href='../../aifeducation/html/LargeDataSetBase.html#method-LargeDataSetBase-set_package_versions'><code>LargeDataSetBase$set_package_versions()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-LargeDataSetForText-new"></a>}}
-\if{latex}{\out{\hypertarget{method-LargeDataSetForText-new}{}}}
-\subsection{Method \code{new()}}{
-Method for creation of \link{LargeDataSetForText} instance. It can be initialized with \code{init_data}
+\if{html}{\out{<a id="method-LargeDataSetForText-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-LargeDataSetForText-initialize}{}}}
+\subsection{\code{LargeDataSetForText$new()}}{
+  Method for creation of \link{LargeDataSetForText} instance. It can be initialized with \code{init_data}
 parameter if passed (Uses \code{add_from_data.frame()} method if \code{init_data} is \code{data.frame}).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$new(init_data = NULL)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$new(init_data = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{init_data}}{Initial \code{data.frame} for dataset.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new instance of this class initialized with \code{init_data} if passed.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{init_data}}{Initial \code{data.frame} for dataset.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new instance of this class initialized with \code{init_data} if passed.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForText-add_from_files_txt"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForText-add_from_files_txt}{}}}
-\subsection{Method \code{add_from_files_txt()}}{
-Method for adding raw texts saved within .txt files to the data set. Please note the the directory
+\subsection{\code{LargeDataSetForText$add_from_files_txt()}}{
+  Method for adding raw texts saved within .txt files to the data set. Please note the the directory
 should contain one folder for each .txt file. In order to create an informative data set every folder can
 contain the following additional files:
 \itemize{
@@ -89,8 +90,9 @@ contain the following additional files:
 The id of every .txt file is the file name without file extension. Please be aware to provide unique file
 names. Id and raw texts are mandatory, bibliographic and license information are optional.
 }
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$add_from_files_txt(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$add_from_files_txt(
   dir_path,
   batch_size = 500L,
   log_file = NULL,
@@ -100,29 +102,22 @@ names. Id and raw texts are mandatory, bibliographic and license information are
   log_top_message = NA,
   clean_text = TRUE,
   trace = TRUE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path to the directory where the files are stored.}
-
-\item{\code{batch_size}}{\code{int} determining the number of files to process at once.}
-
-\item{\code{log_file}}{\code{string} Path to the file where the log should be saved. If no logging is desired set this
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path to the directory where the files are stored.}
+      \item{\code{batch_size}}{\code{int} determining the number of files to process at once.}
+      \item{\code{log_file}}{\code{string} Path to the file where the log should be saved. If no logging is desired set this
 argument to \code{NULL}.}
-
-\item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
+      \item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
 the log files. Only relevant if \code{log_file} is not \code{NULL}.}
-
-\item{\code{log_top_value}}{\code{int} indicating the current iteration of the process.}
-
-\item{\code{log_top_total}}{\code{int} determining the maximal number of iterations.}
-
-\item{\code{log_top_message}}{\code{string} providing additional information of the process.}
-
-\item{\code{clean_text}}{\code{bool} If \code{TRUE} the text is modified to improve the quality of the following analysis:
+      \item{\code{log_top_value}}{\code{int} indicating the current iteration of the process.}
+      \item{\code{log_top_total}}{\code{int} determining the maximal number of iterations.}
+      \item{\code{log_top_message}}{\code{string} providing additional information of the process.}
+      \item{\code{clean_text}}{\code{bool} If \code{TRUE} the text is modified to improve the quality of the following analysis:
 \itemize{
 \item Some special symbols are removed.
 \item All spaces at the beginning and the end of a row are removed.
@@ -133,20 +128,20 @@ the log files. Only relevant if \code{log_file} is not \code{NULL}.}
 \item Line breaks within a paragraph are removed.
 \item Multiple line breaks are reduced to a single line break.
 }}
+      \item{\code{trace}}{\code{bool} If \code{TRUE} information on the progress is printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new raw texts to the data set.
+  }
+}
 
-\item{\code{trace}}{\code{bool} If \code{TRUE} information on the progress is printed to the console.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new raw texts to the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForText-add_from_files_pdf"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForText-add_from_files_pdf}{}}}
-\subsection{Method \code{add_from_files_pdf()}}{
-Method for adding raw texts saved within .pdf files to the data set. Please note the the directory
+\subsection{\code{LargeDataSetForText$add_from_files_pdf()}}{
+  Method for adding raw texts saved within .pdf files to the data set. Please note the the directory
 should contain one folder for each .pdf file. In order to create an informative data set every folder can
 contain the following additional files:
 \itemize{
@@ -161,8 +156,9 @@ such as "CC BY".
 The id of every .pdf file is the file name without file extension. Please be aware to provide unique file
 names. Id and raw texts are mandatory, bibliographic and license information are optional.
 }
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$add_from_files_pdf(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$add_from_files_pdf(
   dir_path,
   batch_size = 500L,
   log_file = NULL,
@@ -172,29 +168,22 @@ names. Id and raw texts are mandatory, bibliographic and license information are
   log_top_message = NA,
   clean_text = TRUE,
   trace = TRUE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path to the directory where the files are stored.}
-
-\item{\code{batch_size}}{\code{int} determining the number of files to process at once.}
-
-\item{\code{log_file}}{\code{string} Path to the file where the log should be saved. If no logging is desired set this
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path to the directory where the files are stored.}
+      \item{\code{batch_size}}{\code{int} determining the number of files to process at once.}
+      \item{\code{log_file}}{\code{string} Path to the file where the log should be saved. If no logging is desired set this
 argument to \code{NULL}.}
-
-\item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
+      \item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
 the log files. Only relevant if \code{log_file} is not \code{NULL}.}
-
-\item{\code{log_top_value}}{\code{int} indicating the current iteration of the process.}
-
-\item{\code{log_top_total}}{\code{int} determining the maximal number of iterations.}
-
-\item{\code{log_top_message}}{\code{string} providing additional information of the process.}
-
-\item{\code{clean_text}}{\code{bool} If \code{TRUE} the text is modified to improve the quality of the following analysis:
+      \item{\code{log_top_value}}{\code{int} indicating the current iteration of the process.}
+      \item{\code{log_top_total}}{\code{int} determining the maximal number of iterations.}
+      \item{\code{log_top_message}}{\code{string} providing additional information of the process.}
+      \item{\code{clean_text}}{\code{bool} If \code{TRUE} the text is modified to improve the quality of the following analysis:
 \itemize{
 \item Some special symbols are removed.
 \item All spaces at the beginning and the end of a row are removed.
@@ -205,27 +194,28 @@ the log files. Only relevant if \code{log_file} is not \code{NULL}.}
 \item Line breaks within a paragraph are removed.
 \item Multiple line breaks are reduced to a single line break.
 }}
+      \item{\code{trace}}{\code{bool} If \code{TRUE} information on the progress is printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new raw texts to the data set.
+  }
+}
 
-\item{\code{trace}}{\code{bool} If \code{TRUE} information on the progress is printed to the console.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new raw texts to the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForText-add_from_files_xlsx"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForText-add_from_files_xlsx}{}}}
-\subsection{Method \code{add_from_files_xlsx()}}{
-Method for adding raw texts saved within .xlsx files to the data set. The method assumes that the
+\subsection{\code{LargeDataSetForText$add_from_files_xlsx()}}{
+  Method for adding raw texts saved within .xlsx files to the data set. The method assumes that the
 texts are saved in the rows and that the columns store the id and the raw texts in the columns. In addition, a
 column for the bibliography information and the license can be added. The column names for these rows must be
 specified with the following arguments. They must be the same for all .xlsx files in the chosen directory. Id
 and raw texts are mandatory, bibliographic, license, license's url, license's text, and source's url are
 optional. Additional columns are dropped.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$add_from_files_xlsx(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$add_from_files_xlsx(
   dir_path,
   trace = TRUE,
   id_column = "id",
@@ -240,101 +230,95 @@ optional. Additional columns are dropped.
   log_top_value = 0L,
   log_top_total = 1L,
   log_top_message = NA
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path to the directory where the files are stored.}
-
-\item{\code{trace}}{\code{bool} If \code{TRUE} prints information on the progress to the console.}
-
-\item{\code{id_column}}{\code{string} Name of the column storing the ids for the texts.}
-
-\item{\code{text_column}}{\code{string} Name of the column storing the raw text.}
-
-\item{\code{bib_entry_column}}{\code{string} Name of the column storing the bibliographic information of the texts.}
-
-\item{\code{license_column}}{\code{string} Name of the column storing information about the licenses.}
-
-\item{\code{url_license_column}}{\code{string} Name of the column storing information about the url to the license in the
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path to the directory where the files are stored.}
+      \item{\code{trace}}{\code{bool} If \code{TRUE} prints information on the progress to the console.}
+      \item{\code{id_column}}{\code{string} Name of the column storing the ids for the texts.}
+      \item{\code{text_column}}{\code{string} Name of the column storing the raw text.}
+      \item{\code{bib_entry_column}}{\code{string} Name of the column storing the bibliographic information of the texts.}
+      \item{\code{license_column}}{\code{string} Name of the column storing information about the licenses.}
+      \item{\code{url_license_column}}{\code{string} Name of the column storing information about the url to the license in the
 internet.}
-
-\item{\code{text_license_column}}{\code{string} Name of the column storing the license as text.}
-
-\item{\code{url_source_column}}{\code{string} Name of the column storing information about about the url to the source in the
+      \item{\code{text_license_column}}{\code{string} Name of the column storing the license as text.}
+      \item{\code{url_source_column}}{\code{string} Name of the column storing information about about the url to the source in the
 internet.}
-
-\item{\code{log_file}}{\code{string} Path to the file where the log should be saved. If no logging is desired set this
+      \item{\code{log_file}}{\code{string} Path to the file where the log should be saved. If no logging is desired set this
 argument to \code{NULL}.}
-
-\item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
+      \item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
 the log files. Only relevant if \code{log_file} is not \code{NULL}.}
+      \item{\code{log_top_value}}{\code{int} indicating the current iteration of the process.}
+      \item{\code{log_top_total}}{\code{int} determining the maximal number of iterations.}
+      \item{\code{log_top_message}}{\code{string} providing additional information of the process.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new raw texts to the data set.
+  }
+}
 
-\item{\code{log_top_value}}{\code{int} indicating the current iteration of the process.}
-
-\item{\code{log_top_total}}{\code{int} determining the maximal number of iterations.}
-
-\item{\code{log_top_message}}{\code{string} providing additional information of the process.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new raw texts to the data set.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForText-add_from_data.frame"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForText-add_from_data.frame}{}}}
-\subsection{Method \code{add_from_data.frame()}}{
-Method for adding raw texts from a \code{data.frame}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$add_from_data.frame(data_frame)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_frame}}{Object of class \code{data.frame} with at least the following columns "id","text","bib_entry",
+\subsection{\code{LargeDataSetForText$add_from_data.frame()}}{
+  Method for adding raw texts from a \code{data.frame}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$add_from_data.frame(data_frame)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data_frame}}{Object of class \code{data.frame} with at least the following columns "id","text","bib_entry",
 "license", "url_license", "text_license", and "url_source". If "id" and7or "text" is missing an error occurs.
 If the other columns are not present in the \code{data.frame} they are added with empty values(\code{NA}).
 Additional columns are dropped.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The method does not return anything. It adds new raw texts to the data set.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The method does not return anything. It adds new raw texts to the data set.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForText-get_private"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForText-get_private}{}}}
-\subsection{Method \code{get_private()}}{
-Method for requesting all private fields and methods. Used for loading and updating an object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$get_private()}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForText$get_private()}}{
+  Method for requesting all private fields and methods. Used for loading and updating an object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$get_private()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} with all private fields and methods.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} with all private fields and methods.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-LargeDataSetForText-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-LargeDataSetForText-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LargeDataSetForText$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{LargeDataSetForText$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{LargeDataSetForText$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

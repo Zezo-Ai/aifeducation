@@ -14,7 +14,7 @@ Objects of this class containing fields and methods used in several other classe
 This class is \strong{not} designed for a direct application and should only be used by developers.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEBaseModel}},
 \code{\link{AIFEMaster}},
 \code{\link{BaseModelCore}},
@@ -27,15 +27,15 @@ Other R6 Classes for Developers:
 }
 \concept{R6 Classes for Developers}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{aifeducation::AIFEBaseModel}} -> \code{\link[aifeducation:ModelsBasedOnTextEmbeddings]{aifeducation::ModelsBasedOnTextEmbeddings}} -> \code{ClassifiersBasedOnTextEmbeddings}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{AIFEBaseModel}} -> \code{\link[aifeducation:ModelsBasedOnTextEmbeddings]{ModelsBasedOnTextEmbeddings}} -> \code{ClassifiersBasedOnTextEmbeddings}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{feature_extractor}}{('list()')\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{feature_extractor}}{('list()')\cr
 List for storing information and objects about the feature_extractor.}
 
-\item{\code{reliability}}{('list()')\cr
+    \item{\code{reliability}}{('list()')\cr
 
 List for storing central reliability measures of the last training.
 \itemize{
@@ -60,231 +60,243 @@ line with the assumption of weak superiority.
 recall, and f1 for every fold.
 \item \code{reliability$standard_measures_mean}: \code{matrix} containing the mean measures for precision, recall, and f1.
 }}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-predict}{\code{ClassifiersBasedOnTextEmbeddings$predict()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-check_embedding_model}{\code{ClassifiersBasedOnTextEmbeddings$check_embedding_model()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-check_feature_extractor_object_type}{\code{ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-requires_compression}{\code{ClassifiersBasedOnTextEmbeddings$requires_compression()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-save}{\code{ClassifiersBasedOnTextEmbeddings$save()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-load_from_disk}{\code{ClassifiersBasedOnTextEmbeddings$load_from_disk()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-adjust_target_levels}{\code{ClassifiersBasedOnTextEmbeddings$adjust_target_levels()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-plot_training_history}{\code{ClassifiersBasedOnTextEmbeddings$plot_training_history()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-plot_coding_stream}{\code{ClassifiersBasedOnTextEmbeddings$plot_coding_stream()}}
-\item \href{#method-ClassifiersBasedOnTextEmbeddings-clone}{\code{ClassifiersBasedOnTextEmbeddings$clone()}}
+  \itemize{
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-predict}{\code{ClassifiersBasedOnTextEmbeddings$predict()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-check_embedding_model}{\code{ClassifiersBasedOnTextEmbeddings$check_embedding_model()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-check_feature_extractor_object_type}{\code{ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-requires_compression}{\code{ClassifiersBasedOnTextEmbeddings$requires_compression()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-save}{\code{ClassifiersBasedOnTextEmbeddings$save()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-load_from_disk}{\code{ClassifiersBasedOnTextEmbeddings$load_from_disk()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-adjust_target_levels}{\code{ClassifiersBasedOnTextEmbeddings$adjust_target_levels()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-plot_training_history}{\code{ClassifiersBasedOnTextEmbeddings$plot_training_history()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-plot_coding_stream}{\code{ClassifiersBasedOnTextEmbeddings$plot_coding_stream()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-print}{\code{ClassifiersBasedOnTextEmbeddings$print()}}
+    \item \href{#method-ClassifiersBasedOnTextEmbeddings-clone}{\code{ClassifiersBasedOnTextEmbeddings$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEBaseModel" data-id="count_parameter"><a href='../../aifeducation/html/AIFEBaseModel.html#method-AIFEBaseModel-count_parameter'><code>aifeducation::AIFEBaseModel$count_parameter()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model'><code>aifeducation::ModelsBasedOnTextEmbeddings$get_text_embedding_model()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model_name"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model_name'><code>aifeducation::ModelsBasedOnTextEmbeddings$get_text_embedding_model_name()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEBaseModel" data-id="count_parameter"><a href='../../aifeducation/html/AIFEBaseModel.html#method-AIFEBaseModel-count_parameter'><code>AIFEBaseModel$count_parameter()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_lr_statistics"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_lr_statistics'><code>ModelsBasedOnTextEmbeddings$get_lr_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model'><code>ModelsBasedOnTextEmbeddings$get_text_embedding_model()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model_name"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model_name'><code>ModelsBasedOnTextEmbeddings$get_text_embedding_model_name()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="plot_learning_rate"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-plot_learning_rate'><code>ModelsBasedOnTextEmbeddings$plot_learning_rate()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-predict"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-predict}{}}}
-\subsection{Method \code{predict()}}{
-Method for predicting new data with a trained neural net.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$predict(
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$predict()}}{
+  Method for predicting new data with a trained neural net.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$predict(
   newdata,
   batch_size = 32L,
   ml_trace = 1L
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{newdata}}{Object of class \link{TextEmbeddingModel} or \link{LargeDataSetForTextEmbeddings} for which predictions
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{newdata}}{Object of class \link{TextEmbeddingModel} or \link{LargeDataSetForTextEmbeddings} for which predictions
 should be made. In addition, this method allows to use objects of class \code{array} and
 \code{datasets.arrow_dataset.Dataset}. However, these should be used only by developers.}
-
-\item{\code{batch_size}}{\code{int} Size of batches.}
-
-\item{\code{ml_trace}}{\code{int} \code{ml_trace=0} does not print any information on the process from the machine learning
+      \item{\code{batch_size}}{\code{int} Size of batches.}
+      \item{\code{ml_trace}}{\code{int} \code{ml_trace=0} does not print any information on the process from the machine learning
 framework.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a \code{data.frame} containing the predictions and the probabilities of the different labels for each
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{data.frame} containing the predictions and the probabilities of the different labels for each
 case.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-check_embedding_model"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-check_embedding_model}{}}}
-\subsection{Method \code{check_embedding_model()}}{
-Method for checking if the provided text embeddings are created with the same \link{TextEmbeddingModel}
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$check_embedding_model()}}{
+  Method for checking if the provided text embeddings are created with the same \link{TextEmbeddingModel}
 as the classifier.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$check_embedding_model(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$check_embedding_model(
   text_embeddings,
   require_compressed = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{text_embeddings}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
-
-\item{\code{require_compressed}}{\code{TRUE} if a compressed version of the embeddings are necessary. Compressed embeddings
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_embeddings}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
+      \item{\code{require_compressed}}{\code{TRUE} if a compressed version of the embeddings are necessary. Compressed embeddings
 are created by an object of class \link{TEFeatureExtractor}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{TRUE} if the underlying \link{TextEmbeddingModel} is the same. \code{FALSE} if the models differ.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if the underlying \link{TextEmbeddingModel} is the same. \code{FALSE} if the models differ.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-check_feature_extractor_object_type"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-check_feature_extractor_object_type}{}}}
-\subsection{Method \code{check_feature_extractor_object_type()}}{
-Method for checking an object of class \link{TEFeatureExtractor}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type(
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type()}}{
+  Method for checking an object of class \link{TEFeatureExtractor}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type(
   feature_extractor
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{feature_extractor}}{Object of class \link{TEFeatureExtractor}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-This method does nothing returns. It raises an error if
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{feature_extractor}}{Object of class \link{TEFeatureExtractor}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    This method does nothing returns. It raises an error if
 \itemize{
 \item the object is \code{NULL}
 \item the object does not rely on the same machine learning framework as the classifier
 \item the object is not trained.
 }
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-requires_compression"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-requires_compression}{}}}
-\subsection{Method \code{requires_compression()}}{
-Method for checking if provided text embeddings must be compressed via a \link{TEFeatureExtractor} before
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$requires_compression()}}{
+  Method for checking if provided text embeddings must be compressed via a \link{TEFeatureExtractor} before
 processing.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$requires_compression(text_embeddings)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$requires_compression(text_embeddings)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_embeddings}}{Object of class \link{EmbeddedText}, \link{LargeDataSetForTextEmbeddings}, \code{array} or
+\code{datasets.arrow_dataset.Dataset}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Return \code{TRUE} if a compression is necessary and \code{FALSE} if not.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{text_embeddings}}{Object of class \link{EmbeddedText}, \link{LargeDataSetForTextEmbeddings}, \code{array} or
-\code{datasets.arrow_dataset.Dataset}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Return \code{TRUE} if a compression is necessary and \code{FALSE} if not.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-save"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-save}{}}}
-\subsection{Method \code{save()}}{
-Method for saving a model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$save(dir_path, folder_name)}\if{html}{\out{</div>}}
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$save()}}{
+  Method for saving a model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$save(dir_path, folder_name)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{\code{string} Path of the directory where the model should be saved.}
+      \item{\code{folder_name}}{\code{string} Name of the folder that should be created within the directory.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It saves the model to disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{\code{string} Path of the directory where the model should be saved.}
-
-\item{\code{folder_name}}{\code{string} Name of the folder that should be created within the directory.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It saves the model to disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-load_from_disk"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-load_from_disk}{}}}
-\subsection{Method \code{load_from_disk()}}{
-loads an object from disk and updates the object to the current version of the package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$load_from_disk(dir_path)}\if{html}{\out{</div>}}
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$load_from_disk()}}{
+  loads an object from disk and updates the object to the current version of the package.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$load_from_disk(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the object set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It loads an object from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the object set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It loads an object from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-adjust_target_levels"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-adjust_target_levels}{}}}
-\subsection{Method \code{adjust_target_levels()}}{
-Method transforms the levels of a factor into numbers corresponding
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$adjust_target_levels()}}{
+  Method transforms the levels of a factor into numbers corresponding
 to the models definition.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$adjust_target_levels(data_targets)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$adjust_target_levels(data_targets)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data_targets}}{\code{factor} containing the labels for cases stored in embeddings. Factor must be
+named and has to use the same names as used in in the embeddings.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method returns a \code{factor} containing the numerical representation of
+categories/classes.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_targets}}{\code{factor} containing the labels for cases stored in embeddings. Factor must be
-named and has to use the same names as used in in the embeddings.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method returns a \code{factor} containing the numerical representation of
-categories/classes.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-plot_training_history"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-plot_training_history}{}}}
-\subsection{Method \code{plot_training_history()}}{
-Method for requesting a plot of the training history.
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$plot_training_history()}}{
+  Method for requesting a plot of the training history.
 This method requires the \emph{R} package 'ggplot2' to work.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$plot_training_history(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$plot_training_history(
   final_training = FALSE,
   pl_step = NULL,
   measure = "loss",
@@ -296,93 +308,111 @@ This method requires the \emph{R} package 'ggplot2' to work.
   y_max = NULL,
   add_min_max = TRUE,
   text_size = 10L
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{final_training}}{\code{bool} If \code{FALSE} the values of the performance estimation are used. If \code{TRUE} only the epochs of the final training are used.}
-
-\item{\code{pl_step}}{\code{int} Number of the step during pseudo labeling to plot. Only relevant if the model was trained
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{final_training}}{\code{bool} If \code{FALSE} the values of the performance estimation are used. If \code{TRUE} only the epochs of the final training are used.}
+      \item{\code{pl_step}}{\code{int} Number of the step during pseudo labeling to plot. Only relevant if the model was trained
 with active pseudo labeling.}
-
-\item{\code{measure}}{\code{string} Measure to plot. Allowed values:
+      \item{\code{measure}}{\code{string} Measure to plot. Allowed values:
 \itemize{
 \item \code{"avg_iota"} = Average Iota
 \item \code{"loss"} = Loss
 \item \code{"accuracy"} = Accuracy
 \item \code{"balanced_accuracy"} = Balanced Accuracy
 }}
+      \item{\code{ind_best_model}}{\code{bool} If \code{TRUE} the plot indicates the best states of the model according to the chosen measure.}
+      \item{\code{ind_selected_model}}{\code{bool} If \code{TRUE} the plot indicates the states of the model which are used after training. These are the final states of the fold or the final state of the last training loop.}
+      \item{\code{x_min}}{\code{int} Minimal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
 
-\item{\code{ind_best_model}}{\code{bool} If \code{TRUE} the plot indicates the best states of the model according to the chosen measure.}
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{x_max}}{\code{int} Maximal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
 
-\item{\code{ind_selected_model}}{\code{bool} If \code{TRUE} the plot indicates the states of the model which are used after training. These are the final states of the fold or the final state of the last training loop.}
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{y_min}}{\code{int} Minimal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
 
-\item{\code{x_min}}{\code{int} Minimal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{y_max}}{\code{int} Maximal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
 
-\item{\code{x_max}}{\code{int} Maximal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{add_min_max}}{\code{bool} If \code{TRUE} the minimal and maximal values during performance estimation are port of the plot. If \code{FALSE} only the mean values are shown. Parameter is ignored if \code{final_training=TRUE}.}
+      \item{\code{text_size}}{\code{int} Size of text elements. Allowed values:
 
-\item{\code{y_min}}{\code{int} Minimal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{y_max}}{\code{int} Maximal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{add_min_max}}{\code{bool} If \code{TRUE} the minimal and maximal values during performance estimation are port of the plot. If \code{FALSE} only the mean values are shown. Parameter is ignored if \code{final_training=TRUE}.}
-
-\item{\code{text_size}}{\code{int} Size of text elements. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a plot of class \code{ggplot} visualizing the training process.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a plot of class \code{ggplot} visualizing the training process.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-plot_coding_stream"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-plot_coding_stream}{}}}
-\subsection{Method \code{plot_coding_stream()}}{
-Method for requesting a plot the coding stream.
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$plot_coding_stream()}}{
+  Method for requesting a plot the coding stream.
 The plot shows how the cases of different categories/classes are
 assigned to a the available classes/categories. The visualization
 is helpful for analyzing the consequences of coding errors.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$plot_coding_stream(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$plot_coding_stream(
   label_categories_size = 3L,
   key_size = 0.5,
   text_size = 10L
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{label_categories_size}}{\code{double} determining the size of the label for each true and assigned category within the plot.}
+      \item{\code{key_size}}{\code{double} determining the size of the legend.}
+      \item{\code{text_size}}{\code{double} determining the size of the text within the legend.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a plot of class \code{ggplot} visualizing the training process.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{label_categories_size}}{\code{double} determining the size of the label for each true and assigned category within the plot.}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-print"></a>}}
+\if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-print}{}}}
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
+}
 
-\item{\code{key_size}}{\code{double} determining the size of the legend.}
-
-\item{\code{text_size}}{\code{double} determining the size of the text within the legend.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a plot of class \code{ggplot} visualizing the training process.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ClassifiersBasedOnTextEmbeddings-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-ClassifiersBasedOnTextEmbeddings-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ClassifiersBasedOnTextEmbeddings$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{ClassifiersBasedOnTextEmbeddings$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ClassifiersBasedOnTextEmbeddings$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

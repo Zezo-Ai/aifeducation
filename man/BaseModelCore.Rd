@@ -10,7 +10,7 @@ Does return a new object of this class.
 This class contains all methods shared by all BaseModels.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEBaseModel}},
 \code{\link{AIFEMaster}},
 \code{\link{ClassifiersBasedOnTextEmbeddings}},
@@ -23,90 +23,94 @@ Other R6 Classes for Developers:
 }
 \concept{R6 Classes for Developers}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{aifeducation::AIFEBaseModel}} -> \code{BaseModelCore}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{AIFEBaseModel}} -> \code{BaseModelCore}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{Tokenizer}}{('TokenizerBase')\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{Tokenizer}}{('TokenizerBase')\cr
 Objects of class \code{TokenizerBase}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-BaseModelCore-create_from_hf}{\code{BaseModelCore$create_from_hf()}}
-\item \href{#method-BaseModelCore-train}{\code{BaseModelCore$train()}}
-\item \href{#method-BaseModelCore-count_parameter}{\code{BaseModelCore$count_parameter()}}
-\item \href{#method-BaseModelCore-plot_training_history}{\code{BaseModelCore$plot_training_history()}}
-\item \href{#method-BaseModelCore-get_special_tokens}{\code{BaseModelCore$get_special_tokens()}}
-\item \href{#method-BaseModelCore-get_tokenizer_statistics}{\code{BaseModelCore$get_tokenizer_statistics()}}
-\item \href{#method-BaseModelCore-fill_mask}{\code{BaseModelCore$fill_mask()}}
-\item \href{#method-BaseModelCore-save}{\code{BaseModelCore$save()}}
-\item \href{#method-BaseModelCore-load_from_disk}{\code{BaseModelCore$load_from_disk()}}
-\item \href{#method-BaseModelCore-get_model}{\code{BaseModelCore$get_model()}}
-\item \href{#method-BaseModelCore-get_model_type}{\code{BaseModelCore$get_model_type()}}
-\item \href{#method-BaseModelCore-get_final_size}{\code{BaseModelCore$get_final_size()}}
-\item \href{#method-BaseModelCore-get_n_layers}{\code{BaseModelCore$get_n_layers()}}
-\item \href{#method-BaseModelCore-get_flops_estimates}{\code{BaseModelCore$get_flops_estimates()}}
-\item \href{#method-BaseModelCore-set_publication_info}{\code{BaseModelCore$set_publication_info()}}
-\item \href{#method-BaseModelCore-estimate_sustainability_inference_fill_mask}{\code{BaseModelCore$estimate_sustainability_inference_fill_mask()}}
-\item \href{#method-BaseModelCore-calc_flops_architecture_based}{\code{BaseModelCore$calc_flops_architecture_based()}}
-\item \href{#method-BaseModelCore-clone}{\code{BaseModelCore$clone()}}
+  \itemize{
+    \item \href{#method-BaseModelCore-create_from_hf}{\code{BaseModelCore$create_from_hf()}}
+    \item \href{#method-BaseModelCore-train}{\code{BaseModelCore$train()}}
+    \item \href{#method-BaseModelCore-count_parameter}{\code{BaseModelCore$count_parameter()}}
+    \item \href{#method-BaseModelCore-plot_training_history}{\code{BaseModelCore$plot_training_history()}}
+    \item \href{#method-BaseModelCore-get_special_tokens}{\code{BaseModelCore$get_special_tokens()}}
+    \item \href{#method-BaseModelCore-get_tokenizer_statistics}{\code{BaseModelCore$get_tokenizer_statistics()}}
+    \item \href{#method-BaseModelCore-fill_mask}{\code{BaseModelCore$fill_mask()}}
+    \item \href{#method-BaseModelCore-save}{\code{BaseModelCore$save()}}
+    \item \href{#method-BaseModelCore-load_from_disk}{\code{BaseModelCore$load_from_disk()}}
+    \item \href{#method-BaseModelCore-get_model}{\code{BaseModelCore$get_model()}}
+    \item \href{#method-BaseModelCore-get_model_type}{\code{BaseModelCore$get_model_type()}}
+    \item \href{#method-BaseModelCore-get_final_size}{\code{BaseModelCore$get_final_size()}}
+    \item \href{#method-BaseModelCore-get_n_layers}{\code{BaseModelCore$get_n_layers()}}
+    \item \href{#method-BaseModelCore-get_max_seq_len}{\code{BaseModelCore$get_max_seq_len()}}
+    \item \href{#method-BaseModelCore-get_flops_estimates}{\code{BaseModelCore$get_flops_estimates()}}
+    \item \href{#method-BaseModelCore-set_publication_info}{\code{BaseModelCore$set_publication_info()}}
+    \item \href{#method-BaseModelCore-estimate_sustainability_inference_fill_mask}{\code{BaseModelCore$estimate_sustainability_inference_fill_mask()}}
+    \item \href{#method-BaseModelCore-calc_flops_architecture_based}{\code{BaseModelCore$calc_flops_architecture_based()}}
+    \item \href{#method-BaseModelCore-print}{\code{BaseModelCore$print()}}
+    \item \href{#method-BaseModelCore-clone}{\code{BaseModelCore$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-create_from_hf"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-create_from_hf}{}}}
-\subsection{Method \code{create_from_hf()}}{
-Creates BaseModel from a pretrained model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$create_from_hf(model_dir = NULL, tokenizer_dir = NULL)}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$create_from_hf()}}{
+  Creates BaseModel from a pretrained model
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$create_from_hf(model_dir = NULL, tokenizer_dir = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{model_dir}}{Path where the model is stored.}
+      \item{\code{tokenizer_dir}}{\code{string} Path to the directory where the tokenizer is saved. Allowed values:
+
+any}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Does return a new object of this class.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{model_dir}}{Path where the model is stored.}
-
-\item{\code{tokenizer_dir}}{\code{string} Path to the directory where the tokenizer is saved. Allowed values: any}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Does return a new object of this class.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-train"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-train}{}}}
-\subsection{Method \code{train()}}{
-Traines a BaseModel
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$train(
+\subsection{\code{BaseModelCore$train()}}{
+  Traines a BaseModel
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$train(
   text_dataset,
   p_mask = 0.15,
   whole_word = TRUE,
@@ -126,314 +130,379 @@ Traines a BaseModel
   pytorch_trace = 1L,
   log_dir = NULL,
   log_write_interval = 2L
-)}\if{html}{\out{</div>}}
-}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
+      \item{\code{p_mask}}{\code{double} Ratio that determines the number of tokens used for masking. Allowed values:
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
-
-\item{\code{p_mask}}{\code{double} Ratio that determines the number of tokens used for masking. Allowed values: \ifelse{latex}{$0.05 <= x <= 0.6$}{\ifelse{html}{\eqn{0.05 <= x <= 0.6}}{`0.05 <= x <= 0.6`}}}
-
-\item{\code{whole_word}}{\code{bool} * \code{TRUE}: whole word masking should be applied. Only relevant if a \code{WordPieceTokenizer} is used.
+\ifelse{latex}{$0.05 <= x <= 0.6$}{\ifelse{html}{\eqn{0.05 <= x <= 0.6}}{`0.05 <= x <= 0.6`}}}
+      \item{\code{whole_word}}{\code{bool} * \code{TRUE}: whole word masking should be applied. Only relevant if a \code{WordPieceTokenizer} is used.
 \itemize{
 \item \code{FALSE}: token masking is used.
 }}
-
-\item{\code{val_size}}{\code{double} between 0 and 1, indicating the proportion of cases which should be
+      \item{\code{val_size}}{\code{double} between 0 and 1, indicating the proportion of cases which should be
 used for the validation sample during the estimation of the model.
-The remaining cases are part of the training data. Allowed values: \ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
+The remaining cases are part of the training data. Allowed values:
 
-\item{\code{n_epoch}}{\code{int} Number of training epochs. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
+      \item{\code{n_epoch}}{\code{int} Number of training epochs. Allowed values:
 
-\item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values:
 
-\item{\code{max_sequence_length}}{\code{int} Maximal number of tokens for every sequence. Allowed values: \ifelse{latex}{$20 <= x $}{\ifelse{html}{\eqn{20 <= x }}{`20 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{max_sequence_length}}{\code{int} Maximal number of tokens for every sequence. Allowed values:
 
-\item{\code{full_sequences_only}}{\code{bool} \code{TRUE} for using only chunks with a sequence length equal to \code{chunk_size}.}
+\ifelse{latex}{$20 <= x $}{\ifelse{html}{\eqn{20 <= x }}{`20 <= x `}}}
+      \item{\code{full_sequences_only}}{\code{bool} \code{TRUE} for using only chunks with a sequence length equal to \code{chunk_size}.}
+      \item{\code{min_seq_len}}{\code{int} Only relevant if \code{full_sequences_only = FALSE}. Value determines the minimal sequence length included in
+training process.  Allowed values:
 
-\item{\code{min_seq_len}}{\code{int} Only relevant if \code{full_sequences_only = FALSE}. Value determines the minimal sequence length included in
-training process.  Allowed values: \ifelse{latex}{$10 <= x $}{\ifelse{html}{\eqn{10 <= x }}{`10 <= x `}}}
+\ifelse{latex}{$10 <= x $}{\ifelse{html}{\eqn{10 <= x }}{`10 <= x `}}}
+      \item{\code{learning_rate}}{\code{double} Initial learning rate for the training. Sets the maximal learning rate.
+Set this value to \code{0.0} requests an automatic search for a good learning rate. Allowed values:
 
-\item{\code{learning_rate}}{\code{double} Initial learning rate for the training. Sets the maximal learning rate. Allowed values: \ifelse{latex}{$0 < x <= 1$}{\ifelse{html}{\eqn{0 < x <= 1}}{`0 < x <= 1`}}}
-
-\item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
-
-\item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
+\ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+      \item{\code{sustain_track}}{\code{bool} If \code{TRUE} energy consumption is tracked during training via the python library 'codecarbon'.}
+      \item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
 sustainability should be tracked. A list can be found on Wikipedia:
-\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
+\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values:
 
-\item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values: any}
+any}
+      \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values:
 
-\item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+any}
+      \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values:
 
-\item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values: 'debug', 'info', 'warning', 'error', 'critical'}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values:
+\itemize{
+\item 'debug'
+\item 'info'
+\item 'warning'
+\item 'error'
+\item 'critical'
+}}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+      \item{\code{pytorch_trace}}{\code{int} \code{ml_trace=0} does not print any information about the training process from pytorch on the console. Allowed values:
 
-\item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+\ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+      \item{\code{log_dir}}{\code{string} Path to the directory where the log files should be saved.
+If no logging is desired set this argument to \code{NULL}. Allowed values:
 
-\item{\code{pytorch_trace}}{\code{int} \code{ml_trace=0} does not print any information about the training process from pytorch on the console. Allowed values: \ifelse{latex}{$0 <= x <= 1$}{\ifelse{html}{\eqn{0 <= x <= 1}}{`0 <= x <= 1`}}}
+any}
+      \item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
+the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed values:
 
-\item{\code{log_dir}}{\code{string} Path to the directory where the log files should be saved.
-If no logging is desired set this argument to \code{NULL}. Allowed values: any}
-
-\item{\code{log_write_interval}}{\code{int} Time in seconds determining the interval in which the logger should try to update
-the log files. Only relevant if \code{log_dir} is not \code{NULL}. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Does nothing return.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Does nothing return.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-count_parameter"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-count_parameter}{}}}
-\subsection{Method \code{count_parameter()}}{
-Method for counting the trainable parameters of a model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$count_parameter()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$count_parameter()}}{
+  Method for counting the trainable parameters of a model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$count_parameter()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the number of trainable parameters of the model.
+  }
 }
 
-\subsection{Returns}{
-Returns the number of trainable parameters of the model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-plot_training_history"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-plot_training_history}{}}}
-\subsection{Method \code{plot_training_history()}}{
-Method for requesting a plot of the training history.
+\subsection{\code{BaseModelCore$plot_training_history()}}{
+  Method for requesting a plot of the training history.
 This method requires the \emph{R} package 'ggplot2' to work.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$plot_training_history(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$plot_training_history(
   x_min = NULL,
   x_max = NULL,
   y_min = NULL,
   y_max = NULL,
   ind_best_model = TRUE,
   text_size = 10L
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x_min}}{\code{int} Minimal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{x_max}}{\code{int} Maximal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{y_min}}{\code{int} Minimal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{y_max}}{\code{int} Maximal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values:
+
+\ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
+      \item{\code{ind_best_model}}{\code{bool} If \code{TRUE} the plot indicates the best states of the model according to the chosen measure.}
+      \item{\code{text_size}}{\code{int} Size of text elements. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a plot of class \code{ggplot} visualizing the training process.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x_min}}{\code{int} Minimal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{x_max}}{\code{int} Maximal value for x-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{y_min}}{\code{int} Minimal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{y_max}}{\code{int} Maximal value for y-axis. Set to \code{NULL} for an automatic adjustment. Allowed values: \ifelse{latex}{$ x $}{\ifelse{html}{\eqn{ x }}{` x `}}}
-
-\item{\code{ind_best_model}}{\code{bool} If \code{TRUE} the plot indicates the best states of the model according to the chosen measure.}
-
-\item{\code{text_size}}{\code{int} Size of text elements. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a plot of class \code{ggplot} visualizing the training process.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_special_tokens"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_special_tokens}{}}}
-\subsection{Method \code{get_special_tokens()}}{
-Method for receiving the special tokens of the model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_special_tokens()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_special_tokens()}}{
+  Method for receiving the special tokens of the model
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_special_tokens()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{matrix} containing the special tokens in the rows
+and their type, token, and id in the columns.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{matrix} containing the special tokens in the rows
-and their type, token, and id in the columns.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_tokenizer_statistics"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_tokenizer_statistics}{}}}
-\subsection{Method \code{get_tokenizer_statistics()}}{
-Tokenizer statistics
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_tokenizer_statistics()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_tokenizer_statistics()}}{
+  Tokenizer statistics
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_tokenizer_statistics()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{data.frame} containing the tokenizer's statistics.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{data.frame} containing the tokenizer's statistics.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-fill_mask"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-fill_mask}{}}}
-\subsection{Method \code{fill_mask()}}{
-Method for calculating tokens behind mask tokens.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$fill_mask(masked_text, n_solutions = 5L)}\if{html}{\out{</div>}}
-}
+\subsection{\code{BaseModelCore$fill_mask()}}{
+  Method for calculating tokens behind mask tokens.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$fill_mask(masked_text, n_solutions = 5L)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{masked_text}}{\code{string} Text with mask tokens. Allowed values:
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{masked_text}}{\code{string} Text with mask tokens. Allowed values: any}
+any}
+      \item{\code{n_solutions}}{\code{int} Number of solutions the model should predict. Allowed values:
 
-\item{\code{n_solutions}}{\code{int} Number of solutions the model should predict. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a \code{list} containing a \code{data.frame} for every
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} containing a \code{data.frame} for every
 mask. The \code{data.frame} contains the solutions in the rows and reports
 the score, token id, and token string in the columns.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-save"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-save}{}}}
-\subsection{Method \code{save()}}{
-Method for saving a model on disk.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$save(dir_path, folder_name)}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$save()}}{
+  Method for saving a model on disk.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$save(dir_path, folder_name)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path to the directory where to save the object.}
+      \item{\code{folder_name}}{\code{string} Name of the folder where the model should be saved. Allowed values:
+
+any}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does nothing return. It is used to save an object on disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path to the directory where to save the object.}
-
-\item{\code{folder_name}}{\code{string} Name of the folder where the model should be saved. Allowed values: any}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does nothing return. It is used to save an object on disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-load_from_disk"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-load_from_disk}{}}}
-\subsection{Method \code{load_from_disk()}}{
-Loads an object from disk
+\subsection{\code{BaseModelCore$load_from_disk()}}{
+  Loads an object from disk
 and updates the object to the current version of the package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$load_from_disk(dir_path)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$load_from_disk(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the object set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does nothin return. It loads an object from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the object set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does nothin return. It loads an object from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_model"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_model}{}}}
-\subsection{Method \code{get_model()}}{
-Get 'PyTorch' model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_model()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_model()}}{
+  Get 'PyTorch' model
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_model()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the underlying 'PyTorch' model.
+  }
 }
 
-\subsection{Returns}{
-Returns the underlying 'PyTorch' model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_model_type"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_model_type}{}}}
-\subsection{Method \code{get_model_type()}}{
-Type of the underlying model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_model_type()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_model_type()}}{
+  Type of the underlying model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_model_type()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{string} describing the model's architecture.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{string} describing the model's architecture.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_final_size"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_final_size}{}}}
-\subsection{Method \code{get_final_size()}}{
-Size of the final layer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_final_size()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_final_size()}}{
+  Size of the final layer.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_final_size()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of dimensions of the last
+hidden layer.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of dimensions of the last
-hidden layer.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_n_layers"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_n_layers}{}}}
-\subsection{Method \code{get_n_layers()}}{
-Number of layers.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_n_layers()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_n_layers()}}{
+  Number of layers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_n_layers()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of layers available for
+embedding.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of layers available for
-embedding.
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BaseModelCore-get_max_seq_len"></a>}}
+\if{latex}{\out{\hypertarget{method-BaseModelCore-get_max_seq_len}{}}}
+\subsection{\code{BaseModelCore$get_max_seq_len()}}{
+  Maximum sequence length.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_max_seq_len()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the maximum sequence length.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-get_flops_estimates"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-get_flops_estimates}{}}}
-\subsection{Method \code{get_flops_estimates()}}{
-Flop estimates
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$get_flops_estimates()}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$get_flops_estimates()}}{
+  Flop estimates
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$get_flops_estimates()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{data.frame} containing statistics about the flops.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{data.frame} containing statistics about the flops.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-set_publication_info"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-set_publication_info}{}}}
-\subsection{Method \code{set_publication_info()}}{
-Method for setting the bibliographic information of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$set_publication_info(type, authors, citation, url = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{type}}{\code{string} Type of information which should be changed/added.
+\subsection{\code{BaseModelCore$set_publication_info()}}{
+  Method for setting the bibliographic information of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$set_publication_info(type, authors, citation, url = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{type}}{\code{string} Type of information which should be changed/added.
 \code{developer}, and \code{modifier} are possible.}
-
-\item{\code{authors}}{List of people.}
-
-\item{\code{citation}}{\code{string} Citation in free text.}
-
-\item{\code{url}}{\code{string} Corresponding URL if applicable.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Function does not return a value. It is used to set the private
+      \item{\code{authors}}{List of people.}
+      \item{\code{citation}}{\code{string} Citation in free text.}
+      \item{\code{url}}{\code{string} Corresponding URL if applicable.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Function does not return a value. It is used to set the private
 members for publication information of the model.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-estimate_sustainability_inference_fill_mask"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-estimate_sustainability_inference_fill_mask}{}}}
-\subsection{Method \code{estimate_sustainability_inference_fill_mask()}}{
-Calculates the energy consumption for inference of the given task.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$estimate_sustainability_inference_fill_mask(
+\subsection{\code{BaseModelCore$estimate_sustainability_inference_fill_mask()}}{
+  Calculates the energy consumption for inference of the given task.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$estimate_sustainability_inference_fill_mask(
   text_dataset = NULL,
   n_samples = NULL,
   sustain_iso_code = NULL,
@@ -441,75 +510,108 @@ Calculates the energy consumption for inference of the given task.
   sustain_interval = 15L,
   sustain_log_level = "warning",
   trace = TRUE
-)}\if{html}{\out{</div>}}
-}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
+      \item{\code{n_samples}}{\code{int} Number of samples. Allowed values:
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{text_dataset}}{\code{LargeDataSetForText} \link{LargeDataSetForText} Object storing textual data.}
-
-\item{\code{n_samples}}{\code{int} Number of samples. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-
-\item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{sustain_iso_code}}{\code{string} ISO code (Alpha-3-Code) for the country. This variable must be set if
 sustainability should be tracked. A list can be found on Wikipedia:
-\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values: any}
+\url{https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes}. Allowed values:
 
-\item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
-codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values: any}
+any}
+      \item{\code{sustain_region}}{\code{string} Region within a country. Only available for USA and Canada See the documentation of
+codecarbon for more information. \url{https://docs.codecarbon.io/latest/} Allowed values:
 
-\item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+any}
+      \item{\code{sustain_interval}}{\code{int} Interval in seconds for measuring power usage. Allowed values:
 
-\item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values: 'debug', 'info', 'warning', 'error', 'critical'}
-
-\item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns nothing. Method saves the statistics internally.
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{sustain_log_level}}{\code{string} Level for printing information to the console. Allowed values:
+\itemize{
+\item 'debug'
+\item 'info'
+\item 'warning'
+\item 'error'
+\item 'critical'
+}}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns nothing. Method saves the statistics internally.
 The statistics can be accessed with the method \code{get_sustainability_data("inference")}
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-calc_flops_architecture_based"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-calc_flops_architecture_based}{}}}
-\subsection{Method \code{calc_flops_architecture_based()}}{
-Calculates FLOPS based on model's architecture.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$calc_flops_architecture_based(batch_size, n_batches, n_epoch)}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$calc_flops_architecture_based()}}{
+  Calculates FLOPS based on model's architecture.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$calc_flops_architecture_based(batch_size, n_batches, n_epoch)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{n_batches}}{\code{int} Number of batches. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{n_epoch}}{\code{int} Number of training epochs. Allowed values:
+
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{data.frame} storing the estimates.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{batch_size}}{\code{int} Size of the batches for training. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BaseModelCore-print"></a>}}
+\if{latex}{\out{\hypertarget{method-BaseModelCore-print}{}}}
+\subsection{\code{BaseModelCore$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
+}
 
-\item{\code{n_batches}}{\code{int} Number of batches. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-
-\item{\code{n_epoch}}{\code{int} Number of training epochs. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a \code{data.frame} storing the estimates.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BaseModelCore-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-BaseModelCore-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BaseModelCore$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{BaseModelCore$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BaseModelCore$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

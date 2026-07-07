@@ -209,12 +209,12 @@ DataManagerClassifier <- R6::R6Class(
       if (!is.null(self$datasets)) {
         if (!is.null(self$datasets$data_labeled)) {
           self$datasets$data_labeled$set_format("np")
-          length_labeled <- extract_column_from_py_dataset(self$datasets$data_labeled,"length")
-          labels_labeled <- extract_column_from_py_dataset(self$datasets$data_labeled,"labels")
+          length_labeled <- extract_column_from_py_dataset(self$datasets$data_labeled, "length")
+          labels_labeled <- extract_column_from_py_dataset(self$datasets$data_labeled, "labels")
 
           if (!is.null(self$datasets$data_unlabeled)) {
             self$datasets$data_unlabeled$set_format("np")
-            length_unlabeled <- extract_column_from_py_dataset(self$datasets$data_unlabeled,"length")
+            length_unlabeled <- extract_column_from_py_dataset(self$datasets$data_unlabeled, "length")
             labels_unlabeled <- rep(NA, times = length(length_unlabeled))
           } else {
             length_unlabeled <- NULL
@@ -379,15 +379,15 @@ DataManagerClassifier <- R6::R6Class(
       # Create Synthetic Cases
       tmp_data$set_format("np")
       syn_cases <- get_synthetic_cases_from_matrix(
-        matrix_form = extract_column_from_py_dataset(tmp_data,"matrix_form"),
-        target = extract_column_from_py_dataset(tmp_data,"labels"),
-        sequence_length = extract_column_from_py_dataset(tmp_data,"length"),
+        matrix_form = extract_column_from_py_dataset(tmp_data, "matrix_form"),
+        target = extract_column_from_py_dataset(tmp_data, "labels"),
+        sequence_length = extract_column_from_py_dataset(tmp_data, "length"),
         method = self$config$sc$methods,
         min_k = self$config$sc$min_k,
         max_k = self$config$sc$max_k,
         times = self$config$times,
         features = self$config$features,
-        pad_value=self$config$pad_value
+        pad_value = self$config$pad_value
       )
 
       # Unload cluster for parallel processing
@@ -523,7 +523,7 @@ DataManagerClassifier <- R6::R6Class(
       # Prepare classes for join
       class_vector <- vector(length = n_final_cases)
       class_vector[] <- NA
-      names(class_vector) <- extract_column_from_py_dataset(data_set_embeddings,"id")
+      names(class_vector) <- extract_column_from_py_dataset(data_set_embeddings, "id")
 
       # Convert labels
       data_targets <- na.omit(data_targets)
@@ -538,7 +538,7 @@ DataManagerClassifier <- R6::R6Class(
       class_vector[relevant_target_names] <- data_targets[relevant_target_names]
 
       # Sort class vector according to the input ids
-      class_vector <- class_vector[extract_column_from_py_dataset(data_set_embeddings,"id")]
+      class_vector <- class_vector[extract_column_from_py_dataset(data_set_embeddings, "id")]
 
       # Get indices for labeled-unlabeled split
       indices_unlabeled <- which(is.na(class_vector)) - 1L
@@ -569,7 +569,7 @@ DataManagerClassifier <- R6::R6Class(
     #--------------------------------------------------------------------------
     get_all_labels = function() {
       self$datasets$data_labeled$set_format("np")
-      return(extract_column_from_py_dataset(self$datasets$data_labeled,"labels"))
+      return(extract_column_from_py_dataset(self$datasets$data_labeled, "labels"))
     },
     #-------------------------------------------------------------------------
     check_and_calculate_number_folds = function(folds) {
@@ -577,22 +577,34 @@ DataManagerClassifier <- R6::R6Class(
       freq_cat <- table(sample_target)
       min_freq <- min(freq_cat)
       if (min_freq < 6L) {
-        stop("Frequency of the smallest category respective class is", min_freq, ". At least
-                   6 cases are necessary. Consider to remove this category/class.")
+        stop(
+          "Frequency of the smallest category respective class is", min_freq, ". ",
+          "At least 6 cases are necessary. Consider to remove this category/class."
+        )
       } else {
-        if (min_freq / folds < 3L) {
-          fin_k_folds <- floor(min_freq / 3L)
-          warning("Frequency of the smallest category respective class is not sufficent to ensure
-                    at least 3 cases per fold. Adjusting number of folds from ", folds, "to", fin_k_folds, ".")
+        if (min_freq / folds < 4L) {
+          fin_k_folds <- floor(min_freq / 4)
+          if (fin_k_folds == 0L) {
+            stop(
+              "Frequency of the smallest category/label is to low. Please check your data. ",
+              "Consider to remove all categories/labels with a very low absolute frequency."
+            )
+          } else {
+            message(
+              "Frequency of the smallest category/label is not sufficent to ensure ",
+              "at least 4 cases per fold. Adjusting number of folds from ",
+              folds, " to ", fin_k_folds, "."
+            )
+          }
         } else {
           fin_k_folds <- folds
         }
       }
       return(fin_k_folds)
     },
+    #--------------------------------------------------------------------------
     add_matrix_form = function(dataset) {
       if (!is.null(dataset)) {
-
         dataset <- dataset$map(py$map_input_to_matrix_form,
           fn_kwargs = list(
             times = as.integer(self$config$times),
@@ -609,7 +621,6 @@ DataManagerClassifier <- R6::R6Class(
     },
     add_one_hot_encoding = function(dataset) {
       if (!is.null(dataset)) {
-
         dataset <- dataset$map(py$map_labels_to_one_hot,
           fn_kwargs = reticulate::dict(list(num_classes = as.integer(self$config$n_classes))),
           load_from_cache_file = FALSE,
@@ -622,23 +633,114 @@ DataManagerClassifier <- R6::R6Class(
       }
     },
     create_indices_name_map = function() {
-      self$name_idx$labeled_data <- seq.int(from = 0L, to = (length(extract_column_from_py_dataset(self$datasets$data_labeled,"id"))) - 1L)
-      names(self$name_idx$labeled_data) <- extract_column_from_py_dataset(self$datasets$data_labeled,"id")
+      self$name_idx$labeled_data <- seq.int(from = 0L, to = (length(extract_column_from_py_dataset(self$datasets$data_labeled, "id"))) - 1L)
+      names(self$name_idx$labeled_data) <- extract_column_from_py_dataset(self$datasets$data_labeled, "id")
 
       if (!is.null(self$datasets$data_unlabeled)) {
-        self$name_idx$unlabeled_data <- seq.int(from = 0L, to = (length(extract_column_from_py_dataset(self$datasets$data_unlabeled,"id"))) - 1L)
-        names(self$name_idx$unlabeled_data) <- extract_column_from_py_dataset(self$datasets$data_unlabeled,"id")
+        self$name_idx$unlabeled_data <- seq.int(from = 0L, to = (length(extract_column_from_py_dataset(self$datasets$data_unlabeled, "id"))) - 1L)
+        names(self$name_idx$unlabeled_data) <- extract_column_from_py_dataset(self$datasets$data_unlabeled, "id")
       } else {
         self$name_idx$unlabeled_data <- NULL
       }
     },
+    #-----------------------------------------------------------------------------
+    #' title Create cross-validation samples
+    #' description Function creates cross-validation samples and ensures that the relative frequency for every
+    #'   category/label within a fold equals the relative frequency of the category/label within the initial data.
+    #'
+    #' param target Named 'factor' containing the relevant labels/categories. Missing cases should be declared with 'NA'.
+    #' param k_folds 'int' number of folds.
+    #'
+    #' return Return a 'list' with the following components:
+    #'   * 'val_sample': 'vector' of 'strings' containing the names of cases of the validation sample.
+    #'   * 'train_sample': 'vector' of 'strings' containing the names of cases of the train sample.
+    #'   * 'n_folds': int' Number of realized folds.
+    #'   * 'unlabeled_cases': 'vector' of 'strings' containing the names of the unlabeled cases.
+    #'
+    #' note The parameter 'target' allows cases with missing categories/labels. These should be declared with 'NA'. All
+    #'   these cases are ignored for creating the different folds. Their names are saved within the component
+    #'   'unlabeled_cases'. These cases can be used for Pseudo Labeling.
+    get_folds = function(target,
+                         k_folds) {
+      sample_target <- na.omit(target)
+      freq_cat <- table(sample_target)
+      categories <- names(freq_cat)
+      min_freq <- min(freq_cat)
+
+
+      final_assignments <- NULL
+      for (cat in categories) {
+        condition <- (sample_target == cat)
+        focused_targets <- subset(
+          x = sample_target,
+          subset = condition
+        )
+        n_cases <- length(focused_targets)
+
+        cases_per_fold <- vector(length = k_folds)
+        cases_per_fold[] <- ceiling(n_cases / k_folds)
+
+        delta <- sum(cases_per_fold) - n_cases
+        if (delta > 0L) {
+          for (i in 1L:delta) {
+            cases_per_fold[1L + (i - 1L) %% k_folds] <- cases_per_fold[1L + (i - 1L) %% k_folds] - 1L
+          }
+        }
+
+        possible_assignments <- NULL
+        for (i in seq_len(length(cases_per_fold))) {
+          possible_assignments <- append(
+            x = possible_assignments,
+            values = rep.int(
+              x = i,
+              times = cases_per_fold[i]
+            )
+          )
+        }
+
+        assignments <- sample(
+          x = possible_assignments,
+          size = length(possible_assignments),
+          replace = FALSE
+        )
+        names(assignments) <- names(focused_targets)
+        final_assignments <- append(
+          x = final_assignments,
+          values = assignments
+        )
+      }
+
+      val_sample <- NULL
+      for (i in 1L:k_folds) {
+        condition <- (final_assignments == i)
+        val_sample[i] <- list(names(subset(
+          x = final_assignments,
+          subset = condition
+        )))
+      }
+
+      train_sample <- NULL
+      for (i in 1L:k_folds) {
+        train_sample[i] <- list(setdiff(x = names(sample_target), y = val_sample[[i]]))
+      }
+
+      unlabeled_cases <- setdiff(x = names(target), y = c(val_sample[[1L]], train_sample[[1L]]))
+
+      results <- list(
+        val_sample = val_sample,
+        train_sample = train_sample,
+        n_folds = k_folds,
+        unlabeled_cases = unlabeled_cases
+      )
+      return(results)
+    },
     create_folds = function() {
       # Create Train, Test, and Validation Samples--------------------------------
       # Check maximal number of folds, adjust, and create folds
-      data_targets <- factor(x = extract_column_from_py_dataset(self$datasets$data_labeled,"labels"))
-      names(data_targets) <- extract_column_from_py_dataset(self$datasets$data_labeled,"id")
+      data_targets <- factor(x = extract_column_from_py_dataset(self$datasets$data_labeled, "labels"))
+      names(data_targets) <- extract_column_from_py_dataset(self$datasets$data_labeled, "id")
 
-      folds <- get_folds(
+      folds <- private$get_folds(
         target = data_targets,
         k_folds = self$config$n_folds
       )
@@ -661,8 +763,8 @@ DataManagerClassifier <- R6::R6Class(
       }
     },
     create_final_sample = function(data_targets) {
-      data_targets <- factor(x = extract_column_from_py_dataset(self$datasets$data_labeled,"labels"))
-      names(data_targets) <- extract_column_from_py_dataset(self$datasets$data_labeled,"id")
+      data_targets <- factor(x = extract_column_from_py_dataset(self$datasets$data_labeled, "labels"))
+      names(data_targets) <- extract_column_from_py_dataset(self$datasets$data_labeled, "id")
 
       names_final_split <- get_stratified_train_test_split(
         targets = data_targets,

@@ -13,7 +13,7 @@ Returns a \code{vector} containing the alpha-3 codes for most countries.
 Function for requesting a \code{vector} containing the alpha-3 codes for most countries.
 }
 \seealso{
-Other Utils Sustainability Developers: 
-\code{\link{summarize_tracked_sustainability}()}
+Other Utils Sustainability Developers:
+\code{\link[=summarize_tracked_sustainability]{summarize_tracked_sustainability()}}
 }
 \concept{Utils Sustainability Developers}

@@ -43,13 +43,15 @@ the newest version. If 'miniconda' is not found on the system it will be install
 On MAC OS torch will be installed without support for cuda.
 }
 \seealso{
-Other Installation and Configuration: 
-\code{\link{check_aif_py_modules}()},
-\code{\link{get_recommended_py_versions}()},
-\code{\link{install_aifeducation_studio}()},
-\code{\link{install_py_modules}()},
-\code{\link{prepare_session}()},
-\code{\link{set_transformers_logger}()},
-\code{\link{update_aifeducation}()}
+Other Installation and Configuration:
+\code{\link[=check_aif_py_modules]{check_aif_py_modules()}},
+\code{\link[=get_recommended_py_versions]{get_recommended_py_versions()}},
+\code{\link[=install_aifeducation_studio]{install_aifeducation_studio()}},
+\code{\link[=install_protocol_buffer_compiler]{install_protocol_buffer_compiler()}},
+\code{\link[=install_py_modules]{install_py_modules()}},
+\code{\link[=prepare_session]{prepare_session()}},
+\code{\link[=set_codecarbon_logger]{set_codecarbon_logger()}},
+\code{\link[=set_transformers_logger]{set_transformers_logger()}},
+\code{\link[=update_aifeducation]{update_aifeducation()}}
 }
 \concept{Installation and Configuration}

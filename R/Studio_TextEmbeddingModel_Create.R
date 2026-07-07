@@ -65,7 +65,29 @@ TextEmbeddingModel_Create_UI <- function(id) {
           bslib::card_header("Embedding Proberties"),
           bslib::card_body(
             shiny::uiOutput(outputId = shiny::NS(id, "granularity_rate")),
-            shiny::uiOutput(outputId = shiny::NS(id, "total_words"))
+            shiny::uiOutput(outputId = shiny::NS(id, "total_words")),
+          )
+        ),
+        bslib::card(
+          bslib::card_header("Chunk Calculation"),
+          bslib::card_body(
+            shinyFiles::shinyDirButton(
+              id = shiny::NS(id, "button_select_dataset_for_raw_texts"),
+              label = "Choose Collection of Raw Texts",
+              title = "Please choose a folder",
+              icon = shiny::icon("folder-open")
+            ),
+            shiny::textInput(
+              inputId = shiny::NS(id, "raw_text_dir"),
+              label = shiny::tags$p(shiny::icon("folder"), "Path"),
+              width = "100%"
+            ),
+            shiny::actionButton(
+              inputId = shiny::NS(id, "btn_calc_quantile_chunks"),
+              label = shiny::tags$p(shiny::icon("paper-plane"), "Calculate"),
+              width = "100%"
+            ),
+            DT::DTOutput(outputId = shiny::NS(id, "quantile_chunks")),
           )
         )
       )
@@ -101,6 +123,30 @@ TextEmbeddingModel_Create_Server <- function(id, log_dir, volumes) {
     path_to_base_model <- shiny::eventReactive(input$button_select_base_model, {
       path <- shinyFiles::parseDirPath(volumes, input$button_select_base_model)
       return(path)
+    })
+
+    # Raw Texts
+    shinyFiles::shinyDirChoose(
+      input = input,
+      id = "button_select_dataset_for_raw_texts",
+      roots = volumes,
+      # session = session,
+      allowDirCreate = FALSE
+    )
+    shiny::observeEvent(input$button_select_dataset_for_raw_texts, {
+      path <- shinyFiles::parseDirPath(volumes, input$button_select_dataset_for_raw_texts)
+      shiny::updateTextInput(
+        inputId = "raw_text_dir",
+        value = path
+      )
+    })
+
+    path_to_raw_texts <- shiny::eventReactive(input$raw_text_dir, {
+      if (input$raw_text_dir != "") {
+        return(input$raw_text_dir)
+      } else {
+        return(NULL)
+      }
     })
 
     # Start screen for choosing the location for storing the data set-----------
@@ -241,6 +287,14 @@ TextEmbeddingModel_Create_Server <- function(id, log_dir, volumes) {
             step = 1
           ),
           shiny::sliderInput(
+            inputId = ns("lm_insert_mask_tokens"),
+            label = "Insert Mask Tokens",
+            value = 0.15,
+            min = 0.0,
+            max = 0.50,
+            step = 0.01
+          ),
+          shiny::sliderInput(
             inputId = ns("lm_emb_layers"),
             label = "Layers for Embeddings",
             value = c(
@@ -304,6 +358,69 @@ TextEmbeddingModel_Create_Server <- function(id, log_dir, volumes) {
       }
     })
 
+    # Chunk quantile
+    quantile_table <- shiny::eventReactive(input$btn_calc_quantile_chunks, {
+      model_path <- path_to_base_model()
+      path_to_text <- path_to_raw_texts()
+
+
+      if (!is.null(model_path) && dir.exists(path_to_text)) {
+        display_processing()
+        raw_texts <- try(load_from_disk(path_to_text), silent = TRUE)
+        if (inherits(x = raw_texts, what = c("LargeDataSetForText", "EmbeddedText"))) {
+          if (inherits(raw_texts, "EmbeddedText")) {
+            raw_texts <- raw_texts$convert_to_LargeDataSetForTextEmbeddings()
+          }
+
+          if (file.exists(file.path(model_path, "r_config_state.rda"))) {
+            base_model <- load_from_disk(model_path)
+          } else {
+            base_model <- create_object(model_architecture)
+            base_model$create_from_hf(
+              model_dir = model_path,
+              tokenizer_dir = model_path
+            )
+          }
+
+          quantile <- base_model$Tokenizer$calc_quantiles(
+            text_dataset = raw_texts,
+            batch_size = 32L,
+            seq_len_tokens = input$lm_max_length,
+            token_overlap = input$lm_overlap,
+            trace = FALSE
+          )
+
+          quantile_table <- as.matrix(
+            rbind(
+              names(quantile),
+              quantile
+            )
+          )
+          quantile_table <- t(quantile_table)
+          quantile_table <- unname(quantile_table)
+          colnames(quantile_table) <- c("Quantile", "Chunks")
+
+          shiny::removeModal()
+          shiny::removeModal()
+          return(quantile_table)
+        } else {
+          shiny::removeModal()
+          shiny::removeModal()
+
+          display_errors(
+            error_messages = "Object at the given path is not of class
+            LargeDataSetForText or EmbeddedText."
+          )
+        }
+      } else {
+        return(NULL)
+      }
+    })
+
+    output$quantile_chunks <- DT::renderDT({
+      quantile_table()
+    })
+
     # Save the model to disk----------------------------------------------------
     shiny::observeEvent(input$save_modal_button_continue, {
       # Remove Save Modal
@@ -349,6 +466,7 @@ TextEmbeddingModel_Create_Server <- function(id, log_dir, volumes) {
           emb_layer_min = input$lm_emb_layers[1],
           emb_layer_max = input$lm_emb_layers[2],
           emb_pool_type = input$lm_emb_pool_type,
+          emb_insert_mask_tokens = input$lm_insert_mask_tokens,
           base_model = base_model
         )
 

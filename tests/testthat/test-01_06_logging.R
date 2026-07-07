@@ -1,5 +1,3 @@
-
-
 # Start time
 test_time_start <- Sys.time()
 

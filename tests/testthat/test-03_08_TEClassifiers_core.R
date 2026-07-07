@@ -10,7 +10,7 @@ test_time_start <- Sys.time()
 # config------------------------------------------------------------------------
 load_all_py_scripts()
 object_class_names <- get_TEClassifiers_class_names(super_class = "ClassifiersBasedOnTextEmbeddings")
-object_class_names=setdiff(x=object_class_names,y=c("TEClassifierProtoNet","TEClassifierRegular"))
+object_class_names <- setdiff(x = object_class_names, y = c("TEClassifierProtoNet", "TEClassifierRegular"))
 
 max_samples <- 20
 max_samples_CI <- 2
@@ -113,6 +113,15 @@ for (object_class_name in object_class_names) {
 
       test_that(paste("count parameter", object_class_name, get_current_args_for_print(test_combination)), {
         expect_gte(object = classifier$count_parameter(), expected = 0)
+      })
+
+      test_that(paste("print method", object_class_name, get_current_args_for_print(test_combination)), {
+        suppressMessages(
+          expect_no_error(classifier$print())
+        )
+        suppressMessages(
+          expect_no_error(print(classifier))
+        )
       })
 
       test_that(paste("Predictions", object_class_name, get_current_args_for_print(test_combination)), {
@@ -457,12 +466,14 @@ for (object_class_name in object_class_names) {
         ng_conv_n_layers <- 0L
         rec_n_layers <- 0L
         dense_n_layers <- 1L
+        lr_min=0.0
       } else {
         use_pl <- FALSE
         tf_n_layers <- NULL
         ng_conv_n_layers <- NULL
         rec_n_layers <- NULL
         dense_n_layers <- NULL
+        lr_min=1e-4
       }
 
       if (object_class_name == "TEClassifierParallel" && j <= 1) {
@@ -489,7 +500,8 @@ for (object_class_name in object_class_names) {
           tf_n_layers = tf_n_layers,
           ng_conv_n_layers = ng_conv_n_layers,
           rec_n_layers = rec_n_layers,
-          dense_n_layers = dense_n_layers
+          dense_n_layers = dense_n_layers,
+          lr_min=lr_min
         )
       )
 
@@ -505,6 +517,8 @@ for (object_class_name in object_class_names) {
         var_override = list(
           name = NULL,
           label = "Classifier for Estimating a Postive or Negative Rating of Movie Reviews",
+          use_pl=use_pl,
+          use_sc=use_sc,
           trace = random_bool_on_CI(),
           log_dir = log_dir
         )
@@ -564,48 +578,48 @@ for (object_class_name in object_class_names) {
         get_current_args_for_print(test_combination),
         get_current_args_for_print(train_args_combinations)
       ), {
-      # Predictions before saving and loading
-      suppressMessages(
-        predictions <- classifier$predict(
-          newdata = test_embeddings_reduced,
-          batch_size = 2,
-          ml_trace = 0
+        # Predictions before saving and loading
+        suppressMessages(
+          predictions <- classifier$predict(
+            newdata = test_embeddings_reduced,
+            batch_size = 2,
+            ml_trace = 0
+          )
         )
-      )
 
-      # Save and load
-      folder_name <- paste0("function_save_load_", generate_id())
-      dir_path <- paste0(root_path_results, "/", folder_name)
-      save_to_disk(
-        object = classifier,
-        dir_path = root_path_results,
-        folder_name = folder_name
-      )
-      classifier2 <- NULL
-      classifier2 <- load_from_disk(dir_path = dir_path)
-
-      # Is config equal after loading
-      expect_equal(
-        classifier$get_model_config(),
-        classifier2$get_model_config()
-      )
-
-      # Predict after loading
-      suppressMessages(
-        predictions_2 <- classifier2$predict(
-          newdata = test_embeddings_reduced,
-          batch_size = 2,
-          ml_trace = 0
+        # Save and load
+        folder_name <- paste0("function_save_load_", generate_id())
+        dir_path <- paste0(root_path_results, "/", folder_name)
+        save_to_disk(
+          object = classifier,
+          dir_path = root_path_results,
+          folder_name = folder_name
         )
-      )
+        classifier2 <- NULL
+        classifier2 <- load_from_disk(dir_path = dir_path)
 
-      # Compare predictions
-      columns_to_compate=setdiff(colnames(predictions),"expected_category")
-      i <- sample(x = seq.int(from = 1, to = nrow(predictions)), size = 1)
-      expect_equal(predictions[i, columns_to_compate, drop = FALSE],
-        predictions_2[i, columns_to_compate, drop = FALSE],
-        tolerance = 1e-5
-      )
+        # Is config equal after loading
+        expect_equal(
+          classifier$get_model_config(),
+          classifier2$get_model_config()
+        )
+
+        # Predict after loading
+        suppressMessages(
+          predictions_2 <- classifier2$predict(
+            newdata = test_embeddings_reduced,
+            batch_size = 2,
+            ml_trace = 0
+          )
+        )
+
+        # Compare predictions
+        columns_to_compate <- setdiff(colnames(predictions), "expected_category")
+        i <- sample(x = seq.int(from = 1, to = nrow(predictions)), size = 1)
+        expect_equal(predictions[i, columns_to_compate, drop = FALSE],
+          predictions_2[i, columns_to_compate, drop = FALSE],
+          tolerance = 1e-5
+        )
       })
 
       # Plot training history------------------------------------------------
@@ -623,19 +637,23 @@ for (object_class_name in object_class_names) {
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "avg_iota", final_training = FALSE, add_min_max = TRUE, ind_best_model = FALSE, ind_selected_model = TRUE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "accuracy", final_training = FALSE, add_min_max = TRUE, ind_best_model = FALSE, ind_selected_model = FALSE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "balanced_accuracy", final_training = FALSE, add_min_max = TRUE, ind_best_model = TRUE, ind_selected_model = FALSE), class = "ggplot")
+        expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "s_avg_iota", final_training = FALSE, add_min_max = TRUE, ind_best_model = TRUE, ind_selected_model = FALSE), class = "ggplot")
 
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "loss", final_training = FALSE, add_min_max = TRUE, y_min = 0, y_max = 2, ind_best_model = TRUE, ind_selected_model = FALSE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "avg_iota", final_training = FALSE, add_min_max = TRUE, y_min = 0, y_max = 1, ind_best_model = FALSE, ind_selected_model = FALSE), class = "ggplot")
+        expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "s_avg_iota", final_training = FALSE, add_min_max = TRUE, y_min = 0, y_max = 1, ind_best_model = FALSE, ind_selected_model = FALSE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "accuracy", final_training = FALSE, add_min_max = TRUE, y_min = 0, y_max = 1, ind_best_model = FALSE, ind_selected_model = TRUE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "balanced_accuracy", final_training = FALSE, add_min_max = TRUE, y_min = 0, y_max = 1, ind_best_model = TRUE, ind_selected_model = TRUE), class = "ggplot")
 
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "loss", final_training = FALSE, add_min_max = FALSE, ind_best_model = TRUE, ind_selected_model = TRUE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "avg_iota", final_training = FALSE, add_min_max = FALSE, ind_best_model = TRUE, ind_selected_model = FALSE), class = "ggplot")
+        expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "s_avg_iota", final_training = FALSE, add_min_max = FALSE, ind_best_model = TRUE, ind_selected_model = FALSE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "accuracy", final_training = FALSE, add_min_max = FALSE, ind_best_model = FALSE, ind_selected_model = FALSE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "balanced_accuracy", final_training = FALSE, add_min_max = FALSE, ind_best_model = FALSE, ind_selected_model = TRUE), class = "ggplot")
 
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "loss", final_training = TRUE, ind_best_model = TRUE, ind_selected_model = FALSE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "avg_iota", final_training = TRUE, ind_best_model = TRUE, ind_selected_model = TRUE), class = "ggplot")
+        expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "s_avg_iota", final_training = TRUE, ind_best_model = TRUE, ind_selected_model = TRUE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "accuracy", final_training = TRUE, ind_best_model = FALSE, ind_selected_model = TRUE), class = "ggplot")
         expect_s3_class(object = classifier$plot_training_history(pl_step = pl_step, measure = "balanced_accuracy", final_training = TRUE, ind_best_model = FALSE, ind_selected_model = FALSE), class = "ggplot")
       })
@@ -647,6 +665,16 @@ for (object_class_name in object_class_names) {
       ), {
         expect_s3_class(object = classifier$plot_coding_stream(), class = "ggplot")
       })
+
+      if (classifier$last_training$config$lr_rate == 0.0 || classifier$last_training$config$lr_rate == 0.0) {
+        test_that(paste(
+          "plot_learning_rate", object_class_name,
+          get_current_args_for_print(test_combination),
+          get_current_args_for_print(train_args_combinations)
+        ), {
+          expect_s3_class(object = classifier$plot_learning_rate(), class = "ggplot")
+        })
+      }
       gc()
     }
   }

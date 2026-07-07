@@ -25,12 +25,12 @@ Fleiss, J. L. (1971). Measuring nominal scale agreement among
 many raters. Psychological Bulletin, 76(5), 378–382. \url{doi:10.1037/h0031619}
 }
 \seealso{
-Other performance measures: 
-\code{\link{calc_standard_classification_measures}()},
-\code{\link{cohens_kappa}()},
-\code{\link{get_coder_metrics}()},
-\code{\link{gwet_ac}()},
-\code{\link{kendalls_w}()},
-\code{\link{kripp_alpha}()}
+Other performance measures:
+\code{\link[=calc_standard_classification_measures]{calc_standard_classification_measures()}},
+\code{\link[=cohens_kappa]{cohens_kappa()}},
+\code{\link[=get_coder_metrics]{get_coder_metrics()}},
+\code{\link[=gwet_ac]{gwet_ac()}},
+\code{\link[=kendalls_w]{kendalls_w()}},
+\code{\link[=kripp_alpha]{kripp_alpha()}}
 }
 \concept{performance measures}

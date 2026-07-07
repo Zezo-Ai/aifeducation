@@ -13,7 +13,7 @@ Abstract class for managing the data and samples during training a classifier. D
 used with all classifiers based on text embeddings.
 }
 \seealso{
-Other R6 Classes for Developers: 
+Other R6 Classes for Developers:
 \code{\link{AIFEBaseModel}},
 \code{\link{AIFEMaster}},
 \code{\link{BaseModelCore}},
@@ -26,15 +26,15 @@ Other R6 Classes for Developers:
 }
 \concept{R6 Classes for Developers}
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{config}}{('list')\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{config}}{('list')\cr
 Field for storing configuration of the \link{DataManagerClassifier}.}
 
-\item{\code{state}}{('list')\cr
+    \item{\code{state}}{('list')\cr
 Field for storing the current state of the \link{DataManagerClassifier}.}
 
-\item{\code{datasets}}{('list')\cr
+    \item{\code{datasets}}{('list')\cr
 Field for storing the data sets used during training. All elements of the list are data sets of class
 \code{datasets.arrow_dataset.Dataset}. The following data sets are available:
 \itemize{
@@ -44,46 +44,47 @@ Field for storing the data sets used during training. All elements of the list a
 \item data_labeled_pseudo: subset of data_unlabeled if pseudo labels were estimated by a classifier.
 }}
 
-\item{\code{name_idx}}{('named vector')\cr
+    \item{\code{name_idx}}{('named vector')\cr
 Field for storing the pairs of indexes and names of every case. The pairs for labeled and unlabeled data are
 separated.}
 
-\item{\code{samples}}{('list')\cr
+    \item{\code{samples}}{('list')\cr
 Field for storing the assignment of every cases to a train, validation or test data set depending on the
 concrete fold. Only the indexes and not the names are stored. In addition, the list contains the assignment for
 the final training which excludes a test data set. If the \link{DataManagerClassifier} uses \code{i} folds the sample for
 the final training can be requested with \code{i+1}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DataManagerClassifier-new}{\code{DataManagerClassifier$new()}}
-\item \href{#method-DataManagerClassifier-get_config}{\code{DataManagerClassifier$get_config()}}
-\item \href{#method-DataManagerClassifier-get_labeled_data}{\code{DataManagerClassifier$get_labeled_data()}}
-\item \href{#method-DataManagerClassifier-get_unlabeled_data}{\code{DataManagerClassifier$get_unlabeled_data()}}
-\item \href{#method-DataManagerClassifier-get_samples}{\code{DataManagerClassifier$get_samples()}}
-\item \href{#method-DataManagerClassifier-set_state}{\code{DataManagerClassifier$set_state()}}
-\item \href{#method-DataManagerClassifier-get_n_folds}{\code{DataManagerClassifier$get_n_folds()}}
-\item \href{#method-DataManagerClassifier-get_n_classes}{\code{DataManagerClassifier$get_n_classes()}}
-\item \href{#method-DataManagerClassifier-get_statistics}{\code{DataManagerClassifier$get_statistics()}}
-\item \href{#method-DataManagerClassifier-contains_unlabeled_data}{\code{DataManagerClassifier$contains_unlabeled_data()}}
-\item \href{#method-DataManagerClassifier-get_dataset}{\code{DataManagerClassifier$get_dataset()}}
-\item \href{#method-DataManagerClassifier-get_val_dataset}{\code{DataManagerClassifier$get_val_dataset()}}
-\item \href{#method-DataManagerClassifier-get_test_dataset}{\code{DataManagerClassifier$get_test_dataset()}}
-\item \href{#method-DataManagerClassifier-create_synthetic}{\code{DataManagerClassifier$create_synthetic()}}
-\item \href{#method-DataManagerClassifier-add_replace_pseudo_data}{\code{DataManagerClassifier$add_replace_pseudo_data()}}
-\item \href{#method-DataManagerClassifier-clone}{\code{DataManagerClassifier$clone()}}
-}
+  \itemize{
+    \item \href{#method-DataManagerClassifier-initialize}{\code{DataManagerClassifier$new()}}
+    \item \href{#method-DataManagerClassifier-get_config}{\code{DataManagerClassifier$get_config()}}
+    \item \href{#method-DataManagerClassifier-get_labeled_data}{\code{DataManagerClassifier$get_labeled_data()}}
+    \item \href{#method-DataManagerClassifier-get_unlabeled_data}{\code{DataManagerClassifier$get_unlabeled_data()}}
+    \item \href{#method-DataManagerClassifier-get_samples}{\code{DataManagerClassifier$get_samples()}}
+    \item \href{#method-DataManagerClassifier-set_state}{\code{DataManagerClassifier$set_state()}}
+    \item \href{#method-DataManagerClassifier-get_n_folds}{\code{DataManagerClassifier$get_n_folds()}}
+    \item \href{#method-DataManagerClassifier-get_n_classes}{\code{DataManagerClassifier$get_n_classes()}}
+    \item \href{#method-DataManagerClassifier-get_statistics}{\code{DataManagerClassifier$get_statistics()}}
+    \item \href{#method-DataManagerClassifier-contains_unlabeled_data}{\code{DataManagerClassifier$contains_unlabeled_data()}}
+    \item \href{#method-DataManagerClassifier-get_dataset}{\code{DataManagerClassifier$get_dataset()}}
+    \item \href{#method-DataManagerClassifier-get_val_dataset}{\code{DataManagerClassifier$get_val_dataset()}}
+    \item \href{#method-DataManagerClassifier-get_test_dataset}{\code{DataManagerClassifier$get_test_dataset()}}
+    \item \href{#method-DataManagerClassifier-create_synthetic}{\code{DataManagerClassifier$create_synthetic()}}
+    \item \href{#method-DataManagerClassifier-add_replace_pseudo_data}{\code{DataManagerClassifier$add_replace_pseudo_data()}}
+    \item \href{#method-DataManagerClassifier-clone}{\code{DataManagerClassifier$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DataManagerClassifier-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DataManagerClassifier-new}{}}}
-\subsection{Method \code{new()}}{
-Creating a new instance of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$new(
+\if{html}{\out{<a id="method-DataManagerClassifier-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-DataManagerClassifier-initialize}{}}}
+\subsection{\code{DataManagerClassifier$new()}}{
+  Creating a new instance of this class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$new(
   data_embeddings,
   data_targets,
   class_levels,
@@ -97,317 +98,363 @@ Creating a new instance of this class.
   sc_max_k = 10L,
   trace = TRUE,
   n_cores = auto_n_cores()
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
-
-\item{\code{data_targets}}{\code{factor} containing the labels for cases stored in embeddings. Factor must be
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
+      \item{\code{data_targets}}{\code{factor} containing the labels for cases stored in embeddings. Factor must be
 named and has to use the same names as used in in the embeddings.}
-
-\item{\code{class_levels}}{\code{vector} containing the levels (categories or classes) within the target data. Please
+      \item{\code{class_levels}}{\code{vector} containing the levels (categories or classes) within the target data. Please
 note that order matters. For ordinal data please ensure that the levels are sorted correctly with later levels
 indicating a higher category/class. For nominal data the order does not matter.}
+      \item{\code{folds}}{\code{int} determining the number of cross-fold samples. Allowed values:
 
-\item{\code{folds}}{\code{int} determining the number of cross-fold samples. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-
-\item{\code{val_size}}{\code{double} between 0 and 1, indicating the proportion of cases which should be
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{val_size}}{\code{double} between 0 and 1, indicating the proportion of cases which should be
 used for the validation sample during the estimation of the model.
-The remaining cases are part of the training data. Allowed values: \ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
+The remaining cases are part of the training data. Allowed values:
 
-\item{\code{pad_value}}{\code{int} Value indicating padding. This value should no be in the range of
+\ifelse{latex}{$0 < x < 1$}{\ifelse{html}{\eqn{0 < x < 1}}{`0 < x < 1`}}}
+      \item{\code{pad_value}}{\code{int} Value indicating padding. This value should no be in the range of
 regluar values for computations. Thus it is not recommended to chance this value.
-Default is \code{-100}. Allowed values: \ifelse{latex}{$ x <= -1$}{\ifelse{html}{\eqn{ x <= -1}}{` x <= -1`}}}
+Default is \code{-100}. Allowed values:
 
-\item{\code{one_hot_encoding}}{\code{bool} If \code{TRUE} all labels are converted to one hot encoding.}
-
-\item{\code{add_matrix_map}}{\code{bool} If \code{TRUE} all embeddings are transformed into a two dimensional matrix.
+\ifelse{latex}{$ x <= -1$}{\ifelse{html}{\eqn{ x <= -1}}{` x <= -1`}}}
+      \item{\code{one_hot_encoding}}{\code{bool} If \code{TRUE} all labels are converted to one hot encoding.}
+      \item{\code{add_matrix_map}}{\code{bool} If \code{TRUE} all embeddings are transformed into a two dimensional matrix.
 The number of rows equals the number of cases. The number of columns equals \code{times*features}.}
+      \item{\code{sc_methods}}{\code{string} containing the method for generating synthetic cases. Allowed values:
+\itemize{
+\item 'knnor'
+}}
+      \item{\code{sc_min_k}}{\code{int} determining the minimal number of k which is used for creating synthetic units. Allowed values:
 
-\item{\code{sc_methods}}{\code{string} containing the method for generating synthetic cases. Allowed values: 'knnor'}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{sc_max_k}}{\code{int} determining the maximal number of k which is used for creating synthetic units. Allowed values:
 
-\item{\code{sc_min_k}}{\code{int} determining the minimal number of k which is used for creating synthetic units. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
+      \item{\code{n_cores}}{\code{int} Number of cores which should be used during the calculation of synthetic cases. Only relevant if \code{use_sc=TRUE}. Allowed values:
 
-\item{\code{sc_max_k}}{\code{int} determining the maximal number of k which is used for creating synthetic units. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
-
-\item{\code{trace}}{\code{bool} \code{TRUE} if information about the estimation phase should be printed to the console.}
-
-\item{\code{n_cores}}{\code{int} Number of cores which should be used during the calculation of synthetic cases. Only relevant if \code{use_sc=TRUE}. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method returns an initialized object of class \link{DataManagerClassifier}.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method returns an initialized object of class \link{DataManagerClassifier}.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_config"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_config}{}}}
-\subsection{Method \code{get_config()}}{
-Method for requesting the configuration of the \link{DataManagerClassifier}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_config()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$get_config()}}{
+  Method for requesting the configuration of the \link{DataManagerClassifier}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_config()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} storing the configuration of the \link{DataManagerClassifier}.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} storing the configuration of the \link{DataManagerClassifier}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_labeled_data"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_labeled_data}{}}}
-\subsection{Method \code{get_labeled_data()}}{
-Method for requesting the complete labeled data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_labeled_data()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$get_labeled_data()}}{
+  Method for requesting the complete labeled data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_labeled_data()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \code{datasets.arrow_dataset.Dataset} containing all cases with labels.
+  }
 }
 
-\subsection{Returns}{
-Returns an object of class \code{datasets.arrow_dataset.Dataset} containing all cases with labels.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_unlabeled_data"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_unlabeled_data}{}}}
-\subsection{Method \code{get_unlabeled_data()}}{
-Method for requesting the complete unlabeled data set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_unlabeled_data()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$get_unlabeled_data()}}{
+  Method for requesting the complete unlabeled data set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_unlabeled_data()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \code{datasets.arrow_dataset.Dataset} containing all cases without labels.
+  }
 }
 
-\subsection{Returns}{
-Returns an object of class \code{datasets.arrow_dataset.Dataset} containing all cases without labels.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_samples"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_samples}{}}}
-\subsection{Method \code{get_samples()}}{
-Method for requesting the assignments to train, validation, and test data sets for every fold and
+\subsection{\code{DataManagerClassifier$get_samples()}}{
+  Method for requesting the assignments to train, validation, and test data sets for every fold and
 the final training.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_samples()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_samples()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} storing the assignments to a train, validation, and test data set for every fold. In the
+case of the sample for the final training the test data set is always empty (\code{NULL}).
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} storing the assignments to a train, validation, and test data set for every fold. In the
-case of the sample for the final training the test data set is always empty (\code{NULL}).
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-set_state"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-set_state}{}}}
-\subsection{Method \code{set_state()}}{
-Method for setting the current state of the \link{DataManagerClassifier}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$set_state(iteration, step = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{iteration}}{\code{int} determining the current iteration of the training. That is iteration determines the fold
+\subsection{\code{DataManagerClassifier$set_state()}}{
+  Method for setting the current state of the \link{DataManagerClassifier}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$set_state(iteration, step = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{iteration}}{\code{int} determining the current iteration of the training. That is iteration determines the fold
 to use for training, validation, and testing. If \emph{i} is the number of fold \emph{i+1} request the sample for the
 final training. For requesting the sample for the final training iteration can take a string \code{"final"}.}
-
-\item{\code{step}}{\code{int} determining the step for estimating and using pseudo labels during training. Only relevant if
+      \item{\code{step}}{\code{int} determining the step for estimating and using pseudo labels during training. Only relevant if
 training is requested with pseudo labels.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It is used for setting the internal state of the DataManager.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It is used for setting the internal state of the DataManager.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_n_folds"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_n_folds}{}}}
-\subsection{Method \code{get_n_folds()}}{
-Method for requesting the number of folds the \link{DataManagerClassifier} can use with the current data.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_n_folds()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$get_n_folds()}}{
+  Method for requesting the number of folds the \link{DataManagerClassifier} can use with the current data.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_n_folds()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the number of folds the \link{DataManagerClassifier} uses.
+  }
 }
 
-\subsection{Returns}{
-Returns the number of folds the \link{DataManagerClassifier} uses.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_n_classes"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_n_classes}{}}}
-\subsection{Method \code{get_n_classes()}}{
-Method for requesting the number of classes.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_n_classes()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$get_n_classes()}}{
+  Method for requesting the number of classes.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_n_classes()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the number classes.
+  }
 }
 
-\subsection{Returns}{
-Returns the number classes.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_statistics"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_statistics}{}}}
-\subsection{Method \code{get_statistics()}}{
-Method for requesting descriptive sample statistics.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_statistics()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$get_statistics()}}{
+  Method for requesting descriptive sample statistics.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_statistics()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a table describing the absolute frequencies of the labeled and unlabeled data. The rows contain
+the length of the sequences while the columns contain the labels.
+  }
 }
 
-\subsection{Returns}{
-Returns a table describing the absolute frequencies of the labeled and unlabeled data. The rows contain
-the length of the sequences while the columns contain the labels.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-contains_unlabeled_data"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-contains_unlabeled_data}{}}}
-\subsection{Method \code{contains_unlabeled_data()}}{
-Method for checking if the dataset contains cases without labels.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$contains_unlabeled_data()}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$contains_unlabeled_data()}}{
+  Method for checking if the dataset contains cases without labels.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$contains_unlabeled_data()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns \code{TRUE} if the dataset contains cases without labels. Returns \code{FALSE}
+if all cases have labels.
+  }
 }
 
-\subsection{Returns}{
-Returns \code{TRUE} if the dataset contains cases without labels. Returns \code{FALSE}
-if all cases have labels.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_dataset"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_dataset}{}}}
-\subsection{Method \code{get_dataset()}}{
-Method for requesting a data set for training depending in the current state of the
+\subsection{\code{DataManagerClassifier$get_dataset()}}{
+  Method for requesting a data set for training depending in the current state of the
 DataManagerClassifier.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_dataset(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_dataset(
   inc_labeled = TRUE,
   inc_unlabeled = FALSE,
   inc_synthetic = FALSE,
   inc_pseudo_data = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inc_labeled}}{\code{bool} If \code{TRUE} the data set includes all cases which have labels.}
-
-\item{\code{inc_unlabeled}}{\code{bool} If \code{TRUE} the data set includes all cases which have no labels.}
-
-\item{\code{inc_synthetic}}{\code{bool} If \code{TRUE} the data set includes all synthetic cases with their corresponding labels.}
-
-\item{\code{inc_pseudo_data}}{\code{bool} If \code{TRUE} the data set includes all cases which have pseudo labels.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns an object of class \code{datasets.arrow_dataset.Dataset} containing the requested kind of data along
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{inc_labeled}}{\code{bool} If \code{TRUE} the data set includes all cases which have labels.}
+      \item{\code{inc_unlabeled}}{\code{bool} If \code{TRUE} the data set includes all cases which have no labels.}
+      \item{\code{inc_synthetic}}{\code{bool} If \code{TRUE} the data set includes all synthetic cases with their corresponding labels.}
+      \item{\code{inc_pseudo_data}}{\code{bool} If \code{TRUE} the data set includes all cases which have pseudo labels.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \code{datasets.arrow_dataset.Dataset} containing the requested kind of data along
 with all requested transformations for training. Please note that this method returns a data sets that is
 designed for training only. The corresponding validation data set is requested with \code{get_val_dataset} and the
 corresponding test data set with \code{get_test_dataset}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_val_dataset"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_val_dataset}{}}}
-\subsection{Method \code{get_val_dataset()}}{
-Method for requesting a data set for validation depending in the current state of the
+\subsection{\code{DataManagerClassifier$get_val_dataset()}}{
+  Method for requesting a data set for validation depending in the current state of the
 \link{DataManagerClassifier}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_val_dataset()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Returns an object of class \code{datasets.arrow_dataset.Dataset} containing the requested kind of data along
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_val_dataset()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \code{datasets.arrow_dataset.Dataset} containing the requested kind of data along
 with all requested transformations for validation. The corresponding data set for training can be requested
 with \code{get_dataset} and the corresponding data set for testing with \code{get_test_dataset}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-get_test_dataset"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-get_test_dataset}{}}}
-\subsection{Method \code{get_test_dataset()}}{
-Method for requesting a data set for testing depending in the current state of the
+\subsection{\code{DataManagerClassifier$get_test_dataset()}}{
+  Method for requesting a data set for testing depending in the current state of the
 DataManagerClassifier.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$get_test_dataset()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Returns an object of class \code{datasets.arrow_dataset.Dataset} containing the requested kind of data along
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$get_test_dataset()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \code{datasets.arrow_dataset.Dataset} containing the requested kind of data along
 with all requested transformations for validation. The corresponding data set for training can be requested
 with \code{get_dataset} and the corresponding data set for validation with \code{get_val_dataset}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-create_synthetic"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-create_synthetic}{}}}
-\subsection{Method \code{create_synthetic()}}{
-Method for generating synthetic data used during training. The process uses all labeled data
+\subsection{\code{DataManagerClassifier$create_synthetic()}}{
+  Method for generating synthetic data used during training. The process uses all labeled data
 belonging to the current state of the DataManagerClassifier.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$create_synthetic(trace = TRUE, inc_pseudo_data = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{trace}}{\code{bool} If \code{TRUE} information on the process are printed to the console.}
-
-\item{\code{inc_pseudo_data}}{\code{bool} If \code{TRUE} data with pseudo labels are used in addition to the labeled data for
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$create_synthetic(trace = TRUE, inc_pseudo_data = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{trace}}{\code{bool} If \code{TRUE} information on the process are printed to the console.}
+      \item{\code{inc_pseudo_data}}{\code{bool} If \code{TRUE} data with pseudo labels are used in addition to the labeled data for
 generating synthetic cases.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-This method does nothing return. It generates a new data set for synthetic cases which are stored as an
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    This method does nothing return. It generates a new data set for synthetic cases which are stored as an
 object of class \code{datasets.arrow_dataset.Dataset} in the field \code{datasets$data_labeled_synthetic}. Please note
 that a call of this method will override an existing data set in the corresponding field.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-add_replace_pseudo_data"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-add_replace_pseudo_data}{}}}
-\subsection{Method \code{add_replace_pseudo_data()}}{
-Method for adding data with pseudo labels generated by a classifier
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$add_replace_pseudo_data(inputs, labels)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inputs}}{\code{array} or \code{matrix} representing the input data.}
-
-\item{\code{labels}}{\code{factor} containing the corresponding pseudo labels.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-This method does nothing return. It generates a new data set for synthetic cases which are stored as an
+\subsection{\code{DataManagerClassifier$add_replace_pseudo_data()}}{
+  Method for adding data with pseudo labels generated by a classifier
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$add_replace_pseudo_data(inputs, labels)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{inputs}}{\code{array} or \code{matrix} representing the input data.}
+      \item{\code{labels}}{\code{factor} containing the corresponding pseudo labels.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    This method does nothing return. It generates a new data set for synthetic cases which are stored as an
 object of class \code{datasets.arrow_dataset.Dataset} in the field \code{datasets$data_labeled_pseudo}. Please note that
 a call of this method will override an existing data set in the corresponding field.
+title Create cross-validation samples
+description Function creates cross-validation samples and ensures that the relative frequency for every
+category/label within a fold equals the relative frequency of the category/label within the initial data.
+
+param target Named 'factor' containing the relevant labels/categories. Missing cases should be declared with 'NA'.
+param k_folds 'int' number of folds.
+
+return Return a 'list' with the following components:
+\itemize{
+\item 'val_sample': 'vector' of 'strings' containing the names of cases of the validation sample.
+\item 'train_sample': 'vector' of 'strings' containing the names of cases of the train sample.
+\item 'n_folds': int' Number of realized folds.
+\item 'unlabeled_cases': 'vector' of 'strings' containing the names of the unlabeled cases.
 }
+
+note The parameter 'target' allows cases with missing categories/labels. These should be declared with 'NA'. All
+these cases are ignored for creating the different folds. Their names are saved within the component
+'unlabeled_cases'. These cases can be used for Pseudo Labeling.
+  }
 }
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataManagerClassifier-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DataManagerClassifier-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataManagerClassifier$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{DataManagerClassifier$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataManagerClassifier$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

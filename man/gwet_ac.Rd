@@ -36,12 +36,12 @@ The definitive guide to measuring the extent of agreement among raters
 (Fifth edition, volume 1). AgreeStat Analytics.
 }
 \seealso{
-Other performance measures: 
-\code{\link{calc_standard_classification_measures}()},
-\code{\link{cohens_kappa}()},
-\code{\link{fleiss_kappa}()},
-\code{\link{get_coder_metrics}()},
-\code{\link{kendalls_w}()},
-\code{\link{kripp_alpha}()}
+Other performance measures:
+\code{\link[=calc_standard_classification_measures]{calc_standard_classification_measures()}},
+\code{\link[=cohens_kappa]{cohens_kappa()}},
+\code{\link[=fleiss_kappa]{fleiss_kappa()}},
+\code{\link[=get_coder_metrics]{get_coder_metrics()}},
+\code{\link[=kendalls_w]{kendalls_w()}},
+\code{\link[=kripp_alpha]{kripp_alpha()}}
 }
 \concept{performance measures}

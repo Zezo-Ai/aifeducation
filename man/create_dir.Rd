@@ -23,7 +23,7 @@ Check whether the passed \code{dir_path} directory exists. If not, creates a new
 message if \code{trace} is \code{TRUE}.
 }
 \seealso{
-Other Utils File Management Developers: 
-\code{\link{get_file_extension}()}
+Other Utils File Management Developers:
+\code{\link[=get_file_extension]{get_file_extension()}}
 }
 \concept{Utils File Management Developers}

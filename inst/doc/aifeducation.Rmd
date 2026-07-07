@@ -111,6 +111,33 @@ aifeducation::check_aif_py_modules()
 
 Now everything is ready to use the package.
 
+
+
+## Step 3 - Install Protocol Buffer Compiler (Optional)
+
+Next you *can* install Protocol Buffer Compiler if it is not already on your system.
+This compiler is a prerequisite for two python packages ('protbuf' and 'sentencepiece') 
+and some open source models to work. These packages are also necessary to update
+some older open source models to newer version of the library 'transformers'. 
+You can find installation instructions on [https://protobuf.dev/installation/].
+
+As an alternative you can call `aifeducation::install_protocol_buffer_compiler()`
+for an automatic installation. 
+
+After a successful installation of Protocol Buffer Compiler you can install
+the two python packages by calling `reticulate::py_install(c("protobuf","sentencepiece"))`.
+Please restart the session.
+
+> Please note that this installation step is only necessary if you plan to
+> work with base models that use a tokenizer based on 'sentencepiece'. You can found
+> a table with all transformers models and their prerequisites in 
+> [A02 Supported Base Models](https://fberding.github.io/aifeducation/articles/a02_base_model_types.html)
+
+> Please note that all base models created with this package do **not** need
+> these packages.
+
+In order to be fully flexible we recommend  to install these packages and the compiler.
+
 # 2) Starting a new session
 
 The most convenient way to work with the package is to use *AI for
@@ -165,6 +192,12 @@ aifeducation::update_aifeducation(
 > used aifeducation with version 1.1.1 or lower please 
 > install this package manually with `reticulate::py_install("calflops")` or call
 > `aifeducation::update_aifeducation`.
+
+> Starting with version 1.1.6 the python packages 'protobuf' and 'sentencepiece ' are optional packages. If you
+> used aifeducation with version 1.1.5 or lower please 
+> install first Protocol Buffer Compiler via `install_protocol_buffer_compiler` or
+> (https://protobuf.dev/installation/)[https://protobuf.dev/installation/].
+> After that install the packages manually with `reticulate::py_install(c("protobuf","sentencepiece"))`.
 
 # 5) Recommended Version of Python Packages
 

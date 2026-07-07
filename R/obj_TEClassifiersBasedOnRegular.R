@@ -27,13 +27,13 @@ TEClassifiersBasedOnRegular <- R6::R6Class(
   inherit = ClassifiersBasedOnTextEmbeddings,
   public = list(
     #---------------------------------------------------------------------------
-    #' @description Method for training a neural net.
+    #' @description Method for training a sequential classifier.
     #'
-    #'   Training includes a routine for early stopping. In the case that loss<0.0001 and Accuracy=1.00 and Average
-    #'   Iota=1.00 training stops. The history uses the values of the last trained epoch for the remaining epochs.
+    #' Training includes a routine for early stopping. In the case that loss<0.001
+    #' and smoothed Average Iota is at least .98 training stops. The history uses the values of the last trained epoch for the remaining epochs.
     #'
-    #'   After training the model with the best values for Average Iota, Accuracy, and Loss on the validation data set
-    #'   is used as the final model.
+    #' After training the model with the best values for smoothed Average Iota
+    #' on the validation data set is used as the final model.
     #'
     #' @param data_embeddings `r get_param_doc_desc("data_embeddings")`
     #' @param data_targets `r get_param_doc_desc("data_targets")`.
@@ -107,9 +107,9 @@ TEClassifiersBasedOnRegular <- R6::R6Class(
                      log_write_interval = 10L,
                      n_cores = auto_n_cores(),
                      lr_rate = 1e-3,
-                     lr_min=1e-4,
+                     lr_min = 1e-4,
                      lr_warm_up_ratio = 0.02,
-                     lr_scheduler="None",
+                     lr_scheduler = "None",
                      optimizer = "AdamW",
                      amp = FALSE) {
       private$do_training(args = get_called_args(n = 1L))

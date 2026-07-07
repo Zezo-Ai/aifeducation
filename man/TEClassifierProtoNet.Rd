@@ -38,7 +38,7 @@ and Data Mining (Vol. 11440, pp. 305–317). Springer International Publishing.
 https://doi.org/10.1007/978-3-030-16145-3_24
 }
 \seealso{
-Other Classification: 
+Other Classification:
 \code{\link{TEClassifierParallel}},
 \code{\link{TEClassifierParallelPrototype}},
 \code{\link{TEClassifierRegular}},
@@ -47,76 +47,80 @@ Other Classification:
 }
 \concept{Classification}
 \section{Super classes}{
-\code{\link[aifeducation:AIFEMaster]{aifeducation::AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{aifeducation::AIFEBaseModel}} -> \code{\link[aifeducation:ModelsBasedOnTextEmbeddings]{aifeducation::ModelsBasedOnTextEmbeddings}} -> \code{\link[aifeducation:ClassifiersBasedOnTextEmbeddings]{aifeducation::ClassifiersBasedOnTextEmbeddings}} -> \code{\link[aifeducation:TEClassifiersBasedOnProtoNet]{aifeducation::TEClassifiersBasedOnProtoNet}} -> \code{TEClassifierProtoNet}
+\code{\link[aifeducation:AIFEMaster]{AIFEMaster}} -> \code{\link[aifeducation:AIFEBaseModel]{AIFEBaseModel}} -> \code{\link[aifeducation:ModelsBasedOnTextEmbeddings]{ModelsBasedOnTextEmbeddings}} -> \code{\link[aifeducation:ClassifiersBasedOnTextEmbeddings]{ClassifiersBasedOnTextEmbeddings}} -> \code{\link[aifeducation:TEClassifiersBasedOnProtoNet]{TEClassifiersBasedOnProtoNet}} -> \code{TEClassifierProtoNet}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TEClassifierProtoNet-new}{\code{TEClassifierProtoNet$new()}}
-\item \href{#method-TEClassifierProtoNet-configure}{\code{TEClassifierProtoNet$configure()}}
-\item \href{#method-TEClassifierProtoNet-embed}{\code{TEClassifierProtoNet$embed()}}
-\item \href{#method-TEClassifierProtoNet-plot_embeddings}{\code{TEClassifierProtoNet$plot_embeddings()}}
-\item \href{#method-TEClassifierProtoNet-clone}{\code{TEClassifierProtoNet$clone()}}
+  \itemize{
+    \item \href{#method-TEClassifierProtoNet-initialize}{\code{TEClassifierProtoNet$new()}}
+    \item \href{#method-TEClassifierProtoNet-configure}{\code{TEClassifierProtoNet$configure()}}
+    \item \href{#method-TEClassifierProtoNet-embed}{\code{TEClassifierProtoNet$embed()}}
+    \item \href{#method-TEClassifierProtoNet-plot_embeddings}{\code{TEClassifierProtoNet$plot_embeddings()}}
+    \item \href{#method-TEClassifierProtoNet-clone}{\code{TEClassifierProtoNet$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>aifeducation::AIFEMaster$get_all_fields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>aifeducation::AIFEMaster$get_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>aifeducation::AIFEMaster$get_ml_framework()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>aifeducation::AIFEMaster$get_model_config()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>aifeducation::AIFEMaster$get_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>aifeducation::AIFEMaster$get_model_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>aifeducation::AIFEMaster$get_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>aifeducation::AIFEMaster$get_package_versions()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>aifeducation::AIFEMaster$get_private()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>aifeducation::AIFEMaster$get_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>aifeducation::AIFEMaster$get_sustainability_data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>aifeducation::AIFEMaster$is_configured()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>aifeducation::AIFEMaster$is_trained()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>aifeducation::AIFEMaster$set_documentation_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>aifeducation::AIFEMaster$set_model_description()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>aifeducation::AIFEMaster$set_model_license()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>aifeducation::AIFEMaster$set_publication_info()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEBaseModel" data-id="count_parameter"><a href='../../aifeducation/html/AIFEBaseModel.html#method-AIFEBaseModel-count_parameter'><code>aifeducation::AIFEBaseModel$count_parameter()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model'><code>aifeducation::ModelsBasedOnTextEmbeddings$get_text_embedding_model()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model_name"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model_name'><code>aifeducation::ModelsBasedOnTextEmbeddings$get_text_embedding_model_name()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="adjust_target_levels"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-adjust_target_levels'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$adjust_target_levels()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="check_embedding_model"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-check_embedding_model'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$check_embedding_model()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="check_feature_extractor_object_type"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-check_feature_extractor_object_type'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="load_from_disk"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-load_from_disk'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$load_from_disk()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="plot_coding_stream"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-plot_coding_stream'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$plot_coding_stream()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="plot_training_history"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-plot_training_history'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$plot_training_history()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="predict"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-predict'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$predict()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="requires_compression"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-requires_compression'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$requires_compression()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="save"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-save'><code>aifeducation::ClassifiersBasedOnTextEmbeddings$save()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TEClassifiersBasedOnProtoNet" data-id="get_metric_scale_factor"><a href='../../aifeducation/html/TEClassifiersBasedOnProtoNet.html#method-TEClassifiersBasedOnProtoNet-get_metric_scale_factor'><code>aifeducation::TEClassifiersBasedOnProtoNet$get_metric_scale_factor()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TEClassifiersBasedOnProtoNet" data-id="predict_with_samples"><a href='../../aifeducation/html/TEClassifiersBasedOnProtoNet.html#method-TEClassifiersBasedOnProtoNet-predict_with_samples'><code>aifeducation::TEClassifiersBasedOnProtoNet$predict_with_samples()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="aifeducation" data-topic="TEClassifiersBasedOnProtoNet" data-id="train"><a href='../../aifeducation/html/TEClassifiersBasedOnProtoNet.html#method-TEClassifiersBasedOnProtoNet-train'><code>aifeducation::TEClassifiersBasedOnProtoNet$train()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_all_fields"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_all_fields'><code>AIFEMaster$get_all_fields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_documentation_license'><code>AIFEMaster$get_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_ml_framework"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_ml_framework'><code>AIFEMaster$get_ml_framework()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_config"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_config'><code>AIFEMaster$get_model_config()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_description'><code>AIFEMaster$get_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_info'><code>AIFEMaster$get_model_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_model_license'><code>AIFEMaster$get_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_package_versions"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_package_versions'><code>AIFEMaster$get_package_versions()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_private"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_private'><code>AIFEMaster$get_private()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_publication_info'><code>AIFEMaster$get_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="get_sustainability_data"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-get_sustainability_data'><code>AIFEMaster$get_sustainability_data()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_configured"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_configured'><code>AIFEMaster$is_configured()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="is_trained"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-is_trained'><code>AIFEMaster$is_trained()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_documentation_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_documentation_license'><code>AIFEMaster$set_documentation_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_description"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_description'><code>AIFEMaster$set_model_description()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_model_license"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_model_license'><code>AIFEMaster$set_model_license()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEMaster" data-id="set_publication_info"><a href='../../aifeducation/html/AIFEMaster.html#method-AIFEMaster-set_publication_info'><code>AIFEMaster$set_publication_info()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="AIFEBaseModel" data-id="count_parameter"><a href='../../aifeducation/html/AIFEBaseModel.html#method-AIFEBaseModel-count_parameter'><code>AIFEBaseModel$count_parameter()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_lr_statistics"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_lr_statistics'><code>ModelsBasedOnTextEmbeddings$get_lr_statistics()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model'><code>ModelsBasedOnTextEmbeddings$get_text_embedding_model()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="get_text_embedding_model_name"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-get_text_embedding_model_name'><code>ModelsBasedOnTextEmbeddings$get_text_embedding_model_name()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ModelsBasedOnTextEmbeddings" data-id="plot_learning_rate"><a href='../../aifeducation/html/ModelsBasedOnTextEmbeddings.html#method-ModelsBasedOnTextEmbeddings-plot_learning_rate'><code>ModelsBasedOnTextEmbeddings$plot_learning_rate()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="adjust_target_levels"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-adjust_target_levels'><code>ClassifiersBasedOnTextEmbeddings$adjust_target_levels()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="check_embedding_model"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-check_embedding_model'><code>ClassifiersBasedOnTextEmbeddings$check_embedding_model()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="check_feature_extractor_object_type"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-check_feature_extractor_object_type'><code>ClassifiersBasedOnTextEmbeddings$check_feature_extractor_object_type()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="load_from_disk"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-load_from_disk'><code>ClassifiersBasedOnTextEmbeddings$load_from_disk()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="plot_coding_stream"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-plot_coding_stream'><code>ClassifiersBasedOnTextEmbeddings$plot_coding_stream()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="plot_training_history"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-plot_training_history'><code>ClassifiersBasedOnTextEmbeddings$plot_training_history()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="predict"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-predict'><code>ClassifiersBasedOnTextEmbeddings$predict()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="print"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-print'><code>ClassifiersBasedOnTextEmbeddings$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="requires_compression"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-requires_compression'><code>ClassifiersBasedOnTextEmbeddings$requires_compression()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="ClassifiersBasedOnTextEmbeddings" data-id="save"><a href='../../aifeducation/html/ClassifiersBasedOnTextEmbeddings.html#method-ClassifiersBasedOnTextEmbeddings-save'><code>ClassifiersBasedOnTextEmbeddings$save()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TEClassifiersBasedOnProtoNet" data-id="get_metric_scale_factor"><a href='../../aifeducation/html/TEClassifiersBasedOnProtoNet.html#method-TEClassifiersBasedOnProtoNet-get_metric_scale_factor'><code>TEClassifiersBasedOnProtoNet$get_metric_scale_factor()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TEClassifiersBasedOnProtoNet" data-id="predict_with_samples"><a href='../../aifeducation/html/TEClassifiersBasedOnProtoNet.html#method-TEClassifiersBasedOnProtoNet-predict_with_samples'><code>TEClassifiersBasedOnProtoNet$predict_with_samples()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="aifeducation" data-topic="TEClassifiersBasedOnProtoNet" data-id="train"><a href='../../aifeducation/html/TEClassifiersBasedOnProtoNet.html#method-TEClassifiersBasedOnProtoNet-train'><code>TEClassifiersBasedOnProtoNet$train()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TEClassifierProtoNet-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TEClassifierProtoNet-new}{}}}
-\subsection{Method \code{new()}}{
-Creating a new instance of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEClassifierProtoNet$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TEClassifierProtoNet-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TEClassifierProtoNet-initialize}{}}}
+\subsection{\code{TEClassifierProtoNet$new()}}{
+  Creating a new instance of this class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEClassifierProtoNet$new()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \link{TEClassifierProtoNet} which is ready for configuration.
+  }
 }
 
-\subsection{Returns}{
-Returns an object of class \link{TEClassifierProtoNet} which is ready for configuration.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEClassifierProtoNet-configure"></a>}}
 \if{latex}{\out{\hypertarget{method-TEClassifierProtoNet-configure}{}}}
-\subsection{Method \code{configure()}}{
-Creating a new instance of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEClassifierProtoNet$configure(
+\subsection{\code{TEClassifierProtoNet$configure()}}{
+  Creating a new instance of this class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEClassifierProtoNet$configure(
   name = NULL,
   label = NULL,
   text_embeddings = NULL,
@@ -139,103 +143,133 @@ Creating a new instance of this class.
   repeat_encoder = 1L,
   dense_dropout = 0.4,
   encoder_dropout = 0.1
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{\code{string} Name of the new model. Please refer to common name conventions.
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{\code{string} Name of the new model. Please refer to common name conventions.
 Free text can be used with parameter \code{label}. If set to \code{NULL} a unique ID
-is generated automatically. Allowed values: any}
+is generated automatically. Allowed values:
 
-\item{\code{label}}{\code{string} Label for the new model. Here you can use free text. Allowed values: any}
+any}
+      \item{\code{label}}{\code{string} Label for the new model. Here you can use free text. Allowed values:
 
-\item{\code{text_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
-
-\item{\code{feature_extractor}}{\code{TEFeatureExtractor} Object of class \link{TEFeatureExtractor} which should be used in order to reduce
+any}
+      \item{\code{text_embeddings}}{\verb{EmbeddedText, LargeDataSetForTextEmbeddings} Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings}.}
+      \item{\code{feature_extractor}}{\code{TEFeatureExtractor} Object of class \link{TEFeatureExtractor} which should be used in order to reduce
 the number of dimensions of the text embeddings. If no feature extractor should be applied set \code{NULL}.}
-
-\item{\code{target_levels}}{\code{vector} containing the levels (categories or classes) within the target data. Please
+      \item{\code{target_levels}}{\code{vector} containing the levels (categories or classes) within the target data. Please
 note that order matters. For ordinal data please ensure that the levels are sorted correctly with later levels
 indicating a higher category/class. For nominal data the order does not matter.}
+      \item{\code{dense_size}}{\code{int} Number of neurons for each dense layer. Allowed values:
 
-\item{\code{dense_size}}{\code{int} Number of neurons for each dense layer. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{dense_layers}}{\code{int} Number of dense layers. Allowed values:
 
-\item{\code{dense_layers}}{\code{int} Number of dense layers. Allowed values: \ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{rec_size}}{\code{int} Number of neurons for each recurrent layer. Allowed values:
 
-\item{\code{rec_size}}{\code{int} Number of neurons for each recurrent layer. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{rec_layers}}{\code{int} Number of recurrent layers. Allowed values:
 
-\item{\code{rec_layers}}{\code{int} Number of recurrent layers. Allowed values: \ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{rec_type}}{\code{string} Type of the recurrent layers. \code{rec_type='GRU'} for Gated Recurrent Unit and \code{rec_type='LSTM'} for Long Short-Term Memory. Allowed values:
+\itemize{
+\item 'GRU'
+\item 'LSTM'
+}}
+      \item{\code{rec_bidirectional}}{\code{bool} If \code{TRUE} a bidirectional version of the recurrent layers is used.}
+      \item{\code{embedding_dim}}{\code{int}  determining the number of dimensions for the embedding. Allowed values:
 
-\item{\code{rec_type}}{\code{string} Type of the recurrent layers. \code{rec_type='GRU'} for Gated Recurrent Unit and \code{rec_type='LSTM'} for Long Short-Term Memory. Allowed values: 'GRU', 'LSTM'}
+\ifelse{latex}{$2 <= x $}{\ifelse{html}{\eqn{2 <= x }}{`2 <= x `}}}
+      \item{\code{self_attention_heads}}{\code{int} determining the number of attention heads for a self-attention layer. Only relevant if \code{attention_type='MultiHead'} Allowed values:
 
-\item{\code{rec_bidirectional}}{\code{bool} If \code{TRUE} a bidirectional version of the recurrent layers is used.}
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{intermediate_size}}{\code{int} determining the size of the projection layer within a each transformer encoder. Allowed values:
 
-\item{\code{embedding_dim}}{\code{int}  determining the number of dimensions for the embedding. Allowed values: \ifelse{latex}{$2 <= x $}{\ifelse{html}{\eqn{2 <= x }}{`2 <= x `}}}
+\ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+      \item{\code{attention_type}}{\code{string} Choose the attention type. Allowed values:
+\itemize{
+\item 'Fourier'
+\item 'MultiHead'
+}}
+      \item{\code{add_pos_embedding}}{\code{bool} \code{TRUE} if positional embedding should be used.}
+      \item{\code{act_fct}}{\code{string} Activation function for the specified layers. Allowed values:
+\itemize{
+\item 'ELU'
+\item 'LeakyReLU'
+\item 'ReLU'
+\item 'GELU'
+\item 'Sigmoid'
+\item 'Tanh'
+\item 'PReLU'
+}}
+      \item{\code{parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values:
+\itemize{
+\item 'None'
+\item 'OrthogonalWeights'
+\item 'WeightNorm'
+\item 'SpectralNorm'
+}}
+      \item{\code{rec_dropout}}{\code{double} determining the dropout between recurrent layers. Allowed values:
 
-\item{\code{self_attention_heads}}{\code{int} determining the number of attention heads for a self-attention layer. Only relevant if \code{attention_type='multihead'} Allowed values: \ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+\ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
+      \item{\code{repeat_encoder}}{\code{int} determining how many times the encoder should be added to the network. Allowed values:
 
-\item{\code{intermediate_size}}{\code{int} determining the size of the projection layer within a each transformer encoder. Allowed values: \ifelse{latex}{$1 <= x $}{\ifelse{html}{\eqn{1 <= x }}{`1 <= x `}}}
+\ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
+      \item{\code{dense_dropout}}{\code{double} determining the dropout between dense layers. Allowed values:
 
-\item{\code{attention_type}}{\code{string} Choose the attention type. Allowed values: 'Fourier', 'MultiHead'}
+\ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
+      \item{\code{encoder_dropout}}{\code{double} determining the dropout for the dense projection within the transformer encoder layers. Allowed values:
 
-\item{\code{add_pos_embedding}}{\code{bool} \code{TRUE} if positional embedding should be used.}
-
-\item{\code{act_fct}}{\code{string} Activation function for all layers. Allowed values: 'ELU', 'LeakyReLU', 'ReLU', 'GELU', 'Sigmoid', 'Tanh', 'PReLU'}
-
-\item{\code{parametrizations}}{\code{string} Re-Parametrizations of the weights of layers. Allowed values: 'None', 'OrthogonalWeights', 'WeightNorm', 'SpectralNorm'}
-
-\item{\code{rec_dropout}}{\code{double} determining the dropout between recurrent layers. Allowed values: \ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
-
-\item{\code{repeat_encoder}}{\code{int} determining how many times the encoder should be added to the network. Allowed values: \ifelse{latex}{$0 <= x $}{\ifelse{html}{\eqn{0 <= x }}{`0 <= x `}}}
-
-\item{\code{dense_dropout}}{\code{double} determining the dropout between dense layers. Allowed values: \ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
-
-\item{\code{encoder_dropout}}{\code{double} determining the dropout for the dense projection within the transformer encoder layers. Allowed values: \ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
-
-\item{\code{bias}}{\code{bool} If \code{TRUE} a bias term is added to all layers. If \code{FALSE} no bias term is added to the layers.}
+\ifelse{latex}{$0 <= x <= 0.6$}{\ifelse{html}{\eqn{0 <= x <= 0.6}}{`0 <= x <= 0.6`}}}
+      \item{\code{bias}}{\code{bool} If \code{TRUE} a bias term is added to all layers. If \code{FALSE} no bias term is added to the layers.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEClassifierProtoNet-embed"></a>}}
 \if{latex}{\out{\hypertarget{method-TEClassifierProtoNet-embed}{}}}
-\subsection{Method \code{embed()}}{
-Method for embedding documents. Please do not confuse this type of embeddings with the embeddings of
+\subsection{\code{TEClassifierProtoNet$embed()}}{
+  Method for embedding documents. Please do not confuse this type of embeddings with the embeddings of
 texts created by an object of class \link{TextEmbeddingModel}. These embeddings embed documents according to their
 similarity to specific classes.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEClassifierProtoNet$embed(embeddings_q = NULL, batch_size = 32L)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{embeddings_q}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings} containing the text
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEClassifierProtoNet$embed(embeddings_q = NULL, batch_size = 32L)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{embeddings_q}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings} containing the text
 embeddings for all cases which should be embedded into the classification space.}
-
-\item{\code{batch_size}}{\code{int} batch size.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a \code{list} containing the following elements
+      \item{\code{batch_size}}{\code{int} batch size.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} containing the following elements
 \itemize{
 \item \code{embeddings_q}: embeddings for the cases (query sample).
 \item \code{embeddings_prototypes}: embeddings of the prototypes which were learned during training. They represents the
 center for the different classes.
 }
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEClassifierProtoNet-plot_embeddings"></a>}}
 \if{latex}{\out{\hypertarget{method-TEClassifierProtoNet-plot_embeddings}{}}}
-\subsection{Method \code{plot_embeddings()}}{
-Method for creating a plot to visualize embeddings and their corresponding centers (prototypes).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEClassifierProtoNet$plot_embeddings(
+\subsection{\code{TEClassifierProtoNet$plot_embeddings()}}{
+  Method for creating a plot to visualize embeddings and their corresponding centers (prototypes).
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEClassifierProtoNet$plot_embeddings(
   embeddings_q,
   classes_q = NULL,
   batch_size = 12L,
@@ -243,50 +277,47 @@ Method for creating a plot to visualize embeddings and their corresponding cente
   size_points = 3L,
   size_points_prototypes = 8L,
   inc_unlabeled = TRUE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{embeddings_q}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings} containing the text
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{embeddings_q}}{Object of class \link{EmbeddedText} or \link{LargeDataSetForTextEmbeddings} containing the text
 embeddings for all cases which should be embedded into the classification space.}
-
-\item{\code{classes_q}}{Named \code{factor} containg the true classes for every case. Please note that the names must match
+      \item{\code{classes_q}}{Named \code{factor} containg the true classes for every case. Please note that the names must match
 the names/ids in \code{embeddings_q}.}
-
-\item{\code{batch_size}}{\code{int} batch size.}
-
-\item{\code{alpha}}{\code{float} Value indicating how transparent the points should be (important
+      \item{\code{batch_size}}{\code{int} batch size.}
+      \item{\code{alpha}}{\code{float} Value indicating how transparent the points should be (important
 if many points overlap). Does not apply to points representing prototypes.}
+      \item{\code{size_points}}{\code{int} Size of the points excluding the points for prototypes.}
+      \item{\code{size_points_prototypes}}{\code{int} Size of points representing prototypes.}
+      \item{\code{inc_unlabeled}}{\code{bool} If \code{TRUE} plot includes unlabeled cases as data points.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a plot of class \code{ggplot}visualizing embeddings.
+  }
+}
 
-\item{\code{size_points}}{\code{int} Size of the points excluding the points for prototypes.}
-
-\item{\code{size_points_prototypes}}{\code{int} Size of points representing prototypes.}
-
-\item{\code{inc_unlabeled}}{\code{bool} If \code{TRUE} plot includes unlabeled cases as data points.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns a plot of class \code{ggplot}visualizing embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TEClassifierProtoNet-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TEClassifierProtoNet-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TEClassifierProtoNet$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TEClassifierProtoNet$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TEClassifierProtoNet$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

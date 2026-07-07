@@ -25,14 +25,14 @@ values for test data if test data was available during training.
 In general the loss is written by a python function during model's training.
 }
 \seealso{
-Other Utils Log Developers: 
-\code{\link{cat_message}()},
-\code{\link{clean_pytorch_log_transformers}()},
-\code{\link{output_message}()},
-\code{\link{print_message}()},
-\code{\link{read_log}()},
-\code{\link{reset_log}()},
-\code{\link{reset_loss_log}()},
-\code{\link{write_log}()}
+Other Utils Log Developers:
+\code{\link[=cat_message]{cat_message()}},
+\code{\link[=clean_pytorch_log_transformers]{clean_pytorch_log_transformers()}},
+\code{\link[=output_message]{output_message()}},
+\code{\link[=print_message]{print_message()}},
+\code{\link[=read_log]{read_log()}},
+\code{\link[=reset_log]{reset_log()}},
+\code{\link[=reset_loss_log]{reset_loss_log()}},
+\code{\link[=write_log]{write_log()}}
 }
 \concept{Utils Log Developers}

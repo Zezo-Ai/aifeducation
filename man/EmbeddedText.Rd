@@ -19,51 +19,53 @@ the data may not fit into memory/RAM. Thus, please use this object only for a sm
 is recommended to use an object of class \link{LargeDataSetForTextEmbeddings} which can deal with any number of texts.
 }
 \seealso{
-Other Data Management: 
+Other Data Management:
 \code{\link{LargeDataSetForText}},
 \code{\link{LargeDataSetForTextEmbeddings}}
 }
 \concept{Data Management}
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{embeddings}}{('data.frame()')\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{embeddings}}{('data.frame()')\cr
 data.frame containing the text embeddings for all chunks. Documents are in the rows. Embedding dimensions are
 in the columns.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-EmbeddedText-configure}{\code{EmbeddedText$configure()}}
-\item \href{#method-EmbeddedText-save}{\code{EmbeddedText$save()}}
-\item \href{#method-EmbeddedText-is_configured}{\code{EmbeddedText$is_configured()}}
-\item \href{#method-EmbeddedText-load_from_disk}{\code{EmbeddedText$load_from_disk()}}
-\item \href{#method-EmbeddedText-get_model_info}{\code{EmbeddedText$get_model_info()}}
-\item \href{#method-EmbeddedText-get_model_label}{\code{EmbeddedText$get_model_label()}}
-\item \href{#method-EmbeddedText-get_times}{\code{EmbeddedText$get_times()}}
-\item \href{#method-EmbeddedText-get_features}{\code{EmbeddedText$get_features()}}
-\item \href{#method-EmbeddedText-get_original_features}{\code{EmbeddedText$get_original_features()}}
-\item \href{#method-EmbeddedText-get_pad_value}{\code{EmbeddedText$get_pad_value()}}
-\item \href{#method-EmbeddedText-is_compressed}{\code{EmbeddedText$is_compressed()}}
-\item \href{#method-EmbeddedText-add_feature_extractor_info}{\code{EmbeddedText$add_feature_extractor_info()}}
-\item \href{#method-EmbeddedText-get_feature_extractor_info}{\code{EmbeddedText$get_feature_extractor_info()}}
-\item \href{#method-EmbeddedText-convert_to_LargeDataSetForTextEmbeddings}{\code{EmbeddedText$convert_to_LargeDataSetForTextEmbeddings()}}
-\item \href{#method-EmbeddedText-n_rows}{\code{EmbeddedText$n_rows()}}
-\item \href{#method-EmbeddedText-get_all_fields}{\code{EmbeddedText$get_all_fields()}}
-\item \href{#method-EmbeddedText-set_package_versions}{\code{EmbeddedText$set_package_versions()}}
-\item \href{#method-EmbeddedText-get_package_versions}{\code{EmbeddedText$get_package_versions()}}
-\item \href{#method-EmbeddedText-clone}{\code{EmbeddedText$clone()}}
-}
+  \itemize{
+    \item \href{#method-EmbeddedText-configure}{\code{EmbeddedText$configure()}}
+    \item \href{#method-EmbeddedText-save}{\code{EmbeddedText$save()}}
+    \item \href{#method-EmbeddedText-is_configured}{\code{EmbeddedText$is_configured()}}
+    \item \href{#method-EmbeddedText-load_from_disk}{\code{EmbeddedText$load_from_disk()}}
+    \item \href{#method-EmbeddedText-get_model_info}{\code{EmbeddedText$get_model_info()}}
+    \item \href{#method-EmbeddedText-get_model_label}{\code{EmbeddedText$get_model_label()}}
+    \item \href{#method-EmbeddedText-get_times}{\code{EmbeddedText$get_times()}}
+    \item \href{#method-EmbeddedText-get_features}{\code{EmbeddedText$get_features()}}
+    \item \href{#method-EmbeddedText-get_original_features}{\code{EmbeddedText$get_original_features()}}
+    \item \href{#method-EmbeddedText-get_pad_value}{\code{EmbeddedText$get_pad_value()}}
+    \item \href{#method-EmbeddedText-is_compressed}{\code{EmbeddedText$is_compressed()}}
+    \item \href{#method-EmbeddedText-add_feature_extractor_info}{\code{EmbeddedText$add_feature_extractor_info()}}
+    \item \href{#method-EmbeddedText-get_feature_extractor_info}{\code{EmbeddedText$get_feature_extractor_info()}}
+    \item \href{#method-EmbeddedText-convert_to_LargeDataSetForTextEmbeddings}{\code{EmbeddedText$convert_to_LargeDataSetForTextEmbeddings()}}
+    \item \href{#method-EmbeddedText-n_rows}{\code{EmbeddedText$n_rows()}}
+    \item \href{#method-EmbeddedText-get_all_fields}{\code{EmbeddedText$get_all_fields()}}
+    \item \href{#method-EmbeddedText-set_package_versions}{\code{EmbeddedText$set_package_versions()}}
+    \item \href{#method-EmbeddedText-get_package_versions}{\code{EmbeddedText$get_package_versions()}}
+    \item \href{#method-EmbeddedText-print}{\code{EmbeddedText$print()}}
+    \item \href{#method-EmbeddedText-clone}{\code{EmbeddedText$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-configure"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-configure}{}}}
-\subsection{Method \code{configure()}}{
-Creates a new object representing text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$configure(
+\subsection{\code{EmbeddedText$configure()}}{
+  Creates a new object representing text embeddings.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$configure(
   embeddings,
   model_name = NA,
   model_label = NA,
@@ -80,354 +82,386 @@ Creates a new object representing text embeddings.
   param_emb_pool_type = NULL,
   param_aggregation = NULL,
   param_pad_value = -100L
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{embeddings}}{\code{data.frame} containing the text embeddings.}
-
-\item{\code{model_name}}{\code{string} Name of the model that generates this embedding.}
-
-\item{\code{model_label}}{\code{string} Label of the model that generates this embedding.}
-
-\item{\code{model_date}}{\code{string} Date when the embedding generating model was created.}
-
-\item{\code{model_method}}{\code{string} Method of the underlying embedding model.}
-
-\item{\code{model_version}}{\code{string} Version of the model that generated this embedding.}
-
-\item{\code{model_language}}{\code{string} Language of the model that generated this embedding.}
-
-\item{\code{param_seq_length}}{\code{int} Maximum number of tokens that processes the generating model for a chunk.}
-
-\item{\code{param_chunks}}{\code{int} Maximum number of chunks which are supported by the generating model.}
-
-\item{\code{param_features}}{\code{int} Number of dimensions of the text embeddings.}
-
-\item{\code{param_overlap}}{\code{int} Number of tokens that were added at the beginning of the sequence for the next chunk
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{embeddings}}{\code{data.frame} containing the text embeddings.}
+      \item{\code{model_name}}{\code{string} Name of the model that generates this embedding.}
+      \item{\code{model_label}}{\code{string} Label of the model that generates this embedding.}
+      \item{\code{model_date}}{\code{string} Date when the embedding generating model was created.}
+      \item{\code{model_method}}{\code{string} Method of the underlying embedding model.}
+      \item{\code{model_version}}{\code{string} Version of the model that generated this embedding.}
+      \item{\code{model_language}}{\code{string} Language of the model that generated this embedding.}
+      \item{\code{param_seq_length}}{\code{int} Maximum number of tokens that processes the generating model for a chunk.}
+      \item{\code{param_chunks}}{\code{int} Maximum number of chunks which are supported by the generating model.}
+      \item{\code{param_features}}{\code{int} Number of dimensions of the text embeddings.}
+      \item{\code{param_overlap}}{\code{int} Number of tokens that were added at the beginning of the sequence for the next chunk
 by this model.    #'}
-
-\item{\code{param_emb_layer_min}}{\code{int} or \code{string} determining the first layer to be included in the creation of
+      \item{\code{param_emb_layer_min}}{\code{int} or \code{string} determining the first layer to be included in the creation of
 embeddings.}
-
-\item{\code{param_emb_layer_max}}{\code{int} or \code{string} determining the last layer to be included in the creation of
+      \item{\code{param_emb_layer_max}}{\code{int} or \code{string} determining the last layer to be included in the creation of
 embeddings.}
-
-\item{\code{param_emb_pool_type}}{\code{string} determining the method for pooling the token embeddings within each layer.}
-
-\item{\code{param_aggregation}}{\code{string} Aggregation method of the hidden states. Deprecated. Only included for backward
+      \item{\code{param_emb_pool_type}}{\code{string} determining the method for pooling the token embeddings within each layer.}
+      \item{\code{param_aggregation}}{\code{string} Aggregation method of the hidden states. Deprecated. Only included for backward
 compatibility.}
-
-\item{\code{param_pad_value}}{\code{int} Value indicating padding. This value should no be in the range of
+      \item{\code{param_pad_value}}{\code{int} Value indicating padding. This value should no be in the range of
 regluar values for computations. Thus it is not recommended to chance this value.
-Default is \code{-100}. Allowed values: \ifelse{latex}{$ x <= -1$}{\ifelse{html}{\eqn{ x <= -1}}{` x <= -1`}}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Returns an object of class \link{EmbeddedText} which stores the text embeddings produced by an objects of
+Default is \code{-100}. Allowed values:
+
+\ifelse{latex}{$ x <= -1$}{\ifelse{html}{\eqn{ x <= -1}}{` x <= -1`}}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \link{EmbeddedText} which stores the text embeddings produced by an objects of
 class \link{TextEmbeddingModel}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-save"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-save}{}}}
-\subsection{Method \code{save()}}{
-Saves a data set to disk.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$save(dir_path, folder_name, create_dir = TRUE)}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$save()}}{
+  Saves a data set to disk.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$save(dir_path, folder_name, create_dir = TRUE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where to store the data set.}
+      \item{\code{folder_name}}{\code{string} Name of the folder for storing the data set.}
+      \item{\code{create_dir}}{\code{bool} If \code{True} the directory will be created if it does not exist.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It write the data set to disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where to store the data set.}
-
-\item{\code{folder_name}}{\code{string} Name of the folder for storing the data set.}
-
-\item{\code{create_dir}}{\code{bool} If \code{True} the directory will be created if it does not exist.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It write the data set to disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-is_configured"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-is_configured}{}}}
-\subsection{Method \code{is_configured()}}{
-Method for checking if the model was successfully configured. An object can only be used if this
+\subsection{\code{EmbeddedText$is_configured()}}{
+  Method for checking if the model was successfully configured. An object can only be used if this
 value is \code{TRUE}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$is_configured()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$is_configured()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{bool} \code{TRUE} if the model is fully configured. \code{FALSE} if not.
+  }
 }
 
-\subsection{Returns}{
-\code{bool} \code{TRUE} if the model is fully configured. \code{FALSE} if not.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-load_from_disk"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-load_from_disk}{}}}
-\subsection{Method \code{load_from_disk()}}{
-loads an object of class \link{EmbeddedText} from disk and updates the object to the current version of
+\subsection{\code{EmbeddedText$load_from_disk()}}{
+  loads an object of class \link{EmbeddedText} from disk and updates the object to the current version of
 the package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$load_from_disk(dir_path)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$load_from_disk(dir_path)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir_path}}{Path where the data set set is stored.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It loads an object from disk.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir_path}}{Path where the data set set is stored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does not return anything. It loads an object from disk.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_model_info"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_model_info}{}}}
-\subsection{Method \code{get_model_info()}}{
-Method for retrieving information about the model that generated this embedding.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_model_info()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$get_model_info()}}{
+  Method for retrieving information about the model that generated this embedding.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_model_info()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list} contains all saved information about the underlying text embedding model.
+  }
 }
 
-\subsection{Returns}{
-\code{list} contains all saved information about the underlying text embedding model.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_model_label"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_model_label}{}}}
-\subsection{Method \code{get_model_label()}}{
-Method for retrieving the label of the model that generated this embedding.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_model_label()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$get_model_label()}}{
+  Method for retrieving the label of the model that generated this embedding.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_model_label()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{string} Label of the corresponding text embedding model
+  }
 }
 
-\subsection{Returns}{
-\code{string} Label of the corresponding text embedding model
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_times"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_times}{}}}
-\subsection{Method \code{get_times()}}{
-Number of chunks/times of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_times()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$get_times()}}{
+  Number of chunks/times of the text embeddings.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_times()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of chunks/times of the text embeddings.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of chunks/times of the text embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_features"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_features}{}}}
-\subsection{Method \code{get_features()}}{
-Number of actual features/dimensions of the text embeddings.In the case a
+\subsection{\code{EmbeddedText$get_features()}}{
+  Number of actual features/dimensions of the text embeddings.In the case a
 \link[=TEFeatureExtractor]{feature extractor} was used the number of features is smaller as the original number of
 features. To receive the original number of features (the number of features before applying a
 \link[=TEFeatureExtractor]{feature extractor}) you can use the method \code{get_original_features} of this class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_features()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_features()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of features/dimensions of the text embeddings.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the number of features/dimensions of the text embeddings.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_original_features"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_original_features}{}}}
-\subsection{Method \code{get_original_features()}}{
-Number of original features/dimensions of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_original_features()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Returns an \code{int} describing the number of features/dimensions if no
+\subsection{\code{EmbeddedText$get_original_features()}}{
+  Number of original features/dimensions of the text embeddings.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_original_features()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the number of features/dimensions if no
 \link[=TEFeatureExtractor]{feature extractor}) is used or before a \link[=TEFeatureExtractor]{feature extractor}) is
 applied.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_pad_value"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_pad_value}{}}}
-\subsection{Method \code{get_pad_value()}}{
-Value for indicating padding.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_pad_value()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$get_pad_value()}}{
+  Value for indicating padding.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_pad_value()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an \code{int} describing the value used for padding.
+  }
 }
 
-\subsection{Returns}{
-Returns an \code{int} describing the value used for padding.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-is_compressed"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-is_compressed}{}}}
-\subsection{Method \code{is_compressed()}}{
-Checks if the text embedding were reduced by a \link[=TEFeatureExtractor]{feature extractor}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$is_compressed()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$is_compressed()}}{
+  Checks if the text embedding were reduced by a \link[=TEFeatureExtractor]{feature extractor}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$is_compressed()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns \code{TRUE} if the number of dimensions was reduced by a \link[=TEFeatureExtractor]{feature extractor}. If
+not return \code{FALSE}.
+  }
 }
 
-\subsection{Returns}{
-Returns \code{TRUE} if the number of dimensions was reduced by a \link[=TEFeatureExtractor]{feature extractor}. If
-not return \code{FALSE}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-add_feature_extractor_info"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-add_feature_extractor_info}{}}}
-\subsection{Method \code{add_feature_extractor_info()}}{
-Method setting information on the \link[=TEFeatureExtractor]{feature extractor} that was used to reduce
+\subsection{\code{EmbeddedText$add_feature_extractor_info()}}{
+  Method setting information on the \link[=TEFeatureExtractor]{feature extractor} that was used to reduce
 the number of dimensions of the text embeddings. This information should only be used if a
 \link[=TEFeatureExtractor]{feature extractor} was applied.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$add_feature_extractor_info(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$add_feature_extractor_info(
   model_name,
   model_label = NA,
   features = NA,
   method = NA,
   noise_factor = NA,
   optimizer = NA
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{model_name}}{\code{string} Name of the underlying \link{TextEmbeddingModel}.}
-
-\item{\code{model_label}}{\code{string} Label of the underlying \link{TextEmbeddingModel}.}
-
-\item{\code{features}}{\code{int} Number of dimension (features) for the \strong{compressed} text embeddings.}
-
-\item{\code{method}}{\code{string} Method that the \link{TEFeatureExtractor} applies for genereating the compressed text
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{model_name}}{\code{string} Name of the underlying \link{TextEmbeddingModel}.}
+      \item{\code{model_label}}{\code{string} Label of the underlying \link{TextEmbeddingModel}.}
+      \item{\code{features}}{\code{int} Number of dimension (features) for the \strong{compressed} text embeddings.}
+      \item{\code{method}}{\code{string} Method that the \link{TEFeatureExtractor} applies for genereating the compressed text
 embeddings.}
+      \item{\code{noise_factor}}{\code{double} Noise factor of the \link{TEFeatureExtractor}.}
+      \item{\code{optimizer}}{\code{string} Optimizer used during training the \link{TEFeatureExtractor}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does nothing return. It sets information on a \link[=TEFeatureExtractor]{feature extractor}.
+  }
+}
 
-\item{\code{noise_factor}}{\code{double} Noise factor of the \link{TEFeatureExtractor}.}
-
-\item{\code{optimizer}}{\code{string} Optimizer used during training the \link{TEFeatureExtractor}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Method does nothing return. It sets information on a \link[=TEFeatureExtractor]{feature extractor}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_feature_extractor_info"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_feature_extractor_info}{}}}
-\subsection{Method \code{get_feature_extractor_info()}}{
-Method for receiving information on the \link[=TEFeatureExtractor]{feature extractor} that was used to
+\subsection{\code{EmbeddedText$get_feature_extractor_info()}}{
+  Method for receiving information on the \link[=TEFeatureExtractor]{feature extractor} that was used to
 reduce the number of dimensions of the text embeddings.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_feature_extractor_info()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_feature_extractor_info()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} with information on the \link[=TEFeatureExtractor]{feature extractor}. If no
+\link[=TEFeatureExtractor]{feature extractor} was used it returns \code{NULL}.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} with information on the \link[=TEFeatureExtractor]{feature extractor}. If no
-\link[=TEFeatureExtractor]{feature extractor} was used it returns \code{NULL}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-convert_to_LargeDataSetForTextEmbeddings"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-convert_to_LargeDataSetForTextEmbeddings}{}}}
-\subsection{Method \code{convert_to_LargeDataSetForTextEmbeddings()}}{
-Method for converting this object to an object of class \link{LargeDataSetForTextEmbeddings}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$convert_to_LargeDataSetForTextEmbeddings()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$convert_to_LargeDataSetForTextEmbeddings()}}{
+  Method for converting this object to an object of class \link{LargeDataSetForTextEmbeddings}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$convert_to_LargeDataSetForTextEmbeddings()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns an object of class \link{LargeDataSetForTextEmbeddings} which uses memory mapping allowing to work
+with large data sets.
+  }
 }
 
-\subsection{Returns}{
-Returns an object of class \link{LargeDataSetForTextEmbeddings} which uses memory mapping allowing to work
-with large data sets.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-n_rows"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-n_rows}{}}}
-\subsection{Method \code{n_rows()}}{
-Number of rows.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$n_rows()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$n_rows()}}{
+  Number of rows.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$n_rows()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns the number of rows of the text embeddings which represent the number of cases.
+  }
 }
 
-\subsection{Returns}{
-Returns the number of rows of the text embeddings which represent the number of cases.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_all_fields"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_all_fields}{}}}
-\subsection{Method \code{get_all_fields()}}{
-Return all fields.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_all_fields()}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$get_all_fields()}}{
+  Return all fields.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_all_fields()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method returns a \code{list} containing all public and private fields
+of the object.
+  }
 }
 
-\subsection{Returns}{
-Method returns a \code{list} containing all public and private fields
-of the object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-set_package_versions"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-set_package_versions}{}}}
-\subsection{Method \code{set_package_versions()}}{
-Method for setting the package version for 'aifeducation',
+\subsection{\code{EmbeddedText$set_package_versions()}}{
+  Method for setting the package version for 'aifeducation',
 'reticulate', 'torch', and 'numpy' to the currently used versions.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$set_package_versions()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$set_package_versions()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Method does not return anything. It is used to set the private
+fields fo package versions.
+  }
 }
 
-\subsection{Returns}{
-Method does not return anything. It is used to set the private
-fields fo package versions.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-get_package_versions"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-get_package_versions}{}}}
-\subsection{Method \code{get_package_versions()}}{
-Method for requesting a summary of the R and python packages'
+\subsection{\code{EmbeddedText$get_package_versions()}}{
+  Method for requesting a summary of the R and python packages'
 versions used for creating the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$get_package_versions()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$get_package_versions()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Returns a \code{list} containing the versions of the relevant
+R and python packages.
+  }
 }
 
-\subsection{Returns}{
-Returns a \code{list} containing the versions of the relevant
-R and python packages.
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-EmbeddedText-print"></a>}}
+\if{latex}{\out{\hypertarget{method-EmbeddedText-print}{}}}
+\subsection{\code{EmbeddedText$print()}}{
+  Print method for classifiers.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Prints a short description of the object.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EmbeddedText-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-EmbeddedText-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EmbeddedText$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{EmbeddedText$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EmbeddedText$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
